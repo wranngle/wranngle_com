@@ -6,12 +6,13 @@ import { rm, readFile } from "fs/promises";
 // which helps cold start times
 const allowlist = [
   "@google/generative-ai",
+  "arktype",
   "axios",
   "connect-pg-simple",
   "cors",
   "date-fns",
+  "drizzle-arktype",
   "drizzle-orm",
-  "drizzle-zod",
   "express",
   "express-rate-limit",
   "express-session",
@@ -28,8 +29,6 @@ const allowlist = [
   "uuid",
   "ws",
   "xlsx",
-  "zod",
-  "zod-validation-error",
 ];
 
 async function buildAll() {
