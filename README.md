@@ -4,11 +4,12 @@ Wranngle Systems is an AI and automation consultancy. This project is the offici
 
 ## Tech Stack
 
-- **Runtime:** [Bun](https://bun.sh)
+- **Runtime:** [Bun](https://bun.sh) (local dev), Cloudflare Workers (production)
 - **Frontend:** React, Tailwind CSS, Framer Motion, Radix UI
-- **Backend:** Express.js
-- **Validation:** Arktype
+- **Backend:** Cloudflare Pages Functions (serverless)
+- **Validation:** ArkType
 - **AI Integration:** ElevenLabs Conversational AI
+- **Hosting:** Cloudflare Pages (free tier)
 
 ## Getting Started
 
@@ -24,13 +25,13 @@ bun install
 
 ### Development
 
-Start the development server (runs backend with hot reload and frontend via Vite middleware):
+Start the development server (Vite dev server with hot reload):
 
 ```bash
 bun run dev
 ```
 
-The application will be available at `http://localhost:5000`.
+The application will be available at `http://localhost:5173`.
 
 ### Build & Production
 
@@ -40,19 +41,34 @@ To build the project for production:
 bun run build
 ```
 
-To start the production server:
+To preview the production build locally with Cloudflare Pages Functions:
 
 ```bash
-bun run start
+bun run preview
+```
+
+To deploy to Cloudflare Pages:
+
+```bash
+bun run deploy
 ```
 
 ## Project Structure
 
 - `client/`: React frontend source code.
-- `server/`: Express backend source code.
-- `shared/`: Shared TypeScript schemas and utilities.
+- `functions/`: Cloudflare Pages Functions (serverless API endpoints).
+- `shared/`: Shared TypeScript schemas and utilities (ArkType).
 - `script/`: Build and utility scripts.
 - `openspec/`: Project specifications and change proposals.
+
+## Architecture
+
+This is a static site with serverless API functions:
+
+- **Frontend**: React SPA built with Vite, served globally via Cloudflare Pages CDN
+- **API**: Cloudflare Pages Functions handle `/api/*` routes (e.g., `/api/leads`)
+- **Lead Capture**: Form submissions are validated with ArkType and forwarded to an n8n webhook
+- **Environment Variables**: Set `N8N_WEBHOOK_URL` in Cloudflare Pages dashboard
 
 ## License
 
