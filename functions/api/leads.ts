@@ -1,39 +1,70 @@
-import { type } from "arktype";
-
-const insertLeadSchema = type({
-  businessName: "string",
-  industry: "string",
-  ownerName: "string",
-  phone: "string",
-  email: "string.email",
-  package: "string",
-  "status?": "string",
-  "notes?": "string",
-});
-
 interface Env {
   N8N_WEBHOOK_URL: string;
 }
 
-export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-  };
+interface LeadInput {
+  businessName: string;
+  industry: string;
+  ownerName: string;
+  phone: string;
+  email: string;
+  package: string;
+  status?: string;
+  notes?: string;
+}
 
+function validateLead(body: unknown): { valid: true; data: LeadInput } | { valid: false; error: string } {
+  if (!body || typeof body !== "object") {
+    return { valid: false, error: "Invalid request body" };
+  }
+
+  const b = body as Record<string, unknown>;
+  const required = ["businessName", "industry", "ownerName", "phone", "email", "package"];
+
+  for (const field of required) {
+    if (typeof b[field] !== "string" || !b[field]) {
+      return { valid: false, error: `Missing required field: ${field}` };
+    }
+  }
+
+  if (!b.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(b.email as string)) {
+    return { valid: false, error: "Invalid email format" };
+  }
+
+  return {
+    valid: true,
+    data: {
+      businessName: b.businessName as string,
+      industry: b.industry as string,
+      ownerName: b.ownerName as string,
+      phone: b.phone as string,
+      email: b.email as string,
+      package: b.package as string,
+      status: (b.status as string) || "pending",
+      notes: b.notes as string | undefined,
+    },
+  };
+}
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
+export const onRequestPost: PagesFunction<Env> = async (context) => {
   try {
     const body = await context.request.json();
-    const result = insertLeadSchema(body);
+    const result = validateLead(body);
 
-    if (result instanceof type.errors) {
-      return new Response(JSON.stringify({ error: result.summary }), {
+    if (!result.valid) {
+      return new Response(JSON.stringify({ error: result.error }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
 
-    const lead = { ...result, status: result.status ?? "pending" };
+    const lead = result.data;
 
     // Forward to n8n webhook for processing
     const webhookUrl = context.env.N8N_WEBHOOK_URL;
@@ -61,10 +92,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 export const onRequestOptions: PagesFunction = async () => {
   return new Response(null, {
     status: 204,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
+    headers: corsHeaders,
   });
 };
