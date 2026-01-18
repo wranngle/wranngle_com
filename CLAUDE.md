@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Install dependencies
 bun install
 
-# Development (hot reload, runs on port 5000)
+# Development (Vite dev server with hot reload)
 bun run dev
 
 # Type checking
@@ -21,50 +21,69 @@ bun run lint:fix
 # Production build (outputs to dist/)
 bun run build
 
-# Run production build
-bun run start
+# Preview with Cloudflare Pages Functions
+bun run preview
+
+# Deploy to Cloudflare Pages
+bun run deploy
 ```
 
 ## Architecture
 
-**Monorepo-lite structure** with shared code between client and server:
+**Static site + Cloudflare Pages Functions** for serverless API:
 
 ```
 client/          → React frontend (Vite)
 ├── src/
 │   ├── components/ui/   → Shadcn/Radix UI components
 │   └── hooks/           → React hooks (use-toast, etc.)
-server/          → Express backend
-├── index.ts     → Server entry, Vite middleware in dev
-├── routes.ts    → API route registration
-└── storage.ts   → Data storage interface (in-memory)
+functions/       → Cloudflare Pages Functions (API)
+├── api/
+│   ├── leads.ts → Lead capture endpoint → n8n webhook
+│   └── health.ts → Health check endpoint
 shared/          → Shared TypeScript types
 └── schema.ts    → ArkType schemas (validation + types)
 script/          → Build scripts
-└── build.ts     → Production build (esbuild + Vite)
+└── build.ts     → Vite production build
 ```
 
 **Key architectural patterns:**
-- **Shared schema**: `shared/schema.ts` defines ArkType schemas used for both validation and TypeScript types across client/server
-- **API routes**: All API endpoints under `/api` (e.g., `/api/leads`, `/api/health`)
-- **Single server**: Express serves both API routes and static frontend (Vite middleware in dev, static files in prod)
+- **Serverless API**: Cloudflare Pages Functions handle `/api/*` routes
+- **Lead capture**: POSTs to `/api/leads` validate with ArkType and forward to n8n webhook
+- **Static hosting**: Cloudflare Pages serves the React SPA globally (free tier)
 - **Path aliases**: `@` → `client/src`, `@shared` → `shared` (configured in vite.config.ts and tsconfig)
 
 ## Tech Stack
 
-- **Runtime**: Bun
+- **Runtime**: Bun (local dev), Cloudflare Workers (production)
 - **Frontend**: React, Tailwind CSS, Framer Motion, Radix UI, React Query, wouter
-- **Backend**: Express.js
+- **Backend**: Cloudflare Pages Functions
 - **Validation**: ArkType (not Zod)
 - **Linting**: XO with Prettier
-- **Build**: Vite (client), esbuild (server)
+- **Build**: Vite
+
+## Deployment
+
+### First-time setup
+
+1. Login to Cloudflare: `npx wrangler login`
+2. Deploy: `bun run deploy`
+3. Set environment variable in Cloudflare Dashboard:
+   - `N8N_WEBHOOK_URL` = your n8n webhook URL for lead capture
+
+### Continuous deployment
+
+Connect GitHub repo to Cloudflare Pages in the dashboard:
+- Build command: `bun run build`
+- Build output directory: `dist`
+- Root directory: `/`
 
 ## Important Notes
 
-- **Validation uses ArkType**, not Zod. Schemas are defined with `type({...})` syntax in `shared/schema.ts`
-- **In-memory storage**: Current implementation uses `MemStorage` class - no database required for development
+- **Validation uses ArkType**, not Zod. Schemas defined with `type({...})` syntax
+- **No database**: Lead data is forwarded to n8n webhook for processing
 - **ElevenLabs widget**: The page embeds `<elevenlabs-convai>` for the AI voice agent demo
-- **Port 5000**: The app serves on port 5000 (configurable via `PORT` env var)
+- **Environment variables**: Set `N8N_WEBHOOK_URL` in Cloudflare Dashboard
 
 <!-- OPENSPEC:START -->
 ## OpenSpec Instructions
