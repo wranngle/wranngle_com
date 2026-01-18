@@ -4,10 +4,10 @@
 - [x] 1.3 Save documentation to OpenSpec
 
 ## 2. Refactor (Proposed)
-- [ ] 2.1 Remove Express dependencies and server entry point
-- [ ] 2.2 Create `/functions/api/leads.ts` for Cloudflare
-- [ ] 2.3 Implement n8n webhook integration for data persistence
-- [ ] 2.4 Verify build compatibility with Bun/Vite for Cloudflare
+- [x] 2.1 Remove Express dependencies and server entry point
+- [x] 2.2 Create `/functions/api/leads.ts` for Cloudflare
+- [x] 2.3 Implement n8n webhook integration for data persistence
+- [x] 2.4 Verify build compatibility with Bun/Vite for Cloudflare
 
 ## 3. Deployment (Proposed)
 - [ ] 3.1 Connect GitHub repository to Cloudflare Pages
