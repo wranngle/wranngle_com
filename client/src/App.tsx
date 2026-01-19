@@ -173,12 +173,25 @@ const IntakeForm = ({ selectedPackage, onSuccess }) => {
           <Input id="phone" type="tel" className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]" {...register("phone", { required: true })} placeholder="(555) 000-0000" />
         </div>
         <div className="grid gap-2">
+          <Label htmlFor="agentName">
+            What would you like to name your AI agent? (Optional)
+          </Label>
+          <Input
+            id="agentName"
+            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]"
+            {...register("agentName")}
+            placeholder="Sarah, Max, Alex..."
+            maxLength={50}
+          />
+          <p className="text-xs opacity-60">This will be the name of your AI assistant</p>
+        </div>
+        <div className="grid gap-2">
           <Label htmlFor="notes">Additional Notes (Optional)</Label>
-          <Textarea 
-            id="notes" 
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)] min-h-[100px]" 
-            {...register("notes")} 
-            placeholder="AI behavior, specific questions, current phone system details, etc." 
+          <Textarea
+            id="notes"
+            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)] min-h-[100px]"
+            {...register("notes")}
+            placeholder="AI behavior, specific questions, current phone system details, etc."
           />
         </div>
         <input type="hidden" {...register("package")} value={currentPackage} />
