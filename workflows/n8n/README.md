@@ -9,33 +9,51 @@ This workflow handles lead submissions from the Wranngle.com contact form.
 3. Select `wranngle-lead-intake.json`
 4. The workflow will be created in DEV phase (inactive by default)
 
-## Required Configuration
+## Configuration Required
 
-### 1. Google Sheets Credential
+### 1. n8n Database Storage (Replace placeholder node)
 
-1. Click the **Store in Google Sheets** node
-2. Under **Credential to connect with**, click **Create New Credential**
-3. Follow Google OAuth flow to authorize n8n
-4. Select or create a Google Sheet for storing leads
-5. Configure column mappings (already pre-configured)
+The workflow currently has a placeholder for database storage. You need to:
 
-### 2. Email Credential
+**Option A: Use HTTP Request to n8n API**
+1. Delete the "Store in n8n Database" node
+2. Add **HTTP Request** node
+3. Configure:
+   - **Method:** POST
+   - **URL:** `https://n8n.wranngle.com/api/v1/executions`
+   - **Authentication:** Use your n8n API key
+   - **Body:** JSON with lead data
+4. This stores execution data accessible via n8n API
 
+**Option B: Use Code Node with Database**
+1. Delete the "Store in n8n Database" node
+2. Add **Code** node
+3. Use JavaScript to store data in n8n's execution data
+4. Access via Executions menu
+
+**Option C: Use External Database** (if you add one later)
+1. Replace with PostgreSQL, MySQL, or MongoDB node
+2. Use existing database credentials
+
+**Recommended:** Start with Option A (HTTP Request) - it's simplest and uses n8n's built-in storage.
+
+### 2. Email Notification (Use existing credentials)
+
+The email node is pre-configured to send to `sales@wranngle.com`.
+
+**Setup:**
 1. Click the **Send Email Notification** node
-2. Under **Credential to connect with**, choose one of:
-   - **SMTP**: For custom email server
-   - **Gmail**: For Gmail account
-   - **SendGrid**: For SendGrid API (recommended for production)
-3. Update recipient email from `leads@wranngle.com` to your actual email
+2. Under **Credential to connect with:**
+   - **If you already have email configured:** Select existing credential from dropdown
+   - **If new setup needed:** Create credential for your email service (SMTP/SendGrid/etc)
+3. Verify `fromEmail` is correct: `noreply@wranngle.com`
+4. Email recipient already set to: `sales@wranngle.com`
 
-### 3. Webhook URL
-
-After saving the workflow:
-
-1. Activate the workflow (toggle switch in top-right)
-2. Click the **Webhook Trigger** node
-3. Copy the **Production URL** (should be: `https://n8n.wranngle.com/webhook/wranngle-intake-form`)
-4. Add this URL to your Cloudflare Pages environment variables as `N8N_WEBHOOK_URL`
+**Email includes:**
+- Styled HTML template with Wranngle branding
+- All lead fields (business, contact, package, agent name)
+- Clickable email and phone links
+- Timestamp
 
 ## Workflow Flow
 
@@ -44,8 +62,8 @@ Webhook Trigger
     ↓
 Format Lead Data (timestamps, extracts fields)
     ↓
-    ├─→ Store in Google Sheets
-    └─→ Send Email Notification
+    ├─→ Store in n8n Database (configure storage method)
+    └─→ Send Email to sales@wranngle.com
 ```
 
 ## Data Schema
@@ -60,6 +78,7 @@ The workflow expects this JSON payload from `/api/leads`:
   "phone": "string",
   "email": "string",
   "package": "basic | premium",
+  "agentName": "string | null",
   "status": "pending",
   "notes": "string | null"
 }
@@ -74,34 +93,43 @@ The workflow expects this JSON payload from `/api/leads`:
 curl -X POST https://n8n.wranngle.com/webhook/wranngle-intake-form \
   -H "Content-Type: application/json" \
   -d '{
-    "businessName": "Test Business",
+    "businessName": "Test HVAC",
     "industry": "HVAC",
     "ownerName": "John Doe",
     "phone": "+1-555-0100",
     "email": "test@example.com",
-    "package": "basic",
+    "package": "premium",
+    "agentName": "Sarah",
     "status": "pending",
-    "notes": "This is a test"
+    "notes": "Testing the workflow"
   }'
 ```
 
 3. Check:
-   - Google Sheets has new row
-   - Email notification received
+   - Email received at sales@wranngle.com
    - n8n execution log shows success
+   - Data stored (depending on storage method chosen)
 
 ## Production Deployment
 
 Once tested in DEV:
 
-1. Rename workflow to `[ALPHA] Wranngle Lead Intake Workflow`
+1. Rename workflow to `[PROD] Wranngle Lead Intake Workflow`
 2. Test with production form on wranngle.com
-3. Promote to `[PROD]` after validation
-4. Monitor executions in n8n dashboard
+3. Monitor executions in n8n dashboard
+4. Set up error notifications (optional)
 
 ## Troubleshooting
 
-- **401 Unauthorized**: Check Google Sheets / Email credentials are valid
+- **401 Unauthorized**: Check email credentials are valid
 - **Webhook not triggered**: Verify `N8N_WEBHOOK_URL` in Cloudflare matches webhook path
 - **Data missing**: Check field mappings in Format Lead Data node
-- **Email not sent**: Verify SMTP settings or SendGrid API key
+- **Email not sent**: Verify email credential and recipient address
+- **Database node error**: Replace with appropriate storage method (see Configuration above)
+
+## Notes
+
+- No Google Sheets integration (per requirements)
+- Uses existing email infrastructure already configured in n8n
+- All lead data available in n8n execution history
+- Can add SMS notifications later by adding Twilio node (reuse existing credentials)
