@@ -216,11 +216,11 @@ const PricingCard = ({ pkg, isDark }) => {
     features: [
       "Triple-channel Voice + Web + SMS AI Agents",
       "Dual-Agent On-Call System",
+      "Lead Qualification",
       "Two-Way SMS (Unique Number)",
       "Cal.com Integration",
-      "Lead Qualification",
-      "Priority Support",
-      "Unified AI Inbox"
+      "Unified AI Inbox",
+      "Priority Support"
     ]
   } : {
     tierName: "Core",
@@ -235,8 +235,8 @@ const PricingCard = ({ pkg, isDark }) => {
       "Voice-only AI Agent",
       "Service Call Detection",
       "Lead Scoring & Scoring",
-      "Call Forwarding to Mobile",
       "One-Way Shared SMS Notify",
+      "Call Forwarding to Mobile",
       "Standard Trade Training Data",
       "Basic Support"
     ]
