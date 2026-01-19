@@ -55,18 +55,25 @@ function checkRateLimit(key: string): { allowed: boolean; remaining: number; res
   };
 }
 
-// Cleanup old entries periodically (simple implementation)
-setInterval(() => {
+function lazyCleanup(): void {
+  // Perform lazy cleanup of expired entries (limited to avoid performance impact)
   const now = Date.now();
   const entries = Array.from(rateLimitStore.entries());
+  let cleaned = 0;
+  const maxCleanup = 10; // Clean max 10 entries per request to avoid performance impact
+
   for (const [key, record] of entries) {
+    if (cleaned >= maxCleanup) break;
     if (now >= record.resetTime) {
       rateLimitStore.delete(key);
+      cleaned++;
     }
   }
-}, 60 * 1000); // Cleanup every minute
+}
 
 export const onRequest: PagesFunction = async (context) => {
+  // Lazy cleanup of expired rate limit entries
+  lazyCleanup();
   // Skip rate limiting for OPTIONS requests
   if (context.request.method === "OPTIONS") {
     return context.next();
