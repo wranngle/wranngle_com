@@ -3,10 +3,10 @@
  * Uses Cloudflare's built-in rate limiting capabilities
  */
 
-interface RateLimitConfig {
+type RateLimitConfig = {
   windowMs: number; // Time window in milliseconds
   maxRequests: number; // Max requests per window
-}
+};
 
 const RATE_LIMIT_CONFIG: RateLimitConfig = {
   windowMs: 60 * 1000, // 1 minute
@@ -14,22 +14,29 @@ const RATE_LIMIT_CONFIG: RateLimitConfig = {
 };
 
 // In-memory store for rate limiting (resets on worker restart)
-const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+const rateLimitStore = new Map<string, {count: number; resetTime: number}>();
 
 function getRateLimitKey(request: Request): string {
   // Use CF-Connecting-IP header (set by Cloudflare) for real IP
-  const ip = request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For") || "unknown";
+  const ip =
+    request.headers.get('CF-Connecting-IP') ||
+    request.headers.get('X-Forwarded-For') ||
+    'unknown';
   return `ratelimit:${ip}`;
 }
 
-function checkRateLimit(key: string): { allowed: boolean; remaining: number; resetTime: number } {
+function checkRateLimit(key: string): {
+  allowed: boolean;
+  remaining: number;
+  resetTime: number;
+} {
   const now = Date.now();
   const record = rateLimitStore.get(key);
 
   if (!record || now >= record.resetTime) {
     // Create new window
     const resetTime = now + RATE_LIMIT_CONFIG.windowMs;
-    rateLimitStore.set(key, { count: 1, resetTime });
+    rateLimitStore.set(key, {count: 1, resetTime});
     return {
       allowed: true,
       remaining: RATE_LIMIT_CONFIG.maxRequests - 1,
@@ -58,7 +65,7 @@ function checkRateLimit(key: string): { allowed: boolean; remaining: number; res
 function lazyCleanup(): void {
   // Perform lazy cleanup of expired entries (limited to avoid performance impact)
   const now = Date.now();
-  const entries = Array.from(rateLimitStore.entries());
+  const entries = [...rateLimitStore.entries()];
   let cleaned = 0;
   const maxCleanup = 10; // Clean max 10 entries per request to avoid performance impact
 
@@ -75,34 +82,34 @@ export const onRequest: PagesFunction = async (context) => {
   // Lazy cleanup of expired rate limit entries
   lazyCleanup();
   // Skip rate limiting for OPTIONS requests
-  if (context.request.method === "OPTIONS") {
+  if (context.request.method === 'OPTIONS') {
     return context.next();
   }
 
   const key = getRateLimitKey(context.request);
-  const { allowed, remaining, resetTime } = checkRateLimit(key);
+  const {allowed, remaining, resetTime} = checkRateLimit(key);
 
   // Add rate limit headers to response
   const rateLimitHeaders = {
-    "X-RateLimit-Limit": String(RATE_LIMIT_CONFIG.maxRequests),
-    "X-RateLimit-Remaining": String(remaining),
-    "X-RateLimit-Reset": String(Math.floor(resetTime / 1000)),
+    'X-RateLimit-Limit': String(RATE_LIMIT_CONFIG.maxRequests),
+    'X-RateLimit-Remaining': String(remaining),
+    'X-RateLimit-Reset': String(Math.floor(resetTime / 1000)),
   };
 
   if (!allowed) {
     const retryAfter = Math.ceil((resetTime - Date.now()) / 1000);
     return new Response(
       JSON.stringify({
-        error: "Too many requests. Please try again later.",
+        error: 'Too many requests. Please try again later.',
       }),
       {
         status: 429,
         headers: {
-          "Content-Type": "application/json",
-          "Retry-After": String(retryAfter),
+          'Content-Type': 'application/json',
+          'Retry-After': String(retryAfter),
           ...rateLimitHeaders,
         },
-      }
+      },
     );
   }
 

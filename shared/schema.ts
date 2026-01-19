@@ -1,39 +1,39 @@
-import { type } from "arktype";
+import {type} from 'arktype';
 
 export const insertUserSchema = type({
-  username: "string",
-  "isAdmin?": "boolean",
+  username: 'string',
+  'isAdmin?': 'boolean',
 });
 
 export const userSchema = type({
-  id: "number",
-  username: "string",
-  "isAdmin?": "boolean",
+  id: 'number',
+  username: 'string',
+  'isAdmin?': 'boolean',
 });
 
 export const insertLeadSchema = type({
-  businessName: "string",
-  industry: "string",
-  ownerName: "string",
-  phone: "string",
-  email: "string.email",
-  package: "string",
-  "agentName?": "string",
-  "status?": "string",
-  "notes?": "string",
+  businessName: 'string',
+  industry: 'string',
+  ownerName: 'string',
+  phone: 'string',
+  email: 'string.email',
+  package: 'string',
+  'agentName?': 'string',
+  'status?': 'string',
+  'notes?': 'string',
 });
 
 export const leadSchema = type({
-  id: "number",
-  businessName: "string",
-  industry: "string",
-  ownerName: "string",
-  phone: "string",
-  email: "string.email",
-  package: "string",
-  "agentName?": "string",
-  "status?": "string",
-  "notes?": "string",
+  id: 'number',
+  businessName: 'string',
+  industry: 'string',
+  ownerName: 'string',
+  phone: 'string',
+  email: 'string.email',
+  package: 'string',
+  'agentName?': 'string',
+  'status?': 'string',
+  'notes?': 'string',
 });
 
 export type InsertUser = typeof insertUserSchema.infer;
