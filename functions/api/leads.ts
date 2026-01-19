@@ -10,6 +10,7 @@ interface LeadInput {
   phone: string;
   email: string;
   package: string;
+  agentName?: string;
   status?: string;
   notes?: string;
 }
@@ -54,6 +55,17 @@ function validateLead(body: unknown): { valid: true; data: LeadInput } | { valid
     return { valid: false, error: "Invalid package selection" };
   }
 
+  // Validate agentName (optional) - alphanumeric, spaces, hyphens, apostrophes only
+  if (b.agentName && typeof b.agentName === "string") {
+    const agentNameStr = b.agentName as string;
+    if (agentNameStr.length > 50) {
+      return { valid: false, error: "Agent name must be 50 characters or less" };
+    }
+    if (!/^[a-zA-Z0-9\s\-']+$/.test(agentNameStr)) {
+      return { valid: false, error: "Agent name can only contain letters, numbers, spaces, hyphens, and apostrophes" };
+    }
+  }
+
   // Sanitize all string inputs
   return {
     valid: true,
@@ -64,6 +76,7 @@ function validateLead(body: unknown): { valid: true; data: LeadInput } | { valid
       phone: sanitizeString(b.phone as string, 30),
       email: sanitizeString(b.email as string, 254), // RFC 5321 max email length
       package: b.package as string,
+      agentName: b.agentName ? sanitizeString(b.agentName as string, 50) : undefined,
       status: (b.status as string) || "pending",
       notes: b.notes ? sanitizeString(b.notes as string, 1000) : undefined,
     },

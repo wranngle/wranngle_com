@@ -18,6 +18,7 @@ export const insertLeadSchema = type({
   phone: "string",
   email: "string.email",
   package: "string",
+  "agentName?": "string",
   "status?": "string",
   "notes?": "string",
 });
@@ -30,6 +31,7 @@ export const leadSchema = type({
   phone: "string",
   email: "string.email",
   package: "string",
+  "agentName?": "string",
   "status?": "string",
   "notes?": "string",
 });

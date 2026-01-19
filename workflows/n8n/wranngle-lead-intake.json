@@ -69,6 +69,12 @@
               "type": "string"
             },
             {
+              "id": "agentName",
+              "name": "agentName",
+              "value": "={{ $json.body.agentName || '' }}",
+              "type": "string"
+            },
+            {
               "id": "status",
               "name": "status",
               "value": "={{ $json.body.status || 'pending' }}",
@@ -113,6 +119,7 @@
             "phone": "={{ $json.phone }}",
             "email": "={{ $json.email }}",
             "package": "={{ $json.package }}",
+            "agentName": "={{ $json.agentName }}",
             "status": "={{ $json.status }}",
             "notes": "={{ $json.notes }}"
           },
@@ -125,6 +132,7 @@
             {"id": "phone", "displayName": "Phone", "required": false, "type": "string"},
             {"id": "email", "displayName": "Email", "required": false, "type": "string"},
             {"id": "package", "displayName": "Package", "required": false, "type": "string"},
+            {"id": "agentName", "displayName": "Agent Name", "required": false, "type": "string"},
             {"id": "status", "displayName": "Status", "required": false, "type": "string"},
             {"id": "notes", "displayName": "Notes", "required": false, "type": "string"}
           ]
@@ -144,7 +152,7 @@
         "toEmail": "leads@wranngle.com",
         "subject": "New Lead: ={{ $json.businessName }}",
         "emailType": "html",
-        "message": "<h2>New Lead Received</h2>\n<p><strong>Business:</strong> {{ $json.businessName }}</p>\n<p><strong>Industry:</strong> {{ $json.industry }}</p>\n<p><strong>Owner:</strong> {{ $json.ownerName }}</p>\n<p><strong>Phone:</strong> {{ $json.phone }}</p>\n<p><strong>Email:</strong> {{ $json.email }}</p>\n<p><strong>Package:</strong> {{ $json.package }}</p>\n<p><strong>Status:</strong> {{ $json.status }}</p>\n<p><strong>Notes:</strong> {{ $json.notes }}</p>\n<p><strong>Timestamp:</strong> {{ $json.timestamp }}</p>",
+        "message": "<h2>New Lead Received</h2>\n<p><strong>Business:</strong> {{ $json.businessName }}</p>\n<p><strong>Industry:</strong> {{ $json.industry }}</p>\n<p><strong>Owner:</strong> {{ $json.ownerName }}</p>\n<p><strong>Phone:</strong> {{ $json.phone }}</p>\n<p><strong>Email:</strong> {{ $json.email }}</p>\n<p><strong>Package:</strong> {{ $json.package }}</p>\n<p><strong>Agent Name:</strong> {{ $json.agentName }}</p>\n<p><strong>Status:</strong> {{ $json.status }}</p>\n<p><strong>Notes:</strong> {{ $json.notes }}</p>\n<p><strong>Timestamp:</strong> {{ $json.timestamp }}</p>",
         "options": {}
       },
       "notes": "TODO: Configure email credential (SMTP or SendGrid) and update recipient email address"
