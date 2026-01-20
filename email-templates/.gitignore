@@ -1,0 +1,26 @@
+# Email Template .gitignore
+
+# Generated preview files (regenerate with: bun run email:preview:all)
+preview/*-preview.html
+preview/*-inlined.html
+
+# Keep the preview dashboard and quick links
+!preview/index.html
+!preview/quick-links.html
+
+# Node modules (if any)
+node_modules/
+
+# Build artifacts
+dist/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

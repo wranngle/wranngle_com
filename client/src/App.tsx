@@ -2,6 +2,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
 import {Check, ArrowRight, Menu, X, Moon, Sun, Zap} from 'lucide-react';
+import {Link} from 'wouter';
 import {useForm} from 'react-hook-form';
 import {useMutation} from '@tanstack/react-query';
 import {
@@ -18,6 +19,7 @@ import {Textarea} from '@/components/ui/textarea';
 import {Label} from '@/components/ui/label';
 import {useToast} from '@/hooks/use-toast';
 import {Button} from '@/components/ui/button';
+import FAQ from '@/components/FAQ';
 
 const FONTS_CSS = `@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');`;
 const LOGO_URL = 'https://i.ibb.co/WWFmbjKJ/wranngle-wordmark-4096w.png';
@@ -760,8 +762,24 @@ const WranngleLanding = () => {
           </div>
         </section>
 
-        <footer className="py-12 border-t border-white/10 px-6 text-left text-xs opacity-50 mono-font">
-          © 2026 Wranngle Systems LLC
+        <FAQ isDark={isDark} />
+
+        <footer className="py-12 border-t border-white/10 px-6 text-xs mono-font">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="opacity-50">© 2026 Wranngle Systems LLC</div>
+            <div className="flex gap-6 opacity-70">
+              <Link href="/terms">
+                <a className="hover:text-[var(--s500)] hover:underline transition-colors">
+                  Terms of Service
+                </a>
+              </Link>
+              <Link href="/privacy">
+                <a className="hover:text-[var(--s500)] hover:underline transition-colors">
+                  Privacy Policy
+                </a>
+              </Link>
+            </div>
+          </div>
         </footer>
 
         <elevenlabs-convai agent-id="agent_8001kdgp7qbyf4wvhs540be78vew"></elevenlabs-convai>

@@ -5,7 +5,7 @@ The project is the web application and landing page for **Wranngle Systems**, an
 
 ## Tech Stack
 - **Language:** TypeScript
-- **Runtime:** Node.js (with Bun for scripts/builds)
+- **Runtime:** Bun (local dev), Cloudflare Workers (production)
 - **Frontend:**
   - React
   - Tailwind CSS (Styling)
@@ -16,11 +16,11 @@ The project is the web application and landing page for **Wranngle Systems**, an
   - Wouter (Routing)
   - React Query (Data Fetching)
 - **Backend:**
-  - Express.js
-  - Drizzle ORM (Database Access)
-  - ArkType (Validation via `drizzle-arktype`)
-  - esbuild (Bundler)
-- **Database:** PostgreSQL
+  - Cloudflare Pages Functions (Serverless API)
+  - ArkType (Validation)
+  - n8n (Workflow Automation)
+- **Database:** None yet (planned: PostgreSQL via Drizzle ORM)
+- **Hosting:** Cloudflare Pages (free tier)
 - **Linting:** XO
 
 ## Project Conventions
@@ -29,16 +29,19 @@ The project is the web application and landing page for **Wranngle Systems**, an
 - **Formatting:** Prettier (via XO).
 - **Naming:** CamelCase for variables/functions, PascalCase for components/classes.
 - **File Structure:**
-  - `client/`: Frontend React app.
-  - `server/`: Backend Express app.
-  - `shared/`: Shared types and schema (Drizzle/ArkType).
+  - `client/`: Frontend React app (SPA built with Vite).
+  - `functions/`: Cloudflare Pages Functions (serverless API endpoints).
+  - `shared/`: Shared types and validation schemas (ArkType).
   - `script/`: Build and utility scripts.
+  - `workflows/`: n8n workflow definitions.
+  - `openspec/`: Project specifications and change proposals.
 
 ### Architecture Patterns
-- **Monorepo-lite:** Single repository containing both client and server, sharing code via the `shared` directory.
-- **Shared Schema:** Database schema and validation types are defined in `shared/schema.ts` to ensure consistency between frontend and backend.
-- **API First:** Backend serves API routes under `/api`, and serves the static frontend for all other routes in production.
-- **UI Components:** Reusable components located in `client/src/components/ui`, largely based on Shadcn/Radix patterns.
+- **Static Site + Serverless API:** React SPA built with Vite, served via Cloudflare Pages CDN. API routes (`/api/*`) handled by Cloudflare Pages Functions.
+- **Shared Schema:** Validation schemas defined in `shared/schema.ts` using ArkType for type safety.
+- **Workflow Automation:** Lead processing and notifications handled by n8n workflows.
+- **UI Components:** Reusable components located in `client/src/components/ui`, based on Shadcn/Radix patterns.
+- **Path Aliases:** `@` → `client/src`, `@shared` → `shared` (configured in vite.config.ts and tsconfig.json).
 
 ### Testing Strategy
 - **Type Checking:** Strict TypeScript configuration (`tsc`).
@@ -55,9 +58,12 @@ The project is the web application and landing page for **Wranngle Systems**, an
 
 ## Important Constraints
 - **Performance:** The "console" aesthetic should not compromise load times; fonts and assets must be optimized.
-- **Type Safety:** Changes to the database schema must be reflected in `shared/schema.ts` to maintain full-stack type safety.
-- **Environment:** Requires a PostgreSQL connection (`DATABASE_URL`) for full functionality.
+- **Type Safety:** All API inputs/outputs must be validated using ArkType schemas in `shared/schema.ts`.
+- **Environment:** Requires `N8N_WEBHOOK_URL` environment variable for lead processing. Optional: `ALLOWED_ORIGIN` for CORS configuration.
+- **Serverless:** All backend logic must be compatible with Cloudflare Workers runtime (no Node.js-specific APIs).
 
 ## External Dependencies
 - **ElevenLabs:** Used for the conversational AI agent (Agent ID: `agent_8001kdgp7qbyf4wvhs540be78vew`).
+- **n8n:** Self-hosted workflow automation platform at `n8n.wranngle.com` for lead processing and notifications.
+- **Cloudflare Pages:** Hosting platform for static site and serverless functions.
 - **Google Fonts:** Bricolage Grotesque and JetBrains Mono.

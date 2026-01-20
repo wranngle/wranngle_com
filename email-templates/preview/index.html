@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wranngle Email Template Preview</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 24px 32px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #12111a;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      font-family: 'Courier New', monospace;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border-left: 4px solid #ff5f00;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #12111a;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #ff5f00;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: 2px solid #12111a;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+      cursor: pointer;
+      background: white;
+      color: #12111a;
+    }
+
+    .btn:hover {
+      background: #12111a;
+      color: white;
+    }
+
+    .btn-primary {
+      background: #ff5f00;
+      border-color: #ff5f00;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #e55500;
+      border-color: #e55500;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+      position: sticky;
+      top: 0;
+      background: #12111a;
+      color: white;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 12px 12px 0 0;
+      z-index: 10;
+    }
+
+    .modal-header h3 {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-actions {
+      position: sticky;
+      bottom: 0;
+      background: #f9fafb;
+      padding: 16px 24px;
+      border-radius: 0 0 12px 12px;
+      display: flex;
+      gap: 12px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .preview-frame {
+      width: 100%;
+      min-height: 600px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: white;
+    }
+
+    .info-box {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid #cf3c69;
+    }
+
+    .info-box h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #12111a;
+      margin-bottom: 12px;
+    }
+
+    .info-box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .info-box li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .info-box li:last-child {
+      border-bottom: none;
+    }
+
+    .info-box code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #ff5f00;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-content {
+        max-width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+      }
+
+      .modal-header,
+      .modal-actions {
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📧 Wranngle Email Template System</h1>
+      <p class="subtitle">[ PRODUCTION-READY TRANSACTIONAL EMAILS ]</p>
+    </header>
+
+    <div class="grid">
+      <!-- Welcome Email -->
+      <div class="card" onclick="previewTemplate('welcome')">
+        <div class="badge">Onboarding</div>
+        <h2>Welcome Email</h2>
+        <p>Sent when a new customer signs up. Includes agent status, package info, and next steps.</p>
+        <div class="buttons">
+          <button class="btn btn-primary" onclick="event.stopPropagation(); previewTemplate('welcome')">Preview</button>
+          <button class="btn" onclick="event.stopPropagation(); downloadTemplate('welcome')">Download HTML</button>
+        </div>
+      </div>
+
+      <!-- Invoice/Receipt -->
+      <div class="card" onclick="previewTemplate('invoice-receipt')">
+        <div class="badge">Billing</div>
+        <h2>Invoice / Receipt</h2>
+        <p>Professional receipt with line items, tax calculation, and payment confirmation.</p>
+        <div class="buttons">
+          <button class="btn btn-primary" onclick="event.stopPropagation(); previewTemplate('invoice-receipt')">Preview</button>
+          <button class="btn" onclick="event.stopPropagation(); downloadTemplate('invoice-receipt')">Download HTML</button>
+        </div>
+      </div>
+
+      <!-- Notification -->
+      <div class="card" onclick="previewTemplate('notification')">
+        <div class="badge">Alerts</div>
+        <h2>Notification</h2>
+        <p>Real-time alerts with metrics, console-style event logs, and action buttons.</p>
+        <div class="buttons">
+          <button class="btn btn-primary" onclick="event.stopPropagation(); previewTemplate('notification')">Preview</button>
+          <button class="btn" onclick="event.stopPropagation(); downloadTemplate('notification')">Download HTML</button>
+        </div>
+      </div>
+
+      <!-- Password Reset -->
+      <div class="card" onclick="previewTemplate('password-reset')">
+        <div class="badge">Security</div>
+        <h2>Password Reset</h2>
+        <p>Secure password reset with security info, expiry warning, and backup link.</p>
+        <div class="buttons">
+          <button class="btn btn-primary" onclick="event.stopPropagation(); previewTemplate('password-reset')">Preview</button>
+          <button class="btn" onclick="event.stopPropagation(); downloadTemplate('password-reset')">Download HTML</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Box -->
+    <div class="info-box">
+      <h3>🛠️ Development Commands</h3>
+      <ul>
+        <li><code>bun run build:email &lt;template-name&gt;</code> - Build a specific template</li>
+        <li><code>bun run build:email &lt;template-name&gt; --inline</code> - Build with inlined CSS</li>
+        <li><code>bun run preview:emails</code> - Generate all preview files</li>
+        <li><code>bun run test:emails</code> - Test templates in multiple clients</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Preview Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title">Email Preview</h3>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="preview-frame" class="preview-frame" sandbox="allow-same-origin"></iframe>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="downloadCurrentTemplate()">Download HTML</button>
+        <button class="btn" onclick="copyToClipboard()">Copy HTML</button>
+        <button class="btn" onclick="openInNewTab()">Open in New Tab</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentTemplate = '';
+    const templatesData = {
+      'welcome': '../templates/welcome.html',
+      'invoice-receipt': '../templates/invoice-receipt.html',
+      'notification': '../templates/notification.html',
+      'password-reset': '../templates/password-reset.html',
+    };
+
+    async function previewTemplate(templateName) {
+      currentTemplate = templateName;
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modal-title');
+      const frame = document.getElementById('preview-frame');
+
+      modalTitle.textContent = `${templateName.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} - Preview`;
+
+      // For demo purposes, show a message about building the template
+      // In production, this would fetch the built template
+      const previewPath = `${templateName}-preview.html`;
+
+      // Try to load the preview if it exists, otherwise show instructions
+      try {
+        const response = await fetch(previewPath);
+        if (response.ok) {
+          const html = await response.text();
+          frame.srcdoc = html;
+        } else {
+          frame.srcdoc = `
+            <div style="padding: 40px; text-align: center; font-family: Arial, sans-serif;">
+              <h2 style="color: #ff5f00;">⚡ Build Required</h2>
+              <p style="color: #6b7280; margin: 20px 0;">Run this command to generate the preview:</p>
+              <code style="background: #f3f4f6; padding: 12px 24px; border-radius: 8px; display: inline-block; font-family: 'Courier New', monospace;">
+                bun run build:email ${templateName}
+              </code>
+              <p style="color: #6b7280; margin-top: 20px; font-size: 14px;">
+                The preview will be generated at:<br>
+                <strong>email-templates/preview/${templateName}-preview.html</strong>
+              </p>
+            </div>
+          `;
+        }
+      } catch (error) {
+        frame.srcdoc = `
+          <div style="padding: 40px; text-align: center; font-family: Arial, sans-serif;">
+            <h2 style="color: #ff5f00;">⚡ Build Required</h2>
+            <p style="color: #6b7280; margin: 20px 0;">Run this command to generate the preview:</p>
+            <code style="background: #f3f4f6; padding: 12px 24px; border-radius: 8px; display: inline-block; font-family: 'Courier New', monospace;">
+              bun run build:email ${templateName}
+            </code>
+          </div>
+        `;
+      }
+
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('active');
+    }
+
+    function downloadTemplate(templateName) {
+      const filename = `${templateName}.html`;
+      const link = document.createElement('a');
+      link.href = `${templateName}-preview.html`;
+      link.download = filename;
+      link.click();
+    }
+
+    function downloadCurrentTemplate() {
+      if (currentTemplate) {
+        downloadTemplate(currentTemplate);
+      }
+    }
+
+    async function copyToClipboard() {
+      const frame = document.getElementById('preview-frame');
+      const html = frame.srcdoc;
+
+      try {
+        await navigator.clipboard.writeText(html);
+        alert('✓ HTML copied to clipboard!');
+      } catch (error) {
+        console.error('Failed to copy:', error);
+        alert('Failed to copy HTML');
+      }
+    }
+
+    function openInNewTab() {
+      if (currentTemplate) {
+        window.open(`${currentTemplate}-preview.html`, '_blank');
+      }
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>

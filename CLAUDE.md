@@ -26,6 +26,11 @@ bun run preview
 
 # Deploy to Cloudflare Pages
 bun run deploy
+
+# Email Templates
+bun run email:build <template-name>      # Build a specific template
+bun run email:preview:all                # Generate all preview files
+bun run email:test                       # Run validation tests
 ```
 
 ## Architecture
@@ -45,6 +50,11 @@ shared/          → Shared TypeScript types
 └── schema.ts    → ArkType schemas (validation + types)
 script/          → Build scripts
 └── build.ts     → Vite production build
+email-templates/ → Production-ready email system
+├── master/      → Master template (header/footer/branding)
+├── templates/   → Individual email templates
+├── build/       → Template builder and test suite
+└── preview/     → Visual preview dashboard
 ```
 
 **Key architectural patterns:**
@@ -84,6 +94,7 @@ Connect GitHub repo to Cloudflare Pages in the dashboard:
 - **No database**: Lead data is forwarded to n8n webhook for processing
 - **ElevenLabs widget**: The page embeds `<elevenlabs-convai>` for the AI voice agent demo
 - **Environment variables**: Set `N8N_WEBHOOK_URL` in Cloudflare Dashboard
+- **Email Templates**: See `email-templates/README.md` for complete documentation. Preview dashboard at `email-templates/preview/index.html`
 
 <!-- OPENSPEC:START -->
 ## OpenSpec Instructions
