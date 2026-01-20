@@ -36,3 +36,12 @@ _archive/old/*.log
 server/public
 vite.config.ts.*
 *.tar.gz
+
+# Email Templates
+email-templates/preview/*-preview.html
+email-templates/preview/*-inlined.html
+!email-templates/preview/index.html
+!email-templates/preview/quick-links.html
+
+# Documentation Archives
+docs/archive/

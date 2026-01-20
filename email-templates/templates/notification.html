@@ -1,0 +1,143 @@
+<!-- NOTIFICATION EMAIL - Uses master-template.html -->
+<!-- Replace {{CONTENT_BLOCK}} with this content -->
+
+<!-- NOTIFICATION HEADER -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td width="48" valign="top">
+            <!-- Icon/Status Indicator -->
+            <div style="width: 40px; height: 40px; background-color: #ff5f00; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+              <span style="color: #ffffff; font-size: 24px; line-height: 40px; text-align: center;">🔔</span>
+            </div>
+          </td>
+          <td valign="middle" style="padding-left: 16px;">
+            <h1 style="margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 24px; font-weight: 700; color: #12111a;">
+              {{NOTIFICATION_TITLE}}
+            </h1>
+            <p style="margin: 4px 0 0 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #6b7280;">
+              {{NOTIFICATION_TIMESTAMP}}
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- NOTIFICATION CONTENT -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td>
+      <p style="margin: 0 0 16px 0; font-family: 'Inter', Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #12111a;">
+        {{NOTIFICATION_MESSAGE}}
+      </p>
+    </td>
+  </tr>
+</table>
+
+<!-- NOTIFICATION DETAILS (Console Style) -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 20px; background-color: #1a1a1e; border-radius: 8px; border-left: 4px solid #ff5f00;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td>
+            <p style="margin: 0 0 8px 0; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #10b981;">
+              <span style="color: #ff5f00;">[EVENT]</span> {{EVENT_TYPE}}
+            </p>
+            <p style="margin: 0 0 8px 0; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #f0f0f0;">
+              <span style="color: #ff5f00;">[DATA]</span> {{EVENT_DATA}}
+            </p>
+            <p style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #f0f0f0;">
+              <span style="color: #10b981;">[STATUS]</span> {{EVENT_STATUS}}
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- KEY METRICS (Optional) -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <!-- Metric 1 -->
+    <td width="33%" style="padding: 16px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; text-align: center;">
+      <p style="margin: 0 0 4px 0; font-family: 'Courier New', Courier, monospace; font-size: 24px; font-weight: 700; color: #ff5f00;">
+        {{METRIC_1_VALUE}}
+      </p>
+      <p style="margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 12px; color: #6b7280;">
+        {{METRIC_1_LABEL}}
+      </p>
+    </td>
+
+    <!-- Spacer -->
+    <td width="2%"></td>
+
+    <!-- Metric 2 -->
+    <td width="33%" style="padding: 16px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; text-align: center;">
+      <p style="margin: 0 0 4px 0; font-family: 'Courier New', Courier, monospace; font-size: 24px; font-weight: 700; color: #cf3c69;">
+        {{METRIC_2_VALUE}}
+      </p>
+      <p style="margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 12px; color: #6b7280;">
+        {{METRIC_2_LABEL}}
+      </p>
+    </td>
+
+    <!-- Spacer -->
+    <td width="2%"></td>
+
+    <!-- Metric 3 -->
+    <td width="33%" style="padding: 16px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; text-align: center;">
+      <p style="margin: 0 0 4px 0; font-family: 'Courier New', Courier, monospace; font-size: 24px; font-weight: 700; color: #10b981;">
+        {{METRIC_3_VALUE}}
+      </p>
+      <p style="margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 12px; color: #6b7280;">
+        {{METRIC_3_LABEL}}
+      </p>
+    </td>
+  </tr>
+</table>
+
+<!-- ACTION REQUIRED (Conditional) -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 16px; background-color: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px;">
+      <p style="margin: 0 0 8px 0; font-family: 'Inter', Arial, sans-serif; font-size: 14px; font-weight: 700; color: #92400e;">
+        ⚠️ Action Required
+      </p>
+      <p style="margin: 0 0 16px 0; font-family: 'Inter', Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #92400e;">
+        {{ACTION_MESSAGE}}
+      </p>
+      <a href="{{ACTION_URL}}" style="display: inline-block; padding: 10px 20px; background-color: #f59e0b; color: #ffffff; font-family: 'Inter', Arial, sans-serif; font-size: 13px; font-weight: 700; text-decoration: none; text-transform: uppercase; border-radius: 6px; letter-spacing: 0.5px;">
+        Take Action →
+      </a>
+    </td>
+  </tr>
+</table>
+
+<!-- CTA BUTTON -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td align="center">
+      <a href="{{CTA_URL}}" class="btn-primary" style="background-color: #ff5f00; border: 2px solid #ff5f00; border-radius: 8px; color: #ffffff; display: inline-block; font-family: 'Inter', Arial, sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; line-height: 1.4; padding: 14px 32px; text-align: center; text-decoration: none; text-transform: uppercase;">
+        {{CTA_TEXT}}
+      </a>
+    </td>
+  </tr>
+</table>
+
+<!-- NOTIFICATION SETTINGS -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+  <tr>
+    <td style="padding: 12px; background-color: #f9fafb; border-radius: 4px; text-align: center;">
+      <p style="margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 12px; color: #6b7280;">
+        You're receiving this because of your notification preferences.<br>
+        <a href="{{SETTINGS_URL}}" style="color: #ff5f00; text-decoration: underline;">Manage notification settings</a>
+      </p>
+    </td>
+  </tr>
+</table>

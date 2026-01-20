@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="format-detection" content="telephone=no,address=no,email=no,date=no">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+
+  <title>{{EMAIL_TITLE}}</title>
+
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+
+  <style>
+    /* RESET STYLES */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    body { margin: 0; padding: 0; width: 100%; height: 100%; }
+
+    /* CLIENT-SPECIFIC STYLES */
+    #outlook a { padding: 0; }
+    .ReadMsgBody, .ExternalClass { width: 100%; }
+    .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+
+    /* WRANNGLE BRAND COLORS */
+    :root {
+      --wranngle-primary: #ff5f00;
+      --wranngle-secondary: #cf3c69;
+      --wranngle-dark: #12111a;
+      --wranngle-light: #fcfaf5;
+      --wranngle-gray: #6b7280;
+      --wranngle-border: #e5e7eb;
+    }
+
+    /* DARK MODE SUPPORT */
+    @media (prefers-color-scheme: dark) {
+      .dark-mode-bg { background-color: #12111a !important; }
+      .dark-mode-text { color: #fcfaf5 !important; }
+      .dark-mode-border { border-color: rgba(255, 255, 255, 0.1) !important; }
+    }
+
+    /* RESPONSIVE STYLES */
+    @media only screen and (max-width: 600px) {
+      .container { width: 100% !important; max-width: 100% !important; }
+      .mobile-padding { padding-left: 16px !important; padding-right: 16px !important; }
+      .mobile-full-width { width: 100% !important; display: block !important; }
+      .mobile-hide { display: none !important; }
+      .mobile-text-center { text-align: center !important; }
+      .mobile-font-size-16 { font-size: 16px !important; }
+      .mobile-font-size-14 { font-size: 14px !important; }
+    }
+
+    /* FONT IMPORTS - Web-safe fallbacks for maximum compatibility */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    /* BASE TYPOGRAPHY */
+    body, .body-text {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #12111a;
+    }
+
+    .brand-font {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-weight: 700;
+    }
+
+    .mono-font {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 14px;
+    }
+
+    /* UTILITY CLASSES */
+    .no-decoration { text-decoration: none !important; }
+    .bold { font-weight: 700 !important; }
+    .text-center { text-align: center !important; }
+    .text-left { text-align: left !important; }
+    .text-right { text-align: right !important; }
+
+    /* BUTTON STYLES */
+    .btn-primary {
+      background-color: #ff5f00 !important;
+      border: 2px solid #ff5f00 !important;
+      border-radius: 8px !important;
+      color: #ffffff !important;
+      display: inline-block !important;
+      font-family: 'Inter', Arial, sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.5px !important;
+      line-height: 1.4 !important;
+      padding: 14px 32px !important;
+      text-align: center !important;
+      text-decoration: none !important;
+      text-transform: uppercase !important;
+      -webkit-text-size-adjust: none !important;
+    }
+
+    .btn-secondary {
+      background-color: transparent !important;
+      border: 2px solid #12111a !important;
+      border-radius: 8px !important;
+      color: #12111a !important;
+      display: inline-block !important;
+      font-family: 'Inter', Arial, sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.5px !important;
+      line-height: 1.4 !important;
+      padding: 14px 32px !important;
+      text-align: center !important;
+      text-decoration: none !important;
+      text-transform: uppercase !important;
+      -webkit-text-size-adjust: none !important;
+    }
+
+    /* WRANNGLE ACCENT BORDER */
+    .wranngle-border-left {
+      border-left: 4px solid #ff5f00 !important;
+    }
+
+    /* NOISE TEXTURE - Use background pattern for console aesthetic */
+    .noise-bg {
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNyIgbnVtT2N0YXZlcz0iNCIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZSkiIG9wYWNpdHk9IjAuMDUiLz48L3N2Zz4=');
+    }
+  </style>
+</head>
+
+<body style="margin: 0; padding: 0; width: 100%; background-color: #f3f4f6;">
+
+  <!-- PREHEADER TEXT - Hidden but appears in inbox preview -->
+  <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">
+    {{PREHEADER_TEXT}}
+  </div>
+
+  <!-- EMAIL WRAPPER - Ensures proper rendering -->
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f3f4f6; padding: 20px 0;">
+    <tr>
+      <td align="center" valign="top">
+
+        <!-- MAIN CONTAINER - 600px max width -->
+        <table role="presentation" class="container" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width: 600px; width: 100%; background-color: #ffffff; margin: 0 auto;">
+
+          <!-- HEADER SECTION -->
+          <tr>
+            <td align="center" style="padding: 32px 24px; background-color: #12111a;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td align="center">
+                    <!-- WRANNGLE LOGO -->
+                    <a href="https://wranngle.com" style="text-decoration: none;">
+                      <img src="https://i.ibb.co/WWFmbjKJ/wranngle-wordmark-4096w.png" alt="Wranngle" width="180" height="auto" style="display: block; max-width: 180px; height: auto; border: 0;" />
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CONTENT SECTION -->
+          <tr>
+            <td style="padding: 0;">
+
+              <!-- LEFT ACCENT BORDER WRAPPER -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td class="wranngle-border-left" style="padding: 40px 24px; border-left: 4px solid #ff5f00;">
+
+                    {{CONTENT_BLOCK}}
+
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- DIVIDER -->
+          <tr>
+            <td style="padding: 0 24px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td style="border-top: 1px solid #e5e7eb; padding: 0;"></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- FOOTER SECTION -->
+          <tr>
+            <td style="padding: 32px 24px; background-color: #f9fafb;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+
+                <!-- FOOTER TEXT -->
+                <tr>
+                  <td align="center" style="padding-bottom: 16px;">
+                    <p style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; line-height: 1.5; color: #6b7280;">
+                      <strong style="color: #12111a;">WRANNGLE SYSTEMS LLC</strong><br>
+                      Industrial-Grade AI Automation
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- SOCIAL LINKS (optional - customize as needed) -->
+                <tr>
+                  <td align="center" style="padding-bottom: 16px;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;">
+                      <tr>
+                        <td style="padding: 0 8px;">
+                          <a href="https://wranngle.com" style="color: #ff5f00; text-decoration: none; font-size: 12px; font-weight: 600;">Website</a>
+                        </td>
+                        <td style="padding: 0 8px; color: #e5e7eb;">|</td>
+                        <td style="padding: 0 8px;">
+                          <a href="https://wranngle.com/terms" style="color: #6b7280; text-decoration: none; font-size: 12px;">Terms</a>
+                        </td>
+                        <td style="padding: 0 8px; color: #e5e7eb;">|</td>
+                        <td style="padding: 0 8px;">
+                          <a href="https://wranngle.com/privacy" style="color: #6b7280; text-decoration: none; font-size: 12px;">Privacy</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- UNSUBSCRIBE LINK -->
+                <tr>
+                  <td align="center" style="padding-bottom: 8px;">
+                    <p style="margin: 0; font-size: 11px; line-height: 1.5; color: #9ca3af;">
+                      <a href="{{UNSUBSCRIBE_URL}}" style="color: #6b7280; text-decoration: underline;">Unsubscribe</a> from these emails
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- COMPANY ADDRESS -->
+                <tr>
+                  <td align="center">
+                    <p style="margin: 0; font-size: 11px; line-height: 1.5; color: #9ca3af;">
+                      © 2026 Wranngle Systems LLC. All rights reserved.<br>
+                      {{COMPANY_ADDRESS}}
+                    </p>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+  <!-- TRACKING PIXEL (optional) -->
+  {{TRACKING_PIXEL}}
+
+</body>
+</html>
