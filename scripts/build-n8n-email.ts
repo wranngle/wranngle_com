@@ -88,8 +88,8 @@ const workflow = {
         fromEmail: "noreply@wranngle.com",
         toEmail: "sales@wranngle.com",
         subject: "=New Lead: {{ $json.businessName }}",
-        emailType: "html",
-        message: fullHtml,
+        emailFormat: "html",
+        html: fullHtml,
         options: {}
       },
       credentials: {
