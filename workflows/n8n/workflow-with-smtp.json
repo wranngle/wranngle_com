@@ -1,0 +1,71 @@
+{
+  "name": "Wranngle Lead Intake",
+  "nodes": [
+    {
+      "id": "webhook-1",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "wranngle-intake-form",
+      "parameters": {
+        "path": "wranngle-intake-form",
+        "httpMethod": "POST",
+        "responseMode": "onReceived",
+        "responseData": "{ \"success\": true, \"message\": \"Lead received\" }",
+        "options": {}
+      }
+    },
+    {
+      "id": "set-1",
+      "name": "Format Lead Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [450, 300],
+      "parameters": {
+        "mode": "manual",
+        "assignments": {
+          "assignments": [
+            {"id": "timestamp", "name": "timestamp", "value": "={{ $now.format(\"yyyy-MM-dd HH:mm:ss\") }} UTC", "type": "string"},
+            {"id": "businessName", "name": "businessName", "value": "={{ $json.businessName }}", "type": "string"},
+            {"id": "industry", "name": "industry", "value": "={{ $json.industry }}", "type": "string"},
+            {"id": "ownerName", "name": "ownerName", "value": "={{ $json.ownerName }}", "type": "string"},
+            {"id": "phone", "name": "phone", "value": "={{ $json.phone }}", "type": "string"},
+            {"id": "email", "name": "email", "value": "={{ $json.email }}", "type": "string"},
+            {"id": "package", "name": "package", "value": "={{ $json.package }}", "type": "string"},
+            {"id": "agentName", "name": "agentName", "value": "={{ $json.agentName || \"Not specified\" }}", "type": "string"},
+            {"id": "status", "name": "status", "value": "={{ $json.status || \"PENDING\" }}", "type": "string"},
+            {"id": "notes", "name": "notes", "value": "={{ $json.notes || \"None provided\" }}", "type": "string"}
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "email-1",
+      "name": "Send Email Notification",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [650, 300],
+      "parameters": {
+        "fromEmail": "noreply@wranngle.com",
+        "toEmail": "sales@wranngle.com",
+        "subject": "=New Lead: {{ $json.businessName }}",
+        "emailType": "html",
+        "message": "<!DOCTYPE html><html><body style=\"margin:0;padding:20px;background:#f3f4f6;font-family:Arial,sans-serif\"><div style=\"max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden\"><div style=\"padding:24px;background:#12111a;text-align:center\"><img src=\"https://i.ibb.co/WWFmbjKJ/wranngle-wordmark-4096w.png\" alt=\"Wranngle\" width=\"150\"/></div><div style=\"padding:24px;border-left:4px solid #ff5f00\"><h1 style=\"color:#12111a;margin:0 0 20px\">New Lead Received</h1><div style=\"background:#f9fafb;padding:16px;border-radius:4px;margin-bottom:16px\"><p style=\"margin:0 0 4px;color:#6b7280;font-size:12px\">BUSINESS</p><p style=\"margin:0;font-size:18px;font-weight:bold\">{{ $json.businessName }}</p><p style=\"margin:12px 0 4px;color:#6b7280;font-size:12px\">INDUSTRY</p><p style=\"margin:0\">{{ $json.industry }}</p><p style=\"margin:12px 0 4px;color:#6b7280;font-size:12px\">CONTACT</p><p style=\"margin:0\">{{ $json.ownerName }}</p></div><div style=\"background:#f0f9ff;padding:16px;border-radius:4px;margin-bottom:16px\"><p style=\"margin:0 0 4px;color:#6b7280;font-size:12px\">EMAIL</p><p style=\"margin:0\"><a href=\"mailto:{{ $json.email }}\" style=\"color:#0ea5e9\">{{ $json.email }}</a></p><p style=\"margin:12px 0 4px;color:#6b7280;font-size:12px\">PHONE</p><p style=\"margin:0\"><a href=\"tel:{{ $json.phone }}\" style=\"color:#0ea5e9\">{{ $json.phone }}</a></p></div><div style=\"background:#fff7ed;padding:16px;border-radius:4px;margin-bottom:16px\"><p style=\"margin:0 0 4px;color:#6b7280;font-size:12px\">PACKAGE</p><p style=\"margin:0\"><span style=\"background:#ff5f00;color:#fff;padding:4px 12px;border-radius:4px\">{{ $json.package }}</span></p><p style=\"margin:12px 0 4px;color:#6b7280;font-size:12px\">AGENT NAME</p><p style=\"margin:0\">{{ $json.agentName }}</p></div><div style=\"background:#f9fafb;padding:16px;border-radius:4px;margin-bottom:16px\"><p style=\"margin:0 0 4px;color:#6b7280;font-size:12px\">NOTES</p><p style=\"margin:0\">{{ $json.notes }}</p></div><p style=\"color:#6b7280;font-size:12px\">Received: {{ $json.timestamp }}</p></div></div></body></html>",
+        "options": {}
+      },
+      "credentials": {
+        "smtp": {
+          "id": "QvWyMis1VpdNR7WV",
+          "name": "SMTP2GO Wranngle"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {"main": [[{"node": "Format Lead Data", "type": "main", "index": 0}]]},
+    "Format Lead Data": {"main": [[{"node": "Send Email Notification", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"}
+}

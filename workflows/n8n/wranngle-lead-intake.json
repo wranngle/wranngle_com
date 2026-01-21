@@ -1,5 +1,5 @@
 {
-  "name": "[DEV] Wranngle Lead Intake Workflow",
+  "name": "Wranngle Lead Intake",
   "nodes": [
     {
       "id": "webhook-1",
@@ -29,61 +29,61 @@
             {
               "id": "timestamp",
               "name": "timestamp",
-              "value": "={{ $now.toISO() }}",
+              "value": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }} UTC",
               "type": "string"
             },
             {
               "id": "businessName",
               "name": "businessName",
-              "value": "={{ $json.body.businessName }}",
+              "value": "={{ $json.businessName }}",
               "type": "string"
             },
             {
               "id": "industry",
               "name": "industry",
-              "value": "={{ $json.body.industry }}",
+              "value": "={{ $json.industry }}",
               "type": "string"
             },
             {
               "id": "ownerName",
               "name": "ownerName",
-              "value": "={{ $json.body.ownerName }}",
+              "value": "={{ $json.ownerName }}",
               "type": "string"
             },
             {
               "id": "phone",
               "name": "phone",
-              "value": "={{ $json.body.phone }}",
+              "value": "={{ $json.phone }}",
               "type": "string"
             },
             {
               "id": "email",
               "name": "email",
-              "value": "={{ $json.body.email }}",
+              "value": "={{ $json.email }}",
               "type": "string"
             },
             {
               "id": "package",
               "name": "package",
-              "value": "={{ $json.body.package }}",
+              "value": "={{ $json.package }}",
               "type": "string"
             },
             {
               "id": "agentName",
               "name": "agentName",
-              "value": "={{ $json.body.agentName || '' }}",
+              "value": "={{ $json.agentName || 'Not specified' }}",
               "type": "string"
             },
             {
               "id": "status",
               "name": "status",
-              "value": "={{ $json.body.status || 'pending' }}",
+              "value": "={{ $json.status || 'PENDING' }}",
               "type": "string"
             },
             {
               "id": "notes",
               "name": "notes",
-              "value": "={{ $json.body.notes || '' }}",
+              "value": "={{ $json.notes || 'None provided' }}",
               "type": "string"
             }
           ]
@@ -92,33 +92,26 @@
       }
     },
     {
-      "id": "database-1",
-      "name": "Store in n8n Database",
-      "type": "n8n-nodes-base.executeWorkflowTrigger",
-      "typeVersion": 1,
-      "position": [650, 250],
-      "parameters": {
-        "staticData": {
-          "tableName": "wranngle_leads"
-        }
-      },
-      "notes": "Stores leads in n8n's internal database table 'wranngle_leads'. Access via Database menu in n8n UI."
-    },
-    {
       "id": "email-1",
       "name": "Send Email Notification",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2,
-      "position": [650, 400],
+      "position": [650, 300],
       "parameters": {
         "fromEmail": "noreply@wranngle.com",
         "toEmail": "sales@wranngle.com",
-        "subject": "🔔 New Lead: {{ $json.businessName }}",
+        "subject": "=🔔 New Lead: {{ $json.businessName }}",
         "emailType": "html",
-        "message": "<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;\">\n  <h2 style=\"color: #ff5f00; border-bottom: 3px solid #ff5f00; padding-bottom: 10px;\">🎯 New Lead Received</h2>\n  \n  <div style=\"background: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;\">\n    <h3 style=\"margin-top: 0; color: #333;\">Business Information</h3>\n    <p><strong>Business Name:</strong> {{ $json.businessName }}</p>\n    <p><strong>Industry:</strong> {{ $json.industry }}</p>\n    <p><strong>Owner/Contact:</strong> {{ $json.ownerName }}</p>\n  </div>\n  \n  <div style=\"background: #f0f8ff; padding: 15px; border-radius: 5px; margin: 20px 0;\">\n    <h3 style=\"margin-top: 0; color: #333;\">Contact Details</h3>\n    <p><strong>📧 Email:</strong> <a href=\"mailto:{{ $json.email }}\">{{ $json.email }}</a></p>\n    <p><strong>📞 Phone:</strong> <a href=\"tel:{{ $json.phone }}\">{{ $json.phone }}</a></p>\n  </div>\n  \n  <div style=\"background: #fff5f0; padding: 15px; border-radius: 5px; margin: 20px 0;\">\n    <h3 style=\"margin-top: 0; color: #333;\">Package & Details</h3>\n    <p><strong>Package Selected:</strong> <span style=\"background: #ff5f00; color: white; padding: 3px 10px; border-radius: 3px; text-transform: uppercase;\">{{ $json.package }}</span></p>\n    <p><strong>Agent Name:</strong> {{ $json.agentName || 'Not specified' }}</p>\n    <p><strong>Status:</strong> {{ $json.status }}</p>\n    {{#if $json.notes}}\n    <p><strong>Additional Notes:</strong></p>\n    <p style=\"background: white; padding: 10px; border-left: 3px solid #ff5f00;\">{{ $json.notes }}</p>\n    {{/if}}\n  </div>\n  \n  <div style=\"text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #666; font-size: 12px;\">\n    <p>Received: {{ $json.timestamp }}</p>\n    <p>Wranngle Systems Lead Intake | <a href=\"https://n8n.wranngle.com\">View in n8n</a></p>\n  </div>\n</div>",
+        "message": "<!DOCTYPE html><html lang=\"en\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"x-apple-disable-message-reformatting\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"format-detection\" content=\"telephone=no,address=no,email=no,date=no\"><meta name=\"color-scheme\" content=\"light dark\"><meta name=\"supported-color-schemes\" content=\"light dark\"><title>New Lead: {{ $json.businessName }}</title><!--[if mso]><noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript><![endif]--><style>body,table,td,a{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}table,td{mso-table-lspace:0pt;mso-table-rspace:0pt}img{-ms-interpolation-mode:bicubic;border:0;height:auto;line-height:100%;outline:none;text-decoration:none}body{margin:0;padding:0;width:100%;height:100%}#outlook a{padding:0}.ReadMsgBody,.ExternalClass{width:100%}.ExternalClass,.ExternalClass p,.ExternalClass span,.ExternalClass font,.ExternalClass td,.ExternalClass div{line-height:100%}@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');body,.body-text{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6;color:#12111a}@media only screen and (max-width:600px){.container{width:100%!important;max-width:100%!important}.mobile-padding{padding-left:16px!important;padding-right:16px!important}}</style></head><body style=\"margin:0;padding:0;width:100%;background-color:#f3f4f6\"><div style=\"display:none;max-height:0;overflow:hidden;mso-hide:all\">New lead from {{ $json.businessName }} - {{ $json.industry }}</div><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"background-color:#f3f4f6;padding:20px 0\"><tr><td align=\"center\" valign=\"top\"><table role=\"presentation\" class=\"container\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"600\" style=\"max-width:600px;width:100%;background-color:#ffffff;margin:0 auto\"><tr><td align=\"center\" style=\"padding:32px 24px;background-color:#12111a\"><a href=\"https://wranngle.com\" style=\"text-decoration:none\"><img src=\"https://i.ibb.co/WWFmbjKJ/wranngle-wordmark-4096w.png\" alt=\"Wranngle\" width=\"180\" height=\"auto\" style=\"display:block;max-width:180px;height:auto;border:0\"/></a></td></tr><tr><td style=\"padding:0\"><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"><tr><td style=\"padding:40px 24px;border-left:4px solid #ff5f00\"><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"margin-bottom:32px\"><tr><td align=\"center\" style=\"padding:24px;background:linear-gradient(135deg,#12111a 0%,#2d0914 100%);border-radius:8px\"><h1 style=\"margin:0 0 12px 0;font-family:'Inter',Arial,sans-serif;font-size:28px;font-weight:700;color:#ffffff;line-height:1.2\">New Lead Received</h1><p style=\"margin:0;font-family:'Courier New',Courier,monospace;font-size:14px;color:#ff5f00;letter-spacing:1px\">[ INTAKE FORM SUBMISSION ]</p></td></tr></table><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"margin-bottom:24px\"><tr><td><h2 style=\"margin:0 0 16px 0;font-family:'Inter',Arial,sans-serif;font-size:18px;font-weight:700;color:#12111a;text-transform:uppercase;letter-spacing:0.5px\">Business Information</h2></td></tr></table><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"margin-bottom:24px\"><tr><td style=\"padding:20px;background-color:#f9fafb;border:1px solid #e5e7eb;border-left:4px solid #ff5f00;border-radius:4px\"><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"><tr><td style=\"padding-bottom:12px\"><p style=\"margin:0;font-family:'Courier New',Courier,monospace;font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px\">Business Name</p><p style=\"margin:4px 0 0 0;font-family:'Inter',Arial,sans-serif;font-size:18px;font-weight:700;color:#12111a\">{{ $json.businessName }}</p></td></tr><tr><td style=\"padding-bottom:12px\"><p style=\"margin:0;font-family:'Courier New',Courier,monospace;font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px\">Industry / Trade</p><p style=\"margin:4px 0 0 0;font-family:'Inter',Arial,sans-serif;font-size:16px;color:#12111a\">{{ $json.industry }}</p></td></tr><tr><td><p style=\"margin:0;font-family:'Courier New',Courier,monospace;font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px\">Owner / Contact</p><p style=\"margin:4px 0 0 0;font-family:'Inter',Arial,sans-serif;font-size:16px;color:#12111a\">{{ $json.ownerName }}</p></td></tr></table></td></tr></table><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"margin-bottom:24px\"><tr><td><h2 style=\"margin:0 0 16px 0;font-family:'Inter',Arial,sans-serif;font-size:18px;font-weight:700;color:#12111a;text-transform:uppercase;letter-spacing:0.5px\">Contact Details</h2></td></tr></table><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"margin-bottom:24px\"><tr><td style=\"padding:20px;background-color:#f0f9ff;border:1px solid #bae6fd;border-left:4px solid #0ea5e9;border-radius:4px\"><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"><tr><td style=\"padding-bottom:16px\"><p style=\"margin:0;font-family:'Courier New',Courier,monospace;font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px\">Email Address</p><p style=\"margin:4px 0 0 0;font-family:'Inter',Arial,sans-serif;font-size:16px\"><a href=\"mailto:{{ $json.email }}\" style=\"color:#0ea5e9;text-decoration:none;font-weight:600\">{{ $json.email }}</a></p></td></tr><tr><td><p style=\"margin:0;font-family:'Courier New',Courier,monospace;font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px\">Phone Number</p><p style=\"margin:4px 0 0 0;font-family:'Inter',Arial,sans-serif;font-size:16px\"><a href=\"tel:{{ $json.phone }}\" style=\"color:#0ea5e9;text-decoration:none;font-weight:600\">{{ $json.phone }}</a></p></td></tr></table></td></tr></table><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"margin-bottom:24px\"><tr><td><h2 style=\"margin:0 0 16px 0;font-family:'Inter',Arial,sans-serif;font-size:18px;font-weight:700;color:#12111a;text-transform:uppercase;letter-spacing:0.5px\">Package Selection</h2></td></tr></table><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"margin-bottom:24px\"><tr><td style=\"padding:20px;background-color:#fff7ed;border:1px solid #fed7aa;border-left:4px solid #ff5f00;border-radius:4px\"><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"><tr><td style=\"padding-bottom:12px\"><p style=\"margin:0;font-family:'Courier New',Courier,monospace;font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px\">Package</p><p style=\"margin:8px 0 0 0\"><span style=\"display:inline-block;background-color:#ff5f00;color:#ffffff;font-family:'Inter',Arial,sans-serif;font-size:14px;font-weight:700;padding:6px 16px;border-radius:4px;text-transform:uppercase;letter-spacing:0.5px\">{{ $json.package }}</span></p></td></tr><tr><td><p style=\"margin:0;font-family:'Courier New',Courier,monospace;font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px\">Agent Name</p><p style=\"margin:4px 0 0 0;font-family:'Inter',Arial,sans-serif;font-size:16px;color:#12111a\">{{ $json.agentName }}</p></td></tr></table></td></tr></table><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"margin-bottom:24px\"><tr><td><h2 style=\"margin:0 0 16px 0;font-family:'Inter',Arial,sans-serif;font-size:18px;font-weight:700;color:#12111a;text-transform:uppercase;letter-spacing:0.5px\">Additional Notes</h2></td></tr></table><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"margin-bottom:32px\"><tr><td style=\"padding:20px;background-color:#f9fafb;border:1px solid #e5e7eb;border-left:4px solid #6b7280;border-radius:4px\"><p style=\"margin:0;font-family:'Inter',Arial,sans-serif;font-size:15px;line-height:1.6;color:#374151;white-space:pre-wrap\">{{ $json.notes }}</p></td></tr></table><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"margin-bottom:32px\"><tr><td style=\"padding:16px;background-color:#12111a;border-radius:4px\"><p style=\"margin:0 0 4px 0;font-family:'Courier New',Courier,monospace;font-size:12px;color:#9ca3af\"><span style=\"color:#10b981\">STATUS:</span> {{ $json.status }}</p><p style=\"margin:0;font-family:'Courier New',Courier,monospace;font-size:12px;color:#9ca3af\"><span style=\"color:#ff5f00\">RECEIVED:</span> {{ $json.timestamp }}</p></td></tr></table><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"margin-bottom:24px\"><tr><td align=\"center\"><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right:12px\"><a href=\"mailto:{{ $json.email }}\" style=\"background-color:#ff5f00;border:2px solid #ff5f00;border-radius:8px;color:#ffffff;display:inline-block;font-family:'Inter',Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.5px;line-height:1.4;padding:12px 24px;text-align:center;text-decoration:none;text-transform:uppercase\">Reply to Lead</a></td><td><a href=\"tel:{{ $json.phone }}\" style=\"background-color:transparent;border:2px solid #12111a;border-radius:8px;color:#12111a;display:inline-block;font-family:'Inter',Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.5px;line-height:1.4;padding:12px 24px;text-align:center;text-decoration:none;text-transform:uppercase\">Call Lead</a></td></tr></table></td></tr></table><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"><tr><td style=\"padding:16px;background-color:#fef3c7;border:1px solid #fde68a;border-radius:4px;text-align:center\"><p style=\"margin:0;font-family:'Inter',Arial,sans-serif;font-size:13px;line-height:1.5;color:#92400e\"><strong>Internal:</strong> This lead was captured via the website intake form. Follow up within 24 hours.</p></td></tr></table></td></tr></table></td></tr><tr><td style=\"padding:0 24px\"><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"><tr><td style=\"border-top:1px solid #e5e7eb;padding:0\"></td></tr></table></td></tr><tr><td style=\"padding:32px 24px;background-color:#f9fafb\"><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"><tr><td align=\"center\" style=\"padding-bottom:16px\"><p style=\"margin:0;font-family:'Courier New',Courier,monospace;font-size:12px;line-height:1.5;color:#6b7280\"><strong style=\"color:#12111a\">WRANNGLE SYSTEMS LLC</strong><br>Industrial-Grade AI Automation</p></td></tr><tr><td align=\"center\" style=\"padding-bottom:16px\"><table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin:0 auto\"><tr><td style=\"padding:0 8px\"><a href=\"https://wranngle.com\" style=\"color:#ff5f00;text-decoration:none;font-size:12px;font-weight:600\">Website</a></td><td style=\"padding:0 8px;color:#e5e7eb\">|</td><td style=\"padding:0 8px\"><a href=\"https://wranngle.com/terms\" style=\"color:#6b7280;text-decoration:none;font-size:12px\">Terms</a></td><td style=\"padding:0 8px;color:#e5e7eb\">|</td><td style=\"padding:0 8px\"><a href=\"https://wranngle.com/privacy\" style=\"color:#6b7280;text-decoration:none;font-size:12px\">Privacy</a></td></tr></table></td></tr><tr><td align=\"center\"><p style=\"margin:0;font-size:11px;line-height:1.5;color:#9ca3af\">© 2026 Wranngle Systems LLC. All rights reserved.</p></td></tr></table></td></tr></table></td></tr></table></body></html>",
         "options": {}
       },
-      "notes": "Uses existing email credentials. Update credential in node if needed."
+      "credentials": {
+        "smtp": {
+          "id": "YOUR_EMAIL_CREDENTIAL_ID",
+          "name": "Wranngle Email"
+        }
+      },
+      "notes": "Configure email credentials: In n8n, edit this node and select your SMTP/SendGrid credential from the dropdown."
     }
   ],
   "connections": {
@@ -137,11 +130,6 @@
       "main": [
         [
           {
-            "node": "Store in n8n Database",
-            "type": "main",
-            "index": 0
-          },
-          {
             "node": "Send Email Notification",
             "type": "main",
             "index": 0
@@ -156,7 +144,7 @@
   "pinData": {},
   "tags": [
     {
-      "name": "dev"
+      "name": "production"
     },
     {
       "name": "leads"
