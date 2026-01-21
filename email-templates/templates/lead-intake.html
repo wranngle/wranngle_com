@@ -1,0 +1,196 @@
+<!-- LEAD INTAKE NOTIFICATION - Uses master-template.html -->
+<!-- Sent to sales@wranngle.com when a new lead submits the intake form -->
+
+<!-- NOTIFICATION HERO -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 32px;">
+  <tr>
+    <td align="center" style="padding: 24px; background: linear-gradient(135deg, #12111a 0%, #2d0914 100%); border-radius: 8px;">
+      <h1 style="margin: 0 0 12px 0; font-family: 'Inter', Arial, sans-serif; font-size: 28px; font-weight: 700; color: #ffffff; line-height: 1.2;">
+        New Lead Received
+      </h1>
+      <p style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 14px; color: #ff5f00; letter-spacing: 1px;">
+        [ INTAKE FORM SUBMISSION ]
+      </p>
+    </td>
+  </tr>
+</table>
+
+<!-- BUSINESS INFO SECTION -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td>
+      <h2 style="margin: 0 0 16px 0; font-family: 'Inter', Arial, sans-serif; font-size: 18px; font-weight: 700; color: #12111a; text-transform: uppercase; letter-spacing: 0.5px;">
+        Business Information
+      </h2>
+    </td>
+  </tr>
+</table>
+
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 20px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-left: 4px solid #ff5f00; border-radius: 4px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td style="padding-bottom: 12px;">
+            <p style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Business Name</p>
+            <p style="margin: 4px 0 0 0; font-family: 'Inter', Arial, sans-serif; font-size: 18px; font-weight: 700; color: #12111a;">{{BUSINESS_NAME}}</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: 12px;">
+            <p style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Industry / Trade</p>
+            <p style="margin: 4px 0 0 0; font-family: 'Inter', Arial, sans-serif; font-size: 16px; color: #12111a;">{{INDUSTRY}}</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Owner / Contact</p>
+            <p style="margin: 4px 0 0 0; font-family: 'Inter', Arial, sans-serif; font-size: 16px; color: #12111a;">{{OWNER_NAME}}</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- CONTACT DETAILS SECTION -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td>
+      <h2 style="margin: 0 0 16px 0; font-family: 'Inter', Arial, sans-serif; font-size: 18px; font-weight: 700; color: #12111a; text-transform: uppercase; letter-spacing: 0.5px;">
+        Contact Details
+      </h2>
+    </td>
+  </tr>
+</table>
+
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 20px; background-color: #f0f9ff; border: 1px solid #bae6fd; border-left: 4px solid #0ea5e9; border-radius: 4px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td style="padding-bottom: 16px;">
+            <p style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Email Address</p>
+            <p style="margin: 4px 0 0 0; font-family: 'Inter', Arial, sans-serif; font-size: 16px;">
+              <a href="mailto:{{EMAIL}}" style="color: #0ea5e9; text-decoration: none; font-weight: 600;">{{EMAIL}}</a>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Phone Number</p>
+            <p style="margin: 4px 0 0 0; font-family: 'Inter', Arial, sans-serif; font-size: 16px;">
+              <a href="tel:{{PHONE}}" style="color: #0ea5e9; text-decoration: none; font-weight: 600;">{{PHONE}}</a>
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- PACKAGE & AGENT SECTION -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td>
+      <h2 style="margin: 0 0 16px 0; font-family: 'Inter', Arial, sans-serif; font-size: 18px; font-weight: 700; color: #12111a; text-transform: uppercase; letter-spacing: 0.5px;">
+        Package Selection
+      </h2>
+    </td>
+  </tr>
+</table>
+
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td style="padding: 20px; background-color: #fff7ed; border: 1px solid #fed7aa; border-left: 4px solid #ff5f00; border-radius: 4px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td style="padding-bottom: 12px;">
+            <p style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Package</p>
+            <p style="margin: 8px 0 0 0;">
+              <span style="display: inline-block; background-color: #ff5f00; color: #ffffff; font-family: 'Inter', Arial, sans-serif; font-size: 14px; font-weight: 700; padding: 6px 16px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px;">{{PACKAGE}}</span>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Agent Name (if specified)</p>
+            <p style="margin: 4px 0 0 0; font-family: 'Inter', Arial, sans-serif; font-size: 16px; color: #12111a;">{{AGENT_NAME}}</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- NOTES SECTION (conditional display handled by n8n) -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td>
+      <h2 style="margin: 0 0 16px 0; font-family: 'Inter', Arial, sans-serif; font-size: 18px; font-weight: 700; color: #12111a; text-transform: uppercase; letter-spacing: 0.5px;">
+        Additional Notes
+      </h2>
+    </td>
+  </tr>
+</table>
+
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 32px;">
+  <tr>
+    <td style="padding: 20px; background-color: #f9fafb; border: 1px solid #e5e7eb; border-left: 4px solid #6b7280; border-radius: 4px;">
+      <p style="margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 15px; line-height: 1.6; color: #374151; white-space: pre-wrap;">{{NOTES}}</p>
+    </td>
+  </tr>
+</table>
+
+<!-- TIMESTAMP & STATUS -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 32px;">
+  <tr>
+    <td style="padding: 16px; background-color: #12111a; border-radius: 4px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td>
+            <p style="margin: 0 0 4px 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #9ca3af;">
+              <span style="color: #10b981;">STATUS:</span> {{STATUS}}
+            </p>
+            <p style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #9ca3af;">
+              <span style="color: #ff5f00;">RECEIVED:</span> {{TIMESTAMP}}
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- ACTION BUTTONS -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 24px;">
+  <tr>
+    <td align="center">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td style="padding-right: 12px;">
+            <a href="mailto:{{EMAIL}}" class="btn-primary" style="background-color: #ff5f00; border: 2px solid #ff5f00; border-radius: 8px; color: #ffffff; display: inline-block; font-family: 'Inter', Arial, sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; line-height: 1.4; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase;">
+              Reply to Lead
+            </a>
+          </td>
+          <td>
+            <a href="tel:{{PHONE}}" class="btn-secondary" style="background-color: transparent; border: 2px solid #12111a; border-radius: 8px; color: #12111a; display: inline-block; font-family: 'Inter', Arial, sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; line-height: 1.4; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase;">
+              Call Lead
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<!-- INTERNAL NOTE -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+  <tr>
+    <td style="padding: 16px; background-color: #fef3c7; border: 1px solid #fde68a; border-radius: 4px; text-align: center;">
+      <p style="margin: 0; font-family: 'Inter', Arial, sans-serif; font-size: 13px; line-height: 1.5; color: #92400e;">
+        <strong>Internal:</strong> This lead was captured via the website intake form. Follow up within 24 hours.
+      </p>
+    </td>
+  </tr>
+</table>

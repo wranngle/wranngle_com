@@ -15,12 +15,17 @@ const faqData: FAQItem[] = [
   {
     question: 'How quickly can my AI agent be deployed?',
     answer:
-      'Most agents are deployed within 24-48 hours after order. This includes phone number provisioning, AI training on your business specifics, and testing. Elite tier customers receive priority deployment within 24 hours.',
+      'Most agents are deployed within 1-2 weeks after order. This includes phone number provisioning, AI training on your business specifics, and thorough testing to ensure quality.',
   },
   {
     question: "What happens when I exceed my plan's usage limits?",
     answer:
-      "You'll receive alerts when approaching 80% and 95% of your limits. Overage charges are billed at $0.10 per voice minute and $0.05 per SMS segment. You can upgrade to a higher tier at any time to increase your included limits.",
+      "We set limits high only to protect from abuse. No one has ever hit the limit, and honestly if you do hit it in earnest, we'll just increase the limit with no questions asked.",
+  },
+  {
+    question: 'How are you different than a human answering service?',
+    answer:
+      'When including minute usage and overages, our service is likely higher value than live answering services. We can more deeply integrate with your systems. Our onboarding is simpler and more flexible. Our agent can be given data not only specific to your industry, but specific to your exact business. Our service also includes web AI chat and realtime calendar integrations for faster resolution times.',
   },
   {
     question: 'Can the AI agent handle appointment scheduling?',
@@ -35,7 +40,7 @@ const faqData: FAQItem[] = [
   {
     question: 'How does the agent learn about my specific business?',
     answer:
-      'During onboarding, we configure your agent with your service areas, pricing, common questions, and business policies. You can update this knowledge base anytime through the dashboard. The agent improves over time by learning from successful interactions.',
+      'During onboarding, we configure your agent with your service areas, pricing, common questions, and business policies. You can request updates to the knowledge base anytime through our team. The agent improves over time by learning from successful interactions.',
   },
   {
     question: 'Is my caller data secure and private?',
@@ -45,7 +50,12 @@ const faqData: FAQItem[] = [
   {
     question: "Can I customize the agent's voice and personality?",
     answer:
-      "Elite tier includes custom voice identity. You can choose from professional voice options or even clone a voice. You also control the agent's personality - whether friendly and casual or formal and professional - to match your brand.",
+      "Elite tier includes custom voice identity. You can choose from professional voice options or even clone a voice for a fee. You also control the agent's personality - whether friendly and casual or formal and professional - to match your brand.",
+  },
+  {
+    question: 'What if I have multiple business locations?',
+    answer:
+      "If you have multiple locations, we'll provide a phone number for each location to automatically differentiate calls. Each location can have its own knowledge base and routing rules while sharing a unified dashboard.",
   },
   {
     question: 'What happens if I cancel my subscription?',
@@ -63,14 +73,14 @@ const faqData: FAQItem[] = [
       'The agent uses advanced natural language processing to qualify leads based on your criteria. It achieves 95%+ accuracy in distinguishing service calls from spam. You define the qualification criteria, and the agent learns from your feedback to improve accuracy over time.',
   },
   {
-    question: "Can I monitor the agent's calls in real-time?",
-    answer:
-      "Yes! The dashboard provides real-time call monitoring. You can see active calls, read live transcripts, and even listen in. You'll receive instant notifications for high-priority calls and can intervene or take over the call at any time.",
-  },
-  {
     question: 'What languages does the AI agent support?',
     answer:
-      'Currently, the agent supports English (US, UK, Australian accents). Spanish language support is coming in Q2 2026. Elite tier customers will have early access to multilingual capabilities as they become available.',
+      'The agent supports Arabic, Chinese, English, French, Japanese, Korean, and Spanish. Additional languages are available by request.',
+  },
+  {
+    question: 'How does the agent get information about my business?',
+    answer:
+      "By default, your agent's knowledge will be based on your website and publicly available information. During onboarding, you can provide additional business-specific details, FAQs, and policies. Note: There's no self-service dashboard yet - all updates go through our team.",
   },
 ];
 
