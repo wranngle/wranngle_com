@@ -99,7 +99,7 @@ const workflow = {
         toEmail: "sales@wranngle.com",
         subject: "=New Lead: {{ $json.body.businessName }}",
         emailFormat: "html",
-        html: fullHtml,
+        html: "=" + fullHtml,  // "=" prefix required for n8n to evaluate expressions
         options: {}
       },
       credentials: {
