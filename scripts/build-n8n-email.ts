@@ -21,19 +21,20 @@ const contentTemplate = readFileSync(join(root, 'email-templates/templates/lead-
 let fullHtml = masterTemplate.replace('{{CONTENT_BLOCK}}', contentTemplate);
 
 // Replace template placeholders with n8n expressions
+// NOTE: Webhook data is nested under $json.body, not $json directly
 const replacements: Record<string, string> = {
-  '{{EMAIL_TITLE}}': 'New Lead: {{ $json.businessName }}',
-  '{{PREHEADER_TEXT}}': 'New lead from {{ $json.businessName }} - {{ $json.industry }}',
-  '{{BUSINESS_NAME}}': '{{ $json.businessName }}',
-  '{{INDUSTRY}}': '{{ $json.industry }}',
-  '{{OWNER_NAME}}': '{{ $json.ownerName }}',
-  '{{EMAIL}}': '{{ $json.email }}',
-  '{{PHONE}}': '{{ $json.phone }}',
-  '{{PACKAGE}}': '{{ $json.package }}',
-  '{{AGENT_NAME}}': '{{ $json.agentName }}',
-  '{{NOTES}}': '{{ $json.notes }}',
-  '{{STATUS}}': '{{ $json.status }}',
-  '{{TIMESTAMP}}': '{{ $json.timestamp }}',
+  '{{EMAIL_TITLE}}': 'New Lead: {{ $json.body.businessName }}',
+  '{{PREHEADER_TEXT}}': 'New lead from {{ $json.body.businessName }} - {{ $json.body.industry }}',
+  '{{BUSINESS_NAME}}': '{{ $json.body.businessName }}',
+  '{{INDUSTRY}}': '{{ $json.body.industry }}',
+  '{{OWNER_NAME}}': '{{ $json.body.ownerName }}',
+  '{{EMAIL}}': '{{ $json.body.email }}',
+  '{{PHONE}}': '{{ $json.body.phone }}',
+  '{{PACKAGE}}': '{{ $json.body.package }}',
+  '{{AGENT_NAME}}': '{{ $json.body.agentName || "Not specified" }}',
+  '{{NOTES}}': '{{ $json.body.notes || "None provided" }}',
+  '{{STATUS}}': '{{ $json.body.status || "PENDING" }}',
+  '{{TIMESTAMP}}': '{{ $now.format("yyyy-MM-dd HH:mm:ss") }} UTC',
   '{{UNSUBSCRIBE_URL}}': '#',
   '{{COMPANY_ADDRESS}}': 'Wranngle Systems LLC',
   '{{TRACKING_PIXEL}}': '',
@@ -96,7 +97,7 @@ const workflow = {
       parameters: {
         fromEmail: "noreply@wranngle.com",
         toEmail: "sales@wranngle.com",
-        subject: "=New Lead: {{ $json.businessName }}",
+        subject: "=New Lead: {{ $json.body.businessName }}",
         emailFormat: "html",
         html: fullHtml,
         options: {}
