@@ -1,4 +1,13 @@
-// Build n8n-compatible email HTML from templates
+/**
+ * Build n8n-compatible email HTML from templates
+ *
+ * IMPORTANT: n8n emailSend node parameters:
+ * - emailFormat: "html" | "text" (NOT emailType)
+ * - html: string (NOT message) - for HTML content
+ * - text: string - for plain text content
+ *
+ * Reference: https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.sendemail/
+ */
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
@@ -112,3 +121,70 @@ writeFileSync(join(root, 'workflows/n8n/branded-lead-intake.json'), JSON.stringi
 
 console.log('✅ Workflow JSON created: workflows/n8n/branded-lead-intake.json');
 console.log(`   HTML size: ${fullHtml.length} bytes`);
+
+// Validation assertions
+const emailNode = workflow.nodes.find(n => n.name === 'Send Email Notification');
+if (!emailNode) {
+  console.error('❌ VALIDATION FAILED: Email node not found');
+  process.exit(1);
+}
+
+const params = emailNode.parameters as Record<string, unknown>;
+if (params.emailFormat !== 'html') {
+  console.error(`❌ VALIDATION FAILED: emailFormat is "${params.emailFormat}", expected "html"`);
+  process.exit(1);
+}
+
+if (typeof params.html !== 'string' || params.html.length < 1000) {
+  console.error(`❌ VALIDATION FAILED: html content missing or too small (${String(params.html).length} bytes)`);
+  process.exit(1);
+}
+
+console.log('✅ Validation passed: emailFormat=html, html content present');
+
+// Deploy if --deploy flag is passed
+if (process.argv.includes('--deploy')) {
+  const N8N_API_KEY = process.env.N8N_API_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmMjUxMmRkMS0wOTk0LTRjN2YtYWNmMS0wZWY4NDFhZjNhNjYiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzY4ODM4NTE3LCJleHAiOjE4OTM0NTYwMDB9.mZU-Kd_6ZaFmlrOxSYkIeFKlXw-Xy1at1w88XVbIdRk';
+  const WORKFLOW_ID = 'SY5XCbzxX32eCIeO';
+
+  console.log('\n📤 Deploying to n8n...');
+
+  const response = await fetch(`https://n8n.wranngle.com/api/v1/workflows/${WORKFLOW_ID}`, {
+    method: 'PUT',
+    headers: {
+      'X-N8N-API-KEY': N8N_API_KEY,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(workflow),
+  });
+
+  if (!response.ok) {
+    console.error(`❌ DEPLOY FAILED: ${response.status} ${response.statusText}`);
+    process.exit(1);
+  }
+
+  const result = await response.json() as Record<string, unknown>;
+  console.log(`✅ Deployed to n8n (workflow: ${result.id})`);
+
+  // Verify deployment
+  console.log('\n🔍 Verifying deployment...');
+  const verifyResponse = await fetch(`https://n8n.wranngle.com/api/v1/workflows/${WORKFLOW_ID}`, {
+    headers: { 'X-N8N-API-KEY': N8N_API_KEY },
+  });
+  const deployed = await verifyResponse.json() as { nodes: Array<{ name: string; parameters: Record<string, unknown> }> };
+  const deployedEmailNode = deployed.nodes.find(n => n.name === 'Send Email Notification');
+
+  if (deployedEmailNode?.parameters?.emailFormat !== 'html') {
+    console.error('❌ VERIFY FAILED: Deployed workflow has wrong emailFormat');
+    process.exit(1);
+  }
+
+  const deployedHtmlLength = String(deployedEmailNode?.parameters?.html || '').length;
+  if (deployedHtmlLength < 1000) {
+    console.error(`❌ VERIFY FAILED: Deployed html content too small (${deployedHtmlLength} bytes)`);
+    process.exit(1);
+  }
+
+  console.log(`✅ Verified: emailFormat=html, html=${deployedHtmlLength} bytes`);
+  console.log('\n✅ Deploy complete with verification');
+}

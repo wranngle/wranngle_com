@@ -134,10 +134,37 @@ curl -X POST https://n8n.wranngle.com/webhook/wranngle-intake-form \
 
 ### Email not received
 
-1. **Check n8n Executions:** Is there a failed execution?
-2. **Check email credentials:** Test credential in n8n node settings
-3. **Check spam folder:** First emails may land in spam
-4. **Verify sender domain:** `noreply@wranngle.com` must be verified
+1. **Check SMTP2GO suppression list first!**
+   ```bash
+   bun run smtp:health
+   ```
+   If `sales@wranngle.com` is suppressed, clear it:
+   ```bash
+   bun run smtp:clear
+   ```
+
+2. **Check n8n Executions:** Is there a failed execution?
+3. **Check SMTP2GO Activity:** Look for `rejected` or `hard-bounced` events
+4. **Check email credentials:** Test credential in n8n node settings
+5. **Check spam folder:** First emails may land in spam
+6. **Verify sender domain:** `noreply@wranngle.com` must be verified
+
+### SMTP2GO Suppression (Common Issue)
+
+**Symptoms:** n8n shows "success" but email never arrives.
+
+**Root Cause:** If an email bounced previously (e.g., before mailbox was set up), SMTP2GO adds the address to a suppression list and silently rejects future emails.
+
+**Fix:**
+```bash
+# Check for suppressions
+bun run smtp:health
+
+# Clear the suppression
+bun run smtp:clear
+```
+
+**Prevention:** Always verify the recipient mailbox exists before testing.
 
 ### Webhook not triggered
 
@@ -178,9 +205,19 @@ The template is mobile-responsive and tested across major email clients.
 ### Updating the email template
 
 1. Edit `email-templates/templates/lead-intake.html`
-2. Run `bun run email:build lead-intake` to generate preview
-3. Copy the minified HTML into the n8n workflow JSON
-4. Re-import the workflow to n8n
+2. Build and deploy:
+   ```bash
+   bun run n8n:deploy
+   ```
+   This will:
+   - Build the full branded HTML from templates
+   - Validate the workflow JSON (emailFormat=html, content present)
+   - Deploy to n8n via API
+   - Verify the deployment
+
+Manual alternative:
+1. Run `bun run n8n:build` to generate workflow JSON
+2. Import `branded-lead-intake.json` via n8n UI
 
 ### Monitoring
 

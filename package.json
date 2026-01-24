@@ -15,7 +15,11 @@
     "email:build": "bun run email-templates/build/template-builder.ts",
     "email:preview": "bun run email-templates/build/generate-previews.ts && open email-templates/preview/index.html",
     "email:preview:all": "bun run email-templates/build/generate-previews.ts",
-    "email:test": "bun run email-templates/build/test-templates.ts"
+    "email:test": "bun run email-templates/build/test-templates.ts",
+    "n8n:build": "bun run scripts/build-n8n-email.ts",
+    "n8n:deploy": "bun run scripts/build-n8n-email.ts --deploy",
+    "smtp:health": "bun run scripts/smtp2go-health.ts",
+    "smtp:clear": "bun run scripts/smtp2go-health.ts --clear-suppression"
   },
   "xo": {
     "prettier": true,
