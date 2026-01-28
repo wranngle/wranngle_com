@@ -44,10 +44,8 @@ A comprehensive guide to maintaining visual consistency across all Wranngle emai
 | `sm` | 12px | Console labels, metadata |
 | `base` | 14px | Buttons, small body, item descriptions |
 | `lg` | 16px | Primary body text |
-| `xl` | 18px | H2 headings |
-| `2xl` | 24px | Standard H1 |
-| `3xl` | 28px | Receipt H1 |
-| `4xl` | 32px | Hero H1 |
+| `xl` | 20px | H2 section headings |
+| `2xl` | 28px | H1 hero headings |
 
 ### Border Radius
 
@@ -168,7 +166,7 @@ Always use `[LABEL]` format in monospace for console aesthetic:
 
 ```html
 <td align="center" style="padding: 24px; background: linear-gradient(135deg, #12111a 0%, #2d0914 100%); border-radius: 8px;">
-  <h1 style="margin: 0 0 12px 0; font-family: 'Inter', Arial, sans-serif; font-size: 32px; font-weight: 700; color: #ffffff; line-height: 1.2;">
+  <h1 style="margin: 0 0 12px 0; font-family: 'Inter', Arial, sans-serif; font-size: 28px; font-weight: 700; color: #ffffff; line-height: 1.2;">
     Hero Title
   </h1>
   <p style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 14px; color: #ff5f00; letter-spacing: 1px;">
@@ -363,6 +361,19 @@ Emails are classified by type, which affects footer handling and CAN-SPAM compli
 
 ---
 
+## Consistency Standards
+
+These values are enforced across all templates:
+
+| Property | Standard Value | Applies To |
+|----------|---------------|------------|
+| Button padding | `14px 32px` | All `.btn-*` elements |
+| H1 hero font-size | `28px` | All `<h1>` in hero sections |
+| H2 section font-size | `20px` | All `<h2>` section headings |
+| Section spacing rhythm | `16px` / `24px` / `32px` | `margin-bottom` on `<table>` wrappers |
+
+---
+
 ## Deprecated Colors (DO NOT USE)
 
 These colors were removed from the design system:
@@ -541,7 +552,7 @@ All RCS messages use Twilio Content API templates with pre-approved content:
 | lead-intake | HX27f7b91af27cee722463cd80d2eacb5c | BUSINESS_NAME, INDUSTRY, OWNER_NAME, PHONE | None |
 | sales-cold-outreach | HXfffe48244baca47d9d597c74f34b763a | FIRST_NAME, COMPANY, REP_NAME | Schedule Demo, Learn More |
 | sales-quote-followup | HX68644320a6764633724c8945b4fc1a22 | FIRST_NAME, QUOTE_ID, REP_NAME | View Quote, Accept Quote |
-| sales-winback | HXb4f5a844ec6b99993ec1835d50df1ba6 | FIRST_NAME, NEW_FEATURE_1, NEW_FEATURE_2 | Reactivate, Learn More |
+| sales-winback | HXb4f5a844ec6b99993ec1835d50df1ba6 | FIRST_NAME, NEW_FEATURE_1, NEW_FEATURE_2, NEW_FEATURE_3 | Reactivate, Learn More |
 
 ### Message Content Guidelines
 
