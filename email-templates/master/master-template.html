@@ -33,14 +33,54 @@
     .ReadMsgBody, .ExternalClass { width: 100%; }
     .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
 
-    /* WRANNGLE BRAND COLORS */
+    /* ============================================
+       WRANNGLE DESIGN SYSTEM TOKENS
+       ============================================ */
+
+    /* COLOR TOKENS */
     :root {
-      --wranngle-primary: #ff5f00;
-      --wranngle-secondary: #cf3c69;
-      --wranngle-dark: #12111a;
-      --wranngle-light: #fcfaf5;
-      --wranngle-gray: #6b7280;
-      --wranngle-border: #e5e7eb;
+      /* Primary Palette */
+      --wranngle-primary: #ff5f00;      /* Orange - CTAs, left borders, console labels */
+      --wranngle-secondary: #cf3c69;    /* Magenta - security/premium contexts ONLY */
+      --wranngle-dark: #12111a;         /* Near-black - text, dark backgrounds */
+      --wranngle-light: #fcfaf5;        /* Off-white - light mode backgrounds */
+
+      /* Semantic Colors */
+      --wranngle-success: #10b981;      /* Green - completed states ONLY */
+      --wranngle-warning: #f59e0b;      /* Amber - warnings, action required */
+      --wranngle-danger: #ef4444;       /* Red - errors, security alerts */
+
+      /* Neutral Colors */
+      --wranngle-gray-600: #6b7280;     /* Body secondary text */
+      --wranngle-gray-400: #9ca3af;     /* Footer text */
+      --wranngle-gray-300: #d1d5db;     /* Dividers */
+      --wranngle-border: #e5e7eb;       /* Light borders */
+      --wranngle-bg-subtle: #f9fafb;    /* Subtle backgrounds */
+      --wranngle-bg-page: #f3f4f6;      /* Page background */
+
+      /* Spacing Scale (8px base) */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 12px;
+      --space-base: 16px;
+      --space-lg: 20px;
+      --space-xl: 24px;
+      --space-2xl: 32px;
+      --space-3xl: 40px;
+
+      /* Typography Scale */
+      --text-xs: 11px;    /* Footer legal */
+      --text-sm: 12px;    /* Console labels */
+      --text-base: 14px;  /* Buttons, small body */
+      --text-lg: 16px;    /* Body - primary */
+      --text-xl: 18px;    /* H2 */
+      --text-2xl: 24px;   /* H1 standard */
+      --text-3xl: 28px;   /* H1 receipt */
+      --text-4xl: 32px;   /* H1 hero */
+
+      /* Border Radius */
+      --radius-sm: 4px;   /* Info boxes, small elements */
+      --radius-md: 8px;   /* Heroes, cards, buttons */
     }
 
     /* DARK MODE SUPPORT */
@@ -113,6 +153,42 @@
       border: 2px solid #12111a !important;
       border-radius: 8px !important;
       color: #12111a !important;
+      display: inline-block !important;
+      font-family: 'Inter', Arial, sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.5px !important;
+      line-height: 1.4 !important;
+      padding: 14px 32px !important;
+      text-align: center !important;
+      text-decoration: none !important;
+      text-transform: uppercase !important;
+      -webkit-text-size-adjust: none !important;
+    }
+
+    .btn-warning {
+      background-color: #f59e0b !important;
+      border: 2px solid #f59e0b !important;
+      border-radius: 8px !important;
+      color: #ffffff !important;
+      display: inline-block !important;
+      font-family: 'Inter', Arial, sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.5px !important;
+      line-height: 1.4 !important;
+      padding: 14px 32px !important;
+      text-align: center !important;
+      text-decoration: none !important;
+      text-transform: uppercase !important;
+      -webkit-text-size-adjust: none !important;
+    }
+
+    .btn-danger {
+      background-color: #ef4444 !important;
+      border: 2px solid #ef4444 !important;
+      border-radius: 8px !important;
+      color: #ffffff !important;
       display: inline-block !important;
       font-family: 'Inter', Arial, sans-serif !important;
       font-size: 14px !important;
@@ -234,12 +310,10 @@
                   </td>
                 </tr>
 
-                <!-- UNSUBSCRIBE LINK -->
+                <!-- UNSUBSCRIBE / FOOTER MESSAGE (customizable per email type) -->
                 <tr>
                   <td align="center" style="padding-bottom: 8px;">
-                    <p style="margin: 0; font-size: 11px; line-height: 1.5; color: #9ca3af;">
-                      <a href="{{UNSUBSCRIBE_URL}}" style="color: #6b7280; text-decoration: underline;">Unsubscribe</a> from these emails
-                    </p>
+                    {{FOOTER_MESSAGE}}
                   </td>
                 </tr>
 

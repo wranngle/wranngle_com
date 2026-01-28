@@ -1,0 +1,999 @@
+{
+  "_meta": {
+    "exported_at": "2026-01-27T23:00:00Z",
+    "exported_by": "Claude Code",
+    "workflow_description": "Universal Message Sender - Routes SMS/RCS messages through Twilio with comprehensive error handling and retry logic",
+    "webhook_url": "https://n8n.wranngle.com/webhook/universal-message-v1",
+    "webhook_id": "universal-message-v1",
+    "authentication": [
+      "X-Webhook-Secret: wranngle-msg-2026",
+      "User-Agent containing 'ElevenLabs'",
+      "Host containing 'localhost' (dev mode)"
+    ],
+    "supported_templates": [
+      "welcome",
+      "invoice-receipt",
+      "notification",
+      "password-reset",
+      "lead-intake",
+      "sales-cold-outreach",
+      "sales-demo-followup",
+      "sales-proposal-sent",
+      "sales-quote-followup",
+      "sales-winback"
+    ],
+    "twilio_config": {
+      "messaging_service_sid": "MG18bfef5a022578102a9165c1c9a514db",
+      "rcs_sender_id": "XEf22b2df6414c9923fafecacc1e3c6cbb",
+      "fallback_phone": "+18882662193",
+      "account_sid": "ACb9a3b7df2dfe607099bd0ce0e6ae47e1"
+    },
+    "features": [
+      "Multi-channel support (SMS/RCS/auto)",
+      "Template variable substitution",
+      "E.164 phone validation",
+      "Exponential backoff retry (max 3 attempts)",
+      "Delivery status verification",
+      "Comprehensive error responses"
+    ],
+    "node_count": 22,
+    "status": "active",
+    "phase": "DEV",
+    "version_counter": 4
+  },
+  "workflow": {
+    "updatedAt": "2026-01-27T22:46:10.260Z",
+    "createdAt": "2026-01-27T22:43:49.275Z",
+    "id": "CBoXlSNiDOHA5YmA",
+    "name": "[DEV] Universal Message Sender",
+    "description": null,
+    "active": true,
+    "isArchived": false,
+    "nodes": [
+      {
+        "id": "webhook-trigger",
+        "name": "Webhook: Universal Message",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          208,
+          952
+        ],
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "universal-message-v1",
+          "responseMode": "responseNode",
+          "options": {}
+        },
+        "webhookId": "universal-message-v1"
+      },
+      {
+        "id": "auth-check",
+        "name": "Auth: Check Secret",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          432,
+          952
+        ],
+        "parameters": {
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "or",
+            "conditions": [
+              {
+                "id": "secret-header",
+                "leftValue": "={{ $json.headers['x-webhook-secret'] }}",
+                "rightValue": "wranngle-msg-2026",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              },
+              {
+                "id": "elevenlabs-origin",
+                "leftValue": "={{ $json.headers['user-agent'] || '' }}",
+                "rightValue": "ElevenLabs",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              },
+              {
+                "id": "localhost-dev",
+                "leftValue": "={{ $json.headers.host || '' }}",
+                "rightValue": "localhost",
+                "operator": {
+                  "type": "string",
+                  "operation": "contains"
+                }
+              }
+            ]
+          },
+          "options": {}
+        }
+      },
+      {
+        "id": "respond-unauthorized",
+        "name": "Error: Unauthorized",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          656,
+          1024
+        ],
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { success: false, error: 'UNAUTHORIZED', message: 'Invalid or missing authentication' } }}",
+          "options": {
+            "responseCode": 401
+          }
+        }
+      },
+      {
+        "id": "extract-params",
+        "name": "Extract & Normalize Parameters",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          656,
+          832
+        ],
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "request_id",
+                "name": "request_id",
+                "value": "={{ $now.toMillis() + '-' + Math.random().toString(36).substring(7) }}",
+                "type": "string"
+              },
+              {
+                "id": "phone_raw",
+                "name": "phone_raw",
+                "value": "={{ ($json.body?.phone_number || $json.phone_number || '').toString() }}",
+                "type": "string"
+              },
+              {
+                "id": "phone_clean",
+                "name": "phone_number",
+                "value": "={{ ($json.body?.phone_number || $json.phone_number || '').toString().replace(/[^0-9+]/g, '') }}",
+                "type": "string"
+              },
+              {
+                "id": "channel",
+                "name": "channel",
+                "value": "={{ $json.body?.channel || $json.channel || 'auto' }}",
+                "type": "string"
+              },
+              {
+                "id": "template",
+                "name": "template",
+                "value": "={{ $json.body?.template || $json.template || 'welcome' }}",
+                "type": "string"
+              },
+              {
+                "id": "variables",
+                "name": "variables",
+                "value": "={{ $json.body?.variables || $json.variables || {} }}",
+                "type": "object"
+              },
+              {
+                "id": "timestamp",
+                "name": "timestamp",
+                "value": "={{ $now.toISO() }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        }
+      },
+      {
+        "id": "validate-phone",
+        "name": "Validate Phone Format",
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          880,
+          800
+        ],
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "typeValidation": "strict"
+                  },
+                  "combinator": "and",
+                  "conditions": [
+                    {
+                      "id": "us-ca-format",
+                      "leftValue": "={{ $json.phone_number }}",
+                      "rightValue": "^\\+1[2-9][0-9]{9}$",
+                      "operator": {
+                        "type": "string",
+                        "operation": "regex"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "typeValidation": "strict"
+                  },
+                  "combinator": "and",
+                  "conditions": [
+                    {
+                      "id": "intl-format",
+                      "leftValue": "={{ $json.phone_number }}",
+                      "rightValue": "^\\+[1-9][0-9]{6,14}$",
+                      "operator": {
+                        "type": "string",
+                        "operation": "regex"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "typeValidation": "strict"
+                  },
+                  "combinator": "and",
+                  "conditions": [
+                    {
+                      "id": "empty-phone",
+                      "leftValue": "={{ $json.phone_number }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "options": {
+            "fallbackOutput": "extra"
+          }
+        }
+      },
+      {
+        "id": "respond-missing-phone",
+        "name": "Error: Missing Phone",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1104,
+          736
+        ],
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { success: false, error: 'MISSING_PHONE_NUMBER', message: 'No phone number provided', request_id: $json.request_id } }}",
+          "options": {
+            "responseCode": 400
+          }
+        }
+      },
+      {
+        "id": "respond-invalid-phone",
+        "name": "Error: Invalid Phone",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          1104,
+          928
+        ],
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { success: false, error: 'INVALID_PHONE_FORMAT', message: 'Phone number format invalid', provided: $json.phone_raw, cleaned: $json.phone_number, request_id: $json.request_id } }}",
+          "options": {
+            "responseCode": 400
+          }
+        }
+      },
+      {
+        "id": "merge-valid-phones",
+        "name": "Merge Valid Paths",
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3,
+        "position": [
+          1104,
+          544
+        ],
+        "parameters": {}
+      },
+      {
+        "id": "compose-message",
+        "name": "Compose Message",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          1328,
+          544
+        ],
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "phone_number",
+                "name": "phone_number",
+                "value": "={{ $json.phone_number }}",
+                "type": "string"
+              },
+              {
+                "id": "channel",
+                "name": "channel",
+                "value": "={{ $json.channel }}",
+                "type": "string"
+              },
+              {
+                "id": "template",
+                "name": "template",
+                "value": "={{ $json.template }}",
+                "type": "string"
+              },
+              {
+                "id": "variables",
+                "name": "variables",
+                "value": "={{ $json.variables }}",
+                "type": "object"
+              },
+              {
+                "id": "request_id",
+                "name": "request_id",
+                "value": "={{ $json.request_id }}",
+                "type": "string"
+              },
+              {
+                "id": "message_body",
+                "name": "message_body",
+                "value": "={{ (() => { const v = $json.variables || {}; const t = $json.template; const templates = { 'welcome': `Hi ${v.FIRST_NAME || 'there'}! Your ${v.PACKAGE || 'AI agent'} is now LIVE. Questions? wranngle.com`, 'invoice-receipt': `Wranngle: Payment of $${v.AMOUNT || '0.00'} received for ${v.INVOICE_ID || 'invoice'}. Thank you!`, 'notification': `${v.EVENT_TYPE || 'Update'}: ${v.EVENT_DATA || 'Status changed'}`, 'password-reset': `Reset your password: ${v.RESET_URL || 'link'}. Expires in ${v.EXPIRY_TIME || '1 hour'}.`, 'lead-intake': `New lead: ${v.BUSINESS_NAME || 'Business'} (${v.INDUSTRY || 'industry'}) - ${v.OWNER_NAME || 'Owner'}, ${v.PHONE || 'phone'}`, 'sales-cold-outreach': `Hi ${v.FIRST_NAME || 'there'}! ${v.REP_NAME || 'We'} noticed ${v.COMPANY || 'your company'} could benefit from Wranngle. Demo? wranngle.com`, 'sales-demo-followup': `Hi ${v.FIRST_NAME || 'there'}! Thanks for the demo. Questions? ${v.REP_EMAIL || 'team@wranngle.com'}`, 'sales-proposal-sent': `Hi ${v.FIRST_NAME || 'there'}! Your ${v.PACKAGE || 'package'} proposal ($${v.PRICE || '0'}) is ready. Review at wranngle.com`, 'sales-quote-followup': `Hi ${v.FIRST_NAME || 'there'}! Following up on quote ${v.QUOTE_ID || ''}. Questions? ${v.REP_NAME || 'Our team'} is here to help.`, 'sales-winback': `Hi ${v.FIRST_NAME || 'there'}! We've added ${v.NEW_FEATURE_1 || 'new features'} and ${v.NEW_FEATURE_2 || 'improvements'}. Come back? wranngle.com` }; return templates[t] || templates['welcome']; })() }}",
+                "type": "string"
+              },
+              {
+                "id": "attempt",
+                "name": "attempt_number",
+                "value": "=1",
+                "type": "number"
+              }
+            ]
+          },
+          "options": {}
+        }
+      },
+      {
+        "id": "send-via-twilio",
+        "name": "Send via Twilio Messaging Service",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1552,
+          544
+        ],
+        "parameters": {
+          "method": "POST",
+          "url": "https://api.twilio.com/2010-04-01/Accounts/ACb9a3b7df2dfe607099bd0ce0e6ae47e1/Messages.json",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpBasicAuth",
+          "sendBody": true,
+          "contentType": "form-urlencoded",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "To",
+                "value": "={{ $json.phone_number }}"
+              },
+              {
+                "name": "MessagingServiceSid",
+                "value": "MG18bfef5a022578102a9165c1c9a514db"
+              },
+              {
+                "name": "Body",
+                "value": "={{ $json.message_body }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "credentials": {
+          "httpBasicAuth": {
+            "id": "pASOSgPIUdaHk22p",
+            "name": "Twilio Basic Auth v3"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "id": "check-send-result",
+        "name": "Check Send Result",
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          1776,
+          280
+        ],
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "typeValidation": "strict"
+                  },
+                  "combinator": "and",
+                  "conditions": [
+                    {
+                      "id": "has-sid",
+                      "leftValue": "={{ $json.sid }}",
+                      "rightValue": "",
+                      "operator": {
+                        "type": "string",
+                        "operation": "notEmpty"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "typeValidation": "strict"
+                  },
+                  "combinator": "and",
+                  "conditions": [
+                    {
+                      "id": "is-retryable",
+                      "leftValue": "={{ [30003, 30005, 30008, 30009, 30010].includes($json.code || $json.error_code) || ($json.message || '').toLowerCase().includes('temporarily') }}",
+                      "rightValue": true,
+                      "operator": {
+                        "type": "boolean",
+                        "operation": "equals"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "options": {
+            "fallbackOutput": "extra"
+          }
+        }
+      },
+      {
+        "id": "verify-delivery",
+        "name": "Verify: Fetch Status",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          2000,
+          -32
+        ],
+        "parameters": {
+          "url": "=https://api.twilio.com/2010-04-01/Accounts/ACb9a3b7df2dfe607099bd0ce0e6ae47e1/Messages/{{ $json.sid }}.json",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpBasicAuth",
+          "options": {
+            "timeout": 10000
+          }
+        },
+        "credentials": {
+          "httpBasicAuth": {
+            "id": "pASOSgPIUdaHk22p",
+            "name": "Twilio Basic Auth v3"
+          }
+        },
+        "onError": "continueRegularOutput"
+      },
+      {
+        "id": "route-by-delivery",
+        "name": "Route: Delivery Status",
+        "type": "n8n-nodes-base.switch",
+        "typeVersion": 3.2,
+        "position": [
+          2224,
+          -48
+        ],
+        "parameters": {
+          "rules": {
+            "values": [
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "typeValidation": "strict"
+                  },
+                  "combinator": "or",
+                  "conditions": [
+                    {
+                      "id": "is-delivered",
+                      "leftValue": "={{ $json.status }}",
+                      "rightValue": "delivered",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    },
+                    {
+                      "id": "is-sent",
+                      "leftValue": "={{ $json.status }}",
+                      "rightValue": "sent",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "conditions": {
+                  "options": {
+                    "caseSensitive": true,
+                    "typeValidation": "strict"
+                  },
+                  "combinator": "or",
+                  "conditions": [
+                    {
+                      "id": "is-failed",
+                      "leftValue": "={{ $json.status }}",
+                      "rightValue": "failed",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    },
+                    {
+                      "id": "is-undelivered",
+                      "leftValue": "={{ $json.status }}",
+                      "rightValue": "undelivered",
+                      "operator": {
+                        "type": "string",
+                        "operation": "equals"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "options": {
+            "fallbackOutput": "extra"
+          }
+        }
+      },
+      {
+        "id": "respond-success",
+        "name": "Success: Delivered",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          2448,
+          -128
+        ],
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { success: true, status: 'delivered', channel: $('Compose Message').first().json.channel, message_sid: $('Send via Twilio Messaging Service').first().json.sid, recipient: $('Compose Message').first().json.phone_number, template: $('Compose Message').first().json.template, request_id: $('Compose Message').first().json.request_id } }}",
+          "options": {
+            "responseCode": 200
+          }
+        }
+      },
+      {
+        "id": "respond-pending",
+        "name": "Warning: Pending",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          2448,
+          256
+        ],
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { success: true, status: 'pending', note: 'Message accepted, delivery not yet confirmed', message_sid: $('Send via Twilio Messaging Service').first().json.sid, recipient: $('Compose Message').first().json.phone_number, request_id: $('Compose Message').first().json.request_id } }}",
+          "options": {
+            "responseCode": 202
+          }
+        }
+      },
+      {
+        "id": "build-error-response",
+        "name": "Build: Error Details",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2448,
+          64
+        ],
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "troubleshoot",
+                "name": "troubleshooting",
+                "value": "={{ (() => { const code = $json.error_code; const map = { 30032: 'Toll-free not A2P verified', 21211: 'Invalid phone format', 21614: 'Not SMS-capable', 30003: 'Carrier unreachable' }; return map[code] || 'Check Twilio docs'; })() }}",
+                "type": "string"
+              }
+            ]
+          },
+          "options": {}
+        }
+      },
+      {
+        "id": "respond-delivery-failed",
+        "name": "Error: Delivery Failed",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          2672,
+          64
+        ],
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { success: false, error: 'DELIVERY_FAILED', message_sid: $('Send via Twilio Messaging Service').first().json.sid, recipient: $('Compose Message').first().json.phone_number, error_code: $json.error_code, request_id: $('Compose Message').first().json.request_id } }}",
+          "options": {
+            "responseCode": 500
+          }
+        }
+      },
+      {
+        "id": "retry-logic",
+        "name": "Retry: Check Attempts",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          2000,
+          496
+        ],
+        "parameters": {
+          "conditions": {
+            "options": {
+              "version": 2,
+              "leftValue": "",
+              "caseSensitive": true,
+              "typeValidation": "strict"
+            },
+            "combinator": "and",
+            "conditions": [
+              {
+                "id": "under-max",
+                "leftValue": "={{ $('Compose Message').first().json.attempt_number || 1 }}",
+                "rightValue": 3,
+                "operator": {
+                  "type": "number",
+                  "operation": "lt"
+                }
+              }
+            ]
+          },
+          "options": {}
+        }
+      },
+      {
+        "id": "wait-before-retry",
+        "name": "Wait Before Retry",
+        "type": "n8n-nodes-base.wait",
+        "typeVersion": 1.1,
+        "position": [
+          2224,
+          400
+        ],
+        "parameters": {
+          "amount": "={{ Math.pow(2, $('Compose Message').first().json.attempt_number || 1) }}"
+        },
+        "webhookId": "wait-retry-universal-msg"
+      },
+      {
+        "id": "increment-attempt",
+        "name": "Increment Attempt Counter",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          2448,
+          664
+        ],
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "attempt",
+                "name": "attempt_number",
+                "value": "={{ ($('Compose Message').first().json.attempt_number || 1) + 1 }}",
+                "type": "number"
+              }
+            ]
+          },
+          "options": {}
+        }
+      },
+      {
+        "id": "respond-max-retries",
+        "name": "Error: Max Retries",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          2224,
+          592
+        ],
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { success: false, error: 'MAX_RETRIES_EXCEEDED', message: 'Failed after 3 attempts', recipient: $('Compose Message').first().json.phone_number, request_id: $('Compose Message').first().json.request_id } }}",
+          "options": {
+            "responseCode": 500
+          }
+        }
+      },
+      {
+        "id": "respond-permanent-error",
+        "name": "Error: Permanent Failure",
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          2000,
+          688
+        ],
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ { success: false, error: 'TWILIO_PERMANENT_ERROR', error_code: $json.code || $json.error_code, recipient: $('Compose Message').first().json.phone_number, request_id: $('Compose Message').first().json.request_id } }}",
+          "options": {
+            "responseCode": 400
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Webhook: Universal Message": {
+        "main": [
+          [
+            {
+              "node": "Auth: Check Secret",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Auth: Check Secret": {
+        "main": [
+          [
+            {
+              "node": "Extract & Normalize Parameters",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Error: Unauthorized",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract & Normalize Parameters": {
+        "main": [
+          [
+            {
+              "node": "Validate Phone Format",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Validate Phone Format": {
+        "main": [
+          [
+            {
+              "node": "Merge Valid Paths",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Merge Valid Paths",
+              "type": "main",
+              "index": 1
+            }
+          ],
+          [
+            {
+              "node": "Error: Missing Phone",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Error: Invalid Phone",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Merge Valid Paths": {
+        "main": [
+          [
+            {
+              "node": "Compose Message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Compose Message": {
+        "main": [
+          [
+            {
+              "node": "Send via Twilio Messaging Service",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send via Twilio Messaging Service": {
+        "main": [
+          [
+            {
+              "node": "Check Send Result",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Check Send Result",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check Send Result": {
+        "main": [
+          [
+            {
+              "node": "Verify: Fetch Status",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Retry: Check Attempts",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Error: Permanent Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Retry: Check Attempts": {
+        "main": [
+          [
+            {
+              "node": "Wait Before Retry",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Error: Max Retries",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Wait Before Retry": {
+        "main": [
+          [
+            {
+              "node": "Increment Attempt Counter",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Increment Attempt Counter": {
+        "main": [
+          [
+            {
+              "node": "Send via Twilio Messaging Service",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Verify: Fetch Status": {
+        "main": [
+          [
+            {
+              "node": "Route: Delivery Status",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Route: Delivery Status": {
+        "main": [
+          [
+            {
+              "node": "Success: Delivered",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Build: Error Details",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Warning: Pending",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Build: Error Details": {
+        "main": [
+          [
+            {
+              "node": "Error: Delivery Failed",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataErrorExecution": "all",
+      "saveDataSuccessExecution": "all",
+      "saveManualExecutions": true,
+      "callerPolicy": "workflowsFromSameOwner",
+      "availableInMCP": false
+    },
+    "tags": [],
+    "versionId": "2301a034-02f8-439e-b926-96a5b2273c05"
+  }
+}
