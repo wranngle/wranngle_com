@@ -11,6 +11,21 @@ const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID!;
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN!;
 const TWILIO_CONTENT_API = 'https://content.twilio.com/v1/Content';
 
+interface CardAction {
+	title: string;
+	type: 'URL' | 'PHONE_NUMBER' | 'QUICK_REPLY';
+	url?: string;
+	phone?: string;
+	id?: string;
+}
+
+interface CarouselCard {
+	title: string;
+	body: string;
+	media: string;
+	actions: CardAction[];
+}
+
 interface ContentTemplate {
 	friendly_name: string;
 	language: string;
@@ -23,16 +38,32 @@ interface ContentTemplate {
 			title?: string;
 			subtitle?: string;
 			body: string;
-			actions?: Array<{
-				title: string;
-				type: 'URL' | 'PHONE' | 'QUICK_REPLY';
-				url?: string;
-				phone?: string;
-				id?: string;
-			}>;
+			media?: string[];
+			orientation?: 'VERTICAL' | 'HORIZONTAL';
+			actions?: CardAction[];
+		};
+		'twilio/carousel'?: {
+			body: string;
+			cards: CarouselCard[];
 		};
 	};
 }
+
+// Publicly hosted brand assets for RCS media
+const MEDIA = {
+	hero: 'https://wranngle.com/assets/rcs/hero-welcome.png',
+	logo: 'https://wranngle.com/assets/rcs/logo-card.png',
+	notification: 'https://wranngle.com/assets/rcs/notification-alert.png',
+	receipt: 'https://wranngle.com/assets/rcs/receipt-confirmed.png',
+	security: 'https://wranngle.com/assets/rcs/security-shield.png',
+	demo: 'https://wranngle.com/assets/rcs/demo-preview.png',
+	aiAgents: 'https://wranngle.com/assets/rcs/ai-agents.png',
+	analytics: 'https://wranngle.com/assets/rcs/analytics-dashboard.png',
+	integrations: 'https://wranngle.com/assets/rcs/integrations.png',
+	proposal: 'https://wranngle.com/assets/rcs/proposal-ready.png',
+	followup: 'https://wranngle.com/assets/rcs/followup.png',
+	winback: 'https://wranngle.com/assets/rcs/winback-offer.png',
+};
 
 const templates: ContentTemplate[] = [
 	{
@@ -48,10 +79,13 @@ const templates: ContentTemplate[] = [
 			},
 			'twilio/card': {
 				title: 'Welcome to Wranngle',
-				body: 'Hi {{1}}! Your {{2}} AI agent is now LIVE.\\n\\nOur team will call within 24 hours.',
+				body: 'Hi {{1}}! Your {{2}} AI agent is now LIVE.\n\nOur team will call within 24 hours to customize your knowledge base.',
+				media: [MEDIA.hero],
+				orientation: 'VERTICAL',
 				actions: [
 					{title: 'Dashboard', type: 'URL', url: 'https://wranngle.com/dashboard'},
-					{title: 'Call Support', type: 'PHONE', phone: '+18882662193'},
+					{title: 'Call Support', type: 'PHONE_NUMBER', phone: '+18882662193'},
+					{title: 'Get Started', type: 'QUICK_REPLY', id: 'welcome_get_started'},
 				],
 			},
 		},
@@ -69,9 +103,12 @@ const templates: ContentTemplate[] = [
 			},
 			'twilio/card': {
 				title: 'Payment Confirmed',
-				body: 'Amount: ${{1}}\\nInvoice: {{2}}\\n\\nThank you for your business!',
+				body: 'Amount: ${{1}}\nInvoice: {{2}}\n\nThank you for your business!',
+				media: [MEDIA.receipt],
+				orientation: 'HORIZONTAL',
 				actions: [
 					{title: 'View Receipt', type: 'URL', url: 'https://wranngle.com/invoices/{{2}}'},
+					{title: 'Call Billing', type: 'PHONE_NUMBER', phone: '+18882662193'},
 				],
 			},
 		},
@@ -86,6 +123,15 @@ const templates: ContentTemplate[] = [
 		types: {
 			'twilio/text': {
 				body: '{{1}}: {{2}}',
+			},
+			'twilio/card': {
+				title: '{{1}}',
+				body: '{{2}}',
+				media: [MEDIA.notification],
+				orientation: 'HORIZONTAL',
+				actions: [
+					{title: 'View Details', type: 'URL', url: 'https://wranngle.com/dashboard'},
+				],
 			},
 		},
 	},
@@ -102,7 +148,9 @@ const templates: ContentTemplate[] = [
 			},
 			'twilio/card': {
 				title: 'Password Reset Request',
-				body: 'Click below to reset your password.\\n\\nExpires in {{2}}.',
+				body: 'Click below to reset your password.\n\nExpires in {{2}}.',
+				media: [MEDIA.security],
+				orientation: 'HORIZONTAL',
 				actions: [
 					{title: 'Reset Password', type: 'URL', url: '{{1}}'},
 				],
@@ -122,6 +170,16 @@ const templates: ContentTemplate[] = [
 			'twilio/text': {
 				body: 'New lead: {{1}} ({{2}}) - {{3}}, {{4}}',
 			},
+			'twilio/card': {
+				title: 'New Lead Captured',
+				body: 'Business: {{1}}\nIndustry: {{2}}\nContact: {{3}}\nPhone: {{4}}',
+				media: [MEDIA.logo],
+				orientation: 'HORIZONTAL',
+				actions: [
+					{title: 'View in CRM', type: 'URL', url: 'https://wranngle.com/leads'},
+					{title: 'View Details', type: 'URL', url: 'https://wranngle.com/leads'},
+				],
+			},
 		},
 	},
 	{
@@ -136,12 +194,36 @@ const templates: ContentTemplate[] = [
 			'twilio/text': {
 				body: 'Hi {{1}}! {{3}} noticed {{2}} could benefit from Wranngle. Demo? wranngle.com',
 			},
-			'twilio/card': {
-				title: 'Grow Your Business',
-				body: 'Hi {{1}}!\\n\\n{{3}} noticed {{2}} could benefit from 24/7 AI agents.\\n\\nInterested in a demo?',
-				actions: [
-					{title: 'Schedule Demo', type: 'URL', url: 'https://wranngle.com/demo'},
-					{title: 'Learn More', type: 'URL', url: 'https://wranngle.com'},
+			'twilio/carousel': {
+				body: 'Hi {{1}}, see how Wranngle helps businesses like {{2}}:',
+				cards: [
+					{
+						title: '24/7 AI Agents',
+						body: 'Never miss a call. Our AI answers, qualifies leads, and books appointments around the clock.',
+						media: MEDIA.aiAgents,
+						actions: [
+							{title: 'Schedule Demo', type: 'URL', url: 'https://wranngle.com/demo'},
+							{title: 'Interested', type: 'QUICK_REPLY', id: 'cold_interested'},
+						],
+					},
+					{
+						title: 'Analytics Dashboard',
+						body: 'See every call, lead, and conversion in real time. Know exactly what your AI agent is doing.',
+						media: MEDIA.analytics,
+						actions: [
+							{title: 'Schedule Demo', type: 'URL', url: 'https://wranngle.com/demo'},
+							{title: 'Interested', type: 'QUICK_REPLY', id: 'cold_analytics'},
+						],
+					},
+					{
+						title: 'Easy Integrations',
+						body: 'Connect to your CRM, calendar, and phone system in minutes. No coding required.',
+						media: MEDIA.integrations,
+						actions: [
+							{title: 'Schedule Demo', type: 'URL', url: 'https://wranngle.com/demo'},
+							{title: 'Interested', type: 'QUICK_REPLY', id: 'cold_integrations'},
+						],
+					},
 				],
 			},
 		},
@@ -159,10 +241,13 @@ const templates: ContentTemplate[] = [
 			},
 			'twilio/card': {
 				title: 'Thanks for the Demo!',
-				body: 'Hi {{1}}!\\n\\nQuestions? Reply or email {{2}}',
+				body: 'Hi {{1}}!\n\nIt was great showing you Wranngle. Questions? Reply or email {{2}}',
+				media: [MEDIA.followup],
+				orientation: 'VERTICAL',
 				actions: [
 					{title: 'Get Started', type: 'URL', url: 'https://wranngle.com/signup'},
-					{title: 'Call Us', type: 'PHONE', phone: '+18882662193'},
+					{title: 'Call Us', type: 'PHONE_NUMBER', phone: '+18882662193'},
+					{title: 'Ready to Buy', type: 'QUICK_REPLY', id: 'demo_ready'},
 				],
 			},
 		},
@@ -181,10 +266,13 @@ const templates: ContentTemplate[] = [
 			},
 			'twilio/card': {
 				title: 'Proposal Ready',
-				body: 'Hi {{1}}!\\n\\nYour {{2}} proposal (${{3}}) is ready for review.',
+				body: 'Hi {{1}}!\n\nPackage: {{2}}\nPrice: ${{3}}/month\n\nReview and accept your proposal below.',
+				media: [MEDIA.proposal],
+				orientation: 'VERTICAL',
 				actions: [
 					{title: 'View Proposal', type: 'URL', url: 'https://wranngle.com/proposals'},
-					{title: 'Questions?', type: 'PHONE', phone: '+18882662193'},
+					{title: 'Accept', type: 'QUICK_REPLY', id: 'proposal_accept'},
+					{title: 'Questions?', type: 'PHONE_NUMBER', phone: '+18882662193'},
 				],
 			},
 		},
@@ -203,7 +291,9 @@ const templates: ContentTemplate[] = [
 			},
 			'twilio/card': {
 				title: 'Quote Follow-Up',
-				body: 'Hi {{1}}!\\n\\nFollowing up on quote {{2}}.\\n\\n{{3}} is here to help!',
+				body: 'Hi {{1}}!\n\nFollowing up on quote {{2}}.\n\n{{3}} is here to help!',
+				media: [MEDIA.followup],
+				orientation: 'HORIZONTAL',
 				actions: [
 					{title: 'View Quote', type: 'URL', url: 'https://wranngle.com/quotes/{{2}}'},
 					{title: 'Accept Quote', type: 'URL', url: 'https://wranngle.com/quotes/{{2}}/accept'},
@@ -223,12 +313,36 @@ const templates: ContentTemplate[] = [
 			'twilio/text': {
 				body: "Hi {{1}}! We've added {{2}} and {{3}}. Come back? wranngle.com",
 			},
-			'twilio/card': {
-				title: 'We Miss You!',
-				body: "Hi {{1}}!\\n\\nNew features:\\n• {{2}}\\n• {{3}}\\n\\nCome back and see what's new!",
-				actions: [
-					{title: 'Reactivate', type: 'URL', url: 'https://wranngle.com/reactivate'},
-					{title: 'Learn More', type: 'URL', url: 'https://wranngle.com/features'},
+			'twilio/carousel': {
+				body: "Hi {{1}}, a lot has changed at Wranngle!",
+				cards: [
+					{
+						title: '{{2}}',
+						body: 'Our newest capability, built based on feedback from businesses like yours.',
+						media: MEDIA.aiAgents,
+						actions: [
+							{title: 'Reactivate', type: 'URL', url: 'https://wranngle.com/reactivate'},
+							{title: 'Tell Me More', type: 'QUICK_REPLY', id: 'winback_feature1'},
+						],
+					},
+					{
+						title: '{{3}}',
+						body: 'Another major upgrade to help you grow faster and serve customers better.',
+						media: MEDIA.integrations,
+						actions: [
+							{title: 'Reactivate', type: 'URL', url: 'https://wranngle.com/reactivate'},
+							{title: 'Tell Me More', type: 'QUICK_REPLY', id: 'winback_feature2'},
+						],
+					},
+					{
+						title: 'Special Offer',
+						body: 'Come back and get a special deal. Limited time only.',
+						media: MEDIA.winback,
+						actions: [
+							{title: 'Reactivate', type: 'URL', url: 'https://wranngle.com/reactivate'},
+							{title: 'Tell Me More', type: 'QUICK_REPLY', id: 'winback_offer'},
+						],
+					},
 				],
 			},
 		},
