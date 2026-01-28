@@ -16,10 +16,18 @@
     "email:preview": "bun run email-templates/build/generate-previews.ts && open email-templates/preview/index.html",
     "email:preview:all": "bun run email-templates/build/generate-previews.ts",
     "email:test": "bun run email-templates/build/test-templates.ts",
+    "email:test:e2e": "bun test email-templates/build/email-templates.test.ts",
+    "email:test:send": "bun run scripts/email-e2e-test.ts",
     "n8n:build": "bun run scripts/build-n8n-email.ts",
     "n8n:deploy": "bun run scripts/build-n8n-email.ts --deploy",
     "smtp:health": "bun run scripts/smtp2go-health.ts",
-    "smtp:clear": "bun run scripts/smtp2go-health.ts --clear-suppression"
+    "smtp:clear": "bun run scripts/smtp2go-health.ts --clear-suppression",
+    "test:smoke": "bun run scripts/smoke-test-intake.ts",
+    "test:stress": "bun run scripts/smoke-test-intake.ts --stress --count=10",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "xo": {
     "prettier": true,
@@ -99,10 +107,13 @@
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.7.0",
+    "@vitest/ui": "^4.0.18",
     "autoprefixer": "^10.4.20",
+    "happy-dom": "^20.4.0",
     "tailwindcss": "^3.4.17",
     "typescript": "5.6.3",
     "vite": "^7.3.0",
+    "vitest": "^4.0.18",
     "wrangler": "^3.105.0"
   }
 }

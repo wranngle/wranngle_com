@@ -21,6 +21,10 @@ export const insertLeadSchema = type({
   'agentName?': 'string',
   'status?': 'string',
   'notes?': 'string',
+  // SMS consent fields for multi-channel messaging
+  'smsConsent?': 'boolean',
+  'smsConsentTimestamp?': 'string',
+  'preferredChannel?': '"email" | "sms" | "both"',
 });
 
 export const leadSchema = type({
@@ -34,6 +38,10 @@ export const leadSchema = type({
   'agentName?': 'string',
   'status?': 'string',
   'notes?': 'string',
+  // SMS consent fields for multi-channel messaging
+  'smsConsent?': 'boolean',
+  'smsConsentTimestamp?': 'string',
+  'preferredChannel?': '"email" | "sms" | "both"',
 });
 
 export type InsertUser = typeof insertUserSchema.infer;

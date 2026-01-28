@@ -315,7 +315,7 @@ const PricingCard = ({pkg, isDark}) => {
           features: [
             'Voice-only AI Agent',
             'Service Call Detection',
-            'Lead Scoring & Scoring',
+            'Lead Scoring & Qualification',
             'One-Way Shared SMS Notify',
             'Call Forwarding to Mobile',
             'Standard Trade Training Data',
