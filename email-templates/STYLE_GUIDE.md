@@ -543,16 +543,60 @@ Rich Communication Services (RCS) is the next-generation messaging protocol that
 
 All RCS messages use Twilio Content API templates with pre-approved content:
 
-| Template | ContentSid | Variables | Suggested Actions |
-|----------|------------|-----------|-------------------|
-| welcome | HX... | FIRST_NAME, PACKAGE | Dashboard, Call Support |
-| invoice-receipt | HX1b5b613cb2b06c27582ec3a8e5801e0d | AMOUNT, INVOICE_ID | View Receipt |
-| notification | HX0bc926ca95862f317bd8c88d5d3855cc | EVENT_TYPE, EVENT_DATA | None |
-| password-reset | HX4e7e81ce36c38a5916080b56c376ca15 | RESET_URL, EXPIRY_TIME | Reset Password |
-| lead-intake | HX27f7b91af27cee722463cd80d2eacb5c | BUSINESS_NAME, INDUSTRY, OWNER_NAME, PHONE | None |
-| sales-cold-outreach | HXfffe48244baca47d9d597c74f34b763a | FIRST_NAME, COMPANY, REP_NAME | Schedule Demo, Learn More |
-| sales-quote-followup | HX68644320a6764633724c8945b4fc1a22 | FIRST_NAME, QUOTE_ID, REP_NAME | View Quote, Accept Quote |
-| sales-winback | HXb4f5a844ec6b99993ec1835d50df1ba6 | FIRST_NAME, NEW_FEATURE_1, NEW_FEATURE_2, NEW_FEATURE_3 | Reactivate, Learn More |
+| Template | ContentSid | RCS Type | Variables | Actions | Media |
+|----------|------------|----------|-----------|---------|-------|
+| welcome | HX... | card | FIRST_NAME, PACKAGE | Dashboard, Call Support, Get Started | hero-welcome.png |
+| invoice-receipt | HX1b5b613cb2b06c27582ec3a8e5801e0d | card | AMOUNT, INVOICE_ID | View Receipt, Call Billing | receipt-confirmed.png |
+| notification | HX0bc926ca95862f317bd8c88d5d3855cc | card | EVENT_TYPE, EVENT_DATA | View Details | notification-alert.png |
+| password-reset | HX4e7e81ce36c38a5916080b56c376ca15 | card | RESET_URL, EXPIRY_TIME | Reset Password | security-shield.png |
+| lead-intake | HX27f7b91af27cee722463cd80d2eacb5c | card | BUSINESS_NAME, INDUSTRY, OWNER_NAME, PHONE | Call Lead, View in CRM | logo-card.png |
+| sales-cold-outreach | HXfffe48244baca47d9d597c74f34b763a | carousel | FIRST_NAME, COMPANY, REP_NAME | Schedule Demo, Interested (x3 cards) | ai-agents, analytics, integrations |
+| sales-demo-followup | HX... | card | FIRST_NAME, REP_EMAIL | Get Started, Call Us, Ready to Buy | followup.png |
+| sales-proposal-sent | HX... | card | FIRST_NAME, PACKAGE, PRICE | View Proposal, Accept, Questions? | proposal-ready.png |
+| sales-quote-followup | HX68644320a6764633724c8945b4fc1a22 | card | FIRST_NAME, QUOTE_ID, REP_NAME | View Quote, Accept Quote | followup.png |
+| sales-winback | HXb4f5a844ec6b99993ec1835d50df1ba6 | carousel | FIRST_NAME, NEW_FEATURE_1, NEW_FEATURE_2 | Reactivate, Tell Me More (x3 cards) | ai-agents, integrations, winback |
+
+### RCS Content Types Used
+
+| Content Type | Templates | Description |
+|---|---|---|
+| `twilio/text` | All 10 | SMS fallback body |
+| `twilio/card` | welcome, invoice-receipt, notification, password-reset, lead-intake, sales-demo-followup, sales-proposal-sent, sales-quote-followup | Rich card with media, title, body, and action buttons |
+| `twilio/carousel` | sales-cold-outreach, sales-winback | Multi-card swipeable carousel with per-card media and buttons |
+
+#### Card Media
+
+All `twilio/card` templates include a branded media image via the `media` array field. Images are hosted at `https://wranngle.com/assets/rcs/` and must be:
+- Publicly accessible HTTPS URLs
+- JPEG or PNG format
+- Under 16 MB (under 5 MB recommended for MMS fallback)
+
+#### Carousel Structure
+
+Carousels contain 2-3 cards, each with:
+- `title` (max 160 chars combined with body)
+- `body` (required)
+- `media` (required, single image URL)
+- `actions` (1-2 buttons, same type order across all cards)
+
+**Constraint:** Button type order (e.g., URL then QUICK_REPLY) must be identical across every card in the carousel.
+
+#### RCS Media Assets
+
+| Asset Key | File | Used By |
+|---|---|---|
+| hero | `hero-welcome.png` | welcome |
+| receipt | `receipt-confirmed.png` | invoice-receipt |
+| notification | `notification-alert.png` | notification |
+| security | `security-shield.png` | password-reset |
+| logo | `logo-card.png` | lead-intake |
+| aiAgents | `ai-agents.png` | sales-cold-outreach (carousel) |
+| analytics | `analytics-dashboard.png` | sales-cold-outreach (carousel) |
+| integrations | `integrations.png` | sales-cold-outreach (carousel), sales-winback (carousel) |
+| demo | `demo-preview.png` | — (reserved) |
+| followup | `followup.png` | sales-demo-followup, sales-quote-followup |
+| proposal | `proposal-ready.png` | sales-proposal-sent |
+| winback | `winback-offer.png` | sales-winback (carousel) |
 
 ### Message Content Guidelines
 
@@ -723,5 +767,5 @@ Track these metrics in Twilio Console:
 
 ---
 
-**Last Updated:** 2026-01-27  
-**Version:** 2.0 (Added RCS Guidelines)
+**Last Updated:** 2026-01-28
+**Version:** 2.1 (Added RCS media, carousels, enriched all 10 templates)
