@@ -124,7 +124,7 @@ function getCorsHeaders(
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const origin = context.request.headers.get('Origin');
+  const origin = context.request.headers.get('Origin') ?? undefined;
   const corsHeaders = getCorsHeaders(origin, context.env.ALLOWED_ORIGIN);
   const responseHeaders = {
     'Content-Type': 'application/json',
@@ -206,7 +206,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 };
 
 export const onRequestOptions: PagesFunction<Env> = async (context) => {
-  const origin = context.request.headers.get('Origin');
+  const origin = context.request.headers.get('Origin') ?? undefined;
   const corsHeaders = getCorsHeaders(origin, context.env.ALLOWED_ORIGIN);
 
   return new Response(null, {
