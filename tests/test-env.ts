@@ -26,7 +26,6 @@ for (const envPath of envPaths) {
 			}
 		}
 
-		break;
 	}
 }
 
@@ -35,6 +34,7 @@ const requiredVars = [
 	'TWILIO_ACCOUNT_SID',
 	'TWILIO_AUTH_TOKEN',
 	'N8N_API_KEY',
+	'ELEVENLABS_API_KEY',
 ];
 
 for (const variable of requiredVars) {
