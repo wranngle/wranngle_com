@@ -21,7 +21,7 @@ import {useToast} from '@/hooks/use-toast.ts';
 import {Button} from '@/components/ui/button.tsx';
 import FAQ from '@/components/FAQ.tsx';
 
-const FONTS_CSS = `@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');`;
+// Fonts loaded via index.html <link> tag — no runtime @import needed
 const LOGO_URL = 'https://i.ibb.co/WWFmbjKJ/wranngle-wordmark-4096w.png';
 const CONSOLE_LINES = [
   {text: '[INFO] System initializing...', color: 'text-gray-400'},
@@ -516,7 +516,7 @@ const WranngleLanding = () => {
     <div
       className={`min-h-screen font-sans transition-colors duration-500 ${isDark ? 'dark bg-[#12111a]' : 'bg-[#fcfaf5]'}`}
     >
-      <style>{FONTS_CSS}</style>
+      {/* Fonts loaded via index.html preconnect + stylesheet */}
       <style>{`
         :root { --v500: #cf3c69; --s500: #ff5f00; --n950: #12111a; --lasso: 24px 4px 24px 4px; }
         .brand-font { font-family: 'Bricolage Grotesque', sans-serif; }
@@ -536,7 +536,7 @@ const WranngleLanding = () => {
       >
         <header className="sticky top-0 z-50 border-b border-white/10 backdrop-blur-md h-20 flex items-center px-6">
           <div className="max-w-7xl mx-auto w-full flex justify-between items-center">
-            <img src={LOGO_URL} alt="Wranngle" className="h-14 w-auto" />
+            <img src={LOGO_URL} alt="Wranngle" className="h-14 w-auto" width="136" height="56" fetchPriority="high" />
 
             <div className="flex items-center gap-8">
               <nav className="hidden md:flex gap-8 items-center text-sm font-medium">
@@ -565,7 +565,7 @@ const WranngleLanding = () => {
               </div>
 
               <button
-                className="md:hidden p-2"
+                className="md:hidden p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
                 onClick={() => {
                   setMobileMenuOpen(!mobileMenuOpen);
                 }}
@@ -826,7 +826,7 @@ const Card = ({title, desc, accent, isDark}) => (
 );
 
 const ThemeToggle = ({isDark, toggle}) => (
-  <button onClick={toggle} className="p-2 rounded-full hover:bg-white/10">
+  <button onClick={toggle} className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-white/10">
     {isDark ? <Sun size={18} /> : <Moon size={18} />}
   </button>
 );
