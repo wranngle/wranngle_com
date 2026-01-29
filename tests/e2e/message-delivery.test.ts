@@ -10,9 +10,9 @@ const WEBHOOK_URL =
 	'https://n8n.wranngle.com/webhook/universal-message-v1';
 const WEBHOOK_SECRET = 'test-secret-placeholder';
 const TEST_PHONE = process.env.TEST_PHONE_NUMBER || '+12602217355';
-const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID ?? '';
-const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN ?? '';
-const hasCredentials = Boolean(TWILIO_ACCOUNT_SID && TWILIO_AUTH_TOKEN);
+const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID!;
+const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN!;
+const RUN_E2E = process.env.RUN_E2E === 'true';
 
 interface TestCase {
 	template: string;
@@ -150,7 +150,7 @@ async function verifyDelivery(
 	};
 }
 
-describe.skipIf(!hasCredentials)('E2E Message Delivery', () => {
+describe.skipIf(!RUN_E2E)('E2E Message Delivery', () => {
 	describe('Template Delivery', () => {
 		it.skip('should send and deliver all 10 templates', async () => {
 			// Skip in CI to avoid spamming test phone
