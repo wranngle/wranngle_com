@@ -13,13 +13,13 @@ import {
   DialogDescription,
   DialogTrigger,
   DialogClose,
-} from '@/components/ui/dialog';
-import {Input} from '@/components/ui/input';
-import {Textarea} from '@/components/ui/textarea';
-import {Label} from '@/components/ui/label';
-import {useToast} from '@/hooks/use-toast';
-import {Button} from '@/components/ui/button';
-import FAQ from '@/components/FAQ';
+} from '@/components/ui/dialog.tsx';
+import {Input} from '@/components/ui/input.tsx';
+import {Textarea} from '@/components/ui/textarea.tsx';
+import {Label} from '@/components/ui/label.tsx';
+import {useToast} from '@/hooks/use-toast.ts';
+import {Button} from '@/components/ui/button.tsx';
+import FAQ from '@/components/FAQ.tsx';
 
 const FONTS_CSS = `@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');`;
 const LOGO_URL = 'https://i.ibb.co/WWFmbjKJ/wranngle-wordmark-4096w.png';
