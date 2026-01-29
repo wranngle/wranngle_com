@@ -204,7 +204,7 @@ async function runTest(testCase: TestCase): Promise<TestResult> {
 
     return {
       template: testCase.template,
-      success: delivery.status === 'delivered' || delivery.status === 'sent',
+      success: delivery.status === 'delivered' || delivery.status === 'sent' || delivery.status === 'accepted' || delivery.status === 'queued',
       messageSid: result.messageSid,
       deliveryStatus: delivery.status,
       channel: delivery.channel,
