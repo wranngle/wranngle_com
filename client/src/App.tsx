@@ -19,10 +19,10 @@ import {Textarea} from '@/components/ui/textarea.tsx';
 import {Label} from '@/components/ui/label.tsx';
 import {useToast} from '@/hooks/use-toast.ts';
 import {Button} from '@/components/ui/button.tsx';
-import FAQ from '@/components/FAQ.tsx';
+const FAQ = React.lazy(() => import('@/components/FAQ.tsx'));
 
-const FONTS_CSS = `@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');`;
 const LOGO_URL = 'https://i.ibb.co/WWFmbjKJ/wranngle-wordmark-4096w.png';
+const INITIAL_DIM = {w: 0, h: 0};
 const CONSOLE_LINES = [
   {text: '[INFO] System initializing...', color: 'text-gray-400'},
   {text: '> Detecting missed calls (Last 24h)...', color: 'text-gray-300'},
@@ -279,49 +279,79 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
   );
 };
 
+const FACTS_DATA = {
+  premium: {
+    tierName: 'Elite',
+    discountPercent: 20,
+    pricing: {monthly: 500, annualMonthly: 400, addon: 250},
+    specs: {
+      coverage: '24/7/365',
+      ingredients:
+        'PREMIUM NEURAL AUDIO (ELEVENLABS), DUAL-AGENT ON-CALL LOGIC, CAL.COM SYNC, 10DLC COMPLIANT SMS, UNIFIED INBOX ENGINE.',
+    },
+    limits: {minutes: '2,500', sms: '1,500'},
+    features: [
+      'Triple-channel Voice + Web + SMS AI Agents',
+      'Dual-Agent On-Call System',
+      'Lead Qualification',
+      'Two-Way SMS (Unique Number)',
+      'Cal.com Integration',
+      'Unified AI Inbox',
+      'Priority Support',
+    ],
+  },
+  basic: {
+    tierName: 'Core',
+    discountPercent: 15,
+    pricing: {monthly: 250, annualMonthly: 212.5, addon: 250},
+    specs: {
+      coverage: 'After Hours',
+      ingredients:
+        'NATURAL LANGUAGE PROCESSING, LEAD SCORING ALGORITHM, TWILIO VOICE STACK, SHARED SMS POOL, ONE-WAY NOTIFICATIONS, 100% AUTOMATION.',
+    },
+    limits: {minutes: '1,000', sms: '500'},
+    features: [
+      'Voice-only AI Agent',
+      'Service Call Detection',
+      'Lead Scoring & Qualification',
+      'One-Way Shared SMS Notify',
+      'Call Forwarding to Mobile',
+      'Standard Trade Training Data',
+      'Basic Support',
+    ],
+  },
+};
+
+const PRICING_PACKAGES = [
+  {
+    id: 'basic',
+    name: 'Core Agent',
+    price: '250',
+    features: [
+      'Voice-only AI Agent',
+      'After-hours coverage',
+      'SMS Follow-up',
+      'Email lead capture',
+      'Basic Support',
+    ],
+  },
+  {
+    id: 'premium',
+    name: 'Elite Agent',
+    price: '500',
+    features: [
+      'Triple-channel Voice + Web + SMS AI Agents',
+      '24/7 Priority coverage',
+      'Calendar Integration',
+      'Direct Transfer capability',
+      'Custom Voice Identity',
+      'Priority Support',
+    ],
+  },
+];
+
 const PricingCard = ({pkg, isDark}) => {
-  const factsData =
-    pkg.id === 'premium'
-      ? {
-          tierName: 'Elite',
-          discountPercent: 20,
-          pricing: {monthly: 500, annualMonthly: 400, addon: 250},
-          specs: {
-            coverage: '24/7/365',
-            ingredients:
-              'PREMIUM NEURAL AUDIO (ELEVENLABS), DUAL-AGENT ON-CALL LOGIC, CAL.COM SYNC, 10DLC COMPLIANT SMS, UNIFIED INBOX ENGINE.',
-          },
-          limits: {minutes: '2,500', sms: '1,500'},
-          features: [
-            'Triple-channel Voice + Web + SMS AI Agents',
-            'Dual-Agent On-Call System',
-            'Lead Qualification',
-            'Two-Way SMS (Unique Number)',
-            'Cal.com Integration',
-            'Unified AI Inbox',
-            'Priority Support',
-          ],
-        }
-      : {
-          tierName: 'Core',
-          discountPercent: 15,
-          pricing: {monthly: 250, annualMonthly: 212.5, addon: 250},
-          specs: {
-            coverage: 'After Hours',
-            ingredients:
-              'NATURAL LANGUAGE PROCESSING, LEAD SCORING ALGORITHM, TWILIO VOICE STACK, SHARED SMS POOL, ONE-WAY NOTIFICATIONS, 100% AUTOMATION.',
-          },
-          limits: {minutes: '1,000', sms: '500'},
-          features: [
-            'Voice-only AI Agent',
-            'Service Call Detection',
-            'Lead Scoring & Qualification',
-            'One-Way Shared SMS Notify',
-            'Call Forwarding to Mobile',
-            'Standard Trade Training Data',
-            'Basic Support',
-          ],
-        };
+  const factsData = FACTS_DATA[pkg.id];
 
   return (
     <div className="relative group h-full">
@@ -409,33 +439,7 @@ const PricingSection = ({isDark, onSelect}) => {
         </h2>
       </div>
       <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        {[
-          {
-            id: 'basic',
-            name: 'Core Agent',
-            price: '250',
-            features: [
-              'Voice-only AI Agent',
-              'After-hours coverage',
-              'SMS Follow-up',
-              'Email lead capture',
-              'Basic Support',
-            ],
-          },
-          {
-            id: 'premium',
-            name: 'Elite Agent',
-            price: '500',
-            features: [
-              'Triple-channel Voice + Web + SMS AI Agents',
-              '24/7 Priority coverage',
-              'Calendar Integration',
-              'Direct Transfer capability',
-              'Custom Voice Identity',
-              'Priority Support',
-            ],
-          },
-        ].map((pkg) => (
+        {PRICING_PACKAGES.map((pkg) => (
           <PricingCard key={pkg.id} pkg={pkg} isDark={isDark} />
         ))}
       </div>
@@ -516,27 +520,12 @@ const WranngleLanding = () => {
     <div
       className={`min-h-screen font-sans transition-colors duration-500 ${isDark ? 'dark bg-[#12111a]' : 'bg-[#fcfaf5]'}`}
     >
-      <style>{FONTS_CSS}</style>
-      <style>{`
-        :root { --v500: #cf3c69; --s500: #ff5f00; --n950: #12111a; --lasso: 24px 4px 24px 4px; }
-        .brand-font { font-family: 'Bricolage Grotesque', sans-serif; }
-        .mono-font { font-family: 'JetBrains Mono', monospace; }
-        .bg-page-dark { background: radial-gradient(circle at 50% 0%, #2d0914 0%, var(--n950) 60%); --shadow-card: 0 6px 16px rgba(0, 0, 0, 0.4); }
-        .bg-page-light { background: linear-gradient(to bottom, #fcfaf5, #ebdfc8); --shadow-card: 0 6px 16px rgba(18, 17, 26, 0.08); }
-        
-        .noise-overlay::before {
-            content: ''; position: absolute; inset: 0;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            opacity: 0.04; pointer-events: none; z-index: 0;
-        }
-      `}</style>
-
       <div
         className={`min-h-screen flex flex-col ${isDark ? 'bg-page-dark text-[#fcfaf5]' : 'bg-page-light text-[#12111a]'}`}
       >
         <header className="sticky top-0 z-50 border-b border-white/10 backdrop-blur-md h-20 flex items-center px-6">
           <div className="max-w-7xl mx-auto w-full flex justify-between items-center">
-            <img src={LOGO_URL} alt="Wranngle" className="h-14 w-auto" />
+            <img src={LOGO_URL} alt="Wranngle" className="h-14 w-auto" width="136" height="56" fetchPriority="high" />
 
             <div className="flex items-center gap-8">
               <nav className="hidden md:flex gap-8 items-center text-sm font-medium">
@@ -565,7 +554,7 @@ const WranngleLanding = () => {
               </div>
 
               <button
-                className="md:hidden p-2"
+                className="md:hidden p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
                 onClick={() => {
                   setMobileMenuOpen(!mobileMenuOpen);
                 }}
@@ -762,7 +751,9 @@ const WranngleLanding = () => {
           </div>
         </section>
 
-        <FAQ isDark={isDark} />
+        <React.Suspense fallback={null}>
+          <FAQ isDark={isDark} />
+        </React.Suspense>
 
         <footer className="py-12 border-t border-white/10 px-6 text-xs mono-font">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
@@ -826,7 +817,7 @@ const Card = ({title, desc, accent, isDark}) => (
 );
 
 const ThemeToggle = ({isDark, toggle}) => (
-  <button onClick={toggle} className="p-2 rounded-full hover:bg-white/10">
+  <button onClick={toggle} className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-white/10">
     {isDark ? <Sun size={18} /> : <Moon size={18} />}
   </button>
 );
@@ -835,7 +826,7 @@ const ConsoleVisual = ({isDark, lines}) => {
   const [display, setDisplay] = useState([]);
   const idx = useRef(0);
   const containerRef = useRef(null);
-  const [dim, setDim] = useState({w: 0, h: 0});
+  const [dim, setDim] = useState(INITIAL_DIM);
 
   useEffect(() => {
     setDisplay([]);
