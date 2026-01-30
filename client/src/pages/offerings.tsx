@@ -155,15 +155,22 @@ function OfferingCard({item, isDark}: {item: OfferingItem; isDark: boolean}) {
           <p className="text-sm opacity-60 mb-6">{item.description}</p>
 
           <div className="flex-1 flex flex-col">
-            <div className="text-4xl font-bold mb-6">
-              ${item.price}
-              {item.facts ? (
-                <span className="text-sm font-normal opacity-50">/mo</span>
-              ) : (
-                <span className="text-sm font-normal opacity-50">
-                  {' '}
-                  one-time
-                </span>
+            <div className="mb-6">
+              <div className="text-4xl font-bold">
+                ${item.price}
+                {item.facts ? (
+                  <span className="text-sm font-normal opacity-50">/mo</span>
+                ) : (
+                  <span className="text-sm font-normal opacity-50">
+                    {' '}
+                    one-time
+                  </span>
+                )}
+              </div>
+              {item.monthlyAddon && (
+                <div className="text-sm opacity-60 mt-1">
+                  + ${item.monthlyAddon.price}/mo {item.monthlyAddon.label}
+                </div>
               )}
             </div>
             <ul className="space-y-3 mb-8 flex-1">

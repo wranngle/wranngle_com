@@ -18,6 +18,78 @@ import {getOfferingById} from '@/data/offerings.ts';
 
 const isAgentPackage = (id) => id === 'basic' || id === 'premium';
 
+function OrderReceipt({successData}) {
+  const submittedOffering = getOfferingById(successData.package);
+  const itemName =
+    submittedOffering?.name?.toUpperCase() ?? successData.package.toUpperCase();
+  const itemPrice = submittedOffering?.price ?? '0';
+
+  return (
+    <div className="bg-[#f0f0f0] p-6 rounded-sm shadow-xl max-w-sm mx-auto font-mono text-black relative border-t-8 border-[var(--s500)]">
+      <div className="border-b-2 border-dashed border-gray-400 pb-4 mb-4 text-center">
+        <div className="font-bold text-lg tracking-wider">WRANNGLE SYSTEMS</div>
+        <div className="text-xs opacity-60">ORDER CONFIRMATION</div>
+      </div>
+
+      <div className="space-y-2 text-sm mb-6">
+        <div className="flex justify-between">
+          <span>REF:</span>
+          <span>{Math.random().toString(36).slice(2, 11).toUpperCase()}</span>
+        </div>
+        <div className="flex justify-between">
+          <span>DATE:</span>
+          <span>{new Date().toLocaleDateString()}</span>
+        </div>
+        <div className="border-b border-dashed border-gray-400 my-2" />
+        <div className="flex justify-between font-bold">
+          <span>ITEM</span>
+          <span>AMT</span>
+        </div>
+        <div className="flex justify-between">
+          <span>{itemName}</span>
+          <span>${itemPrice}</span>
+        </div>
+        {submittedOffering?.monthlyAddon && (
+          <div className="flex justify-between opacity-70">
+            <span>+ {submittedOffering.monthlyAddon.label}</span>
+            <span>${submittedOffering.monthlyAddon.price}/mo</span>
+          </div>
+        )}
+        {successData.addWebChatAgent && (
+          <div className="flex justify-between opacity-70">
+            <span>WEB CHAT AGENT</span>
+            <span>$250/mo</span>
+          </div>
+        )}
+        <div className="border-b border-dashed border-gray-400 my-2" />
+        <div className="flex justify-between font-bold text-lg">
+          <span>TOTAL</span>
+          <span>${itemPrice}.00</span>
+        </div>
+      </div>
+
+      <div className="text-center text-xs space-y-2 bg-white/50 p-3 rounded">
+        <div className="font-bold text-[var(--s500)]">PAYMENT PENDING</div>
+        <div>Invoice sent to:</div>
+        <div className="font-bold">{successData.email}</div>
+      </div>
+
+      <div className="mt-6 text-[10px] text-center opacity-60">
+        THANK YOU FOR YOUR BUSINESS
+      </div>
+
+      <DialogClose asChild>
+        <Button
+          variant="outline"
+          className="w-full mt-6 border-black/20 text-black hover:bg-black hover:text-white transition-colors"
+        >
+          CLOSE RECEIPT
+        </Button>
+      </DialogClose>
+    </div>
+  );
+}
+
 const IntakeForm = ({selectedPackage, onSuccess}) => {
   const [currentPackage, setCurrentPackage] = useState(selectedPackage);
   const offering = getOfferingById(currentPackage);
@@ -60,66 +132,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
   });
 
   if (successData) {
-    const submittedOffering = getOfferingById(successData.package);
-    const itemName =
-      submittedOffering?.name?.toUpperCase() ??
-      successData.package.toUpperCase();
-    const itemPrice = submittedOffering?.price ?? '0';
-
-    return (
-      <div className="bg-[#f0f0f0] p-6 rounded-sm shadow-xl max-w-sm mx-auto font-mono text-black relative border-t-8 border-[var(--s500)]">
-        <div className="border-b-2 border-dashed border-gray-400 pb-4 mb-4 text-center">
-          <div className="font-bold text-lg tracking-wider">
-            WRANNGLE SYSTEMS
-          </div>
-          <div className="text-xs opacity-60">ORDER CONFIRMATION</div>
-        </div>
-
-        <div className="space-y-2 text-sm mb-6">
-          <div className="flex justify-between">
-            <span>REF:</span>
-            <span>{Math.random().toString(36).slice(2, 11).toUpperCase()}</span>
-          </div>
-          <div className="flex justify-between">
-            <span>DATE:</span>
-            <span>{new Date().toLocaleDateString()}</span>
-          </div>
-          <div className="border-b border-dashed border-gray-400 my-2" />
-          <div className="flex justify-between font-bold">
-            <span>ITEM</span>
-            <span>AMT</span>
-          </div>
-          <div className="flex justify-between">
-            <span>{itemName}</span>
-            <span>${itemPrice}</span>
-          </div>
-          <div className="border-b border-dashed border-gray-400 my-2" />
-          <div className="flex justify-between font-bold text-lg">
-            <span>TOTAL</span>
-            <span>${itemPrice}.00</span>
-          </div>
-        </div>
-
-        <div className="text-center text-xs space-y-2 bg-white/50 p-3 rounded">
-          <div className="font-bold text-[var(--s500)]">PAYMENT PENDING</div>
-          <div>Invoice sent to:</div>
-          <div className="font-bold">{successData.email}</div>
-        </div>
-
-        <div className="mt-6 text-[10px] text-center opacity-60">
-          THANK YOU FOR YOUR BUSINESS
-        </div>
-
-        <DialogClose asChild>
-          <Button
-            variant="outline"
-            className="w-full mt-6 border-black/20 text-black hover:bg-black hover:text-white transition-colors"
-          >
-            CLOSE RECEIPT
-          </Button>
-        </DialogClose>
-      </div>
-    );
+    return <OrderReceipt successData={successData} />;
   }
 
   const isAgent = isAgentPackage(currentPackage);
@@ -177,7 +190,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
         </div>
       )}
 
-      {currentPackage === 'starter-site' && (
+      {currentPackage === 'landing-page' && (
         <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-4 items-start">
           <Zap className="text-[var(--s500)] shrink-0" size={20} />
           <div>
@@ -300,6 +313,28 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
             }
           />
         </div>
+        {!isAgent && (
+          <div className="p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-4 items-start">
+            <Zap className="text-[var(--s500)] shrink-0" size={20} />
+            <div>
+              <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider mb-1">
+                Add-On: Web Chat Agent
+              </div>
+              <p className="text-[11px] opacity-80 leading-relaxed mb-2">
+                Capture leads 24/7 with an AI-powered web chat agent on your new
+                site.
+              </p>
+              <label className="flex items-center gap-2 text-[11px] cursor-pointer">
+                <input
+                  type="checkbox"
+                  {...register('addWebChatAgent')}
+                  className="accent-[var(--s500)]"
+                />
+                <span>Add Web Chat Agent (+$250/mo)</span>
+              </label>
+            </div>
+          </div>
+        )}
         <input type="hidden" {...register('package')} value={currentPackage} />
         <Button
           type="submit"
