@@ -24,7 +24,7 @@ type WelcomeEmailRequest = {
 
 export const onRequestPost: PagesFunction<Env> = async ({request, env}) => {
   try {
-    const body = (await request.json()) as WelcomeEmailRequest;
+    const body = await request.json();
 
     // Validate input
     if (!body.email || !body.name || !body.packageName) {
