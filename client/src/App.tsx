@@ -3,23 +3,12 @@ import React, {useState, useEffect, useRef} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
 import {Check, ArrowRight, Menu, X, Moon, Sun, Zap} from 'lucide-react';
 import {Link} from 'wouter';
-import {useForm} from 'react-hook-form';
-import {useMutation} from '@tanstack/react-query';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogTrigger,
-  DialogClose,
-} from '@/components/ui/dialog.tsx';
-import {Input} from '@/components/ui/input.tsx';
-import {Textarea} from '@/components/ui/textarea.tsx';
-import {Label} from '@/components/ui/label.tsx';
-import {useToast} from '@/hooks/use-toast.ts';
+import {OFFERING_CATEGORIES} from '@/data/offerings.ts';
+import IntakeForm from '@/components/IntakeForm.tsx';
+import {Dialog, DialogContent, DialogTrigger} from '@/components/ui/dialog.tsx';
 import {Button} from '@/components/ui/button.tsx';
-const FAQ = React.lazy(() => import('@/components/FAQ.tsx'));
+
+const FAQ = React.lazy(async () => import('@/components/FAQ.tsx'));
 
 const LOGO_URL = 'https://i.ibb.co/WWFmbjKJ/wranngle-wordmark-4096w.png';
 const INITIAL_DIM = {w: 0, h: 0};
@@ -33,322 +22,11 @@ const CONSOLE_LINES = [
   {text: '\n[READY] Agent awaiting deployment command.', color: 'text-white'},
 ];
 
-const IntakeForm = ({selectedPackage, onSuccess}) => {
-  const [currentPackage, setCurrentPackage] = useState(selectedPackage);
-  const {register, handleSubmit, reset, setValue} = useForm({
-    defaultValues: {package: currentPackage},
-  });
-  const {toast} = useToast();
-  const [successData, setSuccessData] = useState(null);
-
-  useEffect(() => {
-    setValue('package', currentPackage);
-  }, [currentPackage, setValue]);
-
-  const mutation = useMutation({
-    async mutationFn(data) {
-      const res = await fetch('/api/leads', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error('Failed to submit');
-      return res.json();
-    },
-    onSuccess(_, variables) {
-      setSuccessData(variables);
-      toast({
-        title: 'Order Received',
-        description: 'Invoice generated successfully.',
-      });
-      reset();
-      onSuccess?.();
-    },
-    onError(error) {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
-    },
-  });
-
-  if (successData) {
-    return (
-      <div className="bg-[#f0f0f0] p-6 rounded-sm shadow-xl max-w-sm mx-auto font-mono text-black relative border-t-8 border-[var(--s500)]">
-        <div className="border-b-2 border-dashed border-gray-400 pb-4 mb-4 text-center">
-          <div className="font-bold text-lg tracking-wider">
-            WRANNGLE SYSTEMS
-          </div>
-          <div className="text-xs opacity-60">ORDER CONFIRMATION</div>
-        </div>
-
-        <div className="space-y-2 text-sm mb-6">
-          <div className="flex justify-between">
-            <span>REF:</span>
-            <span>{Math.random().toString(36).slice(2, 11).toUpperCase()}</span>
-          </div>
-          <div className="flex justify-between">
-            <span>DATE:</span>
-            <span>{new Date().toLocaleDateString()}</span>
-          </div>
-          <div className="border-b border-dashed border-gray-400 my-2" />
-          <div className="flex justify-between font-bold">
-            <span>ITEM</span>
-            <span>AMT</span>
-          </div>
-          <div className="flex justify-between">
-            <span>
-              {successData.package === 'premium'
-                ? 'ELITE AGENT'
-                : 'STARTER AGENT'}
-            </span>
-            <span>${successData.package === 'premium' ? '500' : '250'}</span>
-          </div>
-          <div className="border-b border-dashed border-gray-400 my-2" />
-          <div className="flex justify-between font-bold text-lg">
-            <span>TOTAL</span>
-            <span>
-              ${successData.package === 'premium' ? '500.00' : '250.00'}
-            </span>
-          </div>
-        </div>
-
-        <div className="text-center text-xs space-y-2 bg-white/50 p-3 rounded">
-          <div className="font-bold text-[var(--s500)]">PAYMENT PENDING</div>
-          <div>Invoice sent to:</div>
-          <div className="font-bold">{successData.email}</div>
-        </div>
-
-        <div className="mt-6 text-[10px] text-center opacity-60">
-          THANK YOU FOR YOUR BUSINESS
-        </div>
-
-        <DialogClose asChild>
-          <Button
-            variant="outline"
-            className="w-full mt-6 border-black/20 text-black hover:bg-black hover:text-white transition-colors"
-          >
-            CLOSE RECEIPT
-          </Button>
-        </DialogClose>
-      </div>
-    );
-  }
-
-  return (
-    <>
-      <DialogHeader>
-        <DialogTitle className="brand-font text-2xl">
-          Agent Intake Form
-        </DialogTitle>
-        <DialogDescription>
-          Tell us about your business to get your agent ready.
-        </DialogDescription>
-      </DialogHeader>
-
-      {currentPackage === 'basic' && (
-        <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-4 items-start">
-          <Zap className="text-[var(--s500)] shrink-0" size={20} />
-          <div>
-            <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider mb-1">
-              Recommended Upgrade
-            </div>
-            <p className="text-[11px] opacity-80 leading-relaxed mb-2">
-              Best Practice: 84% of trade businesses see 2x lead conversion when
-              combining <b>Voice Agent</b> with <b>Web Chat</b>.
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                setCurrentPackage('premium');
-              }}
-              className="mt-2 flex items-center gap-2 text-[10px] font-bold text-[var(--s500)] border border-[var(--s500)] px-3 py-1.5 rounded hover:bg-[var(--s500)] hover:text-white transition-all uppercase tracking-wide"
-            >
-              Upgrade to Elite Agent (+$250/mo) <ArrowRight size={10} />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {currentPackage === 'premium' && (
-        <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/10 rounded-lg flex gap-4 items-center">
-          <div className="w-5 h-5 rounded-full bg-[var(--s500)] flex items-center justify-center text-white shrink-0">
-            <Check size={12} strokeWidth={4} />
-          </div>
-          <div>
-            <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider">
-              Elite Agent Secured
-            </div>
-            <p className="text-[11px] opacity-80 leading-relaxed">
-              Priority 24/7 Coverage + Web Chat Integration included.
-            </p>
-          </div>
-        </div>
-      )}
-
-      <form
-        onSubmit={handleSubmit((data) => {
-          mutation.mutate(data);
-        })}
-        className="space-y-4 py-4"
-      >
-        <div className="grid gap-2">
-          <Label htmlFor="businessName">Business Name</Label>
-          <Input
-            id="businessName"
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]"
-            {...register('businessName', {required: true})}
-            placeholder="Apex Plumbing"
-          />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="industry">Industry / Trade</Label>
-          <Input
-            id="industry"
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]"
-            {...register('industry', {required: true})}
-            placeholder="HVAC / Electrical / etc."
-          />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="ownerName">Contact Person</Label>
-          <Input
-            id="ownerName"
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]"
-            {...register('ownerName', {required: true})}
-            placeholder="John Doe"
-          />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="email">Email Address</Label>
-          <Input
-            id="email"
-            type="email"
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]"
-            {...register('email', {required: true})}
-            placeholder="john@example.com"
-          />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="phone">Phone Number</Label>
-          <Input
-            id="phone"
-            type="tel"
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]"
-            {...register('phone', {required: true})}
-            placeholder="(555) 000-0000"
-          />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="agentName">
-            What would you like to name your AI agent? (Optional)
-          </Label>
-          <Input
-            id="agentName"
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]"
-            {...register('agentName')}
-            placeholder="Sarah, Max, Alex..."
-            maxLength={50}
-          />
-          <p className="text-xs opacity-60">
-            This will be the name of your AI assistant
-          </p>
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="notes">Additional Notes (Optional)</Label>
-          <Textarea
-            id="notes"
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)] min-h-[100px]"
-            {...register('notes')}
-            placeholder="AI behavior, specific questions, current phone system details, etc."
-          />
-        </div>
-        <input type="hidden" {...register('package')} value={currentPackage} />
-        <Button
-          type="submit"
-          className="w-full bg-[var(--s500)] hover:bg-[var(--s500)]/90"
-          disabled={mutation.isPending}
-        >
-          {mutation.isPending
-            ? 'Initializing...'
-            : `Confirm ${currentPackage === 'premium' ? 'Elite' : 'Starter'} Deployment`}
-        </Button>
-      </form>
-    </>
-  );
-};
-
-const FACTS_DATA = {
-  premium: {
-    tierName: 'Elite',
-    discountPercent: 20,
-    pricing: {monthly: 500, annualMonthly: 400, addon: 250},
-    specs: {
-      coverage: '24/7/365',
-      ingredients:
-        'PREMIUM NEURAL AUDIO (ELEVENLABS), DUAL-AGENT ON-CALL LOGIC, CAL.COM SYNC, 10DLC COMPLIANT SMS, UNIFIED INBOX ENGINE.',
-    },
-    limits: {minutes: '2,500', sms: '1,500'},
-    features: [
-      'Triple-channel Voice + Web + SMS AI Agents',
-      'Dual-Agent On-Call System',
-      'Lead Qualification',
-      'Two-Way SMS (Unique Number)',
-      'Cal.com Integration',
-      'Unified AI Inbox',
-      'Priority Support',
-    ],
-  },
-  basic: {
-    tierName: 'Core',
-    discountPercent: 15,
-    pricing: {monthly: 250, annualMonthly: 212.5, addon: 250},
-    specs: {
-      coverage: 'After Hours',
-      ingredients:
-        'NATURAL LANGUAGE PROCESSING, LEAD SCORING ALGORITHM, TWILIO VOICE STACK, SHARED SMS POOL, ONE-WAY NOTIFICATIONS, 100% AUTOMATION.',
-    },
-    limits: {minutes: '1,000', sms: '500'},
-    features: [
-      'Voice-only AI Agent',
-      'Service Call Detection',
-      'Lead Scoring & Qualification',
-      'One-Way Shared SMS Notify',
-      'Call Forwarding to Mobile',
-      'Standard Trade Training Data',
-      'Basic Support',
-    ],
-  },
-};
-
-const PRICING_PACKAGES = [
-  {
-    id: 'basic',
-    name: 'Core Agent',
-    price: '250',
-    features: [
-      'Voice-only AI Agent',
-      'After-hours coverage',
-      'SMS Follow-up',
-      'Email lead capture',
-      'Basic Support',
-    ],
-  },
-  {
-    id: 'premium',
-    name: 'Elite Agent',
-    price: '500',
-    features: [
-      'Triple-channel Voice + Web + SMS AI Agents',
-      '24/7 Priority coverage',
-      'Calendar Integration',
-      'Direct Transfer capability',
-      'Custom Voice Identity',
-      'Priority Support',
-    ],
-  },
-];
+const agentCategory = OFFERING_CATEGORIES.find((c) => c.id === 'ai-agents')!;
+const FACTS_DATA = Object.fromEntries(
+  agentCategory.items.filter((i) => i.facts).map((i) => [i.id, i.facts]),
+);
+const PRICING_PACKAGES = agentCategory.items;
 
 const PricingCard = ({pkg, isDark}) => {
   const factsData = FACTS_DATA[pkg.id];
@@ -443,6 +121,13 @@ const PricingSection = ({isDark, onSelect}) => {
           <PricingCard key={pkg.id} pkg={pkg} isDark={isDark} />
         ))}
       </div>
+      <div className="text-center mt-12">
+        <Link href="/offerings">
+          <a className="inline-flex items-center gap-2 text-[var(--s500)] font-bold uppercase text-sm tracking-wider hover:underline transition-all">
+            View All Offerings <ArrowRight size={16} />
+          </a>
+        </Link>
+      </div>
     </section>
   );
 };
@@ -525,10 +210,20 @@ const WranngleLanding = () => {
       >
         <header className="sticky top-0 z-50 border-b border-white/10 backdrop-blur-md h-20 flex items-center px-6">
           <div className="max-w-7xl mx-auto w-full flex justify-between items-center">
-            <img src={LOGO_URL} alt="Wranngle" className="h-14 w-auto" width="136" height="56" fetchPriority="high" />
+            <img
+              src={LOGO_URL}
+              alt="Wranngle"
+              className="h-14 w-auto"
+              width="136"
+              height="56"
+              fetchPriority="high"
+            />
 
             <div className="flex items-center gap-8">
               <nav className="hidden md:flex gap-8 items-center text-sm font-medium">
+                <Link href="/offerings">
+                  <a>Offerings</a>
+                </Link>
                 <a href="#pricing">Pricing</a>
                 <a href="#features">Features</a>
                 <ThemeToggle isDark={isDark} toggle={toggleTheme} />
@@ -574,6 +269,15 @@ const WranngleLanding = () => {
               className={`fixed inset-0 z-40 md:hidden pt-28 px-6 ${isDark ? 'bg-[#12111a]' : 'bg-[#fcfaf5]'} overflow-y-auto`}
             >
               <nav className="flex flex-col gap-6 text-2xl font-bold brand-font">
+                <Link href="/offerings">
+                  <a
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    Offerings
+                  </a>
+                </Link>
                 <a
                   href="#pricing"
                   onClick={() => {
@@ -817,7 +521,10 @@ const Card = ({title, desc, accent, isDark}) => (
 );
 
 const ThemeToggle = ({isDark, toggle}) => (
-  <button onClick={toggle} className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-white/10">
+  <button
+    onClick={toggle}
+    className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-white/10"
+  >
     {isDark ? <Sun size={18} /> : <Moon size={18} />}
   </button>
 );
