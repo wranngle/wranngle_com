@@ -11,6 +11,7 @@ type LeadInput = {
   email: string;
   package: string;
   agentName?: string;
+  addWebChatAgent?: boolean;
   status?: string;
   notes?: string;
 };
@@ -59,7 +60,7 @@ function validateLead(
   }
 
   // Validate package value
-  const validPackages = ['basic', 'premium'];
+  const validPackages = ['basic', 'premium', 'landing-page', 'business-site'];
   if (!validPackages.includes(b.package as string)) {
     return {valid: false, error: 'Invalid package selection'};
   }
@@ -93,6 +94,7 @@ function validateLead(
       agentName: b.agentName
         ? sanitizeString(b.agentName as string, 50)
         : undefined,
+      addWebChatAgent: b.addWebChatAgent === true ? true : undefined,
       status: (b.status as string) || 'pending',
       notes: b.notes ? sanitizeString(b.notes as string, 1000) : undefined,
     },

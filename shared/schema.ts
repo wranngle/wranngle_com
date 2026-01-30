@@ -21,6 +21,7 @@ export const insertLeadSchema = type({
   'agentName?': 'string',
   'status?': 'string',
   'notes?': 'string',
+  'addWebChatAgent?': 'boolean',
   // SMS consent fields for multi-channel messaging
   'smsConsent?': 'boolean',
   'smsConsentTimestamp?': 'string',
@@ -38,6 +39,7 @@ export const leadSchema = type({
   'agentName?': 'string',
   'status?': 'string',
   'notes?': 'string',
+  'addWebChatAgent?': 'boolean',
   // SMS consent fields for multi-channel messaging
   'smsConsent?': 'boolean',
   'smsConsentTimestamp?': 'string',

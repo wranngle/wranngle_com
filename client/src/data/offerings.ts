@@ -21,6 +21,7 @@ export type OfferingItem = {
   features: string[];
   badge?: string;
   cta: string;
+  monthlyAddon?: {price: string; label: string};
   facts?: OfferingFacts;
 };
 
@@ -119,18 +120,20 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
       'High-performance websites built to convert visitors into customers.',
     items: [
       {
-        id: 'starter-site',
-        name: 'Starter Site',
-        price: '1,500',
+        id: 'landing-page',
+        name: 'Landing Page',
+        price: '900',
         description:
-          'Professional single-page website with mobile-first design and SEO basics.',
+          'Custom landing page with responsive design, SEO, and ongoing maintenance.',
         cta: 'Get Started',
+        monthlyAddon: {price: '100', label: 'maintenance'},
         features: [
-          'Single-page responsive design',
+          'Custom responsive design',
           'Mobile-first build',
           'SEO fundamentals',
           'Contact form integration',
-          'Cloudflare hosting (1 year)',
+          'Cloudflare hosting',
+          'Monthly maintenance & security updates',
         ],
       },
       {
