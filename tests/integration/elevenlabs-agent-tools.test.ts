@@ -49,7 +49,7 @@ describe('ElevenLabs Agent Tools', () => {
 			const tools = await getAgentTools(SARAH_ID);
 			const sendMessage = tools.find((t: any) => t.name === 'send_message');
 			const headers = sendMessage.api_schema.request_headers;
-			expect(headers['X-Webhook-Secret']).toBe('wranngle-msg-2026');
+			expect(headers['X-Webhook-Secret']).toBe(process.env.N8N_WEBHOOK_SECRET);
 		});
 
 		it('should have send_message instructions in system prompt', async () => {

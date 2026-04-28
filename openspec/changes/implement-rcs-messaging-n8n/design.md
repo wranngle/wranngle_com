@@ -56,13 +56,13 @@
 **Headers:**
 ```
 Content-Type: application/json
-X-Webhook-Secret: wranngle-msg-2026
+X-Webhook-Secret: <N8N_WEBHOOK_SECRET>
 ```
 
 **Body:**
 ```json
 {
-  "phone_number": "+12602217355",
+  "phone_number": "+1XXXXXXXXXX",
   "channel": "auto",
   "template": "welcome",
   "variables": {
@@ -90,7 +90,7 @@ X-Webhook-Secret: wranngle-msg-2026
   "status": "delivered",
   "channel": "rcs",
   "message_sid": "SMxxxxxxxxx",
-  "recipient": "+12602217355",
+  "recipient": "+1XXXXXXXXXX",
   "template": "welcome",
   "request_id": "1737781234-abc123"
 }
@@ -187,7 +187,7 @@ const TEMPLATES = {
 POST /2010-04-01/Accounts/{AccountSid}/Messages.json
 
 Body:
-  To: +12602217355
+  To: +1XXXXXXXXXX
   From: +18882662193
   Body: Hi Cody! Your Elite Agent...
 ```
@@ -197,7 +197,7 @@ Body:
 POST /2010-04-01/Accounts/{AccountSid}/Messages.json
 
 Body:
-  To: +12602217355
+  To: +1XXXXXXXXXX
   MessagingServiceSid: MGxxxxxxxxx        // Messaging Service with RCS Sender
   ContentSid: HXxxxxxxxxx                  // Content API template ID
   ContentVariables: {"1":"Cody","2":"Elite Agent"}
