@@ -9,9 +9,9 @@
  * Reference: https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.sendemail/
  */
 import { readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
+import { join, resolve } from 'path';
 
-const root = 'C:/Users/root/Documents/dev/wranngle.com';
+const root = process.env.PROJECT_ROOT || resolve(__dirname, '..');
 
 // Read templates
 const masterTemplate = readFileSync(join(root, 'email-templates/master/master-template.html'), 'utf8');
@@ -145,8 +145,12 @@ console.log('✅ Validation passed: emailFormat=html, html content present');
 
 // Deploy if --deploy flag is passed
 if (process.argv.includes('--deploy')) {
-  const N8N_API_KEY = process.env.N8N_API_KEY || 'REDACTED_N8N_JWT';
-  const WORKFLOW_ID = 'SY5XCbzxX32eCIeO';
+  const N8N_API_KEY = process.env.N8N_API_KEY;
+  const WORKFLOW_ID = process.env.N8N_WORKFLOW_ID;
+  if (!N8N_API_KEY || !WORKFLOW_ID) {
+    console.error('❌ Missing required environment variables for --deploy: N8N_API_KEY, N8N_WORKFLOW_ID');
+    process.exit(1);
+  }
 
   console.log('\n📤 Deploying to n8n...');
 

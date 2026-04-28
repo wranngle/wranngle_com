@@ -18,6 +18,8 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+*.backup
+.absorbed/
 
 # Logs
 npm-debug.log*

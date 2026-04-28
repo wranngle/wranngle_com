@@ -8,10 +8,19 @@
 
 import { MessageBuilder } from '../email-templates/sms/build/message-builder';
 
-const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID || 'REDACTED_TWILIO_SID';
-const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN || 'a5d7bfaa399fae6df2ef2f572e7f06fb';
-const TWILIO_FROM_NUMBER = process.env.TWILIO_FROM_NUMBER || '+15550100';
-const TEST_PHONE = process.env.TEST_PHONE_CODY || '+12602217355';
+function requireEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    console.error(`❌ Missing required environment variable: ${name}`);
+    process.exit(1);
+  }
+  return value;
+}
+
+const TWILIO_ACCOUNT_SID = requireEnv('TWILIO_ACCOUNT_SID');
+const TWILIO_AUTH_TOKEN = requireEnv('TWILIO_AUTH_TOKEN');
+const TWILIO_FROM_NUMBER = requireEnv('TWILIO_FROM_NUMBER');
+const TEST_PHONE = requireEnv('TEST_PHONE_NUMBER');
 
 interface SendResult {
   template: string;

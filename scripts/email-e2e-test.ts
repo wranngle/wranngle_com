@@ -12,9 +12,13 @@
 
 import { EmailTemplateBuilder } from '../email-templates/build/template-builder';
 
-const SMTP2GO_API_KEY = process.env.SMTP2GO_API_KEY || 'api-9DD084EC7F7744DFB7037928ACF689EC';
-const TEST_RECIPIENT = 'cody@wranngle.com';
-const FROM_EMAIL = 'noreply@wranngle.com';
+const SMTP2GO_API_KEY = process.env.SMTP2GO_API_KEY;
+if (!SMTP2GO_API_KEY) {
+  console.error('❌ Missing required environment variable: SMTP2GO_API_KEY');
+  process.exit(1);
+}
+const TEST_RECIPIENT = process.env.TEST_RECIPIENT_EMAIL || 'noreply@wranngle.com';
+const FROM_EMAIL = process.env.FROM_EMAIL || 'noreply@wranngle.com';
 
 // Design system validation
 const DEPRECATED_COLORS = ['#0ea5e9', '#f0f9ff', '#bae6fd'];

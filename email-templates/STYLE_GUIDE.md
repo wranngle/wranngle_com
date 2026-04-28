@@ -695,7 +695,7 @@ POST https://n8n.wranngle.com/webhook/universal-message-v1
 **Request Format:**
 ```json
 {
-  "phone_number": "+12602217355",
+  "phone_number": "+1XXXXXXXXXX",
   "channel": "auto",  // "sms" | "rcs" | "auto"
   "template": "welcome",
   "variables": {
@@ -706,7 +706,7 @@ POST https://n8n.wranngle.com/webhook/universal-message-v1
 ```
 
 **Authentication:**
-- Header: `X-Webhook-Secret: test-secret-placeholder`
+- Header: `X-Webhook-Secret: <N8N_WEBHOOK_SECRET>`
 - OR User-Agent contains "ElevenLabs"
 - OR Host is localhost
 
