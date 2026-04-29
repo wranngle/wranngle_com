@@ -6,11 +6,20 @@
  * Usage: bun run scripts/test-rcs-via-n8n.ts [phone-number]
  */
 
-const TEST_PHONE = process.argv[2] || '+12602217355'; // Default: Cody's phone
-const WEBHOOK_URL = 'https://n8n.wranngle.com/webhook/universal-message-v1';
-const WEBHOOK_SECRET = 'test-secret-placeholder';
+const TEST_PHONE = process.argv[2] || process.env.TEST_PHONE_NUMBER;
+const WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || 'https://n8n.wranngle.com/webhook/universal-message-v1';
+const WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET;
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
+
+if (!TEST_PHONE) {
+  console.error('❌ Missing test phone: pass as argv[2] or set TEST_PHONE_NUMBER');
+  process.exit(1);
+}
+if (!WEBHOOK_SECRET) {
+  console.error('❌ Missing required environment variable: N8N_WEBHOOK_SECRET');
+  process.exit(1);
+}
 
 interface TestCase {
   template: string;
