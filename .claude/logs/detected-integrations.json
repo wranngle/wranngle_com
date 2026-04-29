@@ -1,9 +1,18 @@
 {
-  "timestamp": 1768709141977,
-  "prompt_hash": "One thing is that the github commit is possible to",
+  "timestamp": 1769708425494,
+  "prompt_hash": "Add issue for later: New category of offering: web",
   "integrations": {
     "definitive": [],
-    "possible": [],
+    "possible": [
+      {
+        "trigger": "ai agent",
+        "suggestedCategories": [
+          "ai"
+        ],
+        "confidence": "medium",
+        "source": "context-inference"
+      }
+    ],
     "comparative": [],
     "repos": []
   }
