@@ -8,7 +8,8 @@ import {describe, it, expect, beforeAll} from 'vitest';
 const WEBHOOK_URL =
 	process.env.N8N_WEBHOOK_URL ||
 	'https://n8n.wranngle.com/webhook/universal-message-v1';
-const WEBHOOK_SECRET = 'wranngle-msg-2026';
+const WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET || '';
+const TEST_PHONE = process.env.TEST_PHONE_NUMBER || '';
 
 describe('n8n Webhook Integration', () => {
 	describe('Authentication', () => {
@@ -20,7 +21,7 @@ describe('n8n Webhook Integration', () => {
 					'X-Webhook-Secret': WEBHOOK_SECRET,
 				},
 				body: JSON.stringify({
-					phone_number: '+12602217355',
+					phone_number: TEST_PHONE,
 					template: 'welcome',
 					variables: {FIRST_NAME: 'Test', PACKAGE: 'Test'},
 				}),
@@ -38,7 +39,7 @@ describe('n8n Webhook Integration', () => {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					phone_number: '+12602217355',
+					phone_number: TEST_PHONE,
 					template: 'welcome',
 					variables: {},
 				}),
@@ -55,7 +56,7 @@ describe('n8n Webhook Integration', () => {
 					Host: 'localhost:3000',
 				},
 				body: JSON.stringify({
-					phone_number: '+12602217355',
+					phone_number: TEST_PHONE,
 					template: 'welcome',
 					variables: {},
 				}),
@@ -73,7 +74,7 @@ describe('n8n Webhook Integration', () => {
 					'User-Agent': 'ElevenLabs/1.0',
 				},
 				body: JSON.stringify({
-					phone_number: '+12602217355',
+					phone_number: TEST_PHONE,
 					template: 'welcome',
 					variables: {},
 				}),
@@ -93,7 +94,7 @@ describe('n8n Webhook Integration', () => {
 					'X-Webhook-Secret': WEBHOOK_SECRET,
 				},
 				body: JSON.stringify({
-					phone_number: '+12602217355',
+					phone_number: TEST_PHONE,
 					template: 'welcome',
 					variables: {},
 				}),
@@ -179,7 +180,7 @@ describe('n8n Webhook Integration', () => {
 						'X-Webhook-Secret': WEBHOOK_SECRET,
 					},
 					body: JSON.stringify({
-						phone_number: '+12602217355',
+						phone_number: TEST_PHONE,
 						template,
 						variables: {},
 					}),
@@ -197,7 +198,7 @@ describe('n8n Webhook Integration', () => {
 					'X-Webhook-Secret': WEBHOOK_SECRET,
 				},
 				body: JSON.stringify({
-					phone_number: '+12602217355',
+					phone_number: TEST_PHONE,
 					template: 'unknown-template',
 					variables: {},
 				}),
@@ -218,7 +219,7 @@ describe('n8n Webhook Integration', () => {
 					'X-Webhook-Secret': WEBHOOK_SECRET,
 				},
 				body: JSON.stringify({
-					phone_number: '+12602217355',
+					phone_number: TEST_PHONE,
 					channel: 'auto',
 					template: 'welcome',
 					variables: {},
@@ -236,7 +237,7 @@ describe('n8n Webhook Integration', () => {
 					'X-Webhook-Secret': WEBHOOK_SECRET,
 				},
 				body: JSON.stringify({
-					phone_number: '+12602217355',
+					phone_number: TEST_PHONE,
 					channel: 'sms',
 					template: 'welcome',
 					variables: {},
@@ -254,7 +255,7 @@ describe('n8n Webhook Integration', () => {
 					'X-Webhook-Secret': WEBHOOK_SECRET,
 				},
 				body: JSON.stringify({
-					phone_number: '+12602217355',
+					phone_number: TEST_PHONE,
 					channel: 'rcs',
 					template: 'welcome',
 					variables: {},
@@ -272,7 +273,7 @@ describe('n8n Webhook Integration', () => {
 					'X-Webhook-Secret': WEBHOOK_SECRET,
 				},
 				body: JSON.stringify({
-					phone_number: '+12602217355',
+					phone_number: TEST_PHONE,
 					template: 'welcome',
 					variables: {},
 				}),
@@ -291,7 +292,7 @@ describe('n8n Webhook Integration', () => {
 					'X-Webhook-Secret': WEBHOOK_SECRET,
 				},
 				body: JSON.stringify({
-					phone_number: '+12602217355',
+					phone_number: TEST_PHONE,
 					template: 'welcome',
 					variables: {},
 				}),
@@ -330,7 +331,7 @@ describe('n8n Webhook Integration', () => {
 					'X-Webhook-Secret': WEBHOOK_SECRET,
 				},
 				body: JSON.stringify({
-					phone_number: '+12602217355',
+					phone_number: TEST_PHONE,
 					template: 'invoice-receipt',
 					variables: {
 						AMOUNT: '542.50',
@@ -351,7 +352,7 @@ describe('n8n Webhook Integration', () => {
 					'X-Webhook-Secret': WEBHOOK_SECRET,
 				},
 				body: JSON.stringify({
-					phone_number: '+12602217355',
+					phone_number: TEST_PHONE,
 					template: 'notification',
 					variables: {
 						EVENT_TYPE: 'Status & Update',

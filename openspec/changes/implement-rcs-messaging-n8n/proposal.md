@@ -40,7 +40,7 @@ Transform "Sarah SMS Tool - BULLETPROOF v3.0" (`uFFwYcr7XgdRCvdW`) into a univer
 **New Input Schema:**
 ```json
 {
-  "phone_number": "+12602217355",
+  "phone_number": "+1XXXXXXXXXX",
   "channel": "auto",           // "sms" | "rcs" | "auto" (RCS with SMS fallback)
   "template": "welcome",       // 10 template types
   "variables": {

@@ -11,11 +11,20 @@
  * Run stress test: bun run test:smoke --stress
  */
 
-const N8N_WEBHOOK_URL = 'https://n8n.wranngle.com/webhook/wranngle-intake-form';
-const N8N_API_URL = 'https://n8n.wranngle.com/api/v1';
-const N8N_API_KEY = process.env.N8N_API_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmMjUxMmRkMS0wOTk0LTRjN2YtYWNmMS0wZWY4NDFhZjNhNjYiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzY4ODM4NTE3LCJleHAiOjE4OTM0NTYwMDB9.mZU-Kd_6ZaFmlrOxSYkIeFKlXw-Xy1at1w88XVbIdRk';
-const WORKFLOW_ID = 'SY5XCbzxX32eCIeO';
-const SMTP2GO_API_KEY = process.env.SMTP2GO_API_KEY || 'api-9DD084EC7F7744DFB7037928ACF689EC';
+function requireEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    console.error(`❌ Missing required environment variable: ${name}`);
+    process.exit(1);
+  }
+  return value;
+}
+
+const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || 'https://n8n.wranngle.com/webhook/wranngle-intake-form';
+const N8N_API_URL = process.env.N8N_API_URL || 'https://n8n.wranngle.com/api/v1';
+const N8N_API_KEY = requireEnv('N8N_API_KEY');
+const WORKFLOW_ID = requireEnv('N8N_WORKFLOW_ID');
+const SMTP2GO_API_KEY = requireEnv('SMTP2GO_API_KEY');
 
 interface TestResult {
   name: string;

@@ -12,7 +12,11 @@
  * run with --clear-suppression flag to remove it.
  */
 
-const SMTP2GO_API_KEY = process.env.SMTP2GO_API_KEY || 'api-9DD084EC7F7744DFB7037928ACF689EC';
+const SMTP2GO_API_KEY = process.env.SMTP2GO_API_KEY;
+if (!SMTP2GO_API_KEY) {
+  console.error('❌ Missing required environment variable: SMTP2GO_API_KEY');
+  process.exit(1);
+}
 const CRITICAL_EMAILS = ['sales@wranngle.com', 'noreply@wranngle.com'];
 
 interface SuppressionEntry {

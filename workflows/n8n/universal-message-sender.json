@@ -6,7 +6,7 @@
     "webhook_url": "https://n8n.wranngle.com/webhook/universal-message-v1",
     "webhook_id": "universal-message-v1",
     "authentication": [
-      "X-Webhook-Secret: wranngle-msg-2026",
+      "X-Webhook-Secret: <N8N_WEBHOOK_SECRET>",
       "User-Agent containing 'ElevenLabs'",
       "Host containing 'localhost' (dev mode)"
     ],
@@ -26,7 +26,7 @@
       "messaging_service_sid": "MG18bfef5a022578102a9165c1c9a514db",
       "rcs_sender_id": "XEf22b2df6414c9923fafecacc1e3c6cbb",
       "fallback_phone": "+18882662193",
-      "account_sid": "ACb9a3b7df2dfe607099bd0ce0e6ae47e1"
+      "account_sid": "<TWILIO_ACCOUNT_SID>"
     },
     "features": [
       "Multi-channel support (SMS/RCS/auto)",
@@ -89,7 +89,7 @@
               {
                 "id": "secret-header",
                 "leftValue": "={{ $json.headers['x-webhook-secret'] }}",
-                "rightValue": "wranngle-msg-2026",
+                "rightValue": "<N8N_WEBHOOK_SECRET>",
                 "operator": {
                   "type": "string",
                   "operation": "equals"
@@ -388,7 +388,7 @@
         ],
         "parameters": {
           "method": "POST",
-          "url": "https://api.twilio.com/2010-04-01/Accounts/ACb9a3b7df2dfe607099bd0ce0e6ae47e1/Messages.json",
+          "url": "https://api.twilio.com/2010-04-01/Accounts/<TWILIO_ACCOUNT_SID>/Messages.json",
           "authentication": "genericCredentialType",
           "genericAuthType": "httpBasicAuth",
           "sendBody": true,
@@ -488,7 +488,7 @@
           -32
         ],
         "parameters": {
-          "url": "=https://api.twilio.com/2010-04-01/Accounts/ACb9a3b7df2dfe607099bd0ce0e6ae47e1/Messages/{{ $json.sid }}.json",
+          "url": "=https://api.twilio.com/2010-04-01/Accounts/<TWILIO_ACCOUNT_SID>/Messages/{{ $json.sid }}.json",
           "authentication": "genericCredentialType",
           "genericAuthType": "httpBasicAuth",
           "options": {

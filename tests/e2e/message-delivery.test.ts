@@ -8,8 +8,8 @@ import {describe, it, expect} from 'vitest';
 const WEBHOOK_URL =
 	process.env.N8N_WEBHOOK_URL ||
 	'https://n8n.wranngle.com/webhook/universal-message-v1';
-const WEBHOOK_SECRET = 'wranngle-msg-2026';
-const TEST_PHONE = process.env.TEST_PHONE_NUMBER || '+12602217355';
+const WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET || '';
+const TEST_PHONE = process.env.TEST_PHONE_NUMBER || '';
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID!;
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN!;
 const RUN_E2E = process.env.RUN_E2E === 'true';
