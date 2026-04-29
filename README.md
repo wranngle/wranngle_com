@@ -107,3 +107,7 @@ bun run email:test
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+
+## Clay Integration
+Integration successfully executed for Clay.com.
