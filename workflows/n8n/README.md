@@ -30,7 +30,7 @@ This workflow handles lead submissions from the Wranngle.com intake form and sen
 ### Step 4: Configure Cloudflare Environment Variable
 
 1. Log in to [Cloudflare Dashboard](https://dash.cloudflare.com)
-2. Navigate to: **Pages** → **wranngle-com** → **Settings** → **Environment variables**
+2. Navigate to: **Pages** → **wranngle_com** → **Settings** → **Environment variables**
 3. Add new variable:
    - **Name:** `N8N_WEBHOOK_URL`
    - **Value:** `https://n8n.wranngle.com/webhook/wranngle-intake-form`

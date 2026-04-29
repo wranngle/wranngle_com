@@ -39,7 +39,7 @@
 
 ## Phase 5: Cloudflare Configuration
 - [ ] 5.1 Log in to Cloudflare Dashboard
-- [ ] 5.2 Navigate to Pages → wranngle-com → Settings → Environment variables
+- [ ] 5.2 Navigate to Pages → wranngle_com → Settings → Environment variables
 - [ ] 5.3 Add/update `N8N_WEBHOOK_URL` with production webhook URL
 - [ ] 5.4 Format: `https://n8n.wranngle.com/webhook/wranngle-intake-form`
 - [ ] 5.5 Apply to Production environment
