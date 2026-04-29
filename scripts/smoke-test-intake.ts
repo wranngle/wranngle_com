@@ -11,11 +11,20 @@
  * Run stress test: bun run test:smoke --stress
  */
 
-const N8N_WEBHOOK_URL = 'https://n8n.wranngle.com/webhook/wranngle-intake-form';
-const N8N_API_URL = 'https://n8n.wranngle.com/api/v1';
-const N8N_API_KEY = process.env.N8N_API_KEY || 'REDACTED_N8N_JWT';
-const WORKFLOW_ID = 'SY5XCbzxX32eCIeO';
-const SMTP2GO_API_KEY = process.env.SMTP2GO_API_KEY || 'api-9DD084EC7F7744DFB7037928ACF689EC';
+function requireEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    console.error(`❌ Missing required environment variable: ${name}`);
+    process.exit(1);
+  }
+  return value;
+}
+
+const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || 'https://n8n.wranngle.com/webhook/wranngle-intake-form';
+const N8N_API_URL = process.env.N8N_API_URL || 'https://n8n.wranngle.com/api/v1';
+const N8N_API_KEY = requireEnv('N8N_API_KEY');
+const WORKFLOW_ID = requireEnv('N8N_WORKFLOW_ID');
+const SMTP2GO_API_KEY = requireEnv('SMTP2GO_API_KEY');
 
 interface TestResult {
   name: string;
