@@ -4,6 +4,7 @@ import App from './App.tsx';
 import TermsOfService from './pages/terms-of-service.tsx';
 import PrivacyPolicy from './pages/privacy-policy.tsx';
 import About from './pages/about.tsx';
+import GtmOps from './pages/gtm-ops.tsx';
 import NotFound from './pages/not-found.tsx';
 
 export default function Router() {
@@ -17,6 +18,7 @@ export default function Router() {
       <Route path="/about" component={About} />
       {/* Backcompat: previous /built-by URL still resolves to the About page. */}
       <Route path="/built-by" component={About} />
+      <Route path="/products/gtm-ops" component={GtmOps} />
       <Route path="/terms" component={TermsOfService} />
       <Route path="/privacy" component={PrivacyPolicy} />
       <Route component={NotFound} />

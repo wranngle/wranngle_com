@@ -17,6 +17,8 @@ import {Button} from '@/components/ui/button.tsx';
 import {getOfferingById} from '@/data/offerings.ts';
 
 const isAgentPackage = (id) => id === 'basic' || id === 'premium';
+const isSaasPackage = (id) =>
+  id === 'gtm-ops-trial' || id === 'gtm-ops-pro' || id === 'gtm-ops-scale';
 
 function OrderReceipt({successData}) {
   const submittedOffering = getOfferingById(successData.package);
@@ -144,6 +146,89 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
   }
 
   const isAgent = isAgentPackage(currentPackage);
+  const isSaas = isSaasPackage(currentPackage);
+
+  if (isSaas) {
+    const tierName = offering?.name ?? 'GTM Ops';
+    const isTrial = currentPackage === 'gtm-ops-trial';
+    return (
+      <>
+        <DialogHeader>
+          <DialogTitle className="brand-font text-2xl">
+            {isTrial ? 'Start your trial' : 'Activate your plan'}
+          </DialogTitle>
+          <DialogDescription>
+            {isTrial
+              ? 'Email + company is all we need. No card. 14 days, then upgrade or walk.'
+              : `Tell us where to send the ${tierName} workspace invite.`}
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-3 items-start">
+          <Zap className="text-[var(--s500)] shrink-0 mt-0.5" size={18} />
+          <div className="text-[11px] opacity-80 leading-relaxed">
+            Honest demo mode: this form posts to our lead webhook. Self-serve
+            signup is on the roadmap; right now a human (Cody) will reply within
+            one business day to set up your workspace.
+          </div>
+        </div>
+
+        <form
+          onSubmit={handleSubmit((data) => {
+            mutation.mutate(data);
+          })}
+          className="space-y-4 py-4"
+        >
+          <div className="grid gap-2">
+            <Label htmlFor="businessName">Company Name</Label>
+            <Input
+              id="businessName"
+              className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
+              {...register('businessName', {required: true})}
+              placeholder="Acme Co"
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="email">Work Email</Label>
+            <Input
+              id="email"
+              type="email"
+              className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
+              {...register('email', {required: true})}
+              placeholder="you@acme.co"
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="estimatedProposalsPerMonth">
+              Proposals you expect to generate per month
+            </Label>
+            <Input
+              id="estimatedProposalsPerMonth"
+              className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
+              {...register('estimatedProposalsPerMonth')}
+              placeholder="10–50"
+            />
+          </div>
+          <input
+            type="hidden"
+            {...register('package')}
+            value={currentPackage}
+          />
+          <Button
+            type="submit"
+            className="w-full bg-[var(--s500)] hover:bg-[var(--s500)]/90"
+            disabled={mutation.isPending}
+          >
+            {mutation.isPending
+              ? 'Submitting...'
+              : isTrial
+                ? 'Request trial access'
+                : `Activate ${tierName}`}
+          </Button>
+        </form>
+      </>
+    );
+  }
 
   return (
     <>

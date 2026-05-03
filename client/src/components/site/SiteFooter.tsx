@@ -45,6 +45,9 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
           {/* Offerings */}
           <div>
             <div className={colHeading}>Offerings</div>
+            <Link href="/products/gtm-ops" className={linkBase}>
+              GTM Ops
+            </Link>
             {offeringItems.map((item) => (
               <a
                 key={item.id}

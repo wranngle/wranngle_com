@@ -14,7 +14,14 @@ type LeadInput = {
   addWebChatAgent?: boolean;
   status?: string;
   notes?: string;
+  estimatedProposalsPerMonth?: string;
 };
+
+const SAAS_PACKAGES = new Set([
+  'gtm-ops-trial',
+  'gtm-ops-pro',
+  'gtm-ops-scale',
+]);
 
 // Input sanitization - strip HTML and limit length
 function sanitizeString(input: string, maxLength: number): string {
@@ -33,14 +40,14 @@ function validateLead(
   }
 
   const b = body as Record<string, unknown>;
-  const required = [
-    'businessName',
-    'industry',
-    'ownerName',
-    'phone',
-    'email',
-    'package',
-  ];
+  const isSaas = SAAS_PACKAGES.has(b.package as string);
+
+  // SaaS leads have a tighter form (no industry/owner/phone). Trade leads keep
+  // the original required-set so the n8n flow that fans out to voice setup
+  // still gets everything it expects.
+  const required = isSaas
+    ? ['businessName', 'email', 'package']
+    : ['businessName', 'industry', 'ownerName', 'phone', 'email', 'package'];
 
   for (const field of required) {
     if (typeof b[field] !== 'string' || !b[field]) {
@@ -53,14 +60,24 @@ function validateLead(
     return {valid: false, error: 'Invalid email format'};
   }
 
-  // Validate phone format (basic)
-  const phoneString = b.phone as string;
-  if (!/^[\d\s\-+()]+$/.test(phoneString)) {
-    return {valid: false, error: 'Invalid phone format'};
+  // Validate phone format (trade only — SaaS form does not collect phone)
+  if (!isSaas) {
+    const phoneString = b.phone as string;
+    if (!/^[\d\s\-+()]+$/.test(phoneString)) {
+      return {valid: false, error: 'Invalid phone format'};
+    }
   }
 
   // Validate package value
-  const validPackages = ['basic', 'premium', 'landing-page', 'business-site'];
+  const validPackages = [
+    'basic',
+    'premium',
+    'landing-page',
+    'business-site',
+    'gtm-ops-trial',
+    'gtm-ops-pro',
+    'gtm-ops-scale',
+  ];
   if (!validPackages.includes(b.package as string)) {
     return {valid: false, error: 'Invalid package selection'};
   }
@@ -81,14 +98,22 @@ function validateLead(
     }
   }
 
-  // Sanitize all string inputs
+  // Sanitize all string inputs. SaaS leads omit trade-only fields; fill them
+  // with stable placeholders so downstream consumers (n8n) can still treat the
+  // payload uniformly without needing per-package conditionals.
   return {
     valid: true,
     data: {
       businessName: sanitizeString(b.businessName as string, 200),
-      industry: sanitizeString(b.industry as string, 100),
-      ownerName: sanitizeString(b.ownerName as string, 100),
-      phone: sanitizeString(b.phone as string, 30),
+      industry: isSaas
+        ? 'saas-buyer'
+        : sanitizeString(b.industry as string, 100),
+      ownerName: isSaas
+        ? sanitizeString((b.ownerName as string) || 'n/a', 100)
+        : sanitizeString(b.ownerName as string, 100),
+      phone: isSaas
+        ? sanitizeString((b.phone as string) || 'n/a', 30)
+        : sanitizeString(b.phone as string, 30),
       email: sanitizeString(b.email as string, 254), // RFC 5321 max email length
       package: b.package as string,
       agentName: b.agentName
@@ -97,6 +122,9 @@ function validateLead(
       addWebChatAgent: b.addWebChatAgent === true ? true : undefined,
       status: (b.status as string) || 'pending',
       notes: b.notes ? sanitizeString(b.notes as string, 1000) : undefined,
+      estimatedProposalsPerMonth: b.estimatedProposalsPerMonth
+        ? sanitizeString(b.estimatedProposalsPerMonth as string, 50)
+        : undefined,
     },
   };
 }
