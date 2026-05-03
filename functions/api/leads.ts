@@ -19,8 +19,8 @@ type LeadInput = {
 
 const SAAS_PACKAGES = new Set([
   'gtm-ops-trial',
+  'gtm-ops-plus',
   'gtm-ops-pro',
-  'gtm-ops-scale',
 ]);
 
 // Input sanitization - strip HTML and limit length
@@ -75,8 +75,8 @@ function validateLead(
     'landing-page',
     'business-site',
     'gtm-ops-trial',
+    'gtm-ops-plus',
     'gtm-ops-pro',
-    'gtm-ops-scale',
   ];
   if (!validPackages.includes(b.package as string)) {
     return {valid: false, error: 'Invalid package selection'};

@@ -18,7 +18,7 @@ import {getOfferingById} from '@/data/offerings.ts';
 
 const isAgentPackage = (id) => id === 'basic' || id === 'premium';
 const isSaasPackage = (id) =>
-  id === 'gtm-ops-trial' || id === 'gtm-ops-pro' || id === 'gtm-ops-scale';
+  id === 'gtm-ops-trial' || id === 'gtm-ops-plus' || id === 'gtm-ops-pro';
 
 function OrderReceipt({successData}) {
   const submittedOffering = getOfferingById(successData.package);
