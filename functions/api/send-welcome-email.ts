@@ -10,25 +10,24 @@
  */
 
 // import { EmailTemplateBuilder } from '../../email-templates/build/template-builder';
+import {type} from 'arktype';
+import {welcomeEmailRequestSchema} from '../../shared/schema';
 
 type Env = {
   SENDGRID_API_KEY: string;
   FROM_EMAIL: string;
 };
 
-type WelcomeEmailRequest = {
-  email: string;
-  name: string;
-  packageName: 'Core Agent' | 'Elite Agent';
-};
-
 export const onRequestPost: PagesFunction<Env> = async ({request, env}) => {
   try {
-    const body = (await request.json()) as WelcomeEmailRequest;
+    const raw: unknown = await request.json();
+    const body = welcomeEmailRequestSchema(raw);
 
-    // Validate input
-    if (!body.email || !body.name || !body.packageName) {
-      return new Response('Missing required fields', {status: 400});
+    // ArkType returns a `type.errors` instance on validation failure
+    if (body instanceof type.errors) {
+      return new Response(`Missing or invalid fields: ${body.summary}`, {
+        status: 400,
+      });
     }
 
     // Uncomment to use email templates in production:

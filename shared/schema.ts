@@ -46,7 +46,14 @@ export const leadSchema = type({
   'preferredChannel?': '"email" | "sms" | "both"',
 });
 
+export const welcomeEmailRequestSchema = type({
+  email: 'string.email',
+  name: 'string',
+  packageName: '"Core Agent" | "Elite Agent"',
+});
+
 export type InsertUser = typeof insertUserSchema.infer;
 export type User = typeof userSchema.infer;
 export type InsertLead = typeof insertLeadSchema.infer;
 export type Lead = typeof leadSchema.infer;
+export type WelcomeEmailRequest = typeof welcomeEmailRequestSchema.infer;
