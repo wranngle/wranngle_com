@@ -184,12 +184,25 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
 
     const lead = result.data;
+    const isSaasLead = SAAS_PACKAGES.has(lead.package);
 
-    // Forward to n8n webhook for processing
+    // Forward to n8n webhook for processing. SaaS leads are best-effort:
+    // the n8n flow is shaped around trade intakes, so we swallow webhook
+    // rejection for SaaS submissions rather than surfacing a confusing
+    // 500 to a user who just typed their email. The lead still lands in
+    // Cloudflare logs; a human follows up per the in-form copy.
     const webhookUrl = context.env.N8N_WEBHOOK_URL;
     if (!webhookUrl) {
       // Don't leak internal error to client
       console.error('N8N_WEBHOOK_URL not configured');
+      if (isSaasLead) {
+        console.log('Saas lead (no webhook configured):', lead);
+        return new Response(JSON.stringify({success: true}), {
+          status: 201,
+          headers: responseHeaders,
+        });
+      }
+
       return new Response(
         JSON.stringify({error: 'Service temporarily unavailable'}),
         {
@@ -207,6 +220,14 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     if (!webhookResponse.ok) {
       console.error('Webhook failed:', webhookResponse.status);
+      if (isSaasLead) {
+        console.log('Saas lead (webhook non-OK, swallowed):', lead);
+        return new Response(JSON.stringify({success: true}), {
+          status: 201,
+          headers: responseHeaders,
+        });
+      }
+
       return new Response(
         JSON.stringify({error: 'Failed to process request'}),
         {
