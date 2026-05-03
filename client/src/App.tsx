@@ -1,11 +1,30 @@
 // @ts-nocheck
+/* eslint-disable @typescript-eslint/no-deprecated -- lucide-react brand icons (Linkedin, Github) used intentionally for footer socials; deprecation is upstream-future. */
 import React, {useState, useEffect, useRef} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
-import {Check, ArrowRight, Menu, X, Moon, Sun, Zap} from 'lucide-react';
+import {
+  Check,
+  ArrowRight,
+  Menu,
+  X,
+  Moon,
+  Sun,
+  Zap,
+  ChevronDown,
+  Linkedin,
+  Github,
+  Mail,
+  Globe,
+} from 'lucide-react';
 import {Link} from 'wouter';
 import {OFFERING_CATEGORIES} from '@/data/offerings.ts';
 import IntakeForm from '@/components/IntakeForm.tsx';
 import {Dialog, DialogContent, DialogTrigger} from '@/components/ui/dialog.tsx';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu.tsx';
 import {Button} from '@/components/ui/button.tsx';
 
 const FAQ = React.lazy(async () => import('@/components/FAQ.tsx'));
@@ -221,11 +240,12 @@ const WranngleLanding = () => {
 
             <div className="flex items-center gap-8">
               <nav className="hidden md:flex gap-8 items-center text-sm font-medium">
-                <Link href="/offerings">
-                  <a>Offerings</a>
-                </Link>
+                <OfferingsMegaMenu isDark={isDark} />
                 <a href="#pricing">Pricing</a>
                 <a href="#features">Features</a>
+                <Link href="/about">
+                  <a>About</a>
+                </Link>
                 <ThemeToggle isDark={isDark} toggle={toggleTheme} />
               </nav>
 
@@ -294,6 +314,15 @@ const WranngleLanding = () => {
                 >
                   Features
                 </a>
+                <Link href="/about">
+                  <a
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    About
+                  </a>
+                </Link>
                 <div className="flex items-center justify-between py-6 border-y border-black/10 dark:border-white/10">
                   <span className="text-sm font-medium opacity-60 uppercase tracking-widest">
                     Toggle Appearance
@@ -462,6 +491,42 @@ const WranngleLanding = () => {
         <footer className="py-12 border-t border-white/10 px-6 text-xs mono-font">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="opacity-50">© 2026 Wranngle Systems LLC</div>
+            <div className="flex items-center gap-5 opacity-70">
+              <a
+                href="https://linkedin.com/in/codyarnold96"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="hover:text-[var(--s500)] transition-colors"
+              >
+                <Linkedin size={16} />
+              </a>
+              <a
+                href="https://github.com/Wranngle"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+                className="hover:text-[var(--s500)] transition-colors"
+              >
+                <Github size={16} />
+              </a>
+              <a
+                href="mailto:codymann88@gmail.com"
+                aria-label="Email"
+                className="hover:text-[var(--s500)] transition-colors"
+              >
+                <Mail size={16} />
+              </a>
+              <a
+                href="https://wranngle.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Wranngle"
+                className="hover:text-[var(--s500)] transition-colors"
+              >
+                <Globe size={16} />
+              </a>
+            </div>
             <div className="flex gap-6 opacity-70">
               <Link href="/terms">
                 <a className="hover:text-[var(--s500)] hover:underline transition-colors">
@@ -480,6 +545,80 @@ const WranngleLanding = () => {
         <elevenlabs-convai agent-id="agent_xxxx_demo"></elevenlabs-convai>
       </div>
     </div>
+  );
+};
+
+const OfferingsMegaMenu = ({isDark}) => {
+  // Plain <a href> with hash so /offerings useEffect picks up location.hash on mount.
+  // Radix auto-dismisses the menu when an item is activated.
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          className="inline-flex items-center gap-1 outline-none focus:outline-none hover:text-[var(--s500)] transition-colors"
+        >
+          Offerings <ChevronDown size={14} />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="start"
+        sideOffset={12}
+        className={`w-[640px] p-0 border ${isDark ? 'bg-[#18181b] border-white/10 text-[#fcfaf5]' : 'bg-white border-black/10 text-[#12111a]'} rounded-lg shadow-2xl`}
+      >
+        <div className="grid grid-cols-2 gap-0">
+          {OFFERING_CATEGORIES.map((cat) => (
+            <div
+              key={cat.id}
+              className={`p-5 ${isDark ? 'border-white/5' : 'border-black/5'} border-r last:border-r-0`}
+            >
+              <div className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-3">
+                {cat.name}
+              </div>
+              <div className="space-y-1">
+                {cat.items.map((item) => (
+                  <a
+                    key={item.id}
+                    href={`/offerings#${item.id}`}
+                    className="w-full text-left px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors group flex items-start justify-between gap-2"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold">
+                          {item.name}
+                        </span>
+                        {item.badge && (
+                          <span className="text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[var(--v500)] text-white">
+                            {item.badge}
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-xs opacity-60 mt-0.5 leading-snug">
+                        {item.description}
+                      </div>
+                    </div>
+                    <ArrowRight
+                      size={14}
+                      className="opacity-40 group-hover:opacity-100 group-hover:text-[var(--s500)] group-hover:translate-x-0.5 transition-all mt-1 shrink-0"
+                    />
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div
+          className={`px-5 py-3 border-t text-xs font-bold uppercase tracking-wider ${isDark ? 'border-white/10 bg-white/5' : 'border-black/10 bg-black/5'}`}
+        >
+          <a
+            href="/offerings"
+            className="inline-flex items-center gap-2 text-[var(--s500)] hover:translate-x-1 transition-transform"
+          >
+            View all offerings <ArrowRight size={14} />
+          </a>
+        </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
