@@ -56,3 +56,23 @@ email-templates/preview/*-inlined.html
 
 # Documentation Archives
 docs/archive/
+
+# Claude Code / Gemini operator-local (keep commands/ + hooks/ committed; ignore everything else)
+.claude/local/
+.claude/worktrees/
+.claude/mcp.json
+.claude/.env
+.claude/settings.json
+.claude/scheduled_tasks*
+.claude/logs/
+.gemini/local/
+.gemini/settings.json
+
+# Playwright MCP runtime artifacts (transient agent snapshots)
+.playwright-mcp/
+
+# BMAD planning artifacts (reviewer noise)
+.bmad-output/
+
+# Husky auto-managed (we use lefthook now — lefthook.yml is committed)
+.husky/_/
