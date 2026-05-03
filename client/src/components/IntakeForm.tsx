@@ -22,7 +22,9 @@ function OrderReceipt({successData}) {
   const submittedOffering = getOfferingById(successData.package);
   const itemName =
     submittedOffering?.name?.toUpperCase() ?? successData.package.toUpperCase();
-  const itemPrice = submittedOffering?.price ?? '0';
+  const itemPriceString = submittedOffering?.price ?? '0';
+  const cadence = submittedOffering?.priceCadence ?? 'one-time';
+  const cadenceLabel = cadence === 'monthly' ? '/MO' : ' ONE-TIME';
 
   return (
     <div className="bg-[#f0f0f0] p-6 rounded-sm shadow-xl max-w-sm mx-auto font-mono text-black relative border-t-8 border-[var(--s500)]">
@@ -47,24 +49,30 @@ function OrderReceipt({successData}) {
         </div>
         <div className="flex justify-between">
           <span>{itemName}</span>
-          <span>${itemPrice}</span>
+          <span>
+            ${itemPriceString}
+            {cadenceLabel}
+          </span>
         </div>
         {submittedOffering?.monthlyAddon && (
           <div className="flex justify-between opacity-70">
             <span>+ {submittedOffering.monthlyAddon.label}</span>
-            <span>${submittedOffering.monthlyAddon.price}/mo</span>
+            <span>${submittedOffering.monthlyAddon.price}/MO</span>
           </div>
         )}
         {successData.addWebChatAgent && (
           <div className="flex justify-between opacity-70">
             <span>WEB CHAT AGENT</span>
-            <span>$250/mo</span>
+            <span>$250/MO</span>
           </div>
         )}
         <div className="border-b border-dashed border-gray-400 my-2" />
         <div className="flex justify-between font-bold text-lg">
-          <span>TOTAL</span>
-          <span>${itemPrice}.00</span>
+          <span>{cadence === 'monthly' ? 'DUE MONTHLY' : 'PROJECT TOTAL'}</span>
+          <span>
+            ${itemPriceString}
+            {cadenceLabel}
+          </span>
         </div>
       </div>
 
@@ -175,19 +183,42 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
       )}
 
       {currentPackage === 'premium' && (
-        <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/10 rounded-lg flex gap-4 items-center">
-          <div className="w-5 h-5 rounded-full bg-[var(--s500)] flex items-center justify-center text-white shrink-0">
-            <Check size={12} strokeWidth={4} />
-          </div>
-          <div>
-            <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider">
-              Elite Agent Secured
+        <>
+          <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/10 rounded-lg flex gap-4 items-center">
+            <div className="w-5 h-5 rounded-full bg-[var(--s500)] flex items-center justify-center text-white shrink-0">
+              <Check size={12} strokeWidth={4} />
             </div>
-            <p className="text-[11px] opacity-80 leading-relaxed">
-              Priority 24/7 Coverage + Web Chat Integration included.
-            </p>
+            <div>
+              <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider">
+                Elite Agent Secured
+              </div>
+              <p className="text-[11px] opacity-80 leading-relaxed">
+                Priority 24/7 Coverage + Web Chat Integration included.
+              </p>
+            </div>
           </div>
-        </div>
+          <div className="mt-3 p-4 border border-[var(--v500)]/30 bg-[var(--v500)]/5 rounded-lg flex gap-4 items-start">
+            <Zap className="text-[var(--v500)] shrink-0" size={20} />
+            <div>
+              <div className="text-xs font-bold text-[var(--v500)] uppercase tracking-wider mb-1">
+                Recommended Next Step
+              </div>
+              <p className="text-[11px] opacity-80 leading-relaxed mb-2">
+                Your Elite Agent needs a home. Most Elite buyers ship a Landing
+                Page in 7 days so callers convert before they pick up the phone.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setCurrentPackage('landing-page');
+                }}
+                className="mt-1 flex items-center gap-2 text-[10px] font-bold text-[var(--v500)] border border-[var(--v500)] px-3 py-1.5 rounded hover:bg-[var(--v500)] hover:text-white transition-all uppercase tracking-wide"
+              >
+                Add Landing Page ($900) <ArrowRight size={10} />
+              </button>
+            </div>
+          </div>
+        </>
       )}
 
       {currentPackage === 'landing-page' && (
@@ -215,19 +246,44 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
       )}
 
       {currentPackage === 'business-site' && (
-        <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/10 rounded-lg flex gap-4 items-center">
-          <div className="w-5 h-5 rounded-full bg-[var(--s500)] flex items-center justify-center text-white shrink-0">
-            <Check size={12} strokeWidth={4} />
-          </div>
-          <div>
-            <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider">
-              Business Site Selected
+        <>
+          <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/10 rounded-lg flex gap-4 items-center">
+            <div className="w-5 h-5 rounded-full bg-[var(--s500)] flex items-center justify-center text-white shrink-0">
+              <Check size={12} strokeWidth={4} />
             </div>
-            <p className="text-[11px] opacity-80 leading-relaxed">
-              Multi-page site with CMS, analytics, and lead capture automation.
-            </p>
+            <div>
+              <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider">
+                Business Site Selected
+              </div>
+              <p className="text-[11px] opacity-80 leading-relaxed">
+                Multi-page site with CMS, analytics, and lead capture
+                automation.
+              </p>
+            </div>
           </div>
-        </div>
+          <div className="mt-3 p-4 border border-[var(--v500)]/30 bg-[var(--v500)]/5 rounded-lg flex gap-4 items-start">
+            <Zap className="text-[var(--v500)] shrink-0" size={20} />
+            <div>
+              <div className="text-xs font-bold text-[var(--v500)] uppercase tracking-wider mb-1">
+                Recommended Pairing
+              </div>
+              <p className="text-[11px] opacity-80 leading-relaxed mb-2">
+                Pair with a Core Agent so your contact form is not your only
+                after-hours capture. 84% of trade businesses with both see 2x
+                lead conversion.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setCurrentPackage('basic');
+                }}
+                className="mt-1 flex items-center gap-2 text-[10px] font-bold text-[var(--v500)] border border-[var(--v500)] px-3 py-1.5 rounded hover:bg-[var(--v500)] hover:text-white transition-all uppercase tracking-wide"
+              >
+                Add Core Agent ($250/mo) <ArrowRight size={10} />
+              </button>
+            </div>
+          </div>
+        </>
       )}
 
       <form
