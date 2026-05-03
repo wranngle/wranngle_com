@@ -162,7 +162,7 @@ export default function MegaMenu({
                 <Github size={18} />
               </a>
               <a
-                href="mailto:codymann88@gmail.com"
+                href="mailto:cody@wranngle.com"
                 aria-label="Email"
                 className="hover:text-[var(--s500)] transition-colors"
               >
