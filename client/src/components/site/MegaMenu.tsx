@@ -82,41 +82,54 @@ export default function MegaMenu({
             </div>
           </div>
 
-          {/* Column 2: Offerings (opens popout directly) */}
+          {/* Column 2: Offerings (opens popout directly), grouped by category. */}
           <div className={`p-5 border-r ${dividerClass}`}>
             <div className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-3">
               Offerings
             </div>
-            <div className="space-y-1">
-              {OFFERING_CATEGORIES.flatMap((cat) => cat.items).map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => {
-                    onSelectOffering(item);
-                  }}
-                  className="w-full text-left px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors group flex items-start justify-between gap-2"
-                >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold">{item.name}</span>
-                      {item.badge && (
-                        <span className="text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[var(--v500)] text-white">
-                          {item.badge}
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-xs opacity-60 mt-0.5 leading-snug">
-                      {item.description}
-                    </div>
-                  </div>
-                  <ArrowRight
-                    size={14}
-                    className="opacity-40 group-hover:opacity-100 group-hover:text-[var(--s500)] group-hover:translate-x-0.5 transition-all mt-1 shrink-0"
-                  />
-                </button>
-              ))}
-            </div>
+            {OFFERING_CATEGORIES.map((cat, catIndex) => (
+              <div key={cat.id} className={catIndex > 0 ? 'mt-4' : ''}>
+                <div className="text-[9px] font-bold uppercase tracking-[0.18em] text-[var(--s500)] mb-1.5 px-3">
+                  {cat.name}
+                </div>
+                <div className="space-y-1">
+                  {cat.items.map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => {
+                        onSelectOffering(item);
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors group flex items-start justify-between gap-2"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-semibold">
+                            {item.name}
+                          </span>
+                          {item.badge && (
+                            <span className="text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[var(--v500)] text-white">
+                              {item.badge}
+                            </span>
+                          )}
+                          <span className="text-[10px] font-mono opacity-60 ml-auto shrink-0">
+                            ${item.price}
+                            {item.priceCadence === 'monthly' ? '/mo' : ''}
+                          </span>
+                        </div>
+                        <div className="text-xs opacity-60 mt-0.5 leading-snug">
+                          {item.description}
+                        </div>
+                      </div>
+                      <ArrowRight
+                        size={14}
+                        className="opacity-40 group-hover:opacity-100 group-hover:text-[var(--s500)] group-hover:translate-x-0.5 transition-all mt-1 shrink-0"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Column 3: Legal + Socials */}

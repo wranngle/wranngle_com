@@ -228,19 +228,16 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
               <AgentFactsPopout
                 facts={factsItem.facts}
                 itemName={factsItem.name}
-              />
-              <button
-                type="button"
-                onClick={() => {
+                onGetStarted={() => {
                   const {id} = factsItem;
                   setFactsItem(undefined);
                   setIntakePackage(id);
                 }}
-                className="w-full bg-[var(--s500)] hover:bg-[var(--s500)]/90 text-white font-bold uppercase text-xs tracking-wider py-3 rounded-md transition-all flex items-center justify-center gap-2"
-              >
-                Get Started — {factsItem.facts.tierName} Agent
-                <ArrowRight size={14} />
-              </button>
+                onCrossSell={(targetId) => {
+                  setFactsItem(undefined);
+                  globalThis.location.hash = `offerings-${targetId}`;
+                }}
+              />
             </div>
           )}
         </DialogContent>
