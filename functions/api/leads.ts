@@ -17,11 +17,7 @@ type LeadInput = {
   estimatedProposalsPerMonth?: string;
 };
 
-const SAAS_PACKAGES = new Set([
-  'gtm-ops-trial',
-  'gtm-ops-plus',
-  'gtm-ops-pro',
-]);
+const SAAS_PACKAGES = new Set(['gtm-ops-trial', 'gtm-ops-plus', 'gtm-ops-pro']);
 
 // Input sanitization - strip HTML and limit length
 function sanitizeString(input: string, maxLength: number): string {
