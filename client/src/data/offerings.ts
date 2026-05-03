@@ -1,4 +1,4 @@
-export type OfferingKind = 'ai-agent' | 'website';
+export type OfferingKind = 'ai-agent' | 'website' | 'saas';
 
 export type PricingTier = {
   monthly: number;
@@ -8,22 +8,30 @@ export type PricingTier = {
 };
 
 export type OfferingFacts = {
-  /** Drives spec-sheet rendering: voice/SMS labels for AI agents, project/perf labels for websites. */
+  /** Drives spec-sheet rendering: voice/SMS labels for AI agents, project/perf labels for websites, seat/proposal labels for SaaS. */
   kind: OfferingKind;
   tierName: string;
   /** 0 means "no annual commitment plan" — popout suppresses the discount UI. */
   discountPercent: number;
-  /** Headline price. For AI agents this is monthly subscription; for websites this is one-time project cost. */
+  /** Headline price. For AI agents this is monthly subscription; for websites this is one-time project cost; for SaaS it is monthly SaaS price (0 for trial). */
   headlinePrice: number;
-  /** Annual-commitment monthly equivalent (AI agents only). Set equal to headlinePrice for websites. */
+  /** Annual-commitment monthly equivalent (AI agents + SaaS). Set equal to headlinePrice for websites or trial. */
   annualMonthly: number;
-  /** Per-location addon (AI agents) or maintenance fee (websites). */
+  /** Per-location addon (AI agents), maintenance fee (websites), or seat/usage addon (SaaS). */
   addon: {price: number; label: string};
   specs: {coverage: string; ingredients: string};
-  /** Voice/SMS limits for AI agents. Empty/undefined for websites. */
+  /** Voice/SMS limits for AI agents. Empty/undefined for websites + SaaS. */
   limits?: {minutes: string; sms: string};
   /** Website-only: project delivery facts. */
   delivery?: {timeline: string; pages: string; performance: string};
+  /** SaaS-only: subscription plan facts. proposalsCap is a string so values like 'Unlimited' or '5 / mo (trial)' render cleanly. */
+  saasLimits?: {
+    proposalsCap: string;
+    users: string;
+    sso: boolean;
+    customDomain: boolean;
+    auditChain: string;
+  };
   features: string[];
   /** Cross-sell hint shown on the spec sheet itself (under Marketing Ingredients). */
   crossSell?: {label: string; offeringId: string};
@@ -269,6 +277,180 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
             label:
               'Pair with a Core Agent so the contact form is not your only after-hours capture',
             offeringId: 'basic',
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'saas-products',
+    name: 'SaaS Products',
+    description:
+      'Self-serve software for the rest of the GTM stack. Ship in a browser, not a contract.',
+    items: [
+      {
+        id: 'gtm-ops-trial',
+        name: 'GTM Ops Trial',
+        price: '0',
+        priceCadence: 'monthly',
+        description:
+          'Full-feature 14-day trial of GTM Ops. Lead in, branded proposal out — no card required.',
+        cta: 'Start Free Trial',
+        features: [
+          '14-day full-feature trial',
+          'Up to 5 proposals during trial',
+          'Branded PDF generation',
+          'Demo data preloaded',
+          'Gemini-powered extraction',
+          'No credit card required',
+          'Upgrade or cancel anytime',
+        ],
+        facts: {
+          kind: 'saas',
+          tierName: 'Trial',
+          discountPercent: 0,
+          headlinePrice: 0,
+          annualMonthly: 0,
+          addon: {price: 0, label: 'free for 14 days'},
+          pricing: {monthly: 0, annualMonthly: 0},
+          specs: {
+            coverage: '14-day evaluation window',
+            ingredients:
+              'GEMINI EXTRACTION ENGINE, BRANDED PDF RENDERER, DEMO DATA SEEDS, AUDIT LOG, EVENT REPLAY, CLOUDFLARE PAGES DELIVERY, NO CREDIT CARD GATE.',
+          },
+          saasLimits: {
+            proposalsCap: '5 (trial cap)',
+            users: '1',
+            sso: false,
+            customDomain: false,
+            auditChain: 'Standard',
+          },
+          features: [
+            '14-day full-feature access',
+            '5 proposals during trial',
+            'Branded PDF output',
+            'Demo data preloaded',
+            'Gemini-powered extraction',
+            'Audit log',
+            'No credit card required',
+          ],
+          crossSell: {
+            label:
+              'Outgrowing the trial? Pro unlocks 50 proposals/mo + custom branding',
+            offeringId: 'gtm-ops-pro',
+          },
+        },
+      },
+      {
+        id: 'gtm-ops-pro',
+        name: 'GTM Ops Pro',
+        price: '20',
+        priceCadence: 'monthly',
+        description:
+          'For solo operators and small teams running real proposals. Branded PDFs, custom workspace, full audit chain.',
+        badge: 'Most Popular',
+        cta: 'Start Pro Plan',
+        monthlyAddon: {price: '200', label: 'annual ($200/yr saves 17%)'},
+        features: [
+          '50 proposals per month',
+          'Branded PDFs with your logo + colors',
+          'Custom workspace branding',
+          'Lead intake forms',
+          'Full audit log',
+          'n8n webhook integration',
+          'Gemini-powered extraction',
+          'Email support',
+        ],
+        facts: {
+          kind: 'saas',
+          tierName: 'Pro',
+          discountPercent: 17,
+          headlinePrice: 20,
+          annualMonthly: 16.67,
+          addon: {price: 200, label: '/yr (annual, 17% off)'},
+          pricing: {monthly: 20, annualMonthly: 16.67},
+          specs: {
+            coverage: '50 proposals/mo per workspace',
+            ingredients:
+              'GEMINI EXTRACTION ENGINE, BRANDED PDF RENDERER, CUSTOM LOGO + COLOR INJECTION, LEAD INTAKE FORMS, N8N WEBHOOK BUS, FULL AUDIT LOG, CLOUDFLARE D1 PERSISTENCE.',
+          },
+          saasLimits: {
+            proposalsCap: '50 / mo',
+            users: '3 seats',
+            sso: false,
+            customDomain: false,
+            auditChain: 'Full',
+          },
+          features: [
+            '50 proposals/mo',
+            'Branded PDF output (logo + colors)',
+            'Custom workspace branding',
+            'Lead intake forms',
+            'Full audit log',
+            'n8n webhook integration',
+            'Gemini-powered extraction',
+            'Email support',
+          ],
+          crossSell: {
+            label:
+              'Need SSO, team workspaces, or unlimited proposals? Scale tier ships with all of it',
+            offeringId: 'gtm-ops-scale',
+          },
+        },
+      },
+      {
+        id: 'gtm-ops-scale',
+        name: 'GTM Ops Scale',
+        price: '99',
+        priceCadence: 'monthly',
+        description:
+          'For teams who need SSO, custom domains, and unlimited throughput. Built for ops orgs that ship hundreds of proposals.',
+        cta: 'Talk to Sales',
+        monthlyAddon: {price: '990', label: 'annual ($990/yr saves 17%)'},
+        features: [
+          'Unlimited proposals',
+          'Everything in Pro',
+          'SSO (Google + Azure AD)',
+          'Team workspaces with role-based access',
+          'Custom domain (proposals.yourco.com)',
+          'Advanced audit chain (immutable, exportable)',
+          'Priority support + SLA',
+          'Onboarding session included',
+        ],
+        facts: {
+          kind: 'saas',
+          tierName: 'Scale',
+          discountPercent: 17,
+          headlinePrice: 99,
+          annualMonthly: 82.5,
+          addon: {price: 990, label: '/yr (annual, 17% off)'},
+          pricing: {monthly: 99, annualMonthly: 82.5},
+          specs: {
+            coverage: 'Unlimited proposals, multi-team',
+            ingredients:
+              'GOOGLE + AZURE AD SSO, TEAM WORKSPACES, ROLE-BASED ACCESS, CUSTOM DOMAIN ROUTING, IMMUTABLE AUDIT CHAIN, EXPORT-READY COMPLIANCE LOGS, PRIORITY SUPPORT + SLA.',
+          },
+          saasLimits: {
+            proposalsCap: 'Unlimited',
+            users: 'Unlimited seats',
+            sso: true,
+            customDomain: true,
+            auditChain: 'Immutable + exportable',
+          },
+          features: [
+            'Unlimited proposals',
+            'Everything in Pro',
+            'SSO (Google + Azure AD)',
+            'Team workspaces + RBAC',
+            'Custom domain',
+            'Immutable audit chain',
+            'Priority support + SLA',
+            'Onboarding session',
+          ],
+          crossSell: {
+            label:
+              'Want a custom AI agent funnelling leads INTO GTM Ops? See the Elite Agent',
+            offeringId: 'premium',
           },
         },
       },

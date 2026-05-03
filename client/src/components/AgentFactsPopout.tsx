@@ -47,15 +47,34 @@ export default function AgentFactsPopout({
     specs,
     limits,
     delivery,
+    saasLimits,
     features,
     crossSell,
   } = facts;
   const isWebsite = kind === 'website';
-  const isPremiumTier = /elite|premium|pro|business/i.test(tierName);
-  const showAnnualDiscount = !isWebsite && discountPercent > 0;
-  const headerTitle = isWebsite ? 'Website Spec Sheet' : 'AI Agent Facts';
-  const priceCadenceLabel = isWebsite ? 'Project' : 'Monthly';
-  const priceCadenceSub = isWebsite ? 'One-time delivery' : 'No commitment';
+  const isSaas = kind === 'saas';
+  const isPremiumTier = /elite|premium|pro|business|scale/i.test(tierName);
+  const isTrial = isSaas && headlinePrice === 0;
+  const showAnnualDiscount = !isWebsite && !isTrial && discountPercent > 0;
+  const headerTitle = isSaas
+    ? 'SaaS Plan Facts'
+    : isWebsite
+      ? 'Website Spec Sheet'
+      : 'AI Agent Facts';
+  const priceCadenceLabel = isSaas
+    ? isTrial
+      ? 'Free'
+      : 'Monthly'
+    : isWebsite
+      ? 'Project'
+      : 'Monthly';
+  const priceCadenceSub = isSaas
+    ? isTrial
+      ? '14-day evaluation'
+      : 'Cancel any time'
+    : isWebsite
+      ? 'One-time delivery'
+      : 'No commitment';
 
   return (
     <div className="bg-white border-2 border-black p-4 w-full max-w-[380px] font-sans text-black shadow-sm mx-auto flex flex-col">
@@ -85,13 +104,19 @@ export default function AgentFactsPopout({
           {itemName ? (
             <div className="text-[10px] font-bold uppercase tracking-tighter mt-1 opacity-70">
               {itemName} ·{' '}
-              {isWebsite ? 'Project Engagement' : '1 Business Location'}
+              {isSaas
+                ? 'SaaS Subscription'
+                : isWebsite
+                  ? 'Project Engagement'
+                  : '1 Business Location'}
             </div>
           ) : (
             <div className="text-[10px] font-bold uppercase tracking-tighter mt-1 opacity-70">
-              {isWebsite
-                ? 'Project Engagement'
-                : 'Serving Size: 1 Business Location'}
+              {isSaas
+                ? 'SaaS Subscription'
+                : isWebsite
+                  ? 'Project Engagement'
+                  : 'Serving Size: 1 Business Location'}
             </div>
           )}
         </div>
@@ -99,7 +124,13 @@ export default function AgentFactsPopout({
         {/* Pricing */}
         <div className="border-b-[4px] border-black py-1">
           <div className="text-xs font-bold uppercase tracking-tighter">
-            {isWebsite ? 'Project Price' : 'Base Service Price'}
+            {isSaas
+              ? isTrial
+                ? 'Trial Price'
+                : 'Subscription Price'
+              : isWebsite
+                ? 'Project Price'
+                : 'Base Service Price'}
           </div>
           <div className="flex justify-between items-center">
             <div>
@@ -114,7 +145,7 @@ export default function AgentFactsPopout({
               className="text-5xl font-black leading-none text-[var(--s500)]"
               style={{fontFamily: 'JetBrains Mono, ui-monospace, monospace'}}
             >
-              ${formatNumber(headlinePrice)}
+              {isTrial ? 'FREE' : `$${formatNumber(headlinePrice)}`}
             </span>
           </div>
 
@@ -148,10 +179,43 @@ export default function AgentFactsPopout({
         {/* Specs / Limits / Delivery */}
         <div className="border-b-[4px] border-black">
           <div className="flex justify-end text-[10px] font-bold border-b border-black py-0.5 uppercase tracking-tighter">
-            {isWebsite ? 'Scope *' : '% Fair Use Cap *'}
+            {isSaas
+              ? 'Plan Limits *'
+              : isWebsite
+                ? 'Scope *'
+                : '% Fair Use Cap *'}
           </div>
 
-          {isWebsite ? (
+          {isSaas ? (
+            <>
+              <SpecRow label="Coverage" value={specs.coverage} flag="ACTIVE" />
+              <SpecRow
+                label="Proposals / mo"
+                value={saasLimits?.proposalsCap ?? '—'}
+                flag="100%"
+              />
+              <SpecRow
+                label="Users / Seats"
+                value={saasLimits?.users ?? '—'}
+                flag="100%"
+              />
+              <SpecRow
+                label="SSO"
+                value={saasLimits?.sso ? 'Google + Azure AD' : 'Not included'}
+                flag={saasLimits?.sso ? 'YES' : 'NO'}
+              />
+              <SpecRow
+                label="Custom Domain"
+                value={saasLimits?.customDomain ? 'Included' : 'Not included'}
+                flag={saasLimits?.customDomain ? 'YES' : 'NO'}
+              />
+              <SpecRow
+                label="Audit Chain"
+                value={saasLimits?.auditChain ?? '—'}
+                flag="100%"
+              />
+            </>
+          ) : isWebsite ? (
             <>
               <SpecRow
                 label="Delivery Timeline"
@@ -221,7 +285,11 @@ export default function AgentFactsPopout({
           {/* Features */}
           <div className="py-2">
             <div className="font-bold text-sm mb-1 uppercase tracking-tighter">
-              {isWebsite ? 'Included In Build:' : 'Included System Features:'}
+              {isSaas
+                ? 'Included In Plan:'
+                : isWebsite
+                  ? 'Included In Build:'
+                  : 'Included System Features:'}
             </div>
             <ul className="text-xs space-y-1">
               {features.map((feature, index) => (
@@ -238,10 +306,14 @@ export default function AgentFactsPopout({
         </div>
 
         {/* Add-on */}
-        {addon && (
+        {addon && !(isSaas && isTrial) && (
           <div className="border-b-[4px] border-black py-1.5 flex justify-between items-baseline text-sm">
             <span className="font-bold uppercase tracking-tighter">
-              {isWebsite ? 'Maintenance' : 'Additional Locations'}
+              {isSaas
+                ? 'Annual Plan'
+                : isWebsite
+                  ? 'Maintenance'
+                  : 'Additional Locations'}
             </span>
             <span
               className="font-bold"
@@ -260,15 +332,21 @@ export default function AgentFactsPopout({
       <div className="mt-auto">
         <div className="text-[9px] mt-2 leading-tight">
           <span className="font-bold uppercase italic">
-            {isWebsite ? 'Built With:' : 'Marketing Ingredients:'}
+            {isSaas
+              ? 'Stack Includes:'
+              : isWebsite
+                ? 'Built With:'
+                : 'Marketing Ingredients:'}
           </span>{' '}
           {specs.ingredients}
         </div>
 
         <div className="text-[8px] mt-2 border-t border-black pt-1 leading-[1.2]">
-          {isWebsite
-            ? '* Scope reflects what is included in the project quote. Out-of-scope changes priced separately. Source code is delivered to you on completion. Maintenance is optional and month-to-month.'
-            : '* The % Fair Use (FU) indicates the capacity included in the base price before standard overage rates apply. Mid-annual cancellation of the Discount Price is subject to cancellation fees. API access not available. White-labeling included. All agents are trade-specific.'}
+          {isSaas
+            ? '* Plan limits reset monthly on the billing anniversary. Annual plans billed up-front; monthly plans cancel any time. SSO + custom domain require a verified workspace. Audit logs retained 12 months on Pro, indefinitely on Scale.'
+            : isWebsite
+              ? '* Scope reflects what is included in the project quote. Out-of-scope changes priced separately. Source code is delivered to you on completion. Maintenance is optional and month-to-month.'
+              : '* The % Fair Use (FU) indicates the capacity included in the base price before standard overage rates apply. Mid-annual cancellation of the Discount Price is subject to cancellation fees. API access not available. White-labeling included. All agents are trade-specific.'}
         </div>
 
         {crossSell && onCrossSell && (
