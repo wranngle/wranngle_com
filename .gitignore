@@ -21,13 +21,21 @@ build/
 *.backup
 .absorbed/
 
+# Operational artifacts (never re-add — these were on the kill list)
+_archive/
+smtp2go-*.png
+setup-wizard-results.csv
+start-tunnel.ps1
+
+# OpenSpec working state (proposals churn — keep specs/ only)
+openspec/changes/
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 bun-debug.log*
 *.log
-_archive/old/*.log
 
 # IDE
 .vscode/

@@ -13,7 +13,7 @@ import {describe, it, expect} from 'vitest';
 
 const INTAKE_WEBHOOK = 'https://n8n.wranngle.com/webhook/wranngle-intake-form';
 const UMS_WEBHOOK = 'https://n8n.wranngle.com/webhook/universal-message-v1';
-const WEBHOOK_SECRET = 'test-secret-placeholder';
+const WEBHOOK_SECRET = process.env.SMS_WEBHOOK_SECRET || "test-secret-placeholder";
 // Load from ~/.claude/.env if not in process.env
 import {existsSync, readFileSync} from 'node:fs';
 import {join} from 'node:path';

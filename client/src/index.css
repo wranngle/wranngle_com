@@ -14,67 +14,42 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
 
-  --background: red; /*replace with H S L */
-
-  --foreground: red; /*replace with H S L */
-
-  --border: red; /*replace with H S L */
-
-  --card: red; /*replace with H S L */
-
-  --card-foreground: red; /*replace with H S L */
-
-  --card-border: red; /*replace with H S L */
-
-  --sidebar: red; /*replace with H S L */
-
-  --sidebar-foreground: red; /*replace with H S L */
-
-  --sidebar-border: red; /*replace with H S L */
-
-  --sidebar-primary: red; /*replace with H S L */
-
-  --sidebar-primary-foreground: red; /*replace with H S L */
-
-  --sidebar-accent: red; /*replace with H S L */
-
-  --sidebar-accent-foreground: red; /*replace with H S L */
-
-  --sidebar-ring: red; /*replace with H S L */
-
-  --popover: red; /*replace with H S L */
-
-  --popover-foreground: red; /*replace with H S L */
-
-  --popover-border: red; /*replace with H S L */
-
-  --primary: red; /*replace with H S L */
-
-  --primary-foreground: red; /*replace with H S L */
-
-  --secondary: red; /*replace with H S L */
-
-  --secondary-foreground: red; /*replace with H S L */
-
-  --muted: red; /*replace with H S L */
-
-  --muted-foreground: red; /*replace with H S L */
-
-  --accent: red; /*replace with H S L */
-
-  --accent-foreground: red; /*replace with H S L */
-
-  --destructive: red; /*replace with H S L */
-
-  --destructive-foreground: red; /*replace with H S L */
-
-  --input: red; /*replace with H S L */
-  --ring: red; /*replace with H S L */
-  --chart-1: red; /*replace with H S L */
-  --chart-2: red; /*replace with H S L */
-  --chart-3: red; /*replace with H S L */
-  --chart-4: red; /*replace with H S L */
-  --chart-5: red; /*replace with H S L */
+  /* Brand-system HSL values (per DESIGN.md / tokens/tokens.css mirrored from gtm_ops). */
+  /* shadcn convention: space-separated "H S% L%" so hsl(var(--token)) resolves. */
+  --background: 43 54% 97%;            /* sand-50 #fcfaf5 — light page */
+  --foreground: 247 21% 8%;            /* night-950 #12111a — primary text */
+  --border: 38 51% 85%;                /* sand-200 #ebdfc8 — subtle border */
+  --card: 0 0% 100%;                   /* white */
+  --card-foreground: 247 21% 8%;       /* night-950 */
+  --card-border: 38 51% 85%;           /* sand-200 */
+  --sidebar: 38 50% 94%;               /* sand-100 #f6f1e7 — muted surface */
+  --sidebar-foreground: 247 21% 8%;    /* night-950 */
+  --sidebar-border: 38 51% 85%;        /* sand-200 */
+  --sidebar-primary: 22 100% 50%;      /* sunset-500 #ff5f00 — action */
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 38 50% 94%;        /* sand-100 */
+  --sidebar-accent-foreground: 247 21% 8%;
+  --sidebar-ring: 22 100% 50%;
+  --popover: 0 0% 100%;                /* white */
+  --popover-foreground: 247 21% 8%;
+  --popover-border: 38 51% 85%;
+  --primary: 22 100% 50%;              /* sunset-500 — primary action */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 339 60% 52%;            /* violet-500 #cf3c69 — secondary brand */
+  --secondary-foreground: 0 0% 100%;
+  --muted: 38 50% 94%;                 /* sand-100 */
+  --muted-foreground: 250 11% 54%;     /* night-400 #847d9a */
+  --accent: 31 100% 60%;               /* sunset-300 #ff9e33 — warning amber */
+  --accent-foreground: 247 21% 8%;
+  --destructive: 0 84% 60%;            /* #ef4444 — danger red (email-aligned) */
+  --destructive-foreground: 0 0% 100%;
+  --input: 38 51% 85%;                 /* sand-200 */
+  --ring: 22 100% 50%;                 /* sunset-500 */
+  --chart-1: 22 100% 50%;              /* sunset-500 */
+  --chart-2: 339 60% 52%;              /* violet-500 */
+  --chart-3: 124 19% 46%;              /* cactus #5d8c61 — healthy */
+  --chart-4: 217 91% 60%;              /* info blue #3b82f6 */
+  --chart-5: 31 100% 60%;              /* sunset-300 */
 
   --font-sans: 'Inter', sans-serif;
   --font-serif: Georgia, serif;
