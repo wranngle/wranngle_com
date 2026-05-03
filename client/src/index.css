@@ -107,68 +107,42 @@
   --elevate-1: rgba(255,255,255, .04);
   --elevate-2: rgba(255,255,255, .09);
 
-  --background: red; /*replace with H S L */
-
-  --foreground: red; /*replace with H S L */
-
-  --border: red; /*replace with H S L */
-
-  --card: red; /*replace with H S L */
-
-  --card-foreground: red; /*replace with H S L */
-
-  --card-border: red; /*replace with H S L */
-
-  --sidebar: red; /*replace with H S L */
-
-  --sidebar-foreground: red; /*replace with H S L */
-
-  --sidebar-border: red; /*replace with H S L */
-
-  --sidebar-primary: red; /*replace with H S L */
-
-  --sidebar-primary-foreground: red; /*replace with H S L */
-
-  --sidebar-accent: red; /*replace with H S L */
-
-  --sidebar-accent-foreground: red; /*replace with H S L */
-
-  --sidebar-ring: red; /*replace with H S L */
-
-  --popover: red; /*replace with H S L */
-
-  --popover-foreground: red; /*replace with H S L */
-
-  --popover-border: red; /*replace with H S L */
-
-  --primary: red; /*replace with H S L */
-
-  --primary-foreground: red; /*replace with H S L */
-
-  --secondary: red; /*replace with H S L */
-
-  --secondary-foreground: red; /*replace with H S L */
-
-  --muted: red; /*replace with H S L */
-
-  --muted-foreground: red; /*replace with H S L */
-
-  --accent: red; /*replace with H S L */
-
-  --accent-foreground: red; /*replace with H S L */
-
-  --destructive: red; /*replace with H S L */
-
-  --destructive-foreground: red; /*replace with H S L */
-
-  /* Used as the border around inputs. Dark mode: Should be a border that is light enough to have high contrast when rendered on a --card background. More contrast than standard --border */
-  --input: red; /*replace with H S L */
-  --ring: red; /*replace with H S L */
-  --chart-1: red; /*replace with H S L */
-  --chart-2: red; /*replace with H S L */
-  --chart-3: red; /*replace with H S L */
-  --chart-4: red; /*replace with H S L */
-  --chart-5: red; /*replace with H S L */
+  /* Wranngle dark-mode HSL values (mirror of :root with night surfaces). */
+  --background: 247 21% 8%;            /* night-950 #12111a — dark page */
+  --foreground: 43 54% 97%;            /* sand-50 #fcfaf5 — primary text inverse */
+  --border: 247 11% 22%;               /* night-700 #464055 — dark border */
+  --card: 247 19% 12%;                 /* night-900 #201e28 — slightly elevated dark surface */
+  --card-foreground: 43 54% 97%;
+  --card-border: 247 11% 22%;
+  --sidebar: 247 19% 12%;
+  --sidebar-foreground: 43 54% 97%;
+  --sidebar-border: 247 11% 22%;
+  --sidebar-primary: 22 100% 50%;      /* sunset-500 — same brand action both modes */
+  --sidebar-primary-foreground: 247 21% 8%;
+  --sidebar-accent: 247 16% 17%;       /* night-800 #393444 — hover surface */
+  --sidebar-accent-foreground: 43 54% 97%;
+  --sidebar-ring: 22 100% 50%;
+  --popover: 247 19% 12%;
+  --popover-foreground: 43 54% 97%;
+  --popover-border: 247 11% 22%;
+  --primary: 22 100% 50%;              /* sunset-500 — same in both modes */
+  --primary-foreground: 247 21% 8%;
+  --secondary: 339 60% 52%;            /* violet-500 — same in both modes */
+  --secondary-foreground: 0 0% 100%;
+  --muted: 247 16% 17%;                /* night-800 */
+  --muted-foreground: 250 11% 66%;     /* night-300 #aaa4b8 — softer in dark */
+  --accent: 31 100% 60%;               /* sunset-300 — warning amber */
+  --accent-foreground: 247 21% 8%;
+  --destructive: 0 84% 60%;            /* danger red — same hex both modes */
+  --destructive-foreground: 0 0% 100%;
+  /* Input border in dark mode needs higher contrast against --card surface */
+  --input: 247 11% 28%;                /* night-600 #57516a */
+  --ring: 22 100% 50%;
+  --chart-1: 22 100% 50%;              /* sunset-500 */
+  --chart-2: 339 60% 52%;              /* violet-500 */
+  --chart-3: 124 19% 56%;              /* cactus, lifted for dark */
+  --chart-4: 217 91% 70%;              /* info blue, lifted for dark */
+  --chart-5: 31 100% 65%;              /* sunset-300 lifted */
 
   --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
   --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
