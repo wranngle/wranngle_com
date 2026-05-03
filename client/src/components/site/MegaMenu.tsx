@@ -39,7 +39,7 @@ export default function MegaMenu({
   const dividerClass = isDark ? 'border-white/10' : 'border-black/10';
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <button
           type="button"

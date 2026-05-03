@@ -37,15 +37,29 @@ const WranngleLanding = () => {
     }
 
     const handleOutsideClick = (e) => {
-      // Don't trigger if clicking inside a dialog
-      if (e.target.closest('[role="dialog"]')) return;
+      // Bail if click is inside any Radix-managed surface (Dialog, DropdownMenu,
+      // Popover, Tooltip…). Without this, opening the mega-menu fires this
+      // handler on the same tick and the bubbling Escape we dispatch below
+      // reaches Radix's document keydown listener — which closes the menu
+      // we just opened. (Same risk for any popper-based UI.)
+      const target = e.target;
+      if (
+        target.closest?.(
+          '[role="dialog"], [role="menu"], [role="listbox"], [data-radix-popper-content-wrapper], [data-radix-portal]',
+        )
+      )
+        return;
 
       const widget = document.querySelector('elevenlabs-convai');
       if (widget && !widget.contains(e.target)) {
         const rect = widget.getBoundingClientRect();
         if (rect.height > 80 && widget.shadowRoot) {
-          // Only dispatch Escape if no dialog is open to avoid conflicts
-          const isDialogOpen = document.querySelector('[role="dialog"]');
+          // Dispatch a NON-bubbling Escape so Radix's document-level keydown
+          // listener never sees it. The widget's own shadow-DOM listener still
+          // catches it because dispatchEvent fires synchronously on its target.
+          const isDialogOpen = document.querySelector(
+            '[role="dialog"], [role="menu"]',
+          );
           if (!isDialogOpen) {
             widget.dispatchEvent(
               new KeyboardEvent('keydown', {
@@ -53,7 +67,7 @@ const WranngleLanding = () => {
                 code: 'Escape',
                 keyCode: 27,
                 which: 27,
-                bubbles: true,
+                bubbles: false,
               }),
             );
           }
