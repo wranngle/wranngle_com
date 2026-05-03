@@ -42,7 +42,7 @@ const WranngleLanding = () => {
       // handler on the same tick and the bubbling Escape we dispatch below
       // reaches Radix's document keydown listener — which closes the menu
       // we just opened. (Same risk for any popper-based UI.)
-      const target = e.target;
+      const {target} = e;
       if (
         target.closest?.(
           '[role="dialog"], [role="menu"], [role="listbox"], [data-radix-popper-content-wrapper], [data-radix-portal]',
@@ -374,14 +374,9 @@ function OfferingCard({item, isDark}: {item: OfferingItem; isDark: boolean}) {
             <div className="mb-6">
               <div className="text-4xl font-bold">
                 ${item.price}
-                {item.facts ? (
-                  <span className="text-sm font-normal opacity-50">/mo</span>
-                ) : (
-                  <span className="text-sm font-normal opacity-50">
-                    {' '}
-                    one-time
-                  </span>
-                )}
+                <span className="text-sm font-normal opacity-50">
+                  {item.priceCadence === 'monthly' ? '/mo' : ' one-time'}
+                </span>
               </div>
               {item.monthlyAddon && (
                 <div className="text-sm opacity-60 mt-1">
@@ -419,6 +414,12 @@ function OfferingCard({item, isDark}: {item: OfferingItem; isDark: boolean}) {
                   onGetStarted={() => {
                     setFactsOpen(false);
                     setIntakeOpen(true);
+                  }}
+                  onCrossSell={(targetId) => {
+                    setFactsOpen(false);
+                    // Hash-jump to the cross-sell card so the user lands on the
+                    // right offering tile and can read it in context.
+                    globalThis.location.hash = `offerings-${targetId}`;
                   }}
                 />
               </DialogContent>
