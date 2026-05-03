@@ -135,6 +135,25 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           'Cloudflare hosting',
           'Monthly maintenance & security updates',
         ],
+        facts: {
+          tierName: 'Landing Page',
+          discountPercent: 0,
+          pricing: {monthly: 100, annualMonthly: 100, addon: 900},
+          specs: {
+            coverage: 'One-page conversion surface',
+            ingredients:
+              'VITE BUNDLER, MOBILE-FIRST BREAKPOINTS, CLOUDFLARE PAGES CDN, ARKTYPE FORM VALIDATION, N8N LEAD WEBHOOK, CORE WEB VITALS BUDGET.',
+          },
+          limits: {minutes: 'n/a', sms: 'n/a'},
+          features: [
+            'Custom responsive design',
+            'Mobile-first build',
+            'SEO fundamentals (sitemap + robots + OG tags)',
+            'Contact form → n8n webhook',
+            'Cloudflare global CDN',
+            'Monthly maintenance + security updates',
+          ],
+        },
       },
       {
         id: 'business-site',
@@ -152,6 +171,25 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           'Performance optimization',
           'Cloudflare hosting (1 year)',
         ],
+        facts: {
+          tierName: 'Business Site',
+          discountPercent: 0,
+          pricing: {monthly: 0, annualMonthly: 0, addon: 3500},
+          specs: {
+            coverage: 'Up to 5 pages + CMS',
+            ingredients:
+              'VITE + REACT + TAILWIND, HEADLESS CMS (PAYLOAD/SANITY), CLOUDFLARE PAGES, ANALYTICS DASHBOARD, N8N LEAD-CAPTURE PIPELINE, PERFORMANCE BUDGETS.',
+          },
+          limits: {minutes: 'n/a', sms: 'n/a'},
+          features: [
+            'Up to 5 pages with CMS',
+            'Headless CMS integration',
+            'Analytics dashboard (privacy-first)',
+            'Lead capture → n8n automation',
+            'Performance optimization (Lighthouse 90+)',
+            'Cloudflare hosting (first year included)',
+          ],
+        },
       },
     ],
   },
