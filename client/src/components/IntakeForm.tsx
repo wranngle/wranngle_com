@@ -240,7 +240,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
           <Label htmlFor="businessName">Business Name</Label>
           <Input
             id="businessName"
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]"
+            className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
             {...register('businessName', {required: true})}
             placeholder="Apex Plumbing"
           />
@@ -249,7 +249,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
           <Label htmlFor="industry">Industry / Trade</Label>
           <Input
             id="industry"
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]"
+            className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
             {...register('industry', {required: true})}
             placeholder="HVAC / Electrical / etc."
           />
@@ -258,7 +258,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
           <Label htmlFor="ownerName">Contact Person</Label>
           <Input
             id="ownerName"
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]"
+            className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
             {...register('ownerName', {required: true})}
             placeholder="John Doe"
           />
@@ -268,7 +268,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
           <Input
             id="email"
             type="email"
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]"
+            className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
             {...register('email', {required: true})}
             placeholder="john@example.com"
           />
@@ -278,7 +278,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
           <Input
             id="phone"
             type="tel"
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]"
+            className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
             {...register('phone', {required: true})}
             placeholder="(555) 000-0000"
           />
@@ -290,7 +290,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
             </Label>
             <Input
               id="agentName"
-              className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)]"
+              className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
               {...register('agentName')}
               placeholder="Sarah, Max, Alex..."
               maxLength={50}
@@ -304,7 +304,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
           <Label htmlFor="notes">Additional Notes (Optional)</Label>
           <Textarea
             id="notes"
-            className="placeholder:text-white/20 border-l-4 border-l-[var(--s500)] min-h-[100px]"
+            className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit min-h-[100px]"
             {...register('notes')}
             placeholder={
               isAgent

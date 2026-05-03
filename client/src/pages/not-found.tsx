@@ -1,23 +1,54 @@
-import {AlertCircle} from 'lucide-react';
-import {Card, CardContent} from '@/components/ui/card.tsx';
+// @ts-nocheck
+import React from 'react';
+import {Link} from 'wouter';
+import {AlertCircle, ArrowRight} from 'lucide-react';
+import SiteHeader from '@/components/site/SiteHeader.tsx';
+import SiteFooter from '@/components/site/SiteFooter.tsx';
+import {useDarkMode} from '@/components/site/DarkModeToggle.tsx';
 
 export default function NotFound() {
-  return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
-      <Card className="w-full max-w-md mx-4">
-        <CardContent className="pt-6">
-          <div className="flex mb-4 gap-2">
-            <AlertCircle className="h-8 w-8 text-red-500" />
-            <h1 className="text-2xl font-bold text-gray-900">
-              404 Page Not Found
-            </h1>
-          </div>
+  const {isDark, toggle: toggleTheme} = useDarkMode();
 
-          <p className="mt-4 text-sm text-gray-600">
-            Did you forget to add the page to the router?
-          </p>
-        </CardContent>
-      </Card>
+  return (
+    <div
+      className={`min-h-screen font-sans transition-colors duration-500 ${isDark ? 'dark bg-[#12111a] text-[#fcfaf5]' : 'bg-[#fcfaf5] text-[#12111a]'}`}
+    >
+      <div
+        className={`min-h-screen flex flex-col ${isDark ? 'bg-page-dark' : 'bg-page-light'}`}
+      >
+        <SiteHeader isDark={isDark} toggleTheme={toggleTheme} />
+
+        <main className="flex-1 flex items-center justify-center px-6 py-20">
+          <div
+            className={`relative max-w-lg w-full p-10 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] ${
+              isDark
+                ? 'border-white/10 bg-[#18181b]'
+                : 'border-black/5 bg-white'
+            } noise-overlay overflow-hidden`}
+          >
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-4">
+                <AlertCircle className="text-[var(--s500)]" size={28} />
+                <h1 className="brand-font text-3xl font-bold">
+                  404 — Not Found
+                </h1>
+              </div>
+              <p className="opacity-70 text-base leading-relaxed mb-6">
+                The page you were looking for doesn't exist on this site. Maybe
+                it moved, or maybe the link was wrong.
+              </p>
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--s500)] text-white font-bold uppercase text-xs rounded-md hover:scale-105 transition-all"
+              >
+                Back to Home <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+        </main>
+
+        <SiteFooter isDark={isDark} />
+      </div>
     </div>
   );
 }

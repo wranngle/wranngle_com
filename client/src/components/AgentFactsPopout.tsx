@@ -1,9 +1,16 @@
 import React from 'react';
+import {ArrowRight} from 'lucide-react';
 import type {OfferingFacts} from '@/data/offerings.ts';
 
 type AgentFactsPopoutProps = {
   facts: OfferingFacts;
   itemName?: string;
+  /**
+   * If provided, renders a primary "Get Started — <tier>" CTA below the
+   * spec sheet. The parent is responsible for closing the popout and
+   * opening the intake form preselected to the relevant tier.
+   */
+  onGetStarted?: () => void;
 };
 
 /**
@@ -18,6 +25,7 @@ type AgentFactsPopoutProps = {
 export default function AgentFactsPopout({
   facts,
   itemName,
+  onGetStarted,
 }: AgentFactsPopoutProps) {
   const {tierName, discountPercent, pricing, specs, limits, features} = facts;
   const isPremiumTier = /elite|premium|pro/i.test(tierName);
@@ -199,6 +207,17 @@ export default function AgentFactsPopout({
           the Discount Price is subject to cancellation fees. API access not
           available. White-labeling included. All agents are trade-specific.
         </div>
+
+        {onGetStarted && (
+          <button
+            type="button"
+            onClick={onGetStarted}
+            className="mt-3 w-full bg-[var(--s500)] hover:bg-[var(--s500)]/90 text-white font-black uppercase text-xs tracking-wider py-3 rounded-sm transition-all flex items-center justify-center gap-2"
+          >
+            Get Started — {tierName} Agent
+            <ArrowRight size={14} />
+          </button>
+        )}
       </div>
     </div>
   );
