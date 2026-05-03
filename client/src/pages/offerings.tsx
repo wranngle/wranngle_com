@@ -2,10 +2,11 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'wouter';
 import {motion} from 'framer-motion';
-import {Check, ArrowRight, Moon, Sun} from 'lucide-react';
+import {Check, ArrowRight, Moon, Sun, FileText} from 'lucide-react';
 import {Dialog, DialogContent, DialogTrigger} from '@/components/ui/dialog.tsx';
 import {Button} from '@/components/ui/button.tsx';
 import IntakeForm from '@/components/IntakeForm.tsx';
+import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import {OFFERING_CATEGORIES, type OfferingItem} from '@/data/offerings.ts';
 
 const LOGO_URL = 'https://i.ibb.co/WWFmbjKJ/wranngle-wordmark-4096w.png';
@@ -17,8 +18,29 @@ export default function Offerings() {
   );
 
   useEffect(() => {
-    globalThis.scrollTo(0, 0);
     document.title = 'Offerings | Wranngle Systems';
+    const hash = globalThis.location.hash?.slice(1);
+    if (hash) {
+      // Switch to the category that owns the requested item, then scroll once mounted.
+      const owningCategory = OFFERING_CATEGORIES.find((c) =>
+        c.items.some((i) => i.id === hash),
+      );
+      if (owningCategory && owningCategory.id !== activeCategory) {
+        setActiveCategory(owningCategory.id);
+      }
+
+      // Wait one frame so the freshly-rendered item with id={hash} exists in DOM.
+      requestAnimationFrame(() => {
+        const target = document.getElementById(hash);
+        if (target) {
+          target.scrollIntoView({behavior: 'smooth', block: 'start'});
+        } else {
+          globalThis.scrollTo(0, 0);
+        }
+      });
+    } else {
+      globalThis.scrollTo(0, 0);
+    }
   }, []);
 
   return (
@@ -138,7 +160,7 @@ export default function Offerings() {
 
 function OfferingCard({item, isDark}: {item: OfferingItem; isDark: boolean}) {
   return (
-    <div className="relative group h-full">
+    <div id={item.id} className="relative group h-full scroll-mt-24">
       <div
         className={`relative h-full p-8 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] ${isDark ? 'border-white/10 bg-[#18181b]' : 'border-black/5 bg-white'} flex flex-col noise-overlay overflow-hidden`}
       >
@@ -185,6 +207,22 @@ function OfferingCard({item, isDark}: {item: OfferingItem; isDark: boolean}) {
               ))}
             </ul>
           </div>
+
+          {item.facts && (
+            <Dialog>
+              <DialogTrigger asChild>
+                <button
+                  type="button"
+                  className="w-full mb-3 px-4 py-2 border border-current rounded-md text-xs font-bold uppercase tracking-wider opacity-80 hover:opacity-100 hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all flex items-center justify-center gap-2"
+                >
+                  <FileText size={14} /> View Spec Sheet
+                </button>
+              </DialogTrigger>
+              <DialogContent className="bg-transparent border-none shadow-none p-0 max-w-fit outline-none">
+                <AgentFactsPopout facts={item.facts} itemName={item.name} />
+              </DialogContent>
+            </Dialog>
+          )}
 
           <Dialog>
             <DialogTrigger asChild>
