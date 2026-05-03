@@ -2,6 +2,12 @@
 
 Wranngle Systems is an AI and automation consultancy. This project is the official website and landing page, featuring a console-themed UI and an integrated ElevenLabs Conversational AI agent.
 
+## Demo
+
+🎬 _Loom walkthrough coming soon — site tour + ElevenLabs voice agent embed._
+
+<!-- Replace with: <a href="https://www.loom.com/share/<id>"><img src="https://cdn.loom.com/sessions/thumbnails/<id>-with-play.gif" alt="Site demo"></a> -->
+
 ## Tech Stack
 
 - **Runtime:** [Bun](https://bun.sh) (local dev), Cloudflare Workers (production)
