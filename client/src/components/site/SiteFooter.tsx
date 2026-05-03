@@ -90,7 +90,7 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
                 <Github size={20} />
               </a>
               <a
-                href="mailto:codymann88@gmail.com"
+                href="mailto:cody@wranngle.com"
                 aria-label="Email"
                 className="hover:text-[var(--s500)] transition-colors"
               >

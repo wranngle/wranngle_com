@@ -68,7 +68,7 @@ const SOCIALS = [
   },
   {
     label: 'Email',
-    href: 'mailto:codymann88@gmail.com',
+    href: 'mailto:cody@wranngle.com',
     Icon: Mail,
     external: false,
   },
