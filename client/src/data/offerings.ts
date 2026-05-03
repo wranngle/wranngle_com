@@ -336,20 +336,20 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           ],
           crossSell: {
             label:
-              'Outgrowing the trial? Pro unlocks 50 proposals/mo + custom branding',
-            offeringId: 'gtm-ops-pro',
+              'Outgrowing the trial? Plus unlocks 50 proposals/mo + custom branding',
+            offeringId: 'gtm-ops-plus',
           },
         },
       },
       {
-        id: 'gtm-ops-pro',
-        name: 'GTM Ops Pro',
+        id: 'gtm-ops-plus',
+        name: 'GTM Ops Plus',
         price: '20',
         priceCadence: 'monthly',
         description:
           'For solo operators and small teams running real proposals. Branded PDFs, custom workspace, full audit chain.',
         badge: 'Most Popular',
-        cta: 'Start Pro Plan',
+        cta: 'Start Plus Plan',
         monthlyAddon: {price: '200', label: 'annual ($200/yr saves 17%)'},
         features: [
           '50 proposals per month',
@@ -363,7 +363,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         ],
         facts: {
           kind: 'saas',
-          tierName: 'Pro',
+          tierName: 'Plus',
           discountPercent: 17,
           headlinePrice: 20,
           annualMonthly: 16.67,
@@ -393,14 +393,14 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           ],
           crossSell: {
             label:
-              'Need SSO, team workspaces, or unlimited proposals? Scale tier ships with all of it',
-            offeringId: 'gtm-ops-scale',
+              'Need SSO, team workspaces, or unlimited proposals? Pro tier ships with all of it',
+            offeringId: 'gtm-ops-pro',
           },
         },
       },
       {
-        id: 'gtm-ops-scale',
-        name: 'GTM Ops Scale',
+        id: 'gtm-ops-pro',
+        name: 'GTM Ops Pro',
         price: '99',
         priceCadence: 'monthly',
         description:
@@ -409,7 +409,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         monthlyAddon: {price: '990', label: 'annual ($990/yr saves 17%)'},
         features: [
           'Unlimited proposals',
-          'Everything in Pro',
+          'Everything in Plus',
           'SSO (Google + Azure AD)',
           'Team workspaces with role-based access',
           'Custom domain (proposals.yourco.com)',
@@ -419,7 +419,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         ],
         facts: {
           kind: 'saas',
-          tierName: 'Scale',
+          tierName: 'Pro',
           discountPercent: 17,
           headlinePrice: 99,
           annualMonthly: 82.5,
@@ -439,7 +439,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           },
           features: [
             'Unlimited proposals',
-            'Everything in Pro',
+            'Everything in Plus',
             'SSO (Google + Azure AD)',
             'Team workspaces + RBAC',
             'Custom domain',

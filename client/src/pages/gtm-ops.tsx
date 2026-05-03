@@ -96,7 +96,7 @@ export default function GtmOpsPage() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <a
-                  href="https://gtm-ops.pages.dev"
+                  href="https://app.wranngle.com"
                   target="_blank"
                   rel="noreferrer"
                   className="px-6 py-3 bg-[var(--s500)] text-white font-bold uppercase text-xs rounded-lg shadow-lg hover:scale-105 transition-all flex items-center gap-2"
@@ -104,7 +104,7 @@ export default function GtmOpsPage() {
                   Try the demo <ArrowRight size={14} />
                 </a>
                 <a
-                  href="https://gtm-ops.pages.dev/assets/sample-proposal.pdf"
+                  href="https://app.wranngle.com/assets/sample-proposal.pdf"
                   target="_blank"
                   rel="noreferrer"
                   className="px-6 py-3 border border-current font-bold uppercase text-xs rounded-lg hover:bg-white/5 transition-all flex items-center gap-2"
@@ -215,7 +215,7 @@ export default function GtmOpsPage() {
               </h3>
               <p className="text-sm opacity-70 leading-relaxed">
                 The "Try the demo" button drops you into a static deploy of the
-                operator console at gtm-ops.pages.dev. Every API call is
+                operator console at app.wranngle.com. Every API call is
                 intercepted client-side and answered from synthetic fixtures —
                 so you can click around without a backend, and we don't fake the
                 parts that aren't there yet.
@@ -302,8 +302,8 @@ function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
                     setFactsOpen(false);
                     if (
                       targetId === 'gtm-ops-trial' ||
-                      targetId === 'gtm-ops-pro' ||
-                      targetId === 'gtm-ops-scale'
+                      targetId === 'gtm-ops-plus' ||
+                      targetId === 'gtm-ops-pro'
                     ) {
                       // Stay on this page — scroll to pricing.
                       const target = document.querySelector('#pricing');
