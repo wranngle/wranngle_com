@@ -53,7 +53,7 @@ export default function AgentFactsPopout({
   } = facts;
   const isWebsite = kind === 'website';
   const isSaas = kind === 'saas';
-  const isPremiumTier = /elite|premium|pro|business|scale/i.test(tierName);
+  const isPremiumTier = /elite|premium|plus|pro|business/i.test(tierName);
   const isTrial = isSaas && headlinePrice === 0;
   const showAnnualDiscount = !isWebsite && !isTrial && discountPercent > 0;
   const headerTitle = isSaas
@@ -343,7 +343,7 @@ export default function AgentFactsPopout({
 
         <div className="text-[8px] mt-2 border-t border-black pt-1 leading-[1.2]">
           {isSaas
-            ? '* Plan limits reset monthly on the billing anniversary. Annual plans billed up-front; monthly plans cancel any time. SSO + custom domain require a verified workspace. Audit logs retained 12 months on Pro, indefinitely on Scale.'
+            ? '* Plan limits reset monthly on the billing anniversary. Annual plans billed up-front; monthly plans cancel any time. SSO + custom domain require a verified workspace. Audit logs retained 12 months on Plus, indefinitely on Pro.'
             : isWebsite
               ? '* Scope reflects what is included in the project quote. Out-of-scope changes priced separately. Source code is delivered to you on completion. Maintenance is optional and month-to-month.'
               : '* The % Fair Use (FU) indicates the capacity included in the base price before standard overage rates apply. Mid-annual cancellation of the Discount Price is subject to cancellation fees. API access not available. White-labeling included. All agents are trade-specific.'}
