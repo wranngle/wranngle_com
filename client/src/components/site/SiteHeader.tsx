@@ -11,7 +11,7 @@ import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import type {OfferingItem} from '@/data/offerings.ts';
 import {goTalkToSarah} from '@/lib/sarah.ts';
 
-const LOGO_URL = 'https://i.ibb.co/WWFmbjKJ/wranngle-wordmark-4096w.png';
+const LOGO_URL = '/wordmark.png';
 
 type SiteHeaderProps = {
   isDark: boolean;
@@ -53,8 +53,8 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
               src={LOGO_URL}
               alt="Wranngle"
               className="h-14 w-auto"
-              width="136"
-              height="56"
+              width="600"
+              height="327"
               fetchPriority="high"
             />
           </Link>
