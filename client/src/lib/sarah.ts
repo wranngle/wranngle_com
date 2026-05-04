@@ -1,4 +1,4 @@
-export const SARAH_AGENT_ID = 'agent_8001kdgp7qbyf4wvhs540be78vew';
+export const SARAH_AGENT_ID = 'agent_7801kqqqhjmcfdsa1m2a8t9w6t5c';
 
 export function ensureSarahWidgetScript() {
   if (typeof document === 'undefined') return;
