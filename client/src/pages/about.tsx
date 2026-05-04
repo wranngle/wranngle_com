@@ -62,7 +62,7 @@ const SOCIALS = [
   },
   {
     label: 'GitHub',
-    href: 'https://github.com/Wranngle',
+    href: 'https://github.com/wranngle',
     Icon: Github,
     external: true,
   },
