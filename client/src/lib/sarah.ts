@@ -8,7 +8,12 @@ export function ensureSarahWidgetScript() {
 
   const script = document.createElement('script');
   script.id = scriptId;
-  script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed@beta';
+  // Exact-version pin instead of @beta or @latest. @beta currently
+  // resolves to 0.6.0-beta.8 (months stale); @latest auto-updates and
+  // could break the page on a third-party push. 0.11.7 is the current
+  // stable as of 2026-05-04 — bump deliberately when ElevenLabs ships
+  // a release we want.
+  script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed@0.11.7';
   script.async = true;
   script.crossOrigin = 'anonymous';
   // Bun's DOM typings reject HTMLScriptElement for append(), so use appendChild.
