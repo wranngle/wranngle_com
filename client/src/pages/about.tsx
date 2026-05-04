@@ -56,7 +56,7 @@ const REPOS: RepoEntry[] = [
 const SOCIALS = [
   {
     label: 'LinkedIn',
-    href: 'https://linkedin.com/in/codyarnold96',
+    href: 'https://www.linkedin.com/in/codyarnold96',
     Icon: Linkedin,
     external: true,
   },

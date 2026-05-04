@@ -127,7 +127,7 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
             <div className={colHeading}>Connect</div>
             <div className="flex items-center gap-5 mt-2">
               <a
-                href="https://linkedin.com/in/codyarnold96"
+                href="https://www.linkedin.com/in/codyarnold96"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"

@@ -282,7 +282,7 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
             </div>
             <div className="flex items-center gap-3 px-3">
               <a
-                href="https://linkedin.com/in/codyarnold96"
+                href="https://www.linkedin.com/in/codyarnold96"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
