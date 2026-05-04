@@ -38,7 +38,7 @@ export default function PrivacyPolicy() {
               Privacy Policy
             </h1>
             <p className="text-sm opacity-60 mb-12">
-              Last Updated: January 19, 2026
+              Last Updated: May 4, 2026
             </p>
 
             <div className="space-y-8 leading-relaxed">
@@ -123,12 +123,12 @@ export default function PrivacyPolicy() {
                 <p className="opacity-80 mb-4">We may receive data from:</p>
                 <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
                   <li>
-                    <strong>ElevenLabs:</strong> AI voice synthesis usage and
-                    performance data
+                    <strong>ElevenLabs Conversational AI:</strong> Voice
+                    synthesis, agent runtime, and call performance data
                   </li>
                   <li>
-                    <strong>Twilio:</strong> Telephony metadata and delivery
-                    status
+                    <strong>Twilio / Telnyx / Bandwidth:</strong> Telephony
+                    metadata and delivery status
                   </li>
                   <li>
                     <strong>Stripe:</strong> Payment status and subscription
@@ -137,6 +137,9 @@ export default function PrivacyPolicy() {
                   <li>
                     <strong>Cal.com:</strong> Calendar appointment data (Elite
                     tier only)
+                  </li>
+                  <li>
+                    <strong>Clay:</strong> Lead-enrichment data (gtm_ops only)
                   </li>
                 </ul>
               </section>
@@ -234,23 +237,40 @@ export default function PrivacyPolicy() {
                 </h3>
                 <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
                   <li>
-                    <strong>ElevenLabs:</strong> AI voice synthesis and natural
-                    language processing
+                    <strong>ElevenLabs Conversational AI:</strong> Voice agent
+                    runtime and natural language understanding
                   </li>
                   <li>
-                    <strong>Twilio:</strong> Telephony infrastructure and SMS
-                    delivery
+                    <strong>OpenAI / Anthropic / Google (Gemini):</strong>{' '}
+                    Large-language-model providers used for extraction,
+                    qualification, and proposal generation. Provider selection
+                    varies by workload; only the data needed to complete the
+                    request is sent.
+                  </li>
+                  <li>
+                    <strong>Twilio / Telnyx / Bandwidth:</strong> Telephony
+                    infrastructure and SMS delivery
                   </li>
                   <li>
                     <strong>Stripe:</strong> Payment processing and subscription
                     management
                   </li>
                   <li>
-                    <strong>Cloudflare:</strong> Hosting, CDN, and DDoS
-                    protection
+                    <strong>Cloudflare:</strong> Hosting, CDN, edge functions
+                    (lead-capture API), and DDoS protection
                   </li>
                   <li>
-                    <strong>Neon:</strong> Database hosting and management
+                    <strong>n8n (self-hosted):</strong> Workflow orchestration
+                    and lead-webhook routing — no third-party access to lead
+                    payloads
+                  </li>
+                  <li>
+                    <strong>Cal.com:</strong> Calendar booking integration
+                    (Elite tier)
+                  </li>
+                  <li>
+                    <strong>Clay:</strong> Lead enrichment and deep-research
+                    passes (gtm_ops only)
                   </li>
                 </ul>
 

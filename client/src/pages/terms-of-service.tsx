@@ -38,7 +38,7 @@ export default function TermsOfService() {
               Terms of Service
             </h1>
             <p className="text-sm opacity-60 mb-12">
-              Last Updated: January 19, 2026
+              Last Updated: May 4, 2026
             </p>
 
             <div className="space-y-8 leading-relaxed">
@@ -64,8 +64,8 @@ export default function TermsOfService() {
                 </h2>
                 <p className="opacity-80 mb-4">
                   Wranngle Systems provides AI-powered voice agents designed to
-                  handle inbound calls for trades businesses. The Service
-                  includes:
+                  handle inbound calls for trades businesses, plus the gtm_ops
+                  proposal-generation runtime. The Service includes:
                 </p>
                 <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
                   <li>24/7 AI voice agent for call answering</li>
@@ -73,7 +73,11 @@ export default function TermsOfService() {
                   <li>Two-way SMS communication (Elite tier)</li>
                   <li>Web chat integration (Elite tier)</li>
                   <li>Calendar integration (Elite tier)</li>
-                  <li>Usage analytics and reporting</li>
+                  <li>
+                    gtm_ops: lead intake, Clay-powered enrichment, and
+                    branded-proposal generation (separate SaaS plans)
+                  </li>
+                  <li>Usage analytics, audit logs, and reporting</li>
                 </ul>
               </section>
 
@@ -331,9 +335,8 @@ export default function TermsOfService() {
                   16. Governing Law and Dispute Resolution
                 </h2>
                 <p className="opacity-80 mb-4">
-                  These Terms are governed by the laws of the State of [Your
-                  State], United States, without regard to conflict of law
-                  principles.
+                  These Terms are governed by the laws of the State of Indiana,
+                  United States, without regard to conflict of law principles.
                 </p>
                 <p className="opacity-80 mb-4">
                   Any disputes arising from these Terms or the Service shall be
