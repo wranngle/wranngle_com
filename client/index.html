@@ -111,6 +111,35 @@
       }
     </script>
 
+    <!--
+      Theme pre-paint shim. Without this, every page load renders in
+      the CSS :root (light) defaults and only flips to .dark after
+      React mounts and the useDarkMode hook applies the class — a
+      visible flash for every dark-mode visitor. This script reads
+      the same localStorage key + system preference the hook uses,
+      synchronously sets the class on <html> before stylesheets
+      compute, and prevents the flash. Kept inline + tiny so it
+      blocks the first paint by single-digit milliseconds at most.
+    -->
+    <script>
+      (function () {
+        try {
+          var stored =
+            window.localStorage && window.localStorage.getItem('wranngle:theme');
+          var dark =
+            stored === 'dark' ||
+            (stored !== 'light' &&
+              ((window.matchMedia &&
+                window.matchMedia('(prefers-color-scheme: dark)').matches) ||
+                stored === null));
+          if (dark) document.documentElement.classList.add('dark');
+        } catch (_) {
+          /* localStorage unavailable; fall through to brand default */
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
