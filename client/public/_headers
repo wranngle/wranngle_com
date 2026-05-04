@@ -37,7 +37,7 @@
 # is fine and a hash-busted reload is a force-refresh anyway.
 /og-image.png
   Cache-Control: public, max-age=2592000, must-revalidate
-/portrait-cody.png
+/portrait-cody.jpg
   Cache-Control: public, max-age=2592000, must-revalidate
 /sample-proposal.pdf
   Cache-Control: public, max-age=2592000, must-revalidate
