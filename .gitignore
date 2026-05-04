@@ -27,6 +27,13 @@ smtp2go-*.png
 setup-wizard-results.csv
 start-tunnel.ps1
 
+# Local dotfiles + tooling runtime state (never push to a public repo)
+.wrangler/
+logs/
+old/
+diff.txt
+.autosync/lease.json
+
 # OpenSpec working state (proposals churn — keep specs/ only)
 openspec/changes/
 
