@@ -1,0 +1,5 @@
+# Pauses ~/.dotfiles/scripts/bin/git-autosync.sh for this repo.
+# Reason: this repo is public (github.com/wranngle/wranngle_com) and
+# the wip/$HOST/$branch convention leaks the local hostname.
+# Local commits still happen normally; only the cron-driven push
+# to origin/wip/$HOST/$branch is suppressed.

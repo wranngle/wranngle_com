@@ -109,12 +109,13 @@ export default function GtmOpsPage() {
                   Try the live demo · no signup <ArrowRight size={14} />
                 </a>
                 <a
-                  href={`${GTM_OPS_DEMO_URL}/assets/sample-proposal.pdf`}
+                  href="/sample-proposal.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
+                  download="wranngle-gtm-ops-sample-proposal.pdf"
                   className="px-6 py-3 border border-current font-bold uppercase text-xs rounded-lg hover:bg-white/5 transition-all flex items-center gap-2"
                 >
-                  <FileText size={14} /> View sample proposal (PDF)
+                  <FileText size={14} /> Sample proposal (PDF)
                 </a>
               </div>
             </div>
