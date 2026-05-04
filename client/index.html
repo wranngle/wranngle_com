@@ -6,7 +6,25 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#12111a" />
+    <!--
+      Two theme-color metas so the mobile address-bar tints to match the
+      page mode the visitor actually sees. The site supports both modes
+      via the in-page DarkModeToggle, but theme-color only honors the OS
+      preference media query — not the user's in-page choice. Most
+      visitors keep system + site in sync; the edge case (system X,
+      toggled Y) gets the system value, which is a reasonable default.
+      #fcfaf5 = sand-50 page bg (light); #12111a = night-950 page bg (dark).
+    -->
+    <meta
+      name="theme-color"
+      content="#fcfaf5"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#12111a"
+      media="(prefers-color-scheme: dark)"
+    />
 
     <!-- SEO & Metadata -->
     <title>
