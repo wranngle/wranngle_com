@@ -35,7 +35,7 @@
 # Other immutable static files served from the root. Same reasoning:
 # the file is small, not version-bumped, but rarely changes; long cache
 # is fine and a hash-busted reload is a force-refresh anyway.
-/og-image.png
+/og-image.jpg
   Cache-Control: public, max-age=2592000, must-revalidate
 /portrait-cody.jpg
   Cache-Control: public, max-age=2592000, must-revalidate
