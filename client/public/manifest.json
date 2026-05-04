@@ -1,0 +1,25 @@
+{
+  "name": "Wranngle Systems",
+  "short_name": "Wranngle",
+  "description": "Voice-AI-led GTM motion runtime for trades businesses. 24/7 voice agents, lead capture, and the gtm_ops proposal-generation SaaS.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#12111a",
+  "theme_color": "#12111a",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
