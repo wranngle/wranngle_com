@@ -4,9 +4,9 @@ Wranngle Systems is an AI and automation consultancy. This project is the offici
 
 ## Demo
 
-🎬 _Loom walkthrough coming soon — site tour + ElevenLabs voice agent embed._
-
-<!-- Replace with: <a href="https://www.loom.com/share/<id>"><img src="https://cdn.loom.com/sessions/thumbnails/<id>-with-play.gif" alt="Site demo"></a> -->
+- **Live site:** [wranngle.com](https://wranngle.com)
+- **Voice agent demo:** [wranngle.com/#talk-to-sarah](https://wranngle.com/#talk-to-sarah) — Sarah is a live ElevenLabs ConvAI agent embedded on the page; mic permission required, no signup.
+- **gtm_ops product page:** [wranngle.com/products/gtm-ops](https://wranngle.com/products/gtm-ops) with a no-signup runtime demo at [gtm-ops.pages.dev](https://gtm-ops.pages.dev/).
 
 ## Tech Stack
 
