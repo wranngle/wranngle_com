@@ -19,6 +19,7 @@ export default function Router() {
       {/* Backcompat: previous /built-by URL still resolves to the About page. */}
       <Route path="/built-by" component={About} />
       <Route path="/products/gtm-ops" component={GtmOps} />
+      <Route path="/products/gtm_ops" component={GtmOps} />
       <Route path="/terms" component={TermsOfService} />
       <Route path="/privacy" component={PrivacyPolicy} />
       <Route component={NotFound} />

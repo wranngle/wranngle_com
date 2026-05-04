@@ -114,25 +114,25 @@ export default function About() {
           >
             <div className="relative z-10 max-w-3xl">
               <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
-                ABOUT // WRANNGLE_SYSTEMS // CODY_ARNOLD
+                ABOUT // WRANNGLE_SYSTEMS
               </div>
               <h1 className="brand-font text-4xl md:text-6xl font-bold leading-tight mb-6">
-                The company.{' '}
+                AI should answer the phone,{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--s500)] to-[var(--v500)]">
-                  The engineer.
+                  not add another dashboard.
                 </span>
               </h1>
               <p className="text-lg opacity-80 max-w-2xl leading-relaxed">
-                Pre-revenue. Technically opinionated. Shipping in public on the
-                ElevenLabs Startup Grant. Voice-AI-led GTM motion runtime for
-                trades businesses, built with the same DevOps-style discipline
-                that comes from a decade of keeping infrastructure
-                deterministic.
+                Wranngle ships practical AI systems for trades businesses —
+                voice agents that qualify the call, lead pipelines that
+                don&apos;t drop work overnight, and proposal automation with
+                receipts. Built from the MSP side of the world: logs, handoffs,
+                fallbacks, clear ownership.
               </p>
             </div>
           </motion.section>
 
-          {/* Two-column: Wranngle (company) + Cody (engineer) */}
+          {/* Two-column: Wranngle (company) + Cody (engineer + portrait) */}
           <section className="grid md:grid-cols-2 gap-8 mb-20">
             <article
               className={`relative p-8 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] ${
@@ -153,11 +153,9 @@ export default function About() {
                 revenue every time the phone rings after-hours.
               </p>
               <p className="text-base leading-relaxed opacity-85">
-                The product is an autonomous, deterministic layer between caller
-                intent and operator follow-through: voice agent intercepts, LLM
-                extracts and scores the lead, n8n routes the structured payload,
-                and the operator gets an SMS while the audit trail writes
-                itself.
+                Answer the call, qualify the intent, route the handoff, leave
+                receipts. The stack is voice AI, n8n, structured extraction, and
+                enough discipline to make the output repeatable.
               </p>
             </article>
 
@@ -171,31 +169,78 @@ export default function About() {
               <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-3 mono-font">
                 ENGINEER
               </div>
-              <h2 className="brand-font text-3xl font-bold mb-4">
-                Cody Arnold
-              </h2>
-              <p className="text-base leading-relaxed opacity-85 mb-4">
-                Senior AI Automation Architect. Ten years inside an MSP running
-                4,000+ endpoints across 100+ client environments — the daily
-                grind of keeping infrastructure deterministic when humans,
-                vendors, and networks are all simultaneously trying to violate
-                that contract.
+              <div className="flex items-start gap-5 mb-4">
+                <div
+                  className={`relative shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-[var(--v500)] ${
+                    isDark ? 'bg-[#0f0f13]' : 'bg-[#f4eed8]'
+                  } flex items-center justify-center`}
+                >
+                  <span
+                    className="absolute inset-0 flex items-center justify-center brand-font text-2xl font-bold opacity-40 select-none"
+                    aria-hidden
+                  >
+                    CA
+                  </span>
+                  <img
+                    src="/portrait-cody.png"
+                    alt="Cody Arnold"
+                    className="relative z-10 w-full h-full object-cover scale-110 origin-center"
+                    onError={(e) => {
+                      // If portrait isn't published yet, hide the broken image
+                      // and the CA initials placeholder underneath shows through.
+                      (e.currentTarget as HTMLImageElement).style.display =
+                        'none';
+                    }}
+                  />
+                </div>
+                <div className="min-w-0">
+                  <h2 className="brand-font text-3xl font-bold leading-tight">
+                    Cody Arnold
+                  </h2>
+                  <p className="text-xs opacity-60 mt-1 leading-tight">
+                    Founder / Principal Solutions Architect · Fort Wayne, IN
+                  </p>
+                </div>
+              </div>
+              <p className="text-base leading-relaxed opacity-85 mb-3">
+                Ten years inside an MSP — running automation across{' '}
+                <span className="font-bold">500+ client environments</span> and{' '}
+                <span className="font-bold">4,000+ endpoints</span>. Reduced
+                manual oversight by 40% with Python/PowerShell at scale, then
+                authored a 700-guide SOP framework so a 10-person team could
+                ship the same patterns repeatably.
               </p>
               <p className="text-base leading-relaxed opacity-85">
-                That background shows up in the AI-agent stack: n8n + Python +
-                PowerShell as the orchestration spine, Vapi and ElevenLabs
-                Conversational AI for voice, RAG for grounded responses, and a
-                DevOps-style discipline around evals, audit logs, latency
-                budgets, and reproducible fixtures. Fort Wayne, IN.
+                Productized an on-call ElevenLabs Conversational AI agent now
+                live at 5 clients —{' '}
+                <span className="mono-font text-[13px]">P95 &lt; 500 ms</span>,
+                100% call success, 92% enrichment success, regression-tested via
+                a synthetic-conversation harness. That work secured the
+                ElevenLabs Startup Grant.
               </p>
             </article>
           </section>
 
           {/* Public repos grid */}
           <section className="mb-20">
+            <a
+              href="https://github.com/wranngle"
+              target="_blank"
+              rel="noreferrer"
+              className={`inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-md border transition-colors hover:border-[var(--s500)] hover:text-[var(--s500)] ${
+                isDark
+                  ? 'border-white/15 bg-white/5'
+                  : 'border-black/15 bg-black/5'
+              }`}
+            >
+              <Github size={14} />
+              <span className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-80">
+                github.com/wranngle
+              </span>
+            </a>
             <div className="flex items-baseline justify-between mb-8 flex-wrap gap-3">
               <h2 className="brand-font text-3xl md:text-4xl font-bold">
-                Public repos
+                GitHub projects
               </h2>
               <a
                 href="https://github.com/wranngle"

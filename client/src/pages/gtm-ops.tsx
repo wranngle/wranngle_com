@@ -21,21 +21,24 @@ import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import {getCategoryById, type OfferingItem} from '@/data/offerings.ts';
 
+const GTM_OPS_DEMO_URL = 'https://preview.gtm-ops.pages.dev';
+const GTM_OPS_REPO_URL = 'https://github.com/wranngle/gtm_ops';
+
 const PIPELINE_STEPS = [
   {
     Icon: Inbox,
-    title: 'Lead in',
-    body: 'Form, voice agent, or webhook drops a lead into your workspace with the original context attached.',
+    title: 'Lead intake',
+    body: 'Web chat, voice AI agent, contact form, webhook, internal company data, CRM export — whatever shape the lead arrives in, gtm_ops normalizes it on the way in.',
   },
   {
     Icon: Sparkles,
-    title: 'Gemini extraction',
-    body: 'Structured LLM extraction reads the raw lead and produces a typed proposal payload — no hallucinated fields.',
+    title: 'Lead enrichment',
+    body: 'Clay-powered enrichment plus deep-research passes against the lead’s domain (and yours) — firmographics, recent signals, contact graph — so the proposal lands with real context.',
   },
   {
     Icon: FileCheck,
-    title: 'Branded PDF',
-    body: 'Your logo, your colors, your proposal template. Rendered server-side, ready to send.',
+    title: 'Branded proposal',
+    body: 'Your logo, colors, and proposal template. Structured LLM extraction fills the typed fields; the renderer ships a branded proposal ready to send.',
   },
   {
     Icon: Send,
@@ -46,12 +49,12 @@ const PIPELINE_STEPS = [
 
 export default function GtmOpsPage() {
   const {isDark, toggle: toggleTheme} = useDarkMode();
-  const category = getCategoryById('saas-products');
+  const category = getCategoryById('gtm_ops');
   const tiers = category?.items ?? [];
 
   useEffect(() => {
     globalThis.scrollTo(0, 0);
-    document.title = 'GTM Ops — SaaS for branded proposals · Wranngle';
+    document.title = 'gtm_ops — Lead in, branded proposal out · Wranngle';
   }, []);
 
   return (
@@ -80,7 +83,9 @@ export default function GtmOpsPage() {
           >
             <div className="relative z-10 max-w-3xl">
               <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
-                PRODUCT // GTM_OPS // SAAS
+                PRODUCT //{' '}
+                <span className="normal-case tracking-[0.08em]">gtm_ops</span>{' '}
+                // SAAS
               </div>
               <h1 className="brand-font text-4xl md:text-6xl font-bold leading-tight mb-6">
                 Lead in.{' '}
@@ -89,27 +94,27 @@ export default function GtmOpsPage() {
                 </span>
               </h1>
               <p className="text-lg opacity-80 max-w-2xl leading-relaxed mb-8">
-                GTM Ops is the proposal-generation surface from the Wranngle
-                voice-AI runtime — packaged as self-serve software. Pipe leads
-                in from any source. Get a typed, branded PDF out the other side.
-                Every step is auditable.
+                <span className="mono-font">gtm_ops</span> is the
+                proposal-generation runtime from the Wranngle stack. Pipe leads
+                in from a form, webhook, or voice agent. Get a typed, branded
+                PDF out the other side. Every step writes an audit trail.
               </p>
               <div className="flex flex-wrap gap-4">
                 <a
-                  href="https://app.wranngle.com"
+                  href={GTM_OPS_DEMO_URL}
                   target="_blank"
                   rel="noreferrer"
                   className="px-6 py-3 bg-[var(--s500)] text-white font-bold uppercase text-xs rounded-lg shadow-lg hover:scale-105 transition-all flex items-center gap-2"
                 >
-                  Try the demo <ArrowRight size={14} />
+                  Try the live demo · no signup <ArrowRight size={14} />
                 </a>
                 <a
-                  href="https://app.wranngle.com/assets/sample-proposal.pdf"
+                  href={`${GTM_OPS_DEMO_URL}/assets/sample-proposal.pdf`}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="px-6 py-3 border border-current font-bold uppercase text-xs rounded-lg hover:bg-white/5 transition-all flex items-center gap-2"
                 >
-                  <FileText size={14} /> Download sample proposal
+                  <FileText size={14} /> View sample proposal (PDF)
                 </a>
               </div>
             </div>
@@ -126,7 +131,7 @@ export default function GtmOpsPage() {
               </h2>
               <p className="opacity-70 max-w-2xl text-base leading-relaxed">
                 The same pipeline that ships proposals for the Wranngle voice
-                agent — only now you can run it yourself, in a browser.
+                agent — exposed as a browser-run operator surface.
               </p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -168,11 +173,12 @@ export default function GtmOpsPage() {
                 PRICING
               </div>
               <h2 className="brand-font text-3xl md:text-4xl font-bold mb-3">
-                Three tiers. Cancel any time.
+                Three tiers. One runtime.
               </h2>
               <p className="opacity-70 max-w-xl mx-auto text-base">
-                Start free, upgrade when you have real volume, scale to SSO when
-                your team needs it. No annual lock-in.
+                Pick the volume you need. Plus covers a real solo or small-team
+                cadence; Pro adds SSO, custom domain, and unlimited throughput
+                when an org needs controls.
               </p>
             </div>
 
@@ -198,7 +204,7 @@ export default function GtmOpsPage() {
                 you want.
               </p>
               <a
-                href="https://github.com/wranngle/gtm_ops"
+                href={GTM_OPS_REPO_URL}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 text-sm font-bold border border-current/30 hover:border-[var(--s500)] hover:text-[var(--s500)] transition-colors px-4 py-2 rounded-lg"
@@ -208,17 +214,17 @@ export default function GtmOpsPage() {
             </div>
             <div>
               <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-3 mono-font">
-                HONEST DEMO MODE
+                AUDIT-FIRST BY DESIGN
               </div>
               <h3 className="brand-font text-2xl font-bold mb-3">
-                The demo is a real deploy, not a video.
+                Every proposal is a reproducible artifact.
               </h3>
               <p className="text-sm opacity-70 leading-relaxed">
-                The "Try the demo" button drops you into a static deploy of the
-                operator console at app.wranngle.com. Every API call is
-                intercepted client-side and answered from synthetic fixtures —
-                so you can click around without a backend, and we don't fake the
-                parts that aren't there yet.
+                Each step — intake, enrichment, extraction, render — writes to
+                an immutable audit log keyed to the lead. Replay any proposal
+                from the original payload, diff a new prompt against an old one,
+                or hand a regulator the full chain. No black-box surprises on
+                the day a customer asks.
               </p>
             </div>
           </section>
@@ -233,6 +239,7 @@ export default function GtmOpsPage() {
 function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
   const [factsOpen, setFactsOpen] = useState(false);
   const [intakeOpen, setIntakeOpen] = useState(false);
+  const priceLabel = item.price === '0' ? 'Free' : `$${item.price}`;
 
   return (
     <div className="relative group h-full">
@@ -249,21 +256,29 @@ function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
 
         <div className="relative z-10 flex flex-col h-full">
           <div className="flex justify-between items-start mb-2 mt-6">
-            <h3 className="brand-font text-2xl font-bold">{item.name}</h3>
+            <div>
+              <div className="mono-font text-[10px] text-[var(--s500)] tracking-[0.08em] mb-1">
+                gtm_ops
+              </div>
+              <h3 className="brand-font text-2xl font-bold">{item.name}</h3>
+            </div>
           </div>
           <p className="text-sm opacity-60 mb-6">{item.description}</p>
 
           <div className="flex-1 flex flex-col">
             <div className="mb-6">
               <div className="text-4xl font-bold">
-                ${item.price}
-                <span className="text-sm font-normal opacity-50">
-                  {item.priceCadence === 'monthly' ? '/mo' : ' one-time'}
-                </span>
+                {priceLabel}
+                {item.price !== '0' && (
+                  <span className="text-sm font-normal opacity-50">
+                    {item.priceCadence === 'monthly' ? '/mo' : ' one-time'}
+                  </span>
+                )}
               </div>
               {item.monthlyAddon && (
                 <div className="text-sm opacity-60 mt-1">
-                  or ${item.monthlyAddon.price} {item.monthlyAddon.label}
+                  or ${item.monthlyAddon.price}
+                  {item.monthlyAddon.label}
                 </div>
               )}
             </div>
@@ -296,7 +311,9 @@ function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
                   itemName={item.name}
                   onGetStarted={() => {
                     setFactsOpen(false);
-                    setIntakeOpen(true);
+                    globalThis.setTimeout(() => {
+                      setIntakeOpen(true);
+                    }, 80);
                   }}
                   onCrossSell={(targetId) => {
                     setFactsOpen(false);

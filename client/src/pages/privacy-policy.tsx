@@ -522,7 +522,7 @@ export default function PrivacyPolicy() {
                   <br />
                   Data Protection Officer: dpo@wranngle.com
                   <br />
-                  Support: support@wranngle.com
+                  Sales: hello@wranngle.com
                 </p>
                 <p className="opacity-80 text-sm">
                   For European users, our GDPR representative can be contacted

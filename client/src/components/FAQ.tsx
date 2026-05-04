@@ -1,86 +1,102 @@
-import React from 'react';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion.tsx';
+// @ts-nocheck
+import React, {useState} from 'react';
+import {Plus} from 'lucide-react';
 
 type FAQItem = {
+  group: string;
   question: string;
   answer: string;
 };
 
-const faqData: FAQItem[] = [
+const FAQ_ITEMS: FAQItem[] = [
+  // Getting started
   {
-    question: 'How quickly can my AI agent be deployed?',
+    group: 'Getting started',
+    question: 'How fast can I be live?',
     answer:
-      'Most agents are deployed within 1-2 weeks after order. This includes phone number provisioning, AI training on your business specifics, and thorough testing to ensure quality.',
+      'Most agents go live in 1–2 weeks. That covers phone provisioning, training the agent on your services and pricing, and a couple rounds of test calls before we hand it the line.',
   },
   {
-    question: "What happens when I exceed my plan's usage limits?",
+    group: 'Getting started',
+    question: 'Do I need new phone equipment?',
     answer:
-      "We set limits high only to protect from abuse. No one has ever hit the limit, and honestly if you do hit it in earnest, we'll just increase the limit with no questions asked.",
+      'No. We give you a forwarding number — no hardware, no PBX changes. Forward your existing line after-hours, or replace it entirely. Setup is cloud-based; no boxes, no installer visit.',
   },
   {
-    question: 'How are you different than a human answering service?',
+    group: 'Getting started',
+    question: 'How does the agent learn my business?',
     answer:
-      'When including minute usage and overages, our service is likely higher value than live answering services. We can more deeply integrate with your systems. Our onboarding is simpler and more flexible. Our agent can be given data not only specific to your industry, but specific to your exact business. Our service also includes web AI chat and realtime calendar integrations for faster resolution times.',
+      'During onboarding we feed it your service areas, pricing ranges, common questions, and policies. The agent gets sharper as we feed it real call transcripts. Updates go through Wranngle for now — no self-serve dashboard yet.',
+  },
+  // How it works
+  {
+    group: 'How it works',
+    question: 'What happens when a call needs a human?',
+    answer:
+      "The agent recognizes when it's in over its head. Elite tier hot-transfers to your mobile. Core tier captures details and texts you immediately so you can call back — full transcript included.",
   },
   {
-    question: 'Can the AI agent handle appointment scheduling?',
+    group: 'How it works',
+    question: 'How accurate is lead qualification?',
     answer:
-      'Yes! Elite tier includes Cal.com integration for automatic appointment booking. The agent can check your availability, book appointments, send confirmations, and handle rescheduling requests - all without human intervention.',
+      '95%+ at sorting service calls from spam in our test fleet. You set the criteria; the agent learns from your feedback. It\'s tuned for the trades — it knows the difference between an emergency call and a "do you do roofing?" call.',
   },
   {
-    question: 'What if a call requires human intervention?',
+    group: 'How it works',
+    question: 'How does it compare to a human answering service?',
     answer:
-      'The agent is trained to recognize situations requiring human expertise. It can seamlessly transfer calls to your mobile phone (Elite tier) or capture detailed information and immediately notify you via SMS. You maintain full control over transfer criteria.',
+      'Cheaper at any real call volume. Deeper system integrations. Onboards in days instead of weeks. And you can clone a voice or pick a custom one — most answering services give you a script-reader on a dial-tone.',
   },
   {
-    question: 'How does the agent learn about my specific business?',
+    group: 'How it works',
+    question: 'Can Sarah book appointments?',
     answer:
-      'During onboarding, we configure your agent with your service areas, pricing, common questions, and business policies. You can request updates to the knowledge base anytime through our team. The agent improves over time by learning from successful interactions.',
+      'Yes. Elite includes Cal.com calendar booking. The agent checks availability, schedules the job, sends confirmations, and handles common reschedule requests on its own.',
   },
   {
-    question: 'Is my caller data secure and private?',
+    group: 'How it works',
+    question: 'Can I customize the voice and personality?',
     answer:
-      "Absolutely. All call recordings are encrypted at rest and in transit. We're GDPR and CCPA compliant. You own all your data and can export or delete it at any time. Call recordings are retained for 90 days by default, with longer retention available on request.",
+      "Elite includes a custom ElevenLabs voice identity — choose from professional voices or clone one for an additional fee. You also control the agent's personality (warm vs formal, talkative vs efficient) so it matches your brand.",
   },
   {
-    question: "Can I customize the agent's voice and personality?",
+    group: 'How it works',
+    question: 'What languages does Sarah support?',
     answer:
-      "Elite tier includes custom voice identity. You can choose from professional voice options or even clone a voice for a fee. You also control the agent's personality - whether friendly and casual or formal and professional - to match your brand.",
+      'Out of the box: English, Spanish, French, Arabic, Chinese, Japanese, and Korean. Additional languages are available on request.',
+  },
+  // Money & limits
+  {
+    group: 'Money & limits',
+    question: 'What if I blow past my plan limits?',
+    answer:
+      "Limits exist to stop abuse — not to nickel-and-dime you. No customer has hit the cap in earnest. If you do, we'll raise it. Standard overage rates kick in only after that conversation.",
   },
   {
+    group: 'Money & limits',
+    question: 'What if I cancel?',
+    answer:
+      'Monthly plans cancel anytime, end-of-period. Annual plans (which save up to 20%) carry a 50% early-termination fee on remaining months. Your data stays exportable for 30 days after cancellation.',
+  },
+  // Trust & data
+  {
+    group: 'Trust & data',
+    question: 'Is caller data safe?',
+    answer:
+      'Encrypted at rest and in transit. GDPR- and CCPA-aligned. You own the data; you can export or delete it any time. Recordings retained 90 days by default — longer retention available on request.',
+  },
+  // Product
+  {
+    group: 'Product',
     question: 'What if I have multiple business locations?',
     answer:
-      "If you have multiple locations, we'll provide a phone number for each location to automatically differentiate calls. Each location can have its own knowledge base and routing rules while sharing a unified dashboard.",
+      "Each location gets its own forwarding number, knowledge base, and routing rules — but all share one unified inbox so you don't lose visibility. Per-location add-ons are priced on each spec sheet.",
   },
   {
-    question: 'What happens if I cancel my subscription?',
+    group: 'Product',
+    question: 'What is gtm_ops?',
     answer:
-      'Monthly subscriptions can be cancelled anytime, effective at the end of your billing period. Annual subscriptions have a 50% early termination fee on remaining months. All your data is accessible for 30 days after cancellation for export.',
-  },
-  {
-    question: 'Do I need special phone equipment or setup?',
-    answer:
-      "No! We provide a dedicated phone number that forwards to your agent. You can use your existing number by forwarding after-hours calls to the agent, or replace your main line entirely. Setup requires no hardware - it's all cloud-based.",
-  },
-  {
-    question: 'How accurate is the lead qualification?',
-    answer:
-      'The agent uses advanced natural language processing to qualify leads based on your criteria. It achieves 95%+ accuracy in distinguishing service calls from spam. You define the qualification criteria, and the agent learns from your feedback to improve accuracy over time.',
-  },
-  {
-    question: 'What languages does the AI agent support?',
-    answer:
-      'The agent supports Arabic, Chinese, English, French, Japanese, Korean, and Spanish. Additional languages are available by request.',
-  },
-  {
-    question: 'How does the agent get information about my business?',
-    answer:
-      "By default, your agent's knowledge will be based on your website and publicly available information. During onboarding, you can provide additional business-specific details, FAQs, and policies. Note: There's no self-service dashboard yet - all updates go through our team.",
+      'gtm_ops is the proposal-generation runtime behind the Wranngle stack. Lead in, branded proposal out, with a full audit trail and a live no-signup demo. See the dedicated product page for the pipeline and tiers.',
   },
 ];
 
@@ -89,49 +105,121 @@ type FAQProps = {
 };
 
 export default function FAQ({isDark = true}: FAQProps) {
+  const [openIndex, setOpenIndex] = useState<number>(0);
+
+  // Group while preserving original order
+  const groups: Record<string, Array<FAQItem & {idx: number}>> = {};
+  for (const [i, item] of FAQ_ITEMS.entries()) {
+    groups[item.group] ??= [];
+    groups[item.group].push({...item, idx: i});
+  }
+
   return (
-    <section id="faq" className="py-24 px-6 max-w-4xl mx-auto w-full relative">
-      <div className="text-center mb-12">
-        <h2 className="brand-font text-4xl md:text-5xl font-bold mb-4">
-          Frequently Asked Questions
-        </h2>
-        <p className="opacity-60 text-lg">
-          Everything you need to know about deploying your AI agent
-        </p>
-      </div>
+    <section
+      id="faq"
+      className="py-24 px-6 max-w-7xl mx-auto w-full scroll-mt-24"
+    >
+      <div className="grid lg:grid-cols-[1fr_1.6fr] gap-10 lg:gap-16 items-start">
+        <div className="lg:sticky lg:top-24">
+          <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-2">
+            FAQ
+          </div>
+          <h2 className="brand-font text-4xl md:text-5xl font-extrabold leading-[1.05] tracking-tight mb-4">
+            Straight answers,
+            <br />
+            <span className="text-[var(--s500)]">no fine print.</span>
+          </h2>
+          <p className="text-base opacity-70 leading-relaxed max-w-sm">
+            Got something we didn&apos;t cover?{' '}
+            <a
+              href="/#talk-to-sarah"
+              className="text-[var(--s500)] hover:underline font-semibold"
+            >
+              Ask Sarah
+            </a>{' '}
+            or email{' '}
+            <a
+              href="mailto:hello@wranngle.com"
+              className="text-[var(--s500)] hover:underline font-semibold"
+            >
+              hello@wranngle.com
+            </a>
+            .
+          </p>
+        </div>
 
-      <Accordion type="single" collapsible className="space-y-4">
-        {faqData.map((item, index) => (
-          <AccordionItem
-            key={index}
-            value={`item-${index}`}
-            className={`border rounded-lg ${
-              isDark
-                ? 'border-white/10 bg-white/5'
-                : 'border-black/10 bg-black/5'
-            }`}
-          >
-            <AccordionTrigger className="px-6 py-4 text-left hover:no-underline">
-              <span className="brand-font text-lg font-semibold">
-                {item.question}
-              </span>
-            </AccordionTrigger>
-            <AccordionContent className="px-6 pb-4 opacity-80 leading-relaxed">
-              {item.answer}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-
-      <div className="mt-12 text-center">
-        <p className="opacity-60 mb-4">Still have questions?</p>
-        <a
-          href="mailto:support@wranngle.com"
-          className="inline-flex items-center gap-2 text-[var(--s500)] hover:underline font-semibold"
-        >
-          Contact Support →
-        </a>
+        <div>
+          {Object.entries(groups).map(([group, items]) => (
+            <div key={group} className="mb-7">
+              <div className="mono-font text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--s500)] mb-2 pl-0.5">
+                // {group}
+              </div>
+              {items.map((item) => {
+                const isOpen = openIndex === item.idx;
+                return (
+                  <FAQRow
+                    key={item.idx}
+                    item={item}
+                    isOpen={isOpen}
+                    isDark={isDark}
+                    onToggle={() => {
+                      setOpenIndex(isOpen ? -1 : item.idx);
+                    }}
+                  />
+                );
+              })}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
+  );
+}
+
+function FAQRow({
+  item,
+  isOpen,
+  isDark,
+  onToggle,
+}: {
+  item: FAQItem;
+  isOpen: boolean;
+  isDark: boolean;
+  onToggle: () => void;
+}) {
+  const borderColor = isDark ? 'border-white/10' : 'border-black/10';
+  const iconBorder = isDark ? 'border-white/15' : 'border-black/15';
+  return (
+    <div className={`border-b ${borderColor}`}>
+      <button
+        type="button"
+        onClick={onToggle}
+        className="w-full text-left py-5 px-1 flex items-center justify-between gap-4 bg-transparent"
+      >
+        <span className="flex-1 text-[17px] font-semibold leading-snug brand-font">
+          {item.question}
+        </span>
+        <span
+          className={`shrink-0 w-7 h-7 rounded-full border ${iconBorder} flex items-center justify-center transition-all duration-200 ${
+            isOpen
+              ? 'bg-[var(--s500)] border-[var(--s500)] text-white rotate-45'
+              : ''
+          }`}
+        >
+          <Plus size={14} strokeWidth={2} />
+        </span>
+      </button>
+      <div
+        className="overflow-hidden transition-all duration-300 ease-out"
+        style={{
+          maxHeight: isOpen ? 320 : 0,
+          paddingBottom: isOpen ? 24 : 0,
+        }}
+      >
+        <p className="text-[15px] leading-[1.65] opacity-80 m-0 pr-9">
+          {item.answer}
+        </p>
+      </div>
+    </div>
   );
 }

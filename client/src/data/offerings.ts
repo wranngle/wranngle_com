@@ -180,7 +180,6 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         description:
           'One conversion-focused page, shipped in 7 days. Mobile-first, SEO-foundations, contact form wired straight to your inbox.',
         cta: 'Start Landing Page',
-        badge: 'Quickstart',
         monthlyAddon: {price: '100', label: 'maintenance'},
         features: [
           'One-page custom design, delivered in 7 days',
@@ -283,19 +282,19 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
     ],
   },
   {
-    id: 'saas-products',
-    name: 'SaaS Products',
+    id: 'gtm_ops',
+    name: 'gtm_ops',
     description:
-      'Self-serve software for the rest of the GTM stack. Ship in a browser, not a contract.',
+      'The proposal-generation runtime from the Wranngle stack. Lead in, branded proposal out, with demo fixtures when you just want to inspect the flow.',
     items: [
       {
         id: 'gtm-ops-trial',
-        name: 'GTM Ops Trial',
+        name: 'Trial',
         price: '0',
         priceCadence: 'monthly',
         description:
-          'Full-feature 14-day trial of GTM Ops. Lead in, branded proposal out — no card required.',
-        cta: 'Start Free Trial',
+          'Full-feature 14-day evaluation of gtm_ops. Lead in, branded proposal out — no card required.',
+        cta: 'Start gtm_ops Trial',
         features: [
           '14-day full-feature trial',
           'Up to 5 proposals during trial',
@@ -343,14 +342,14 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
       },
       {
         id: 'gtm-ops-plus',
-        name: 'GTM Ops Plus',
+        name: 'Plus',
         price: '20',
         priceCadence: 'monthly',
         description:
           'For solo operators and small teams running real proposals. Branded PDFs, custom workspace, full audit chain.',
         badge: 'Most Popular',
-        cta: 'Start Plus Plan',
-        monthlyAddon: {price: '200', label: 'annual ($200/yr saves 17%)'},
+        cta: 'Start gtm_ops Plus',
+        monthlyAddon: {price: '200', label: '/yr annual plan'},
         features: [
           '50 proposals per month',
           'Branded PDFs with your logo + colors',
@@ -400,13 +399,13 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
       },
       {
         id: 'gtm-ops-pro',
-        name: 'GTM Ops Pro',
+        name: 'Pro',
         price: '99',
         priceCadence: 'monthly',
         description:
           'For teams who need SSO, custom domains, and unlimited throughput. Built for ops orgs that ship hundreds of proposals.',
-        cta: 'Talk to Sales',
-        monthlyAddon: {price: '990', label: 'annual ($990/yr saves 17%)'},
+        cta: 'Talk gtm_ops Pro',
+        monthlyAddon: {price: '990', label: '/yr annual plan'},
         features: [
           'Unlimited proposals',
           'Everything in Plus',
@@ -449,7 +448,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           ],
           crossSell: {
             label:
-              'Want a custom AI agent funnelling leads INTO GTM Ops? See the Elite Agent',
+              'Want a custom AI agent funnelling leads into gtm_ops? See the Elite Agent',
             offeringId: 'premium',
           },
         },
