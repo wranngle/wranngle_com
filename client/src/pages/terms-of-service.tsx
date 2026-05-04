@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from 'wouter';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
 import SiteFooter from '@/components/site/SiteFooter.tsx';
@@ -7,6 +7,11 @@ import {useDarkMode} from '@/components/site/DarkModeToggle.tsx';
 
 export default function TermsOfService() {
   const {isDark, toggle: toggleTheme} = useDarkMode();
+
+  useEffect(() => {
+    globalThis.scrollTo(0, 0);
+    document.title = 'Terms of Service — Wranngle';
+  }, []);
 
   return (
     <div
