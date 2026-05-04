@@ -1,6 +1,16 @@
 # Cloudflare Pages response-header overrides.
 # https://developers.cloudflare.com/pages/configuration/headers/
 
+# Site-wide security baseline. Cloudflare adds CF-managed headers on top
+# (CF-Ray, NEL, etc.); these are the ones the application owns.
+/*
+  # HSTS — tell browsers to ALWAYS use HTTPS for wranngle.com and its
+  # subdomains for the next year, and signal intent to be in the
+  # Chromium preload list. Safe because the apex + www both already
+  # serve HTTPS; without HSTS, a first visit could be MITM-downgraded
+  # to HTTP. Once preloaded, even a never-visited browser bypasses HTTP.
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
 # Hashed bundles in /assets/* — content-addressable, so cache forever.
 # Vite includes a content hash in every filename (index-DpOR-9It.js etc.),
 # so a redeploy ships a new URL and the old one stays valid in caches
