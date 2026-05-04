@@ -31,12 +31,13 @@
 
 ### `client/` — React SPA (Vite)
 
-Single-page app served as static assets from Cloudflare Pages. Pages:
+Single-page app served as static assets from Cloudflare Pages. Routes (see [`Router.tsx`](client/src/Router.tsx)):
 
-- `/` — landing page ([`App.tsx`](client/src/App.tsx)) with hero, offerings preview, embedded ElevenLabs ConvAI widget
-- `/offerings` — offering catalog ([`pages/offerings.tsx`](client/src/pages/offerings.tsx))
-- `/built-by` — technical-reviewer entry point ([`pages/built-by.tsx`](client/src/pages/built-by.tsx)) linking to the `wranngle/gtm_ops`, `wranngle/voice_ai_agent_evals`, `wranngle/n8n`, `wranngle/career_architect` repos
+- `/` — landing page ([`App.tsx`](client/src/App.tsx)) with hero, the full offerings section (consolidated from the former `/offerings` page), Talk-to-Sarah voice demo, FAQ, and a small founder note linking to `/about`
+- `/about` — Wranngle Systems + Cody Arnold ([`pages/about.tsx`](client/src/pages/about.tsx)), portrait, GitHub projects grid (live `wranngle/*` repo cards), socials. The legacy `/built-by` URL still resolves here.
+- `/products/gtm-ops` (alias `/products/gtm_ops`) — dedicated product page for the gtm_ops SaaS ([`pages/gtm-ops.tsx`](client/src/pages/gtm-ops.tsx))
 - `/privacy`, `/terms` — legal pages
+- `/offerings` — backcompat redirect to `/#offerings`
 - `/*` — `not-found.tsx`
 
 Routing via `wouter`. Brand tokens live in [`client/src/index.css`](client/src/index.css) as HSL variables, mapped from `wranngle/gtm_ops/tokens/`. Tailwind config in [`tailwind.config.ts`](tailwind.config.ts) with shadcn/Radix UI components.
@@ -76,10 +77,10 @@ bun run preview           # local Cloudflare Pages preview with Functions
 bun run deploy            # deploy to Cloudflare Pages
 ```
 
-CI runs typecheck + lint + build on every PR; gitleaks scans history. See [`.github/workflows/test.yml`](.github/workflows/test.yml).
+CI runs typecheck + lint + build on every PR; gitleaks scans history. See [`.github/workflows/test.yml`](.github/workflows/test.yml). A 30-minute synthetic-lead health check (`.github/workflows/lead-health.yml`) catches the silent-500 class of `/api/leads` failures within one cron window.
 
 ## Cross-repo references
 
-- Lead capture flows to [`wranngle/n8n`](https://github.com/wranngle/n8n)'s lead-intake workflow
-- ElevenLabs ConvAI widget routes to the production agent (also surfaced in [`wranngle/voice_ai_agent_evals`](https://github.com/wranngle/voice_ai_agent_evals) for regression testing)
-- `/built-by` links to all four public engineering repos
+- Lead capture flows to [`wranngle/n8n`](https://github.com/wranngle/n8n)'s lead-intake workflow, which also triggers an outbound Sarah call to qualify the lead
+- ElevenLabs ConvAI widget routes to the production Sarah agent (also surfaced in [`wranngle/voice_ai_agent_evals`](https://github.com/wranngle/voice_ai_agent_evals) for regression testing)
+- `/about` links to all public engineering repos via live GitHub repo cards

@@ -1,8 +1,16 @@
 {
   "name": "wranngle_com",
   "version": "1.0.0",
+  "private": true,
   "type": "module",
   "license": "MIT",
+  "description": "wranngle.com — marketing site + serverless lead capture for Wranngle Systems (voice AI for trades businesses).",
+  "author": "Cody Arnold <cody@wranngle.com>",
+  "homepage": "https://wranngle.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wranngle/wranngle_com.git"
+  },
   "scripts": {
     "dev": "vite --config vite.config.ts",
     "dev:functions": "wrangler pages dev dist --live-reload",
