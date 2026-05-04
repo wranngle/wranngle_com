@@ -189,17 +189,29 @@ function FAQRow({
 }) {
   const borderColor = isDark ? 'border-white/10' : 'border-black/10';
   const iconBorder = isDark ? 'border-white/15' : 'border-black/15';
+  // Stable ids tying the toggle button to the answer panel so screen
+  // readers announce this as an expandable accordion (WCAG 4.1.2).
+  const questionSlug = item.question
+    .toLowerCase()
+    .replaceAll(/[^a-z\d]+/g, '-')
+    .replaceAll(/(^-|-$)/g, '');
+  const buttonId = `faq-q-${questionSlug}`;
+  const panelId = `faq-a-${questionSlug}`;
   return (
     <div className={`border-b ${borderColor}`}>
       <button
+        id={buttonId}
         type="button"
         onClick={onToggle}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
         className="w-full text-left py-5 px-1 flex items-center justify-between gap-4 bg-transparent"
       >
         <span className="flex-1 text-[17px] font-semibold leading-snug brand-font">
           {item.question}
         </span>
         <span
+          aria-hidden
           className={`shrink-0 w-7 h-7 rounded-full border ${iconBorder} flex items-center justify-center transition-all duration-200 ${
             isOpen
               ? 'bg-[var(--s500)] border-[var(--s500)] text-white rotate-45'
@@ -210,6 +222,10 @@ function FAQRow({
         </span>
       </button>
       <div
+        id={panelId}
+        role="region"
+        aria-labelledby={buttonId}
+        hidden={!isOpen}
         className="overflow-hidden transition-all duration-300 ease-out"
         style={{
           maxHeight: isOpen ? 320 : 0,
