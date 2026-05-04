@@ -45,5 +45,8 @@
   Cache-Control: public, max-age=2592000, must-revalidate
 /apple-touch-icon.png
   Cache-Control: public, max-age=2592000, must-revalidate
+/manifest.json
+  Content-Type: application/manifest+json; charset=utf-8
+  Cache-Control: public, max-age=86400, must-revalidate
 /wordmark.png
   Cache-Control: public, max-age=2592000, must-revalidate
