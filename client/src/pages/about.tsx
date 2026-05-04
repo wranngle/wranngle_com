@@ -182,7 +182,7 @@ export default function About() {
                     CA
                   </span>
                   <img
-                    src="/portrait-cody.png"
+                    src="/portrait-cody.jpg"
                     alt="Cody Arnold"
                     className="relative z-10 w-full h-full object-cover scale-110 origin-center"
                     onError={(e) => {
