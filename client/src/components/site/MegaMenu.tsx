@@ -44,7 +44,7 @@ export function OfferingsMegaMenu({
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="inline-flex items-center gap-1 outline-none focus:outline-none hover:text-[var(--s500)] transition-colors text-sm font-medium"
+          className="inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--s500)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-sm hover:text-[var(--s500)] transition-colors text-sm font-medium"
         >
           Offerings <ChevronDown size={14} />
         </button>
@@ -183,7 +183,7 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="inline-flex items-center gap-1 outline-none focus:outline-none hover:text-[var(--s500)] transition-colors text-sm font-medium"
+          className="inline-flex items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--s500)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-sm hover:text-[var(--s500)] transition-colors text-sm font-medium"
         >
           About <ChevronDown size={14} />
         </button>
