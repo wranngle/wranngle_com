@@ -1,0 +1,22 @@
+# Cloudflare Pages response-header overrides.
+# https://developers.cloudflare.com/pages/configuration/headers/
+
+# Hashed bundles in /assets/* — content-addressable, so cache forever.
+# Vite includes a content hash in every filename (index-DpOR-9It.js etc.),
+# so a redeploy ships a new URL and the old one stays valid in caches
+# without ever needing revalidation. CF's default of max-age=14400 forces
+# re-download every 4 hours for no reason on returning visitors.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Other immutable static files served from the root. Same reasoning:
+# the file is small, not version-bumped, but rarely changes; long cache
+# is fine and a hash-busted reload is a force-refresh anyway.
+/og-image.png
+  Cache-Control: public, max-age=2592000, must-revalidate
+/portrait-cody.png
+  Cache-Control: public, max-age=2592000, must-revalidate
+/sample-proposal.pdf
+  Cache-Control: public, max-age=2592000, must-revalidate
+/favicon.png
+  Cache-Control: public, max-age=2592000, must-revalidate
