@@ -293,10 +293,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
               Privacy Policy
             </Link>{' '}
             and{' '}
-            <Link
-              href="/terms"
-              className="underline hover:text-[var(--s500)]"
-            >
+            <Link href="/terms" className="underline hover:text-[var(--s500)]">
               Terms of Service
             </Link>
             .
