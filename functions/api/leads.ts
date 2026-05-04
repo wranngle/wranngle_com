@@ -199,7 +199,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       // Don't leak internal error to client
       console.error('N8N_WEBHOOK_URL not configured');
       if (isSaasLead) {
-        console.log('Saas lead (no webhook configured):', lead);
+        // Log only the package + email-domain so CF logs don't retain
+        // full PII when the webhook isn't wired (dev / misconfig path).
+        console.error(
+          'SaaS lead dropped (no webhook configured)',
+          lead.package,
+          lead.email.split('@')[1] ?? 'unknown',
+        );
         return new Response(JSON.stringify({success: true}), {
           status: 201,
           headers: responseHeaders,
@@ -231,7 +237,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (!webhookResponse.ok) {
       console.error('Webhook failed:', webhookResponse.status);
       if (isSaasLead) {
-        console.log('Saas lead (webhook non-OK, swallowed):', lead);
+        // Same PII-minimal logging as the no-webhook branch above.
+        console.error(
+          'SaaS lead webhook non-OK (swallowed)',
+          lead.package,
+          lead.email.split('@')[1] ?? 'unknown',
+          webhookResponse.status,
+        );
         return new Response(JSON.stringify({success: true}), {
           status: 201,
           headers: responseHeaders,
