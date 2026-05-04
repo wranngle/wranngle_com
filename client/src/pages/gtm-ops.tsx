@@ -21,7 +21,11 @@ import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import {getCategoryById, type OfferingItem} from '@/data/offerings.ts';
 
-const GTM_OPS_DEMO_URL = 'https://preview.gtm-ops.pages.dev';
+// Production demo URL. The bare `gtm-ops.pages.dev` is the live
+// deploy; the `preview.` prefix that lived here previously is a
+// per-branch alias and reads as "not the real thing." Once DNS for
+// app.wranngle.com (or demo.wranngle.com) is provisioned, swap here.
+const GTM_OPS_DEMO_URL = 'https://gtm-ops.pages.dev';
 const GTM_OPS_REPO_URL = 'https://github.com/wranngle/gtm_ops';
 
 const PIPELINE_STEPS = [
