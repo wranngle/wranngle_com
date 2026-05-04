@@ -51,7 +51,7 @@
   --chart-4: 217 91% 60%; /* info blue #3b82f6 */
   --chart-5: 31 100% 60%; /* sunset-300 */
 
-  --font-sans: 'Inter', 'DM Sans', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --radius: 0.5rem; /* 8px */

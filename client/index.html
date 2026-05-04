@@ -95,8 +95,19 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!--
+      Font request tuned to actual usage:
+      - Bricolage Grotesque 400-800 (brand-font headers)
+      - Inter 400-900 (body + AgentFactsPopout uses font-black=900;
+        without 800/900 the popout was rendering synthetic-bold, which
+        looks fuzzy on the FDA-nutrition-label spec sheet)
+      - JetBrains Mono 400/500/700 (terminal aesthetic)
+      DM Sans was being downloaded but never used — Inter sits ahead
+      of it in the --font-sans fallback chain, so DM Sans was dead
+      weight. Removed.
+    -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
   </head>
