@@ -404,7 +404,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         priceCadence: 'monthly',
         description:
           'For teams who need SSO, custom domains, and unlimited throughput. Built for ops orgs that ship hundreds of proposals.',
-        cta: 'Talk gtm_ops Pro',
+        cta: 'Talk to Sales',
         monthlyAddon: {price: '990', label: '/yr annual plan'},
         features: [
           'Unlimited proposals',
