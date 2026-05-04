@@ -13,10 +13,9 @@ export default function NotFound() {
     globalThis.scrollTo(0, 0);
     document.title = '404 Not Found — Wranngle';
 
-    // The SPA serves index.html with HTTP 200 for any unknown path
-    // (Cloudflare Pages default behavior). Without a noindex hint,
-    // search engines treat every typo and dead inbound link as a
-    // real indexable page. Inject the meta on mount, remove on unmount.
+    // Client-side unknown routes can still land here after SPA navigation.
+    // Direct unknown requests are handled by client/public/404.html, but keep
+    // this route noindexed for in-app misses.
     const robots = document.createElement('meta');
     robots.name = 'robots';
     robots.content = 'noindex, nofollow';
