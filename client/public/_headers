@@ -11,6 +11,19 @@
   # to HTTP. Once preloaded, even a never-visited browser bypasses HTTP.
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
+  # Clickjacking — refuse iframe embedding of any wranngle.com page.
+  # Site has no legitimate iframe-embed use case; stricter than
+  # SAMEORIGIN to also block accidental subdomain framing.
+  X-Frame-Options: DENY
+
+  # Permissions-Policy — explicitly grant microphone to self (the
+  # ElevenLabs ConvAI widget runs as a custom element on this origin
+  # so self alone is enough; the widget's actual audio capture also
+  # happens via the page's getUserMedia, not a cross-origin iframe).
+  # Deny everything else by default — visitor browsers won't even ask
+  # for camera/geolocation/payment/usb/etc. on this site.
+  Permissions-Policy: microphone=(self), camera=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), midi=(), display-capture=(), fullscreen=(self)
+
 # Hashed bundles in /assets/* — content-addressable, so cache forever.
 # Vite includes a content hash in every filename (index-DpOR-9It.js etc.),
 # so a redeploy ships a new URL and the old one stays valid in caches
