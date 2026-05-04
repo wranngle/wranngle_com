@@ -259,12 +259,26 @@ const FAQ = React.lazy(async () => import('@/components/FAQ.tsx'));
  * (AgentFactsPopout) AND a primary CTA that opens the IntakeForm.
  */
 function OfferingsSection({isDark}: {isDark: boolean}) {
-  const [activeCategory, setActiveCategory] = useState(
-    OFFERING_CATEGORIES[0]?.id ?? 'ai-agents',
-  );
+  const [activeCategory, setActiveCategory] = useState(() => {
+    // Lazy-init from the URL hash so deep-links like
+    // /#offerings-cat-websites render the right tab on the first paint
+    // (no AI Agents → Websites flash).
+    if (globalThis.window !== undefined) {
+      const hash = globalThis.location.hash?.slice(1) ?? '';
+      const prefix = 'offerings-cat-';
+      if (hash.startsWith(prefix)) {
+        const requested = hash.slice(prefix.length);
+        const matched = OFFERING_CATEGORIES.find((c) => c.id === requested);
+        if (matched) return matched.id;
+      }
+    }
 
-  // React to `#offerings-cat-<id>` hashes coming from the OfferingsMegaMenu
-  // (or external links). Switch tab + smooth-scroll to the section.
+    return OFFERING_CATEGORIES[0]?.id ?? 'ai-agents';
+  });
+
+  // React to subsequent `#offerings-cat-<id>` hash changes (mega menu
+  // clicks while already on /). Lazy-init above already handled
+  // first-paint, so this just re-applies on hashchange events.
   useEffect(() => {
     const apply = () => {
       const hash = globalThis.location.hash?.slice(1) ?? '';
@@ -280,6 +294,8 @@ function OfferingsSection({isDark}: {isDark: boolean}) {
       });
     };
 
+    // Run once on mount too — handles deep-link scroll behavior even
+    // though the tab is already correct from lazy-init.
     apply();
     globalThis.addEventListener('hashchange', apply);
     return () => {

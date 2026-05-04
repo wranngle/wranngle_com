@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-deprecated -- lucide-react brand icons (Linkedin, Github) used intentionally for socials; deprecation is upstream-future. */
 // @ts-nocheck
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'wouter';
 import {
   ArrowRight,
@@ -32,6 +32,7 @@ export function OfferingsMegaMenu({
   isDark,
   onSelectOffering,
 }: OfferingsMegaMenuProps) {
+  const [open, setOpen] = useState(false);
   const surfaceClasses = isDark
     ? 'bg-[#18181b] border-white/10 text-[#fcfaf5]'
     : 'bg-white border-black/10 text-[#12111a]';
@@ -39,7 +40,7 @@ export function OfferingsMegaMenu({
   const dividerClass = isDark ? 'border-white/10' : 'border-black/10';
 
   return (
-    <DropdownMenu modal={false}>
+    <DropdownMenu modal={false} open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <button
           type="button"
@@ -64,8 +65,10 @@ export function OfferingsMegaMenu({
                 ? '/products/gtm-ops'
                 : `/#offerings-cat-${cat.id}`;
             const navigate = () => {
-              // Full assign — same-path hash change triggers hashchange
-              // listener; cross-path fully navigates via wouter on next load.
+              // Close the dropdown first — Radix doesn't auto-close on
+              // non-Item clicks, so without this the menu visibly hangs
+              // around for the hashchange tick.
+              setOpen(false);
               globalThis.location.href = headerHref;
             };
 
@@ -117,6 +120,7 @@ export function OfferingsMegaMenu({
                         // Stop the column-level handler from firing; this
                         // tier's spec-sheet popout takes precedence.
                         e.stopPropagation();
+                        setOpen(false);
                         onSelectOffering(item);
                       }}
                       className="w-full text-left px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/15 transition-colors group/item flex items-start justify-between gap-2"
@@ -167,6 +171,7 @@ type AboutMegaMenuProps = {
  * offering: about page, talk-to-sarah, legal, socials.
  */
 export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
+  const [open, setOpen] = useState(false);
   const surfaceClasses = isDark
     ? 'bg-[#18181b] border-white/10 text-[#fcfaf5]'
     : 'bg-white border-black/10 text-[#12111a]';
@@ -174,7 +179,7 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
   const dividerClass = isDark ? 'border-white/10' : 'border-black/10';
 
   return (
-    <DropdownMenu modal={false}>
+    <DropdownMenu modal={false} open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <button
           type="button"
@@ -186,6 +191,13 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
       <DropdownMenuContent
         align="end"
         sideOffset={12}
+        // Bubbling close: any click on an <a> or <button> inside the menu
+        // dismisses the dropdown. Radix's auto-close only fires for
+        // DropdownMenuItem; we use raw Links so we close manually.
+        onClick={(e) => {
+          const target = e.target as HTMLElement | undefined;
+          if (target?.closest('a, button')) setOpen(false);
+        }}
         className={`w-[480px] p-0 border ${surfaceClasses} rounded-lg shadow-2xl`}
       >
         <div className="grid grid-cols-2 gap-0">
@@ -202,7 +214,10 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
               </Link>
               <button
                 type="button"
-                onClick={onTalkToSarah}
+                onClick={() => {
+                  setOpen(false);
+                  onTalkToSarah();
+                }}
                 className="flex w-full items-center gap-2 text-left px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
               >
                 <Sparkles
