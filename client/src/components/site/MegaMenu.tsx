@@ -291,7 +291,7 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
                 <Linkedin size={18} />
               </a>
               <a
-                href="https://github.com/Wranngle"
+                href="https://github.com/wranngle"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="GitHub"

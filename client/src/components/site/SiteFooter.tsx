@@ -136,7 +136,7 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
                 <Linkedin size={20} />
               </a>
               <a
-                href="https://github.com/Wranngle"
+                href="https://github.com/wranngle"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="GitHub"
