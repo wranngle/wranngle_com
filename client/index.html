@@ -163,6 +163,42 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <!-- Static fallback for visitors with JavaScript disabled (NoScript /
+           Tor / lynx / non-JS crawlers). Mirrors the hero pitch + the
+           single contact path. Not a marketing surface; just enough so
+           the page isn't a blank rectangle. -->
+      <div
+        style="
+          max-width: 640px;
+          margin: 6rem auto;
+          padding: 2rem;
+          font-family: 'Inter', system-ui, sans-serif;
+          color: #fcfaf5;
+          background: #18181b;
+          border-left: 4px solid #ff5f00;
+          border-radius: 12px 4px 12px 4px;
+          line-height: 1.5;
+        "
+      >
+        <h1 style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 2rem; margin: 0 0 0.5rem;">
+          Wranngle Systems
+        </h1>
+        <p style="opacity: 0.8; margin: 0 0 1rem;">
+          Voice-AI agents for trades businesses — 24/7 call answering, lead
+          qualification, and the gtm_ops proposal-generation runtime.
+        </p>
+        <p style="opacity: 0.8; margin: 0 0 1rem;">
+          The full site is a JavaScript single-page app. To see the live
+          ElevenLabs voice agent and offerings, please enable JavaScript.
+        </p>
+        <p style="margin: 0;">
+          Contact: <a href="mailto:hello@wranngle.com" style="color: #ff5f00;">hello@wranngle.com</a>
+          &nbsp;·&nbsp;
+          <a href="https://github.com/wranngle" style="color: #ff5f00;">github.com/wranngle</a>
+        </p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
