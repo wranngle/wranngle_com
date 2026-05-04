@@ -1,0 +1,65 @@
+name: lead-endpoint health
+
+# Smoke-test the production lead-capture endpoint every 30 minutes.
+# Catches the silent-500 class of failure (n8n webhook auth drifts,
+# n8n down, secret mismatch, etc.) within a single missed-cron window
+# instead of waiting for a real customer submission.
+#
+# A failure here pages the workflow's failure notification (configure
+# in repo Settings → Notifications, or wire to Slack / email).
+
+on:
+  schedule:
+    # Every 30 minutes. Cheaper than every 5; faster than once-a-day.
+    - cron: '*/30 * * * *'
+  workflow_dispatch: # allow manual runs from the Actions tab
+
+permissions:
+  contents: read
+
+jobs:
+  ping-leads:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: POST a synthetic lead to /api/leads
+        run: |
+          set -euo pipefail
+          response=$(curl -sS \
+            -o /tmp/body.json \
+            -w '%{http_code}' \
+            -X POST \
+            -H 'Content-Type: application/json' \
+            -H 'User-Agent: gh-actions/lead-health' \
+            -d '{
+              "package": "basic",
+              "businessName": "GH Actions health check — please ignore",
+              "industry": "synthetic",
+              "ownerName": "Health Monitor",
+              "email": "health-monitor@wranngle.com",
+              "phone": "+15555550000",
+              "status": "automated-health",
+              "notes": "Triggered by .github/workflows/lead-health.yml"
+            }' \
+            https://wranngle.com/api/leads)
+
+          echo "Status: $response"
+          echo "Body:"
+          cat /tmp/body.json
+          echo
+
+          # 201 is what the function returns on a successful webhook handoff.
+          if [ "$response" != "201" ]; then
+            echo "::error::Lead endpoint returned $response (expected 201) — n8n integration likely broken."
+            exit 1
+          fi
+
+          # Defense-in-depth: the body must contain the success marker
+          # the function emits. A 201 with the wrong shape would still be a
+          # broken contract.
+          if ! grep -q '"success":true' /tmp/body.json; then
+            echo "::error::Lead endpoint returned 201 but body did not include success:true."
+            exit 1
+          fi
+
+          echo "Lead endpoint healthy."
