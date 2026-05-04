@@ -194,9 +194,16 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
         // Bubbling close: any click on an <a> or <button> inside the menu
         // dismisses the dropdown. Radix's auto-close only fires for
         // DropdownMenuItem; we use raw Links so we close manually.
+        // Skip target="_blank" anchors — the synchronous re-render races
+        // with the browser's new-tab dispatch and the click vanishes
+        // (only right-click "Open in new tab" worked).
         onClick={(e) => {
           const target = e.target as HTMLElement | undefined;
-          if (target?.closest('a, button')) setOpen(false);
+          const interactive = target?.closest('a, button');
+          if (!interactive) return;
+          const anchor = target?.closest('a');
+          if (anchor?.target === '_blank') return;
+          setOpen(false);
         }}
         className={`w-[480px] p-0 border ${surfaceClasses} rounded-lg shadow-2xl`}
       >
