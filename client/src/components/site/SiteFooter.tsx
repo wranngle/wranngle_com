@@ -168,7 +168,7 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
           className={`pt-6 border-t ${borderClass} flex flex-col md:flex-row justify-between items-center gap-4 text-xs mono-font opacity-60`}
         >
           <div>© 2026 Wranngle Systems LLC</div>
-          <div>Voice-AI-led GTM motion runtime · ElevenLabs Startup Grant</div>
+          <div>Voice-AI-led GTM motion runtime for trades businesses</div>
         </div>
       </div>
     </footer>
