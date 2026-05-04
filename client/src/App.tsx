@@ -580,7 +580,7 @@ function TalkToSarahSection({isDark}: {isDark: boolean}) {
 
         <div className="relative z-10 console-panel-like rounded-[16px_4px_16px_4px] bg-[#101014] border border-white/10 p-6 min-h-[240px] flex flex-col justify-between">
           <div className="flex items-center justify-between mono-font text-[10px] tracking-widest text-white/50">
-            <span>SARAH // v3.2</span>
+            <span>SARAH // LIVE DEMO</span>
             <span className="inline-flex items-center gap-2 text-[#5d8c61] font-bold">
               <span className="w-2 h-2 rounded-full bg-[#5d8c61] animate-pulse" />
               ONLINE
