@@ -1,5 +1,12 @@
 type Env = {
   N8N_WEBHOOK_URL: string;
+  /**
+   * Shared secret sent as `X-Webhook-Secret` to n8n. The Wranngle
+   * Lead Intake workflow's webhook node uses headerAuth with this
+   * exact header name; without it n8n returns 401 and the function
+   * surfaces a 500 to callers.
+   */
+  N8N_WEBHOOK_SECRET?: string;
   ALLOWED_ORIGIN?: string;
 };
 
@@ -208,9 +215,16 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       );
     }
 
+    const webhookHeaders: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    if (context.env.N8N_WEBHOOK_SECRET) {
+      webhookHeaders['X-Webhook-Secret'] = context.env.N8N_WEBHOOK_SECRET;
+    }
+
     const webhookResponse = await fetch(webhookUrl, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: webhookHeaders,
       body: JSON.stringify(lead),
     });
 
