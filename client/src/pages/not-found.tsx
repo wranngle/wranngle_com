@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from 'wouter';
 import {AlertCircle, ArrowRight} from 'lucide-react';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
@@ -8,6 +8,24 @@ import {useDarkMode} from '@/components/site/DarkModeToggle.tsx';
 
 export default function NotFound() {
   const {isDark, toggle: toggleTheme} = useDarkMode();
+
+  useEffect(() => {
+    globalThis.scrollTo(0, 0);
+    document.title = '404 Not Found — Wranngle';
+
+    // The SPA serves index.html with HTTP 200 for any unknown path
+    // (Cloudflare Pages default behavior). Without a noindex hint,
+    // search engines treat every typo and dead inbound link as a
+    // real indexable page. Inject the meta on mount, remove on unmount.
+    const robots = document.createElement('meta');
+    robots.name = 'robots';
+    robots.content = 'noindex, nofollow';
+    // eslint-disable-next-line unicorn/prefer-dom-node-append
+    document.head.appendChild(robots);
+    return () => {
+      robots.remove();
+    };
+  }, []);
 
   return (
     <div
