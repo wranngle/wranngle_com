@@ -4,65 +4,75 @@
 
 /* LIGHT MODE */
 :root {
-  --button-outline: rgba(0,0,0, .10);
-  --badge-outline: rgba(0,0,0, .05);
+  --button-outline: rgba(0, 0, 0, 0.1);
+  --badge-outline: rgba(0, 0, 0, 0.05);
 
   /* Automatic computation of border around primary / danger buttons */
   --opaque-button-border-intensity: -8; /* In terms of percentages */
 
   /* Backgrounds applied on top of other backgrounds when hovered/active */
-  --elevate-1: rgba(0,0,0, .03);
-  --elevate-2: rgba(0,0,0, .08);
+  --elevate-1: rgba(0, 0, 0, 0.03);
+  --elevate-2: rgba(0, 0, 0, 0.08);
 
   /* Brand-system HSL values (per DESIGN.md / tokens/tokens.css mirrored from gtm_ops). */
   /* shadcn convention: space-separated "H S% L%" so hsl(var(--token)) resolves. */
-  --background: 43 54% 97%;            /* sand-50 #fcfaf5 — light page */
-  --foreground: 247 21% 8%;            /* night-950 #12111a — primary text */
-  --border: 38 51% 85%;                /* sand-200 #ebdfc8 — subtle border */
-  --card: 0 0% 100%;                   /* white */
-  --card-foreground: 247 21% 8%;       /* night-950 */
-  --card-border: 38 51% 85%;           /* sand-200 */
-  --sidebar: 38 50% 94%;               /* sand-100 #f6f1e7 — muted surface */
-  --sidebar-foreground: 247 21% 8%;    /* night-950 */
-  --sidebar-border: 38 51% 85%;        /* sand-200 */
-  --sidebar-primary: 22 100% 50%;      /* sunset-500 #ff5f00 — action */
+  --background: 43 54% 97%; /* sand-50 #fcfaf5 — light page */
+  --foreground: 247 21% 8%; /* night-950 #12111a — primary text */
+  --border: 38 51% 85%; /* sand-200 #ebdfc8 — subtle border */
+  --card: 0 0% 100%; /* white */
+  --card-foreground: 247 21% 8%; /* night-950 */
+  --card-border: 38 51% 85%; /* sand-200 */
+  --sidebar: 38 50% 94%; /* sand-100 #f6f1e7 — muted surface */
+  --sidebar-foreground: 247 21% 8%; /* night-950 */
+  --sidebar-border: 38 51% 85%; /* sand-200 */
+  --sidebar-primary: 22 100% 50%; /* sunset-500 #ff5f00 — action */
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 38 50% 94%;        /* sand-100 */
+  --sidebar-accent: 38 50% 94%; /* sand-100 */
   --sidebar-accent-foreground: 247 21% 8%;
   --sidebar-ring: 22 100% 50%;
-  --popover: 0 0% 100%;                /* white */
+  --popover: 0 0% 100%; /* white */
   --popover-foreground: 247 21% 8%;
   --popover-border: 38 51% 85%;
-  --primary: 22 100% 50%;              /* sunset-500 — primary action */
+  --primary: 22 100% 50%; /* sunset-500 — primary action */
   --primary-foreground: 0 0% 100%;
-  --secondary: 339 60% 52%;            /* violet-500 #cf3c69 — secondary brand */
+  --secondary: 339 60% 52%; /* violet-500 #cf3c69 — secondary brand */
   --secondary-foreground: 0 0% 100%;
-  --muted: 38 50% 94%;                 /* sand-100 */
-  --muted-foreground: 250 11% 54%;     /* night-400 #847d9a */
-  --accent: 31 100% 60%;               /* sunset-300 #ff9e33 — warning amber */
+  --muted: 38 50% 94%; /* sand-100 */
+  --muted-foreground: 250 11% 54%; /* night-400 #847d9a */
+  --accent: 31 100% 60%; /* sunset-300 #ff9e33 — warning amber */
   --accent-foreground: 247 21% 8%;
-  --destructive: 0 84% 60%;            /* #ef4444 — danger red (email-aligned) */
+  --destructive: 0 84% 60%; /* #ef4444 — danger red (email-aligned) */
   --destructive-foreground: 0 0% 100%;
-  --input: 38 51% 85%;                 /* sand-200 */
-  --ring: 22 100% 50%;                 /* sunset-500 */
-  --chart-1: 22 100% 50%;              /* sunset-500 */
-  --chart-2: 339 60% 52%;              /* violet-500 */
-  --chart-3: 124 19% 46%;              /* cactus #5d8c61 — healthy */
-  --chart-4: 217 91% 60%;              /* info blue #3b82f6 */
-  --chart-5: 31 100% 60%;              /* sunset-300 */
+  --input: 38 51% 85%; /* sand-200 */
+  --ring: 22 100% 50%; /* sunset-500 */
+  --chart-1: 22 100% 50%; /* sunset-500 */
+  --chart-2: 339 60% 52%; /* violet-500 */
+  --chart-3: 124 19% 46%; /* cactus #5d8c61 — healthy */
+  --chart-4: 217 91% 60%; /* info blue #3b82f6 */
+  --chart-5: 31 100% 60%; /* sunset-300 */
 
-  --font-sans: 'Inter', sans-serif;
+  --font-sans: 'Inter', 'DM Sans', system-ui, sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: Menlo, monospace;
-  --radius: .5rem; /* 8px */
-  --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00); /*replace with H S L */
-  --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00); /*replace with H S L */
-  --shadow-sm: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
-  --shadow: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
-  --shadow-md: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 2px 4px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
-  --shadow-lg: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 4px 6px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
-  --shadow-xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 8px 10px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
-  --shadow-2xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --radius: 0.5rem; /* 8px */
+  --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0); /*replace with H S L */
+  --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0); /*replace with H S L */
+  --shadow-sm:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-md:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 2px 4px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-lg:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 4px 6px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-xl:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 8px 10px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-2xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 
@@ -70,89 +80,119 @@
 
   /* Fallback for older browsers */
   --sidebar-primary-border: hsl(var(--sidebar-primary));
-  --sidebar-primary-border: hsl(from hsl(var(--sidebar-primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --sidebar-primary-border: hsl(
+    from hsl(var(--sidebar-primary)) h s
+      calc(l + var(--opaque-button-border-intensity)) / alpha
+  );
 
   /* Fallback for older browsers */
   --sidebar-accent-border: hsl(var(--sidebar-accent));
-  --sidebar-accent-border: hsl(from hsl(var(--sidebar-accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --sidebar-accent-border: hsl(
+    from hsl(var(--sidebar-accent)) h s
+      calc(l + var(--opaque-button-border-intensity)) / alpha
+  );
 
   /* Fallback for older browsers */
   --primary-border: hsl(var(--primary));
-  --primary-border: hsl(from hsl(var(--primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --primary-border: hsl(
+    from hsl(var(--primary)) h s
+      calc(l + var(--opaque-button-border-intensity)) / alpha
+  );
 
   /* Fallback for older browsers */
   --secondary-border: hsl(var(--secondary));
-  --secondary-border: hsl(from hsl(var(--secondary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --secondary-border: hsl(
+    from hsl(var(--secondary)) h s
+      calc(l + var(--opaque-button-border-intensity)) / alpha
+  );
 
   /* Fallback for older browsers */
   --muted-border: hsl(var(--muted));
-  --muted-border: hsl(from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --muted-border: hsl(
+    from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) /
+      alpha
+  );
 
   /* Fallback for older browsers */
   --accent-border: hsl(var(--accent));
-  --accent-border: hsl(from hsl(var(--accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --accent-border: hsl(
+    from hsl(var(--accent)) h s
+      calc(l + var(--opaque-button-border-intensity)) / alpha
+  );
 
   /* Fallback for older browsers */
   --destructive-border: hsl(var(--destructive));
-  --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --destructive-border: hsl(
+    from hsl(var(--destructive)) h s
+      calc(l + var(--opaque-button-border-intensity)) / alpha
+  );
 }
 
 .dark {
-  --button-outline: rgba(255,255,255, .10);
-  --badge-outline: rgba(255,255,255, .05);
+  --button-outline: rgba(255, 255, 255, 0.1);
+  --badge-outline: rgba(255, 255, 255, 0.05);
 
-  --opaque-button-border-intensity: 9;  /* In terms of percentages */
+  --opaque-button-border-intensity: 9; /* In terms of percentages */
 
   /* Backgrounds applied on top of other backgrounds when hovered/active */
-  --elevate-1: rgba(255,255,255, .04);
-  --elevate-2: rgba(255,255,255, .09);
+  --elevate-1: rgba(255, 255, 255, 0.04);
+  --elevate-2: rgba(255, 255, 255, 0.09);
 
   /* Wranngle dark-mode HSL values (mirror of :root with night surfaces). */
-  --background: 247 21% 8%;            /* night-950 #12111a — dark page */
-  --foreground: 43 54% 97%;            /* sand-50 #fcfaf5 — primary text inverse */
-  --border: 247 11% 22%;               /* night-700 #464055 — dark border */
-  --card: 247 19% 12%;                 /* night-900 #201e28 — slightly elevated dark surface */
+  --background: 247 21% 8%; /* night-950 #12111a — dark page */
+  --foreground: 43 54% 97%; /* sand-50 #fcfaf5 — primary text inverse */
+  --border: 247 11% 22%; /* night-700 #464055 — dark border */
+  --card: 247 19% 12%; /* night-900 #201e28 — slightly elevated dark surface */
   --card-foreground: 43 54% 97%;
   --card-border: 247 11% 22%;
   --sidebar: 247 19% 12%;
   --sidebar-foreground: 43 54% 97%;
   --sidebar-border: 247 11% 22%;
-  --sidebar-primary: 22 100% 50%;      /* sunset-500 — same brand action both modes */
+  --sidebar-primary: 22 100% 50%; /* sunset-500 — same brand action both modes */
   --sidebar-primary-foreground: 247 21% 8%;
-  --sidebar-accent: 247 16% 17%;       /* night-800 #393444 — hover surface */
+  --sidebar-accent: 247 16% 17%; /* night-800 #393444 — hover surface */
   --sidebar-accent-foreground: 43 54% 97%;
   --sidebar-ring: 22 100% 50%;
   --popover: 247 19% 12%;
   --popover-foreground: 43 54% 97%;
   --popover-border: 247 11% 22%;
-  --primary: 22 100% 50%;              /* sunset-500 — same in both modes */
+  --primary: 22 100% 50%; /* sunset-500 — same in both modes */
   --primary-foreground: 247 21% 8%;
-  --secondary: 339 60% 52%;            /* violet-500 — same in both modes */
+  --secondary: 339 60% 52%; /* violet-500 — same in both modes */
   --secondary-foreground: 0 0% 100%;
-  --muted: 247 16% 17%;                /* night-800 */
-  --muted-foreground: 250 11% 66%;     /* night-300 #aaa4b8 — softer in dark */
-  --accent: 31 100% 60%;               /* sunset-300 — warning amber */
+  --muted: 247 16% 17%; /* night-800 */
+  --muted-foreground: 250 11% 66%; /* night-300 #aaa4b8 — softer in dark */
+  --accent: 31 100% 60%; /* sunset-300 — warning amber */
   --accent-foreground: 247 21% 8%;
-  --destructive: 0 84% 60%;            /* danger red — same hex both modes */
+  --destructive: 0 84% 60%; /* danger red — same hex both modes */
   --destructive-foreground: 0 0% 100%;
   /* Input border in dark mode needs higher contrast against --card surface */
-  --input: 247 11% 28%;                /* night-600 #57516a */
+  --input: 247 11% 28%; /* night-600 #57516a */
   --ring: 22 100% 50%;
-  --chart-1: 22 100% 50%;              /* sunset-500 */
-  --chart-2: 339 60% 52%;              /* violet-500 */
-  --chart-3: 124 19% 56%;              /* cactus, lifted for dark */
-  --chart-4: 217 91% 70%;              /* info blue, lifted for dark */
-  --chart-5: 31 100% 65%;              /* sunset-300 lifted */
+  --chart-1: 22 100% 50%; /* sunset-500 */
+  --chart-2: 339 60% 52%; /* violet-500 */
+  --chart-3: 124 19% 56%; /* cactus, lifted for dark */
+  --chart-4: 217 91% 70%; /* info blue, lifted for dark */
+  --chart-5: 31 100% 65%; /* sunset-300 lifted */
 
-  --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
-  --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
-  --shadow-sm: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
-  --shadow: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
-  --shadow-md: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 2px 4px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
-  --shadow-lg: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 4px 6px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
-  --shadow-xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 8px 10px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
-  --shadow-2xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
-
+  --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-sm:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 1px 2px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-md:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 2px 4px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-lg:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 4px 6px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-xl:
+    0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0),
+    0px 8px 10px -1px hsl(202.8169 89.1213% 53.1373% / 0);
+  --shadow-2xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0);
 }
 
 /* Wranngle brand tokens & utility classes */
@@ -163,10 +203,80 @@
   --lasso: 24px 4px 24px 4px;
 }
 
-.brand-font { font-family: 'Bricolage Grotesque', sans-serif; }
-.mono-font { font-family: 'JetBrains Mono', monospace; }
-.bg-page-dark { background: radial-gradient(circle at 50% 0%, #2d0914 0%, var(--n950) 60%); --shadow-card: 0 6px 16px rgba(0, 0, 0, 0.4); }
-.bg-page-light { background: linear-gradient(to bottom, #fcfaf5, #ebdfc8); --shadow-card: 0 6px 16px rgba(18, 17, 26, 0.08); }
+.brand-font {
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+.mono-font {
+  font-family: 'JetBrains Mono', monospace;
+}
+.bg-page-dark {
+  background: radial-gradient(circle at 50% 0%, #2d0914 0%, var(--n950) 60%);
+  --shadow-card: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+.bg-page-light {
+  background: linear-gradient(to bottom, #fcfaf5, #ebdfc8);
+  --shadow-card: 0 6px 16px rgba(18, 17, 26, 0.08);
+}
+
+html {
+  scrollbar-color: rgba(255, 95, 0, 0.55) transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(18, 17, 26, 0.18);
+  border: 2px solid #fcfaf5;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--s500);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: var(--n950);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--s500);
+}
+
+/* Sarah-glimmer — slow shimmer used on the Sparkles glyph next to
+   Talk to Sarah CTAs. Combines opacity + scale + a hue-rotate twinkle
+   so the icon catches the eye without being noisy. */
+@keyframes sarah-glimmer {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 0 rgba(255, 95, 0, 0));
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.18) rotate(8deg);
+    filter: drop-shadow(0 0 6px rgba(255, 95, 0, 0.55));
+  }
+}
+.sarah-glimmer {
+  animation: sarah-glimmer 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sarah-glimmer {
+    animation: none;
+    opacity: 0.85;
+  }
+}
 
 .noise-overlay::before {
   content: '';
@@ -185,11 +295,14 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
 
   /* Prevent iOS auto-zoom on input focus (requires font-size >= 16px) */
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     font-size: 16px;
   }
 }
@@ -215,9 +328,8 @@
  * need to be distinguished from eachother visually.
  */
 @layer utilities {
-
   /* Hide ugly search cancel button in Chrome until we can style it properly */
-  input[type="search"]::-webkit-search-cancel-button {
+  input[type='search']::-webkit-search-cancel-button {
     @apply hidden;
   }
 
@@ -231,10 +343,11 @@
   /* .no-default-hover-elevate/no-default-active-elevate is an escape hatch so consumers of
    * buttons/badges can remove the automatic brightness adjustment on interactions
    * and program their own. */
-  .no-default-hover-elevate {}
+  .no-default-hover-elevate {
+  }
 
-  .no-default-active-elevate {}
-
+  .no-default-active-elevate {
+  }
 
   /**
    * Toggleable backgrounds go behind the content. Hoverable/active goes on top.
@@ -244,7 +357,7 @@
    */
   .toggle-elevate::before,
   .toggle-elevate-2::before {
-    content: "";
+    content: '';
     pointer-events: none;
     position: absolute;
     inset: 0px;
@@ -276,7 +389,7 @@
   .active-elevate:not(.no-default-active-elevate)::after,
   .hover-elevate-2:not(.no-default-hover-elevate)::after,
   .active-elevate-2:not(.no-default-active-elevate)::after {
-    content: "";
+    content: '';
     pointer-events: none;
     position: absolute;
     inset: 0px;

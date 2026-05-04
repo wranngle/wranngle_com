@@ -2,13 +2,14 @@
 import React, {useState} from 'react';
 import {Link} from 'wouter';
 import {motion, AnimatePresence} from 'framer-motion';
-import {Menu, X, ArrowRight} from 'lucide-react';
+import {Menu, X, ArrowRight, Sparkles} from 'lucide-react';
 import DarkModeToggle from './DarkModeToggle.tsx';
-import MegaMenu from './MegaMenu.tsx';
+import {OfferingsMegaMenu, AboutMegaMenu} from './MegaMenu.tsx';
 import {Dialog, DialogContent} from '@/components/ui/dialog.tsx';
 import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import type {OfferingItem} from '@/data/offerings.ts';
+import {goTalkToSarah} from '@/lib/sarah.ts';
 
 const LOGO_URL = 'https://i.ibb.co/WWFmbjKJ/wranngle-wordmark-4096w.png';
 
@@ -16,27 +17,6 @@ type SiteHeaderProps = {
   isDark: boolean;
   toggleTheme: () => void;
 };
-
-/**
- * Talk-to-Sarah action: scroll to the elevenlabs-convai widget on the home
- * page and trigger its internal open button. If the widget isn't on the
- * current page (e.g. /about), navigate to home first; the widget script is
- * loaded globally on home.
- */
-function talkToSarah() {
-  const widget = document.querySelector('elevenlabs-convai');
-  if (widget) {
-    widget.scrollIntoView({behavior: 'smooth', block: 'center'});
-    setTimeout(() => {
-      const btn = (widget as any).shadowRoot?.querySelector('button');
-      if (btn) btn.click();
-    }, 1000);
-    return;
-  }
-
-  // Widget not on this page → go home, scroll into view, click after mount.
-  globalThis.location.assign('/#talk-to-sarah');
-}
 
 export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -81,20 +61,30 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
 
           <div className="flex items-center gap-6">
             <nav className="hidden md:flex gap-6 items-center">
-              <MegaMenu
+              <Link
+                href="/"
+                className="text-sm font-medium hover:text-[var(--s500)] transition-colors"
+              >
+                Home
+              </Link>
+              <OfferingsMegaMenu
                 isDark={isDark}
                 onSelectOffering={handleSelectOffering}
-                onTalkToSarah={talkToSarah}
               />
+              <AboutMegaMenu isDark={isDark} onTalkToSarah={goTalkToSarah} />
               <DarkModeToggle isDark={isDark} toggle={toggleTheme} />
             </nav>
 
             <div className="hidden md:block">
               <button
                 type="button"
-                onClick={talkToSarah}
-                className="px-4 py-2.5 border border-current rounded-md text-[10px] font-bold uppercase tracking-wider hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all"
+                onClick={goTalkToSarah}
+                className="px-4 py-2.5 border border-current rounded-md text-[10px] font-bold uppercase tracking-wider hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all flex items-center gap-2"
               >
+                <Sparkles
+                  size={12}
+                  className="text-[var(--s500)] sarah-glimmer"
+                />
                 Talk to Sarah
               </button>
             </div>
@@ -166,10 +156,14 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
                 type="button"
                 onClick={() => {
                   setMobileOpen(false);
-                  talkToSarah();
+                  goTalkToSarah();
                 }}
-                className="text-left"
+                className="text-left flex items-center gap-2"
               >
+                <Sparkles
+                  size={18}
+                  className="text-[var(--s500)] sarah-glimmer"
+                />
                 Talk to Sarah
               </button>
               <Link
@@ -231,7 +225,10 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
                 onGetStarted={() => {
                   const {id} = factsItem;
                   setFactsItem(undefined);
-                  setIntakePackage(id);
+                  // Defer to next tick — see App.tsx onGetStarted comment.
+                  globalThis.setTimeout(() => {
+                    setIntakePackage(id);
+                  }, 80);
                 }}
                 onCrossSell={(targetId) => {
                   setFactsItem(undefined);

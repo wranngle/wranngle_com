@@ -2,7 +2,14 @@
 // @ts-nocheck
 import React from 'react';
 import {Link} from 'wouter';
-import {ArrowRight, ChevronDown, Linkedin, Github, Mail} from 'lucide-react';
+import {
+  ArrowRight,
+  ChevronDown,
+  Linkedin,
+  Github,
+  Mail,
+  Sparkles,
+} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,28 +17,21 @@ import {
 } from '@/components/ui/dropdown-menu.tsx';
 import {OFFERING_CATEGORIES, type OfferingItem} from '@/data/offerings.ts';
 
-type MegaMenuProps = {
+type OfferingsMegaMenuProps = {
   isDark: boolean;
   onSelectOffering: (item: OfferingItem) => void;
-  onTalkToSarah: () => void;
 };
 
 /**
- * MegaMenu — full-site nav.
- *
- * Three columns:
- *   1. Site         (Home / About / Talk to Sarah)
- *   2. Offerings    (each item -> opens AgentFactsPopout dialog directly)
- *   3. Legal & Socials (Privacy / Terms / LinkedIn / GitHub / Email)
- *
- * Per operator directive: clicking an Offerings entry should open the
- * spec-sheet popout, NOT navigate to /offerings.
+ * OfferingsMegaMenu — 3 columns, one per OFFERING_CATEGORIES entry
+ * (AI Agents, Websites, gtm_ops). Tiers stack vertically inside each
+ * column. Clicking a tier opens that offering's spec-sheet popout via
+ * the parent's onSelectOffering handler.
  */
-export default function MegaMenu({
+export function OfferingsMegaMenu({
   isDark,
   onSelectOffering,
-  onTalkToSarah,
-}: MegaMenuProps) {
+}: OfferingsMegaMenuProps) {
   const surfaceClasses = isDark
     ? 'bg-[#18181b] border-white/10 text-[#fcfaf5]'
     : 'bg-white border-black/10 text-[#12111a]';
@@ -45,62 +45,81 @@ export default function MegaMenu({
           type="button"
           className="inline-flex items-center gap-1 outline-none focus:outline-none hover:text-[var(--s500)] transition-colors text-sm font-medium"
         >
-          Menu <ChevronDown size={14} />
+          Offerings <ChevronDown size={14} />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
         sideOffset={12}
-        className={`w-[760px] p-0 border ${surfaceClasses} rounded-lg shadow-2xl`}
+        className={`w-[820px] p-0 border ${surfaceClasses} rounded-lg shadow-2xl`}
       >
         <div className="grid grid-cols-3 gap-0">
-          {/* Column 1: Site */}
-          <div className={`p-5 border-r ${dividerClass}`}>
-            <div className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-3">
-              Site
-            </div>
-            <div className="space-y-1">
-              <Link
-                href="/"
-                className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
-              >
-                Home
-              </Link>
-              <Link
-                href="/about"
-                className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
-              >
-                About
-              </Link>
-              <button
-                type="button"
-                onClick={onTalkToSarah}
-                className="block w-full text-left px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
-              >
-                Talk to Sarah
-              </button>
-            </div>
-          </div>
+          {OFFERING_CATEGORIES.map((cat, catIndex) => {
+            const isLast = catIndex === OFFERING_CATEGORIES.length - 1;
+            // gtm_ops gets its own dedicated landing page; the other
+            // categories scroll the home-page Offerings section to the
+            // matching tab via the `#offerings-cat-<id>` hash convention.
+            const headerHref =
+              cat.id === 'gtm_ops'
+                ? '/products/gtm-ops'
+                : `/#offerings-cat-${cat.id}`;
+            const navigate = () => {
+              // Full assign — same-path hash change triggers hashchange
+              // listener; cross-path fully navigates via wouter on next load.
+              globalThis.location.href = headerHref;
+            };
 
-          {/* Column 2: Offerings (opens popout directly), grouped by category. */}
-          <div className={`p-5 border-r ${dividerClass}`}>
-            <div className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-3">
-              Offerings
-            </div>
-            {OFFERING_CATEGORIES.map((cat, catIndex) => (
-              <div key={cat.id} className={catIndex > 0 ? 'mt-4' : ''}>
-                <div className="text-[9px] font-bold uppercase tracking-[0.18em] text-[var(--s500)] mb-1.5 px-3">
-                  {cat.name}
+            const onKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                navigate();
+              }
+            };
+
+            return (
+              // Column-as-link: hovering anywhere in the column primes the
+              // column-level destination; an inner tier button overrides
+              // via stopPropagation + its own onSelectOffering handler.
+              <div
+                key={cat.id}
+                role="link"
+                tabIndex={0}
+                aria-label={`${cat.name} — view category`}
+                onClick={navigate}
+                onKeyDown={onKey}
+                className={`group/col p-5 cursor-pointer transition-colors hover:bg-[var(--s500)]/5 focus:outline-none focus:ring-2 focus:ring-[var(--s500)]/40 ${
+                  isLast ? '' : `border-r ${dividerClass}`
+                }`}
+              >
+                <div className="flex items-baseline justify-between mb-1 gap-2">
+                  <span
+                    className={`text-[11px] font-bold text-[var(--s500)] group-hover/col:underline underline-offset-4 decoration-2 ${
+                      cat.id === 'gtm_ops'
+                        ? 'mono-font tracking-[0.08em]'
+                        : 'uppercase tracking-[0.18em]'
+                    }`}
+                  >
+                    {cat.name}
+                  </span>
+                  <span className="text-[9px] uppercase font-bold tracking-wider opacity-50 group-hover/col:opacity-100 group-hover/col:text-[var(--s500)] shrink-0 transition-opacity">
+                    {cat.id === 'gtm_ops' ? 'Product page →' : 'View all →'}
+                  </span>
+                </div>
+                <div className="text-[10px] opacity-50 mb-3 leading-snug">
+                  {cat.description}
                 </div>
                 <div className="space-y-1">
                   {cat.items.map((item) => (
                     <button
                       key={item.id}
                       type="button"
-                      onClick={() => {
+                      onClick={(e) => {
+                        // Stop the column-level handler from firing; this
+                        // tier's spec-sheet popout takes precedence.
+                        e.stopPropagation();
                         onSelectOffering(item);
                       }}
-                      className="w-full text-left px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors group flex items-start justify-between gap-2"
+                      className="w-full text-left px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/15 transition-colors group/item flex items-start justify-between gap-2"
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
@@ -112,32 +131,101 @@ export default function MegaMenu({
                               {item.badge}
                             </span>
                           )}
-                          <span className="text-[10px] font-mono opacity-60 ml-auto shrink-0">
-                            ${item.price}
-                            {item.priceCadence === 'monthly' ? '/mo' : ''}
-                          </span>
                         </div>
-                        <div className="text-xs opacity-60 mt-0.5 leading-snug">
-                          {item.description}
+                        <div className="text-[10px] font-mono opacity-60 mt-0.5">
+                          {item.price === '0' ? 'Free' : `$${item.price}`}
+                          {item.priceCadence === 'monthly' && item.price !== '0'
+                            ? '/mo'
+                            : item.price === '0'
+                              ? ''
+                              : ' one-time'}
                         </div>
                       </div>
                       <ArrowRight
                         size={14}
-                        className="opacity-40 group-hover:opacity-100 group-hover:text-[var(--s500)] group-hover:translate-x-0.5 transition-all mt-1 shrink-0"
+                        className="opacity-40 group-hover/item:opacity-100 group-hover/item:text-[var(--s500)] group-hover/item:translate-x-0.5 transition-all mt-1 shrink-0"
                       />
                     </button>
                   ))}
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
 
-          {/* Column 3: Legal + Socials */}
-          <div className="p-5">
+type AboutMegaMenuProps = {
+  isDark: boolean;
+  onTalkToSarah: () => void;
+};
+
+/**
+ * AboutMegaMenu — secondary nav surface for everything that isn't an
+ * offering: about page, talk-to-sarah, legal, socials.
+ */
+export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
+  const surfaceClasses = isDark
+    ? 'bg-[#18181b] border-white/10 text-[#fcfaf5]'
+    : 'bg-white border-black/10 text-[#12111a]';
+
+  const dividerClass = isDark ? 'border-white/10' : 'border-black/10';
+
+  return (
+    <DropdownMenu modal={false}>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          className="inline-flex items-center gap-1 outline-none focus:outline-none hover:text-[var(--s500)] transition-colors text-sm font-medium"
+        >
+          About <ChevronDown size={14} />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="end"
+        sideOffset={12}
+        className={`w-[480px] p-0 border ${surfaceClasses} rounded-lg shadow-2xl`}
+      >
+        <div className="grid grid-cols-2 gap-0">
+          <div className={`p-5 border-r ${dividerClass}`}>
+            <div className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-3">
+              Company
+            </div>
+            <div className="space-y-1 mb-5">
+              <Link
+                href="/about"
+                className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
+              >
+                About Wranngle
+              </Link>
+              <button
+                type="button"
+                onClick={onTalkToSarah}
+                className="flex w-full items-center gap-2 text-left px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
+              >
+                <Sparkles
+                  size={14}
+                  className="text-[var(--s500)] sarah-glimmer"
+                />
+                Talk to Sarah
+                <span className="ml-auto text-[9px] font-bold uppercase tracking-wider text-[var(--s500)] opacity-70">
+                  Live demo
+                </span>
+              </button>
+              <Link
+                href="/products/gtm-ops"
+                className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold mono-font"
+              >
+                gtm_ops
+              </Link>
+            </div>
+
             <div className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-3">
               Legal
             </div>
-            <div className="space-y-1 mb-5">
+            <div className="space-y-1">
               <Link
                 href="/privacy"
                 className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
@@ -151,6 +239,21 @@ export default function MegaMenu({
                 Terms of Service
               </Link>
             </div>
+          </div>
+
+          <div className="p-5">
+            <div className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-3">
+              Contact
+            </div>
+            <a
+              href="mailto:hello@wranngle.com"
+              className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold mb-5"
+            >
+              hello@wranngle.com
+              <div className="text-[10px] opacity-60 font-normal mt-0.5">
+                Sales + workspace setup
+              </div>
+            </a>
 
             <div className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-3">
               Connect
@@ -175,7 +278,7 @@ export default function MegaMenu({
                 <Github size={18} />
               </a>
               <a
-                href="mailto:cody@wranngle.com"
+                href="mailto:hello@wranngle.com"
                 aria-label="Email"
                 className="hover:text-[var(--s500)] transition-colors"
               >
@@ -188,3 +291,7 @@ export default function MegaMenu({
     </DropdownMenu>
   );
 }
+
+// Backwards-compat default export — older imports of `MegaMenu` resolve
+// to OfferingsMegaMenu so existing pages don't break.
+export default OfferingsMegaMenu;

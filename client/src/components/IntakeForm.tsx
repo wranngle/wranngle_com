@@ -15,6 +15,7 @@ import {Label} from '@/components/ui/label.tsx';
 import {useToast} from '@/hooks/use-toast.ts';
 import {Button} from '@/components/ui/button.tsx';
 import {getOfferingById} from '@/data/offerings.ts';
+import {openSarahWidget} from '@/lib/sarah.ts';
 
 const isAgentPackage = (id) => id === 'basic' || id === 'premium';
 const isSaasPackage = (id) =>
@@ -108,6 +109,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
   });
   const {toast} = useToast();
   const [successData, setSuccessData] = useState(null);
+  const [startMode, setStartMode] = useState(null);
 
   useEffect(() => {
     setValue('package', currentPackage);
@@ -147,9 +149,76 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
 
   const isAgent = isAgentPackage(currentPackage);
   const isSaas = isSaasPackage(currentPackage);
+  const itemName = isSaas
+    ? `gtm_ops ${offering?.name ?? ''}`.trim()
+    : (offering?.name ?? 'this');
+
+  if (!startMode) {
+    return (
+      <>
+        <DialogHeader>
+          <DialogTitle className="brand-font text-2xl">
+            How would you like to start?
+          </DialogTitle>
+          <DialogDescription>
+            Test the live Sarah demo first, or send the details now. Either way,
+            this starts around {itemName}.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="grid gap-3 py-5">
+          <DialogClose asChild>
+            <button
+              type="button"
+              onClick={() => {
+                globalThis.setTimeout(() => {
+                  openSarahWidget();
+                }, 150);
+              }}
+              className="text-left rounded-lg border border-[var(--s500)]/35 bg-[var(--s500)]/10 p-4 hover:border-[var(--s500)] transition-colors"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <div className="text-sm font-bold uppercase tracking-wider text-[var(--s500)]">
+                    Talk it out with Sarah
+                  </div>
+                  <p className="text-xs opacity-75 mt-1 leading-relaxed">
+                    Open the ElevenLabs voice demo and hear the customer
+                    experience before filling anything out.
+                  </p>
+                </div>
+                <ArrowRight size={16} className="shrink-0 text-[var(--s500)]" />
+              </div>
+            </button>
+          </DialogClose>
+
+          <button
+            type="button"
+            onClick={() => {
+              setStartMode('form');
+            }}
+            className="text-left rounded-lg border border-current/15 p-4 hover:border-[var(--s500)] transition-colors"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <div className="text-sm font-bold uppercase tracking-wider">
+                  Fill out the form
+                </div>
+                <p className="text-xs opacity-70 mt-1 leading-relaxed">
+                  Send the business details and we will follow up with the next
+                  concrete step.
+                </p>
+              </div>
+              <ArrowRight size={16} className="shrink-0" />
+            </div>
+          </button>
+        </div>
+      </>
+    );
+  }
 
   if (isSaas) {
-    const tierName = offering?.name ?? 'GTM Ops';
+    const tierName = offering?.name ?? 'gtm_ops';
     const isTrial = currentPackage === 'gtm-ops-trial';
     return (
       <>
@@ -166,10 +235,10 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
 
         <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-3 items-start">
           <Zap className="text-[var(--s500)] shrink-0 mt-0.5" size={18} />
-          <div className="text-[11px] opacity-80 leading-relaxed">
-            Honest demo mode: this form posts to our lead webhook. Self-serve
-            signup is on the roadmap; right now a human (Cody) will reply within
-            one business day to set up your workspace.
+          <div className="text-[12px] opacity-85 leading-relaxed">
+            Self-serve signup is almost ready. For now, Cody will personally
+            email you back with your workspace login — usually within a few
+            hours.
           </div>
         </div>
 

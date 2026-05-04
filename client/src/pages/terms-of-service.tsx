@@ -366,7 +366,7 @@ export default function TermsOfService() {
                   <br />
                   Email: legal@wranngle.com
                   <br />
-                  Support: support@wranngle.com
+                  Sales: hello@wranngle.com
                 </p>
               </section>
             </div>

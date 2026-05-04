@@ -57,7 +57,7 @@ export default function AgentFactsPopout({
   const isTrial = isSaas && headlinePrice === 0;
   const showAnnualDiscount = !isWebsite && !isTrial && discountPercent > 0;
   const headerTitle = isSaas
-    ? 'SaaS Plan Facts'
+    ? 'gtm_ops Spec Sheet'
     : isWebsite
       ? 'Website Spec Sheet'
       : 'AI Agent Facts';
@@ -105,7 +105,7 @@ export default function AgentFactsPopout({
             <div className="text-[10px] font-bold uppercase tracking-tighter mt-1 opacity-70">
               {itemName} ·{' '}
               {isSaas
-                ? 'SaaS Subscription'
+                ? 'gtm_ops Workspace'
                 : isWebsite
                   ? 'Project Engagement'
                   : '1 Business Location'}
@@ -113,7 +113,7 @@ export default function AgentFactsPopout({
           ) : (
             <div className="text-[10px] font-bold uppercase tracking-tighter mt-1 opacity-70">
               {isSaas
-                ? 'SaaS Subscription'
+                ? 'gtm_ops Workspace'
                 : isWebsite
                   ? 'Project Engagement'
                   : 'Serving Size: 1 Business Location'}
@@ -349,27 +349,36 @@ export default function AgentFactsPopout({
               : '* The % Fair Use (FU) indicates the capacity included in the base price before standard overage rates apply. Mid-annual cancellation of the Discount Price is subject to cancellation fees. API access not available. White-labeling included. All agents are trade-specific.'}
         </div>
 
+        {onGetStarted && (
+          <button
+            type="button"
+            onClick={onGetStarted}
+            className="mt-4 w-full bg-[var(--s500)] hover:bg-[var(--s500)]/90 text-white font-black uppercase text-sm tracking-wider py-4 rounded-sm transition-all flex items-center justify-between gap-2 px-4 shadow-md hover:scale-[1.01] ring-2 ring-[var(--s500)]/30 ring-offset-2 ring-offset-white"
+          >
+            <span className="flex flex-col items-start leading-tight">
+              <span>Get Started — {tierName}</span>
+              <span className="text-[10px] font-bold opacity-90 normal-case tracking-normal">
+                {isTrial
+                  ? 'No card · 14-day trial'
+                  : isWebsite
+                    ? `Project · $${formatNumber(headlinePrice)}`
+                    : `${priceCadenceLabel} · $${formatNumber(headlinePrice)}`}
+              </span>
+            </span>
+            <ArrowRight size={18} />
+          </button>
+        )}
+
         {crossSell && onCrossSell && (
           <button
             type="button"
             onClick={() => {
               onCrossSell(crossSell.offeringId);
             }}
-            className="mt-3 w-full border-2 border-dashed border-black/40 hover:border-[var(--v500)] hover:text-[var(--v500)] text-black/80 font-bold uppercase text-[10px] tracking-wider py-2 rounded-sm transition-all flex items-center justify-center gap-2 text-center px-2"
+            className="mt-2 w-full border border-dashed border-black/30 hover:border-[var(--v500)] hover:text-[var(--v500)] text-black/60 font-bold uppercase text-[10px] tracking-wider py-1.5 rounded-sm transition-all flex items-center justify-center gap-2 text-center px-2"
           >
             {crossSell.label}
-            <ArrowRight size={12} />
-          </button>
-        )}
-
-        {onGetStarted && (
-          <button
-            type="button"
-            onClick={onGetStarted}
-            className="mt-3 w-full bg-[var(--s500)] hover:bg-[var(--s500)]/90 text-white font-black uppercase text-xs tracking-wider py-3 rounded-sm transition-all flex items-center justify-center gap-2"
-          >
-            Get Started — {tierName}
-            <ArrowRight size={14} />
+            <ArrowRight size={11} />
           </button>
         )}
       </div>

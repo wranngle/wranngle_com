@@ -2,6 +2,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {motion} from 'framer-motion';
 import {Check, ArrowRight, Zap, FileText} from 'lucide-react';
+import {Link} from 'wouter';
 import {OFFERING_CATEGORIES, type OfferingItem} from '@/data/offerings.ts';
 import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
@@ -10,6 +11,11 @@ import {Button} from '@/components/ui/button.tsx';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
 import SiteFooter from '@/components/site/SiteFooter.tsx';
 import {useDarkMode} from '@/components/site/DarkModeToggle.tsx';
+import {
+  SARAH_AGENT_ID,
+  ensureSarahWidgetScript,
+  openSarahWidget,
+} from '@/lib/sarah.ts';
 
 const INITIAL_DIM = {w: 0, h: 0};
 const CONSOLE_LINES = [
@@ -26,15 +32,7 @@ const WranngleLanding = () => {
   const {isDark, toggle: toggleTheme} = useDarkMode();
 
   useEffect(() => {
-    const scriptId = 'el-convai-v1';
-    if (!document.getElementById(scriptId)) {
-      const s = document.createElement('script');
-      s.id = scriptId;
-      s.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed@beta';
-      s.async = true;
-      s.crossOrigin = 'anonymous';
-      document.head.append(s);
-    }
+    ensureSarahWidgetScript();
 
     const handleOutsideClick = (e) => {
       // Bail if click is inside any Radix-managed surface (Dialog, DropdownMenu,
@@ -150,25 +148,15 @@ const WranngleLanding = () => {
               </Dialog>
               <ButtonGhost
                 onClick={() => {
-                  const element = document.querySelector('elevenlabs-convai');
-                  element?.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center',
-                  });
-                  setTimeout(() => {
-                    const btn = element?.shadowRoot?.querySelector('button');
-                    if (btn) btn.click();
-                  }, 1000);
+                  openSarahWidget();
                 }}
               >
-                LIVE DEMO
+                TALK TO SARAH
               </ButtonGhost>
             </div>
           </motion.div>
           <ConsoleVisual isDark={isDark} lines={CONSOLE_LINES} />
         </main>
-
-        <OfferingsSection isDark={isDark} />
 
         <section
           id="features"
@@ -177,98 +165,87 @@ const WranngleLanding = () => {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,95,0,0.03),transparent_70%)] pointer-events-none" />
           <div className="mb-24 relative z-10">
             <h2 className="brand-font text-5xl md:text-6xl font-bold mb-6 max-w-3xl leading-tight">
-              Industrial-Grade <br />
+              What the agent <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--s500)] to-[var(--v500)]">
-                Defense System
+                actually does
               </span>{' '}
-              <br />
-              For Your Revenue.
             </h2>
             <p className="opacity-60 max-w-xl text-lg leading-relaxed">
-              Manual reception is a vulnerability. Wranngle deploys an
-              autonomous, deterministic layer that insulates your business from
-              chaos.
+              No "AI transformation" fog. The agent answers, qualifies, books,
+              and sends the lead where you already work.
             </p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8 relative z-10">
             <TerminalCard
               isDark={isDark}
-              title="TEMPORAL_SENTINEL"
-              status="SCANNING"
+              title="24_7_COVERAGE"
+              status="ANSWERING"
               index="01"
             >
               <RadarWatchdog />
               <div className="mt-8 relative z-10">
                 <h3 className="brand-font text-2xl font-bold mb-2">
-                  Total Temporal Coverage
+                  Never miss a call
                 </h3>
                 <p className="text-sm opacity-60 leading-relaxed">
-                  A persistent, non-sleeping observer. Whether it's 2 AM or
-                  Christmas Day, the sentinel intercepts every signal.
+                  Every ring gets answered, including 2 AM, holidays, and the
+                  hours when your crew is already on a job.
                 </p>
               </div>
             </TerminalCard>
 
             <TerminalCard
               isDark={isDark}
-              title="SPECTRAL_GATE"
+              title="LEAD_QUALIFY"
               status="FILTERING"
               index="02"
             >
               <SpectralAnalyzer />
               <div className="mt-8 relative z-10">
                 <h3 className="brand-font text-2xl font-bold mb-2">
-                  Signal Validation
+                  Filter spam, capture revenue
                 </h3>
                 <p className="text-sm opacity-60 leading-relaxed">
-                  Advanced heuristics analyze caller intent in real-time. Spam
-                  is vaporized. Revenue is crystalized.
+                  The agent sorts service calls from junk, gathers the details,
+                  and escalates only the leads worth your time.
                 </p>
               </div>
             </TerminalCard>
 
             <TerminalCard
               isDark={isDark}
-              title="SYNAPSE_UPLINK"
+              title="INSTANT_HANDOFF"
               status="CONNECTED"
               index="03"
             >
               <SynapseLink />
               <div className="mt-8 relative z-10">
                 <h3 className="brand-font text-2xl font-bold mb-2">
-                  Zero-Latency Uplink
+                  Texts you the lead
                 </h3>
                 <p className="text-sm opacity-60 leading-relaxed">
-                  Valid leads are transmuted into structured data and injected
-                  directly into your mobile device via SMS.
+                  Name, address, job type, urgency, and transcript arrive in a
+                  structured handoff while the caller is still warm.
                 </p>
               </div>
             </TerminalCard>
           </div>
         </section>
 
+        <OfferingsSection isDark={isDark} />
+
+        <TalkToSarahSection isDark={isDark} />
+
         <React.Suspense fallback={null}>
           <FAQ isDark={isDark} />
         </React.Suspense>
 
-        {/* Anchor target for "Talk to Sarah" links from anywhere on the site. */}
-        <section
-          id="talk-to-sarah"
-          className="py-16 px-6 max-w-3xl mx-auto w-full text-center"
-        >
-          <h2 className="brand-font text-3xl md:text-4xl font-bold mb-3">
-            Talk to <span className="text-[var(--s500)]">Sarah</span>
-          </h2>
-          <p className="opacity-70 text-base">
-            Our live demo voice agent runs in the corner of this page. Click the
-            floating widget to start a conversation.
-          </p>
-        </section>
+        <FounderNote isDark={isDark} />
 
         <SiteFooter isDark={isDark} />
 
-        <elevenlabs-convai agent-id="agent_8001kdgp7qbyf4wvhs540be78vew"></elevenlabs-convai>
+        <elevenlabs-convai agent-id={SARAH_AGENT_ID}></elevenlabs-convai>
       </div>
     </div>
   );
@@ -286,6 +263,30 @@ function OfferingsSection({isDark}: {isDark: boolean}) {
     OFFERING_CATEGORIES[0]?.id ?? 'ai-agents',
   );
 
+  // React to `#offerings-cat-<id>` hashes coming from the OfferingsMegaMenu
+  // (or external links). Switch tab + smooth-scroll to the section.
+  useEffect(() => {
+    const apply = () => {
+      const hash = globalThis.location.hash?.slice(1) ?? '';
+      const prefix = 'offerings-cat-';
+      if (!hash.startsWith(prefix)) return;
+      const requested = hash.slice(prefix.length);
+      const matched = OFFERING_CATEGORIES.find((c) => c.id === requested);
+      if (!matched) return;
+      setActiveCategory(matched.id);
+      requestAnimationFrame(() => {
+        const target = document.getElementById('offerings');
+        if (target) target.scrollIntoView({behavior: 'smooth', block: 'start'});
+      });
+    };
+
+    apply();
+    globalThis.addEventListener('hashchange', apply);
+    return () => {
+      globalThis.removeEventListener('hashchange', apply);
+    };
+  }, []);
+
   return (
     <section
       id="offerings"
@@ -301,24 +302,31 @@ function OfferingsSection({isDark}: {isDark: boolean}) {
       </div>
 
       <div className="flex justify-center gap-2 mb-12 flex-wrap">
-        {OFFERING_CATEGORIES.map((cat) => (
-          <button
-            key={cat.id}
-            type="button"
-            onClick={() => {
-              setActiveCategory(cat.id);
-            }}
-            className={`px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition-all ${
-              activeCategory === cat.id
-                ? 'bg-[var(--s500)] text-white'
-                : isDark
-                  ? 'bg-white/5 hover:bg-white/10'
-                  : 'bg-black/5 hover:bg-black/10'
-            }`}
-          >
-            {cat.name}
-          </button>
-        ))}
+        {OFFERING_CATEGORIES.map((cat) => {
+          const isGtmOps = cat.id === 'gtm_ops';
+          return (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => {
+                setActiveCategory(cat.id);
+              }}
+              className={`px-6 py-3 rounded-lg text-sm font-bold transition-all ${
+                isGtmOps
+                  ? 'mono-font tracking-[0.06em]'
+                  : 'uppercase tracking-wider'
+              } ${
+                activeCategory === cat.id
+                  ? 'bg-[var(--s500)] text-white'
+                  : isDark
+                    ? 'bg-white/5 hover:bg-white/10'
+                    : 'bg-black/5 hover:bg-black/10'
+              }`}
+            >
+              {cat.name}
+            </button>
+          );
+        })}
       </div>
 
       {OFFERING_CATEGORIES.filter((c) => c.id === activeCategory).map(
@@ -329,10 +337,45 @@ function OfferingsSection({isDark}: {isDark: boolean}) {
             animate={{opacity: 1}}
             transition={{duration: 0.3}}
           >
-            <p className="text-center opacity-60 mb-10 text-sm">
+            <p className="text-center opacity-60 mb-6 text-sm">
               {category.description}
             </p>
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+
+            {category.id === 'gtm_ops' && (
+              <div className="max-w-3xl mx-auto mb-8">
+                <Link href="/products/gtm-ops">
+                  <a
+                    className={`group flex items-center justify-between gap-4 px-5 py-4 rounded-[12px_4px_12px_4px] border-y border-r border-l-4 border-l-[var(--v500)] transition-colors hover:border-l-[var(--s500)] ${
+                      isDark
+                        ? 'border-white/10 bg-[#18181b] hover:bg-[#1f1f24]'
+                        : 'border-black/5 bg-white hover:bg-[#faf6ed]'
+                    }`}
+                  >
+                    <div className="min-w-0">
+                      <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-1">
+                        DEDICATED PRODUCT PAGE
+                      </div>
+                      <p className="text-sm font-bold leading-tight">
+                        See the full gtm_ops pipeline, demo, and architecture
+                        before picking a tier.
+                      </p>
+                    </div>
+                    <ArrowRight
+                      size={18}
+                      className="text-[var(--s500)] shrink-0 group-hover:translate-x-1 transition-transform"
+                    />
+                  </a>
+                </Link>
+              </div>
+            )}
+
+            <div
+              className={`grid gap-8 mx-auto ${
+                category.id === 'gtm_ops'
+                  ? 'md:grid-cols-3 max-w-6xl'
+                  : 'md:grid-cols-2 max-w-4xl'
+              }`}
+            >
               {category.items.map((item) => (
                 <OfferingCard key={item.id} item={item} isDark={isDark} />
               ))}
@@ -347,6 +390,8 @@ function OfferingsSection({isDark}: {isDark: boolean}) {
 function OfferingCard({item, isDark}: {item: OfferingItem; isDark: boolean}) {
   const [factsOpen, setFactsOpen] = useState(false);
   const [intakeOpen, setIntakeOpen] = useState(false);
+  const isSaas = item.facts?.kind === 'saas';
+  const priceLabel = item.price === '0' ? 'Free' : `$${item.price}`;
 
   return (
     <div
@@ -366,21 +411,32 @@ function OfferingCard({item, isDark}: {item: OfferingItem; isDark: boolean}) {
 
         <div className="relative z-10 flex flex-col h-full">
           <div className="flex justify-between items-start mb-2 mt-6">
-            <h3 className="brand-font text-2xl font-bold">{item.name}</h3>
+            <div>
+              {isSaas && (
+                <div className="mono-font text-[10px] text-[var(--s500)] tracking-[0.08em] mb-1">
+                  gtm_ops // SAAS
+                </div>
+              )}
+              <h3 className="brand-font text-2xl font-bold">{item.name}</h3>
+            </div>
           </div>
           <p className="text-sm opacity-60 mb-6">{item.description}</p>
 
           <div className="flex-1 flex flex-col">
             <div className="mb-6">
               <div className="text-4xl font-bold">
-                ${item.price}
-                <span className="text-sm font-normal opacity-50">
-                  {item.priceCadence === 'monthly' ? '/mo' : ' one-time'}
-                </span>
+                {priceLabel}
+                {item.price !== '0' && (
+                  <span className="text-sm font-normal opacity-50">
+                    {item.priceCadence === 'monthly' ? '/mo' : ' one-time'}
+                  </span>
+                )}
               </div>
               {item.monthlyAddon && (
                 <div className="text-sm opacity-60 mt-1">
-                  + ${item.monthlyAddon.price}/mo {item.monthlyAddon.label}
+                  {isSaas
+                    ? `or $${item.monthlyAddon.price}${item.monthlyAddon.label}`
+                    : `+ $${item.monthlyAddon.price}/mo ${item.monthlyAddon.label}`}
                 </div>
               )}
             </div>
@@ -412,8 +468,14 @@ function OfferingCard({item, isDark}: {item: OfferingItem; isDark: boolean}) {
                   facts={item.facts}
                   itemName={item.name}
                   onGetStarted={() => {
+                    // Close popout, then open intake on the next tick — Radix
+                    // Dialog focus-trap cleanup races if both happen in the
+                    // same render commit, which manifested as the spec sheet
+                    // closing without the intake ever opening.
                     setFactsOpen(false);
-                    setIntakeOpen(true);
+                    globalThis.setTimeout(() => {
+                      setIntakeOpen(true);
+                    }, 80);
                   }}
                   onCrossSell={(targetId) => {
                     setFactsOpen(false);
@@ -453,6 +515,117 @@ function OfferingCard({item, isDark}: {item: OfferingItem; isDark: boolean}) {
         </div>
       </div>
     </div>
+  );
+}
+
+function TalkToSarahSection({isDark}: {isDark: boolean}) {
+  return (
+    <section id="talk-to-sarah" className="py-24 px-6 max-w-7xl mx-auto w-full">
+      <div
+        className={`relative overflow-hidden rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] p-8 md:p-12 grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center noise-overlay ${
+          isDark ? 'border-white/10 bg-[#18181b]' : 'border-black/5 bg-white'
+        }`}
+        style={{boxShadow: 'var(--shadow-card)'}}
+      >
+        <div className="relative z-10">
+          <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4">
+            LIVE // ELEVENLABS CONVAI
+          </div>
+          <h2 className="brand-font text-4xl md:text-5xl font-bold leading-tight mb-5">
+            Hear it for yourself. <br />
+            <span className="text-[var(--s500)]">Talk to Sarah.</span>
+          </h2>
+          <p className="text-base md:text-lg opacity-75 leading-relaxed max-w-xl mb-7">
+            Sarah is the live demo agent. Pretend you need a plumber at 11 PM:
+            she will answer, qualify the job, collect the handoff, and show the
+            customer experience your callers would get.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={openSarahWidget}
+              className="px-7 py-3 bg-[var(--s500)] text-white font-bold uppercase text-xs rounded-lg shadow-lg hover:scale-[1.02] transition-all flex items-center gap-2"
+            >
+              Start Voice Demo <ArrowRight size={14} />
+            </button>
+            <a
+              href="#offerings"
+              className="px-7 py-3 border border-current font-bold uppercase text-xs rounded-lg hover:bg-white/5 transition-all"
+            >
+              See Plans
+            </a>
+          </div>
+          <div className="mono-font mt-6 text-[11px] opacity-55 flex flex-wrap gap-4">
+            <span>2 min average</span>
+            <span>No signup</span>
+            <span>Mic permissions required</span>
+          </div>
+        </div>
+
+        <div className="relative z-10 console-panel-like rounded-[16px_4px_16px_4px] bg-[#101014] border border-white/10 p-6 min-h-[240px] flex flex-col justify-between">
+          <div className="flex items-center justify-between mono-font text-[10px] tracking-widest text-white/50">
+            <span>SARAH // v3.2</span>
+            <span className="inline-flex items-center gap-2 text-[#5d8c61] font-bold">
+              <span className="w-2 h-2 rounded-full bg-[#5d8c61] animate-pulse" />
+              ONLINE
+            </span>
+          </div>
+          <div className="flex items-center justify-center gap-1 h-32">
+            {Array.from({length: 28}).map((_, index) => (
+              <motion.div
+                key={index}
+                className={`w-1 rounded-full ${
+                  index % 3 === 0 ? 'bg-[var(--v500)]' : 'bg-[var(--s500)]'
+                }`}
+                animate={{height: ['22%', '82%', '34%', '68%', '22%']}}
+                transition={{
+                  duration: 1.3 + (index % 5) * 0.12,
+                  repeat: Infinity,
+                  repeatType: 'mirror',
+                  delay: index * 0.025,
+                }}
+              />
+            ))}
+          </div>
+          <div className="mono-font text-[10px] text-white/60 flex flex-wrap justify-between gap-3">
+            <span>"Thanks for calling. What is going on?"</span>
+            <span className="text-[#5d8c61]">Powered by ElevenLabs</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FounderNote({isDark}: {isDark: boolean}) {
+  return (
+    <section id="about" className="py-12 px-6 max-w-3xl mx-auto w-full">
+      <Link href="/about">
+        <a
+          className={`group block rounded-[16px_4px_16px_4px] border-y border-r border-l-4 border-l-[var(--v500)] p-5 md:p-6 noise-overlay transition-all hover:scale-[1.005] ${
+            isDark ? 'border-white/10 bg-[#18181b]' : 'border-black/5 bg-white'
+          }`}
+        >
+          <div className="flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-1.5">
+                BUILT BY AN OPERATOR
+              </div>
+              <p className="brand-font text-base md:text-lg font-bold leading-snug">
+                "AI should answer the phone, not add another dashboard."
+              </p>
+              <p className="text-xs opacity-60 mt-1.5">
+                Read the operator story →
+              </p>
+            </div>
+            <ArrowRight
+              size={18}
+              className="text-[var(--v500)] shrink-0 group-hover:translate-x-1 transition-transform"
+            />
+          </div>
+        </a>
+      </Link>
+    </section>
   );
 }
 
