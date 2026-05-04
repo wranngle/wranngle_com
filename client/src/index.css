@@ -276,6 +276,25 @@ html {
     animation: none;
     opacity: 0.85;
   }
+
+  /* Site-wide motion kill switch for vestibular-sensitive visitors
+     (WCAG 2.3.3). The hero ships an animated terminal typewriter,
+     radar gradient, spectral analyzer, synapse-link dots, an SVG
+     dasharray-scrolling path, and the Sarah-panel waveform. Plus
+     the Framer Motion fade-ins on every section. None of those
+     individually expose a reduced-motion knob, so we disable every
+     CSS animation/transition with a strong selector. Framer Motion
+     animations driven by transform/opacity are not blocked here —
+     framer reads prefers-reduced-motion itself when explicitly
+     wired, but that's a per-animation refactor for later. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 .noise-overlay::before {
