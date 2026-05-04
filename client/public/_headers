@@ -43,3 +43,5 @@
   Cache-Control: public, max-age=2592000, must-revalidate
 /favicon.png
   Cache-Control: public, max-age=2592000, must-revalidate
+/wordmark.png
+  Cache-Control: public, max-age=2592000, must-revalidate
