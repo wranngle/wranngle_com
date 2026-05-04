@@ -79,11 +79,11 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
                 aspect ratio inside max-w-[136px]. */}
             <div className="mt-auto pt-6 self-start">
               <img
-                src="https://i.ibb.co/WWFmbjKJ/wranngle-wordmark-4096w.png"
+                src="/wordmark.png"
                 alt="Wranngle"
                 className="block h-10 w-auto max-w-[136px]"
-                width="136"
-                height="40"
+                width="600"
+                height="327"
               />
             </div>
           </div>
