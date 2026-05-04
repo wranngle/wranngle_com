@@ -1,5 +1,6 @@
 // @ts-nocheck
 import React, {useState, useEffect} from 'react';
+import {Link} from 'wouter';
 import {Check, ArrowRight, Zap} from 'lucide-react';
 import {useForm} from 'react-hook-form';
 import {useMutation} from '@tanstack/react-query';
@@ -283,6 +284,23 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
             {...register('package')}
             value={currentPackage}
           />
+          <p className="text-[10px] opacity-60 leading-relaxed mt-1">
+            By submitting, you agree to our{' '}
+            <Link
+              href="/privacy"
+              className="underline hover:text-[var(--s500)]"
+            >
+              Privacy Policy
+            </Link>{' '}
+            and{' '}
+            <Link
+              href="/terms"
+              className="underline hover:text-[var(--s500)]"
+            >
+              Terms of Service
+            </Link>
+            .
+          </p>
           <Button
             type="submit"
             className="w-full bg-[var(--s500)] hover:bg-[var(--s500)]/90"
@@ -546,6 +564,17 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
           </div>
         )}
         <input type="hidden" {...register('package')} value={currentPackage} />
+        <p className="text-[10px] opacity-60 leading-relaxed mt-1">
+          By submitting, you agree to our{' '}
+          <Link href="/privacy" className="underline hover:text-[var(--s500)]">
+            Privacy Policy
+          </Link>{' '}
+          and{' '}
+          <Link href="/terms" className="underline hover:text-[var(--s500)]">
+            Terms of Service
+          </Link>
+          .
+        </p>
         <Button
           type="submit"
           className="w-full bg-[var(--s500)] hover:bg-[var(--s500)]/90"
