@@ -152,6 +152,15 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
               >
                 Offerings
               </a>
+              <Link
+                href="/products/gtm-ops"
+                onClick={() => {
+                  setMobileOpen(false);
+                }}
+                className="mono-font"
+              >
+                gtm_ops
+              </Link>
               <button
                 type="button"
                 onClick={() => {
