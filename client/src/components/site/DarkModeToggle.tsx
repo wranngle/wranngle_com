@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {useState, useEffect, useCallback} from 'react';
 import {Moon, Sun} from 'lucide-react';
 
