@@ -26,6 +26,10 @@ jobs:
         run: bun run check
       - name: Lint (xo)
         run: bun run lint
+      - name: Lint — no new @ts-nocheck (regression guard)
+        run: bash scripts/bin/lint-no-new-ts-nocheck.sh
+        env:
+          BASE_REF: origin/${{ github.base_ref || 'main' }}
       - name: Build (vite + workers)
         run: bun run build
       - name: Gitleaks scan
