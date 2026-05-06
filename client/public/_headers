@@ -59,5 +59,17 @@
 /manifest.json
   Content-Type: application/manifest+json; charset=utf-8
   Cache-Control: public, max-age=86400, must-revalidate
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=86400, must-revalidate
+/cody-arnold.md
+  Content-Type: text/markdown; charset=utf-8
+  Cache-Control: public, max-age=86400, must-revalidate
+/wranngle-systems.md
+  Content-Type: text/markdown; charset=utf-8
+  Cache-Control: public, max-age=86400, must-revalidate
+/profile.json
+  Content-Type: application/ld+json; charset=utf-8
+  Cache-Control: public, max-age=86400, must-revalidate
 /wordmark.png
   Cache-Control: public, max-age=2592000, must-revalidate
