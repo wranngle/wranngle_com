@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-deprecated -- lucide-react brand icon (Github) used intentionally for repo link; deprecation is upstream-future. */
 // @ts-nocheck
 import React, {useEffect, useState} from 'react';
+import Autoplay from 'embla-carousel-autoplay';
 import {motion} from 'framer-motion';
 import {
   Activity,
@@ -37,7 +38,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel.tsx';
-import Autoplay from 'embla-carousel-autoplay';
 import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import {getCategoryById, type OfferingItem} from '@/data/offerings.ts';
@@ -416,7 +416,9 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
   // visual; auto-advance pauses on user interaction (hover/focus/touch).
   // Reduced-motion users get a static carousel — they swap manually with
   // the prev/next buttons or dots.
+
   const autoplayPlugin = React.useRef(
+    // eslint-disable-next-line new-cap -- Autoplay is the embla plugin factory; upstream API is uppercase.
     Autoplay({delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true}),
   );
   const plugins = reducedMotion ? [] : [autoplayPlugin.current];
@@ -426,7 +428,10 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
   React.useEffect(() => {
     if (!api) return;
     setCurrent(api.selectedScrollSnap());
-    const onSelect = () => setCurrent(api.selectedScrollSnap());
+    const onSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+
     api.on('select', onSelect);
     return () => {
       api.off('select', onSelect);
@@ -539,10 +544,13 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
 function usePrefersReducedMotion() {
   const [prefersReduced, setPrefersReduced] = React.useState(false);
   React.useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (globalThis.window === undefined) return;
+    const mq = globalThis.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReduced(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
+    const onChange = (e: MediaQueryListEvent) => {
+      setPrefersReduced(e.matches);
+    };
+
     mq.addEventListener('change', onChange);
     return () => {
       mq.removeEventListener('change', onChange);
