@@ -25,6 +25,8 @@ type LeadInput = {
 };
 
 const SAAS_PACKAGES = new Set(['gtm-ops-trial', 'gtm-ops-plus', 'gtm-ops-pro']);
+const LEAD_DEDUPE_WINDOW_MS = 15 * 60 * 1000;
+const leadDedupeStore = new Map<string, number>();
 
 // Input sanitization - strip HTML and limit length
 function sanitizeString(input: string, maxLength: number): string {
@@ -132,6 +134,53 @@ function validateLead(
   };
 }
 
+function normalizeDedupeValue(value: string | undefined): string {
+  return (value ?? '').trim().toLowerCase().replaceAll(/\s+/g, ' ');
+}
+
+function stableHash(input: string): string {
+  let hash = 2_166_136_261;
+
+  for (let i = 0; i < input.length; i++) {
+    hash ^= input.charCodeAt(i);
+    hash = Math.imul(hash, 16_777_619);
+  }
+
+  return (hash >>> 0).toString(16);
+}
+
+function cleanupLeadDedupeStore(): void {
+  const now = Date.now();
+  let cleaned = 0;
+
+  for (const [key, expiresAt] of leadDedupeStore) {
+    if (cleaned >= 25) break;
+    if (expiresAt <= now) {
+      leadDedupeStore.delete(key);
+      cleaned++;
+    }
+  }
+}
+
+function claimLeadSubmission(lead: LeadInput): boolean {
+  cleanupLeadDedupeStore();
+
+  const key = stableHash(
+    [
+      normalizeDedupeValue(lead.package),
+      normalizeDedupeValue(lead.email),
+      normalizeDedupeValue(lead.businessName),
+      normalizeDedupeValue(lead.phone),
+      normalizeDedupeValue(lead.notes),
+    ].join('|'),
+  );
+
+  if (leadDedupeStore.has(key)) return false;
+
+  leadDedupeStore.set(key, Date.now() + LEAD_DEDUPE_WINDOW_MS);
+  return true;
+}
+
 // Security headers
 const securityHeaders = {
   'X-Content-Type-Options': 'nosniff',
@@ -188,6 +237,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     const lead = result.data;
     const isSaasLead = SAAS_PACKAGES.has(lead.package);
+
+    if (!claimLeadSubmission(lead)) {
+      return new Response(JSON.stringify({success: true, duplicate: true}), {
+        status: 202,
+        headers: responseHeaders,
+      });
+    }
 
     // Forward to n8n webhook for processing. SaaS leads are best-effort:
     // the n8n flow is shaped around trade intakes, so we swallow webhook
