@@ -1,0 +1,46 @@
+# Wranngle Systems - AI voice and workflow automation
+
+> Wranngle Systems is Cody Arnold's AI automation practice for service businesses. The public site documents voice AI agents, lead capture, CRM enrichment, proposal generation, Cloudflare-hosted web apps, and production-oriented eval/runbook practices.
+
+## Primary Pages
+
+- [Home](https://wranngle.com/): AI voice agents for HVAC, plumbing, electrical, and other trades businesses; 24/7 call answering, lead qualification, and handoff workflows.
+- [About Cody Arnold](https://wranngle.com/about): Founder profile, operating record, technical focus, public proof, and contact links.
+- [gtm_ops](https://wranngle.com/products/gtm-ops): Lead-to-proposal runtime using enrichment, audit trails, branded PDFs, and operator review.
+- [Websites](https://wranngle.com/products/websites): Conversion-focused websites with lead capture, SEO foundations, performance, and owned source code.
+- [API Docs](https://wranngle.com/api-docs): Public API contracts for lead intake, checkout, webhook, and health endpoints.
+- [Case Studies](https://wranngle.com/case-studies): Implementation outcomes for lead routing, conversion flows, and automation workflows.
+- [Blog](https://wranngle.com/blog): Practical notes on AI voice, automation, deployment, and operations.
+
+## Clean Machine-Readable Files
+
+- [Cody Arnold profile markdown](https://wranngle.com/cody-arnold.md): Plain markdown profile for LLM agents, recruiters, and enrichment tools.
+- [Wranngle Systems profile markdown](https://wranngle.com/wranngle-systems.md): Plain markdown company and services summary.
+- [Structured profile JSON-LD](https://wranngle.com/profile.json): Schema.org Person and Organization graph for entity resolution.
+- [Sitemap](https://wranngle.com/sitemap.xml): Canonical URL list.
+- [Robots](https://wranngle.com/robots.txt): Crawl policy and discovery hints.
+
+## Public Proof
+
+- [GitHub organization](https://github.com/wranngle): Public repositories for voice agent evals, GTM automation, n8n workflows, trading research, career automation, and this site.
+- [LinkedIn profile](https://www.linkedin.com/in/codyarnold96): Cody Arnold's professional profile.
+
+## Entity Summary
+
+- Person: Cody Arnold
+- Company: Wranngle Systems LLC
+- Location: Fort Wayne, Indiana, United States
+- Primary email: cody@wranngle.com
+- General email: hello@wranngle.com
+- Public GitHub: https://github.com/wranngle
+- Public LinkedIn: https://www.linkedin.com/in/codyarnold96
+- Canonical site: https://wranngle.com
+
+## Core Terms
+
+AI automation engineer, voice AI engineer, ElevenLabs conversational AI, n8n automation, workflow automation, CRM enrichment, lead capture, proposal generation, TypeScript, React, Vite, Cloudflare Pages Functions, ArkType, Bun, Python automation, PowerShell automation, MSP operations, eval harnesses, runbooks, audit trails, latency budgets.
+
+## Optional
+
+- [Privacy Policy](https://wranngle.com/privacy): Data handling and privacy commitments.
+- [Terms of Service](https://wranngle.com/terms): Service terms for Wranngle Systems.
