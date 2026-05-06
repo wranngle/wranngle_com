@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {useState} from 'react';
 import {Link} from 'wouter';
 import {motion, AnimatePresence} from 'framer-motion';
@@ -55,7 +54,7 @@ export default function SiteHeader({
               className="h-14 w-auto"
               width="600"
               height="327"
-              fetchpriority="high"
+              fetchPriority="high"
             />
           </Link>
 
@@ -271,7 +270,12 @@ export default function SiteHeader({
               : 'bg-white text-[#12111a] border-black/10'
           }
         >
-          <IntakeForm selectedPackage="premium" />
+          <IntakeForm
+            selectedPackage="premium"
+            onSuccess={() => {
+              setDeployOpen(false);
+            }}
+          />
         </DialogContent>
       </Dialog>
     </>
