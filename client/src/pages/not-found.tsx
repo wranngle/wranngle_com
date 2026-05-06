@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {useEffect} from 'react';
 import {Link} from 'wouter';
 import {AlertCircle, ArrowRight} from 'lucide-react';
