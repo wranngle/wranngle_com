@@ -27,6 +27,7 @@ import SiteFooter from '@/components/site/SiteFooter.tsx';
 import {useDarkMode} from '@/components/site/DarkModeToggle.tsx';
 import {
   SARAH_AGENT_ID,
+  collapseSarahWidget,
   ensureSarahWidgetScript,
   goTalkToSarah,
   openSarahWidget,
@@ -138,69 +139,78 @@ const WranngleLanding = () => {
   useEffect(() => {
     ensureSarahWidgetScript();
 
-    const handleOutsideClick = (e) => {
+    const isRadixSurfaceClick = (target) =>
+      target.closest?.(
+        '[role="dialog"], [role="menu"], [role="listbox"], [data-radix-popper-content-wrapper], [data-radix-portal]',
+      );
+
+    const isSarahCollapseControl = (path) =>
+      path.some((node) => {
+        if (!(node instanceof HTMLElement) || node.tagName !== 'BUTTON') {
+          return false;
+        }
+
+        const label = (
+          node.ariaLabel ||
+          node.title ||
+          node.innerText ||
+          ''
+        ).toLowerCase();
+
+        return (
+          label.includes('close') ||
+          label.includes('minimize') ||
+          label.includes('collapse') ||
+          label.includes('dismiss')
+        );
+      });
+
+    const isSarahShadowHit = (widget, path) =>
+      Boolean(
+        widget.shadowRoot &&
+        path.some(
+          (node) =>
+            node instanceof Node &&
+            node !== widget &&
+            node.getRootNode() === widget.shadowRoot,
+        ),
+      );
+
+    const handleSarahPointerDown = (e) => {
       // Bail if click is inside any Radix-managed surface (Dialog, DropdownMenu,
       // Popover, Tooltip…). Without this, opening the mega-menu fires this
       // handler on the same tick and the bubbling Escape we dispatch below
       // reaches Radix's document keydown listener — which closes the menu
       // we just opened. (Same risk for any popper-based UI.)
       const {target} = e;
-      if (
-        target.closest?.(
-          '[role="dialog"], [role="menu"], [role="listbox"], [data-radix-popper-content-wrapper], [data-radix-portal]',
-        )
-      )
-        return;
+      if (isRadixSurfaceClick(target)) return;
 
       const widget = document.querySelector('elevenlabs-convai');
-      if (widget && !widget.contains(e.target)) {
-        const rect = widget.getBoundingClientRect();
-        if (rect.height > 80 && widget.shadowRoot) {
-          // Dispatch a NON-bubbling Escape so Radix's document-level keydown
-          // listener never sees it. The widget's own shadow-DOM listener still
-          // catches it because dispatchEvent fires synchronously on its target.
-          const isDialogOpen = document.querySelector(
-            '[role="dialog"], [role="menu"]',
-          );
-          if (!isDialogOpen) {
-            widget.dispatchEvent(
-              new KeyboardEvent('keydown', {
-                key: 'Escape',
-                code: 'Escape',
-                keyCode: 27,
-                which: 27,
-                bubbles: false,
-              }),
-            );
-          }
+      if (!widget?.dataset.visible) return;
 
-          const buttons = [...widget.shadowRoot.querySelectorAll('button')];
-          const closeBtn = buttons.find((b) => {
-            const label = (
-              b.ariaLabel ||
-              b.title ||
-              b.innerText ||
-              ''
-            ).toLowerCase();
-            return (
-              label.includes('close') ||
-              label.includes('minimize') ||
-              label.includes('collapse')
-            );
-          });
+      const path = e.composedPath?.() ?? [];
+      const hitSarahHost = path.includes(widget) || widget.contains(target);
+      const hitSarahShadow = isSarahShadowHit(widget, path);
 
-          if (closeBtn) {
-            closeBtn.click();
-          }
+      if (!hitSarahHost || !hitSarahShadow) {
+        collapseSarahWidget(widget);
+        return;
+      }
 
-          delete widget.dataset.visible;
-        }
+      if (isSarahCollapseControl(path)) {
+        globalThis.setTimeout(() => {
+          collapseSarahWidget(widget);
+        }, 0);
       }
     };
 
-    globalThis.addEventListener('click', handleOutsideClick);
+    globalThis.addEventListener('pointerdown', handleSarahPointerDown, {
+      capture: true,
+    });
     return () => {
-      globalThis.removeEventListener('click', handleOutsideClick);
+      globalThis.removeEventListener('pointerdown', handleSarahPointerDown, {
+        capture: true,
+      });
     };
   }, []);
 

@@ -5,11 +5,9 @@ import react from '@vitejs/plugin-react';
 
 const spaHtmlRoutes = [
   'about',
-  'api-docs',
   'blog',
   'built-by',
   'case-studies',
-  'docs',
   'offerings',
   'privacy',
   'products/ai-voice-agents',

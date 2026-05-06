@@ -6,7 +6,6 @@ import PrivacyPolicy from './pages/privacy-policy.tsx';
 import About from './pages/about.tsx';
 import GtmOps from './pages/gtm-ops.tsx';
 import Websites from './pages/websites.tsx';
-import ApiDocs from './pages/api-docs.tsx';
 import BlogPage from './pages/blog.tsx';
 import CaseStudies from './pages/case-studies.tsx';
 import NotFound from './pages/not-found.tsx';
@@ -64,16 +63,6 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
     title: 'AI Voice Agents for Trades — Wranngle Systems',
     description:
       '24/7 AI voice agents for HVAC, plumbing, electrical, and trades businesses. Capture missed calls, qualify leads, and route handoffs.',
-  },
-  '/api-docs': {
-    title: 'API Documentation — Wranngle Systems',
-    description:
-      'Reference contracts and curl examples for leads, checkout, and webhook endpoints.',
-  },
-  '/docs': {
-    title: 'API Documentation — Wranngle Systems',
-    description:
-      'Reference contracts and curl examples for leads, checkout, and webhook endpoints.',
   },
   '/blog': {
     title: 'Wranngle Blog — AI and Operations Notes',
@@ -173,8 +162,6 @@ export default function Router() {
         <Route path="/products/websites" component={Websites} />
         <Route path="/products/gtm-ops" component={GtmOps} />
         <Route path="/products/gtm_ops" component={GtmOps} />
-        <Route path="/docs" component={ApiDocs} />
-        <Route path="/api-docs" component={ApiDocs} />
         <Route path="/blog" component={BlogPage} />
         <Route path="/case-studies" component={CaseStudies} />
         <Route path="/terms" component={TermsOfService} />
