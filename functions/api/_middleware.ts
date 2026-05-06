@@ -8,24 +8,54 @@ type RateLimitConfig = {
   maxRequests: number; // Max requests per window
 };
 
-const RATE_LIMIT_CONFIG: RateLimitConfig = {
-  windowMs: 60 * 1000, // 1 minute
-  maxRequests: 10, // 10 requests per minute per IP
+const DEFAULT_RATE_LIMIT_CONFIG: RateLimitConfig = {
+  windowMs: 60 * 1000,
+  maxRequests: 30,
+};
+
+const ENDPOINT_RATE_LIMITS: Record<string, RateLimitConfig> = {
+  '/api/leads': {
+    windowMs: 15 * 60 * 1000,
+    maxRequests: 5,
+  },
+  '/api/checkout': {
+    windowMs: 60 * 1000,
+    maxRequests: 5,
+  },
+  '/api/send-welcome-email': {
+    windowMs: 60 * 1000,
+    maxRequests: 3,
+  },
+  '/api/stripe-webhook': {
+    windowMs: 60 * 1000,
+    maxRequests: 30,
+  },
+  '/api/health': {
+    windowMs: 60 * 1000,
+    maxRequests: 60,
+  },
 };
 
 // In-memory store for rate limiting (resets on worker restart)
 const rateLimitStore = new Map<string, {count: number; resetTime: number}>();
 
-function getRateLimitKey(request: Request): string {
+function getRateLimitConfig(pathname: string): RateLimitConfig {
+  return ENDPOINT_RATE_LIMITS[pathname] ?? DEFAULT_RATE_LIMIT_CONFIG;
+}
+
+function getRateLimitKey(request: Request, pathname: string): string {
   // Use CF-Connecting-IP header (set by Cloudflare) for real IP
   const ip =
     request.headers.get('CF-Connecting-IP') ||
     request.headers.get('X-Forwarded-For') ||
     'unknown';
-  return `ratelimit:${ip}`;
+  return `ratelimit:${pathname}:${ip}`;
 }
 
-function checkRateLimit(key: string): {
+function checkRateLimit(
+  key: string,
+  config: RateLimitConfig,
+): {
   allowed: boolean;
   remaining: number;
   resetTime: number;
@@ -35,11 +65,11 @@ function checkRateLimit(key: string): {
 
   if (!record || now >= record.resetTime) {
     // Create new window
-    const resetTime = now + RATE_LIMIT_CONFIG.windowMs;
+    const resetTime = now + config.windowMs;
     rateLimitStore.set(key, {count: 1, resetTime});
     return {
       allowed: true,
-      remaining: RATE_LIMIT_CONFIG.maxRequests - 1,
+      remaining: config.maxRequests - 1,
       resetTime,
     };
   }
@@ -47,7 +77,7 @@ function checkRateLimit(key: string): {
   // Update existing window
   record.count += 1;
 
-  if (record.count > RATE_LIMIT_CONFIG.maxRequests) {
+  if (record.count > config.maxRequests) {
     return {
       allowed: false,
       remaining: 0,
@@ -57,7 +87,7 @@ function checkRateLimit(key: string): {
 
   return {
     allowed: true,
-    remaining: RATE_LIMIT_CONFIG.maxRequests - record.count,
+    remaining: config.maxRequests - record.count,
     resetTime: record.resetTime,
   };
 }
@@ -87,16 +117,13 @@ export const onRequest: PagesFunction = async (context) => {
   }
 
   const {pathname} = new URL(context.request.url);
-  if (pathname === '/api/stripe-webhook') {
-    return context.next();
-  }
-
-  const key = getRateLimitKey(context.request);
-  const {allowed, remaining, resetTime} = checkRateLimit(key);
+  const config = getRateLimitConfig(pathname);
+  const key = getRateLimitKey(context.request, pathname);
+  const {allowed, remaining, resetTime} = checkRateLimit(key, config);
 
   // Add rate limit headers to response
   const rateLimitHeaders = {
-    'X-RateLimit-Limit': String(RATE_LIMIT_CONFIG.maxRequests),
+    'X-RateLimit-Limit': String(config.maxRequests),
     'X-RateLimit-Remaining': String(remaining),
     'X-RateLimit-Reset': String(Math.floor(resetTime / 1000)),
   };
