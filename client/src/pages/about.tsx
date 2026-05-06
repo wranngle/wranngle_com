@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-deprecated -- lucide-react brand icons (Linkedin, Github) used intentionally for socials; deprecation is upstream-future. */
-// @ts-nocheck
 import React, {useEffect} from 'react';
 import {motion} from 'framer-motion';
 import {

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {useEffect} from 'react';
 import {BookOpen, ArrowRight, CalendarClock} from 'lucide-react';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
