@@ -9,7 +9,6 @@
 - AI Voice Agents: https://wranngle.com/products/ai-voice-agents
 - gtm_ops: https://wranngle.com/products/gtm-ops
 - Websites: https://wranngle.com/products/websites
-- API Docs: https://wranngle.com/api-docs
 - GitHub: https://github.com/wranngle
 - LinkedIn: https://www.linkedin.com/in/codyarnold96
 - General contact: hello@wranngle.com

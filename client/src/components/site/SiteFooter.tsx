@@ -137,9 +137,6 @@ export default function SiteFooter({isDark, showCta = true}: SiteFooterProps) {
             <Link href="/terms" className={linkBase}>
               Terms of Service
             </Link>
-            <Link href="/api-docs" className={linkBase}>
-              API Documentation
-            </Link>
           </div>
 
           {/* Resources */}
