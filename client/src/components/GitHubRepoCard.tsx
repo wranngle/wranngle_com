@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {useEffect, useState} from 'react';
 import {Star, GitFork, ExternalLink} from 'lucide-react';
 
@@ -111,7 +110,7 @@ export default function GitHubRepoCard({
           headers: {Accept: 'application/vnd.github+json'},
         });
         if (!res.ok) throw new Error(`GitHub API ${res.status}`);
-        const json = await res.json();
+        const json: GitHubRepoData = await res.json();
         if (cancelled) return;
         setData(json);
         writeCache(fullName, json);
