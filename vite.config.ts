@@ -5,7 +5,6 @@ import react from '@vitejs/plugin-react';
 
 const spaHtmlRoutes = [
   'about',
-  'blog',
   'built-by',
   'case-studies',
   'offerings',
@@ -34,12 +33,6 @@ const routeMeta: Record<
     title: 'Cody Arnold - About Wranngle',
     description:
       'Why Wranngle exists, the operating principles behind the practice, and the public repos that show how the work actually gets done.',
-  },
-  'blog': {
-    canonicalPath: '/blog',
-    title: 'Wranngle Blog - AI and Operations Notes',
-    description:
-      'Deployment notes, product playbooks, and practical guidance on AI voice and lead automation.',
   },
   'case-studies': {
     canonicalPath: '/case-studies',

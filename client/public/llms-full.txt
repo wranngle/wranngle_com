@@ -127,7 +127,6 @@ Wranngle Systems builds and operates:
 - https://wranngle.com/products/gtm-ops - Lead-to-proposal runtime using enrichment, audit trails, branded PDFs, and operator review.
 - https://wranngle.com/products/websites - Conversion-focused websites with lead capture, SEO foundations, performance, and owned source code.
 - https://wranngle.com/case-studies - Implementation outcomes for lead routing, conversion flows, and automation workflows.
-- https://wranngle.com/blog - Practical notes on AI voice, automation, deployment, and operations.
 
 ## Do Not Infer
 

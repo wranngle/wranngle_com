@@ -70,12 +70,6 @@ export default function SiteHeader({
               <OfferingsMegaMenu isDark={isDark} />
               <AboutMegaMenu isDark={isDark} onTalkToSarah={goTalkToSarah} />
               <Link
-                href="/blog"
-                className="text-sm font-medium hover:text-[var(--s500)] transition-colors"
-              >
-                Blog
-              </Link>
-              <Link
                 href="/case-studies"
                 className="text-sm font-medium hover:text-[var(--s500)] transition-colors"
               >
@@ -196,14 +190,6 @@ export default function SiteHeader({
                 }}
               >
                 Case Studies
-              </Link>
-              <Link
-                href="/blog"
-                onClick={() => {
-                  setMobileOpen(false);
-                }}
-              >
-                Blog
               </Link>
               <button
                 type="button"
