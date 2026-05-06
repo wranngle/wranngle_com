@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {useState, useEffect, useRef} from 'react';
 import {motion} from 'framer-motion';
 import {
@@ -139,13 +138,15 @@ const WranngleLanding = () => {
   useEffect(() => {
     ensureSarahWidgetScript();
 
-    const isRadixSurfaceClick = (target) =>
-      target.closest?.(
+    /* eslint-disable @typescript-eslint/no-restricted-types -- e.target is `EventTarget | null` per DOM spec; converting to undefined makes callsites fail. */
+    const isRadixSurfaceClick = (target: EventTarget | null) =>
+      (target as Element | null)?.closest?.(
         '[role="dialog"], [role="menu"], [role="listbox"], [data-radix-popper-content-wrapper], [data-radix-portal]',
       );
+    /* eslint-enable @typescript-eslint/no-restricted-types */
 
-    const isSarahCollapseControl = (path) =>
-      path.some((node) => {
+    const isSarahCollapseControl = (path: EventTarget[]) =>
+      path.some((node: EventTarget) => {
         if (!(node instanceof HTMLElement) || node.tagName !== 'BUTTON') {
           return false;
         }
@@ -165,18 +166,18 @@ const WranngleLanding = () => {
         );
       });
 
-    const isSarahShadowHit = (widget, path) =>
+    const isSarahShadowHit = (widget: HTMLElement, path: EventTarget[]) =>
       Boolean(
         widget.shadowRoot &&
         path.some(
-          (node) =>
+          (node: EventTarget) =>
             node instanceof Node &&
             node !== widget &&
             node.getRootNode() === widget.shadowRoot,
         ),
       );
 
-    const handleSarahPointerDown = (e) => {
+    const handleSarahPointerDown = (e: PointerEvent) => {
       // Bail if click is inside any Radix-managed surface (Dialog, DropdownMenu,
       // Popover, Tooltip…). Without this, opening the mega-menu fires this
       // handler on the same tick and the bubbling Escape we dispatch below
@@ -185,11 +186,13 @@ const WranngleLanding = () => {
       const {target} = e;
       if (isRadixSurfaceClick(target)) return;
 
-      const widget = document.querySelector('elevenlabs-convai');
+      const widget = document.querySelector<HTMLElement>('elevenlabs-convai');
       if (!widget?.dataset.visible) return;
 
       const path = e.composedPath?.() ?? [];
-      const hitSarahHost = path.includes(widget) || widget.contains(target);
+      const hitSarahHost =
+        path.includes(widget) ||
+        (target instanceof Node && widget.contains(target));
       const hitSarahShadow = isSarahShadowHit(widget, path);
 
       if (!hitSarahHost || !hitSarahShadow) {
@@ -972,7 +975,10 @@ function FounderNote({isDark}: {isDark: boolean}) {
   );
 }
 
-const ButtonPrimary = React.forwardRef(({children, ...props}, ref) => (
+const ButtonPrimary = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(({children, ...props}, ref) => (
   <button
     ref={ref}
     {...props}
@@ -982,7 +988,10 @@ const ButtonPrimary = React.forwardRef(({children, ...props}, ref) => (
   </button>
 ));
 
-const ButtonGhost = ({children, ...props}) => (
+const ButtonGhost = ({
+  children,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
   <button
     {...props}
     className="h-12 px-5 border border-current/25 font-bold uppercase text-xs rounded-md hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all inline-flex items-center justify-center gap-2"
@@ -991,10 +1000,19 @@ const ButtonGhost = ({children, ...props}) => (
   </button>
 );
 
-const ConsoleVisual = ({isDark, lines}) => {
-  const [display, setDisplay] = useState([]);
+const ConsoleVisual = ({
+  isDark,
+  lines,
+}: {
+  isDark: boolean;
+  lines: Array<{text: string; color: string}>;
+}) => {
+  const [display, setDisplay] = useState<Array<{text: string; color: string}>>(
+    [],
+  );
   const idx = useRef(0);
-  const containerRef = useRef(null);
+  // eslint-disable-next-line @typescript-eslint/no-restricted-types -- React refs use null sentinel; converting to undefined breaks RefObject<HTMLDivElement> consumers.
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [dim, setDim] = useState(INITIAL_DIM);
 
   useEffect(() => {
@@ -1015,6 +1033,7 @@ const ConsoleVisual = ({isDark, lines}) => {
   useEffect(() => {
     if (!containerRef.current) return;
     const updateDim = () => {
+      if (!containerRef.current) return;
       const {width, height} = containerRef.current.getBoundingClientRect();
       setDim({w: width, h: height});
     };
@@ -1258,7 +1277,19 @@ const SynapseLink = () => {
   );
 };
 
-const TerminalCard = ({children, title, status, index, isDark}) => (
+const TerminalCard = ({
+  children,
+  title,
+  status,
+  index,
+  isDark,
+}: {
+  children: React.ReactNode;
+  title: string;
+  status: string;
+  index: string;
+  isDark: boolean;
+}) => (
   <div className="relative group">
     <div
       className={`relative h-full p-1 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] ${isDark ? 'border-white/10 bg-[#12111a]' : 'border-black/10 bg-white'} overflow-hidden noise-overlay`}
@@ -1285,7 +1316,7 @@ const TerminalCard = ({children, title, status, index, isDark}) => (
   </div>
 );
 
-const TypewriterSequence = ({sequence}) => {
+const TypewriterSequence = ({sequence}: {sequence: string[]}) => {
   const [currentLine, setCurrentLine] = useState(0);
 
   useEffect(() => {
