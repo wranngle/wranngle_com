@@ -48,6 +48,14 @@ jobs:
           cat /tmp/body.json
           echo
 
+          # Cloudflare managed challenges happen before the request reaches
+          # the application or n8n. Treat that as an inconclusive edge-policy
+          # signal, not an app/webhook outage page.
+          if [ "$response" = "403" ] && grep -qiE 'cf_chl|challenge-platform|Just a moment' /tmp/body.json; then
+            echo "::warning::Cloudflare challenged the GitHub Actions health probe before it reached /api/leads. Endpoint health is inconclusive; app/n8n was not proven broken."
+            exit 0
+          fi
+
           # 201 is what the function returns on a successful webhook handoff.
           if [ "$response" != "201" ]; then
             echo "::error::Lead endpoint returned $response (expected 201) — n8n integration likely broken."
