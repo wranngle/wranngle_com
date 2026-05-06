@@ -5,14 +5,12 @@ import {motion} from 'framer-motion';
 import {
   Activity,
   ArrowRight,
-  Braces,
   Check,
   Clock3,
   DatabaseZap,
   ExternalLink,
   FileText,
   Github,
-  Gauge,
   Inbox,
   FileCheck,
   Play,
@@ -31,16 +29,51 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog.tsx';
 import {Button} from '@/components/ui/button.tsx';
+import {
+  type CarouselApi,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel.tsx';
+import Autoplay from 'embla-carousel-autoplay';
 import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import {getCategoryById, type OfferingItem} from '@/data/offerings.ts';
 
-// Production demo URL. The bare `gtm-ops.pages.dev` is the live
-// deploy; the `preview.` prefix that lived here previously is a
-// per-branch alias and reads as "not the real thing." Once DNS for
-// app.wranngle.com (or demo.wranngle.com) is provisioned, swap here.
-const GTM_OPS_DEMO_URL = 'https://gtm-ops.pages.dev';
+// Production demo URL. app.wranngle.com is the canonical console host —
+// gtm-ops.pages.dev was a marketing-page middleman that added a click
+// before the operator could reach the actual surface. Linking here
+// drops users straight into the console.
+const GTM_OPS_DEMO_URL = 'https://app.wranngle.com';
 const GTM_OPS_REPO_URL = 'https://github.com/wranngle/gtm_ops';
+// Real screenshots of the deployed console. Bundled into wranngle_com's
+// public dir (not hot-linked from app.wranngle.com) so the hero renders
+// even before DNS for app.wranngle.com lands. Source: gtm_ops repo's
+// apps/ops-console/assets/screenshots/. Refresh by running
+//   cp ~/projects/gtm_ops/apps/ops-console/assets/screenshots/console-*.png \
+//      client/public/assets/gtm-ops/
+const DEMO_SCREENSHOTS = [
+  {
+    src: '/assets/gtm-ops/console-evals.png',
+    label: 'Evals',
+    sub: 'harness runs · ElevenLabs lab',
+    href: `${GTM_OPS_DEMO_URL}/console/?route=evals`,
+  },
+  {
+    src: '/assets/gtm-ops/console-generate.png',
+    label: 'Generate',
+    sub: 'buyer brief · live trace',
+    href: `${GTM_OPS_DEMO_URL}/console/?route=generate&artifact=pdf`,
+  },
+  {
+    src: '/assets/gtm-ops/console-settings.png',
+    label: 'Settings',
+    sub: 'alert consent · parity',
+    href: `${GTM_OPS_DEMO_URL}/console/?route=settings`,
+  },
+];
 
 const HERO_METRICS = [
   {value: '5 min', label: 'synthetic demo run'},
@@ -378,6 +411,28 @@ export default function GtmOpsPage() {
 }
 
 function ProductScreenshot({isDark}: {isDark: boolean}) {
+  const reducedMotion = usePrefersReducedMotion();
+  // 5s per slide is long enough to read the screenshot caption + see the
+  // visual; auto-advance pauses on user interaction (hover/focus/touch).
+  // Reduced-motion users get a static carousel — they swap manually with
+  // the prev/next buttons or dots.
+  const autoplayPlugin = React.useRef(
+    Autoplay({delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true}),
+  );
+  const plugins = reducedMotion ? [] : [autoplayPlugin.current];
+  const [api, setApi] = React.useState<CarouselApi | undefined>();
+  const [current, setCurrent] = React.useState(0);
+
+  React.useEffect(() => {
+    if (!api) return;
+    setCurrent(api.selectedScrollSnap());
+    const onSelect = () => setCurrent(api.selectedScrollSnap());
+    api.on('select', onSelect);
+    return () => {
+      api.off('select', onSelect);
+    };
+  }, [api]);
+
   return (
     <div className="relative">
       <div
@@ -401,7 +456,7 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
           </div>
           <div className="min-w-0 flex items-center gap-2 text-[10px] uppercase tracking-widest mono-font opacity-60">
             <Activity size={13} className="text-[var(--s500)] shrink-0" />
-            <span className="truncate">gtm_ops.pages.dev / console</span>
+            <span className="truncate">app.wranngle.com / console</span>
           </div>
           <div className="hidden sm:flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400">
             <span className="h-2 w-2 rounded-full bg-current" />
@@ -409,181 +464,91 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
           </div>
         </div>
 
-        <div className="relative p-3 sm:p-4">
-          <div
-            className={`absolute inset-0 ${
-              isDark
-                ? 'bg-[linear-gradient(135deg,rgba(255,95,0,0.10),rgba(59,130,246,0.08),rgba(207,60,105,0.08))]'
-                : 'bg-[linear-gradient(135deg,rgba(255,95,0,0.08),rgba(59,130,246,0.06),rgba(207,60,105,0.05))]'
-            }`}
-          />
-          <div className="relative grid sm:grid-cols-[0.72fr_1.28fr] gap-3 min-h-[370px]">
-            <aside
-              className={`hidden sm:flex flex-col rounded-md border p-3 ${
-                isDark
-                  ? 'border-white/10 bg-[#12111a]/90'
-                  : 'border-black/10 bg-white/90'
-              }`}
-            >
-              <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--s500)] mb-4">
-                Run queue
-              </div>
-              <div className="space-y-2">
-                {['Acme HVAC', 'Northline Solar', 'King Plumbing'].map(
-                  (lead, index) => (
-                    <div
-                      key={lead}
-                      className={`rounded-md border p-3 ${
-                        index === 0
-                          ? 'border-[rgba(255,95,0,0.5)] bg-[var(--s500)]/10'
-                          : isDark
-                            ? 'border-white/10 bg-white/[0.03]'
-                            : 'border-black/10 bg-black/[0.03]'
-                      }`}
-                    >
-                      <div className="font-bold text-sm leading-none">
-                        {lead}
-                      </div>
-                      <div className="mt-1 text-[10px] uppercase tracking-wider opacity-60">
-                        {index === 0 ? 'Ready to render' : 'Enrichment'}
-                      </div>
-                    </div>
-                  ),
-                )}
-              </div>
-              <div className="mt-auto rounded-md border border-emerald-500/30 bg-emerald-500/10 p-3">
-                <div className="flex items-center gap-2 text-emerald-400">
-                  <Gauge size={15} />
-                  <span className="mono-font text-[10px] uppercase tracking-widest">
-                    Median
-                  </span>
-                </div>
-                <div className="mt-2 brand-font text-2xl font-bold">12m</div>
-                <div className="text-[10px] uppercase tracking-wider opacity-60">
-                  lead to PDF (synthetic demo)
-                </div>
-              </div>
-            </aside>
-
-            <div className="min-w-0 flex flex-col gap-3">
-              <div
-                className={`relative overflow-hidden rounded-md border min-h-[148px] ${
-                  isDark ? 'border-white/10' : 'border-black/10'
-                }`}
-              >
-                <img
-                  src="/assets/rcs/demo-preview.png"
-                  alt="gtm_ops live demo console preview"
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#12111a]/95 via-[#12111a]/60 to-[#12111a]/20" />
-                <div className="relative z-10 p-4 text-white">
-                  <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--s500)] mb-3">
-                    Live demo screenshot
-                  </div>
-                  <h2 className="brand-font text-2xl font-bold leading-tight mb-2">
-                    Acme HVAC proposal run
-                  </h2>
-                  <p className="text-sm text-white/70 max-w-sm leading-relaxed">
-                    Intake fields, enrichment context, proposal status, and the
-                    audit chain stay visible in the same workspace.
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-[1.08fr_0.92fr] gap-3 flex-1">
-                <div
-                  className={`rounded-md border p-4 ${
-                    isDark
-                      ? 'border-white/10 bg-[#12111a]/90'
-                      : 'border-black/10 bg-white/95'
-                  }`}
+        <Carousel
+          setApi={setApi}
+          plugins={plugins}
+          opts={{loop: true, align: 'start'}}
+          aria-label="gtm_ops console screenshots"
+          className="relative"
+        >
+          <CarouselContent>
+            {DEMO_SCREENSHOTS.map((shot, index) => (
+              <CarouselItem key={shot.src}>
+                <a
+                  href={shot.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block relative group"
+                  aria-label={`Open ${shot.label} in the live demo (slide ${
+                    index + 1
+                  } of ${DEMO_SCREENSHOTS.length})`}
                 >
-                  <div className="flex items-center justify-between gap-3 mb-4">
-                    <div>
-                      <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--s500)] flex items-center gap-2">
-                        Extraction
-                        <span className="text-[8px] tracking-wider px-1.5 py-0.5 rounded bg-[var(--s500)]/15 text-[var(--s500)]">
-                          DEMO DATA
-                        </span>
-                      </div>
-                      <h3 className="brand-font text-xl font-bold">
-                        Scope builder
-                      </h3>
-                    </div>
-                    <div className="h-9 w-9 rounded-md bg-[var(--s500)]/10 text-[var(--s500)] flex items-center justify-center">
-                      <Braces size={17} />
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    {[
-                      ['Lead type', 'Commercial HVAC'],
-                      ['Budget signal', '$18k - $26k'],
-                      ['Urgency', 'Before July shutdown'],
-                    ].map(([label, value]) => (
-                      <div
-                        key={label}
-                        className={`rounded-md border px-3 py-2 ${
-                          isDark
-                            ? 'border-white/10 bg-white/[0.03]'
-                            : 'border-black/10 bg-black/[0.03]'
-                        }`}
-                      >
-                        <div className="text-[10px] uppercase tracking-wider opacity-60">
-                          {label}
-                        </div>
-                        <div className="text-sm font-semibold">{value}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div
-                  className={`rounded-md border p-4 flex flex-col ${
-                    isDark
-                      ? 'border-white/10 bg-[#12111a]/90'
-                      : 'border-black/10 bg-white/95'
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-3 mb-3">
-                    <div>
-                      <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--v500)]">
-                        Output
-                      </div>
-                      <h3 className="brand-font text-xl font-bold">
-                        Proposal PDF
-                      </h3>
-                    </div>
-                    <FileText size={18} className="text-[var(--v500)]" />
-                  </div>
-                  <div
-                    className={`relative rounded-md overflow-hidden border flex-1 min-h-[132px] ${
-                      isDark ? 'border-white/10' : 'border-black/10'
+                  <img
+                    src={shot.src}
+                    alt={`gtm_ops console — ${shot.label}: ${shot.sub}`}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    className={`block w-full aspect-[16/10] object-cover object-top ${
+                      isDark ? 'bg-[#12111a]' : 'bg-white'
                     }`}
-                  >
-                    <img
-                      src="/assets/rcs/proposal-ready.png"
-                      alt="gtm_ops proposal-ready output preview"
-                      loading="lazy"
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                    <div className="absolute inset-x-0 bottom-0 p-3 bg-[#12111a]/80 text-white">
-                      <div className="text-sm font-bold">Ready to send</div>
-                      <div className="text-[10px] uppercase tracking-wider text-white/60">
-                        Branded artifact generated
-                      </div>
+                  />
+                  <div className="absolute inset-x-0 bottom-0 px-4 py-3 bg-gradient-to-t from-[#12111a]/90 via-[#12111a]/55 to-transparent text-white pointer-events-none">
+                    <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--s500)]">
+                      {shot.label}
+                    </div>
+                    <div className="text-sm font-semibold leading-tight">
+                      {shot.sub}
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                </a>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="left-3 hidden sm:inline-flex" />
+          <CarouselNext className="right-3 hidden sm:inline-flex" />
+        </Carousel>
+
+        <div
+          className={`flex items-center justify-center gap-2 py-3 border-t ${
+            isDark
+              ? 'border-white/10 bg-white/[0.02]'
+              : 'border-black/10 bg-black/[0.02]'
+          }`}
+        >
+          {DEMO_SCREENSHOTS.map((shot, index) => (
+            <button
+              key={shot.src}
+              type="button"
+              onClick={() => api?.scrollTo(index)}
+              aria-label={`Go to ${shot.label} (slide ${index + 1} of ${
+                DEMO_SCREENSHOTS.length
+              })`}
+              aria-current={current === index ? 'true' : undefined}
+              className={`h-1.5 rounded-full transition-all ${
+                current === index
+                  ? 'w-6 bg-[var(--s500)]'
+                  : 'w-1.5 bg-current opacity-30 hover:opacity-60'
+              }`}
+            />
+          ))}
         </div>
       </div>
     </div>
   );
+}
+
+function usePrefersReducedMotion() {
+  const [prefersReduced, setPrefersReduced] = React.useState(false);
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReduced(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => {
+      mq.removeEventListener('change', onChange);
+    };
+  }, []);
+  return prefersReduced;
 }
 
 function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
