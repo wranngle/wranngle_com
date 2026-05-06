@@ -190,7 +190,8 @@ function OrderReceipt({successData}) {
   );
 }
 
-const IntakeForm = ({selectedPackage, onSuccess}) => {
+// eslint-disable-next-line @typescript-eslint/no-empty-function -- intentional noop default; callers without a close-action can omit onSuccess.
+const IntakeForm = ({selectedPackage, onSuccess = () => {}}) => {
   const [currentPackage, setCurrentPackage] = useState(selectedPackage);
   const offering = getOfferingById(currentPackage);
   const {register, handleSubmit, reset, setValue} = useForm({
