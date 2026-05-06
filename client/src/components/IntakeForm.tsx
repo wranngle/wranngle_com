@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, {useState, useEffect} from 'react';
 import {Link} from 'wouter';
-import {Check, ArrowRight, Zap} from 'lucide-react';
+import {Check, ArrowRight, Zap, CreditCard} from 'lucide-react';
 import {useForm} from 'react-hook-form';
 import {useMutation} from '@tanstack/react-query';
 import {
@@ -15,32 +15,77 @@ import {Textarea} from '@/components/ui/textarea.tsx';
 import {Label} from '@/components/ui/label.tsx';
 import {useToast} from '@/hooks/use-toast.ts';
 import {Button} from '@/components/ui/button.tsx';
+import {ToastAction} from '@/components/ui/toast.tsx';
 import {getOfferingById} from '@/data/offerings.ts';
-import {openSarahWidget} from '@/lib/sarah.ts';
+import {goTalkToSarah} from '@/lib/sarah.ts';
 
 const isAgentPackage = (id) => id === 'basic' || id === 'premium';
 const isSaasPackage = (id) =>
   id === 'gtm-ops-trial' || id === 'gtm-ops-plus' || id === 'gtm-ops-pro';
 
 function OrderReceipt({successData}) {
+  const {toast} = useToast();
   const submittedOffering = getOfferingById(successData.package);
   const itemName =
     submittedOffering?.name?.toUpperCase() ?? successData.package.toUpperCase();
   const itemPriceString = submittedOffering?.price ?? '0';
   const cadence = submittedOffering?.priceCadence ?? 'one-time';
   const cadenceLabel = cadence === 'monthly' ? '/MO' : ' ONE-TIME';
+  const canCheckout = submittedOffering && submittedOffering.price !== '0';
+  const checkoutMutation = useMutation({
+    async mutationFn() {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          package: successData.package,
+          email: successData.email,
+          businessName: successData.businessName,
+        }),
+      });
+      const payload = await res.json();
+      if (!res.ok || !payload.url) {
+        throw new Error(payload.error || 'Stripe checkout is unavailable');
+      }
+
+      return payload;
+    },
+    onSuccess(payload) {
+      globalThis.location.assign(payload.url);
+    },
+    onError(error) {
+      toast({
+        title: 'Checkout unavailable',
+        description: `${error.message}. We can send you an invoice manually.`,
+        variant: 'destructive',
+        duration: 10_000,
+        action: (
+          <ToastAction altText="Email Cody for a manual invoice" asChild>
+            <a href="mailto:cody@wranngle.com?subject=Manual%20invoice%20request">
+              Email Cody
+            </a>
+          </ToastAction>
+        ),
+      });
+    },
+  });
 
   return (
     <div className="bg-[#f0f0f0] p-6 rounded-sm shadow-xl max-w-sm mx-auto font-mono text-black relative border-t-8 border-[var(--s500)]">
       <div className="border-b-2 border-dashed border-gray-400 pb-4 mb-4 text-center">
         <div className="font-bold text-lg tracking-wider">WRANNGLE SYSTEMS</div>
-        <div className="text-xs opacity-60">ORDER CONFIRMATION</div>
+        <div className="text-xs opacity-60">
+          {canCheckout ? 'ORDER CONFIRMATION' : 'INTAKE SUMMARY'}
+        </div>
       </div>
 
       <div className="space-y-2 text-sm mb-6">
         <div className="flex justify-between">
           <span>REF:</span>
-          <span>{Math.random().toString(36).slice(2, 11).toUpperCase()}</span>
+          <span>
+            {new Date().toISOString().slice(0, 10).replaceAll('-', '')}-
+            {successData.package.toUpperCase()}
+          </span>
         </div>
         <div className="flex justify-between">
           <span>DATE:</span>
@@ -58,42 +103,85 @@ function OrderReceipt({successData}) {
             {cadenceLabel}
           </span>
         </div>
-        {submittedOffering?.monthlyAddon && (
-          <div className="flex justify-between opacity-70">
-            <span>+ {submittedOffering.monthlyAddon.label}</span>
-            <span>${submittedOffering.monthlyAddon.price}/MO</span>
-          </div>
-        )}
+        {submittedOffering?.monthlyAddon &&
+          (() => {
+            const {price, label} = submittedOffering.monthlyAddon;
+            // Labels like '/yr annual plan' carry their own cadence; split it off
+            // so the receipt reads "+ annual plan / $200/yr" instead of the
+            // awkward "+ /yr annual plan / $200/MO".
+            const cadenceMatch = /^(\/\w+)\s*(.*)$/.exec(label);
+            const cleanLabel = cadenceMatch ? cadenceMatch[2] : label;
+            const cadence = cadenceMatch ? cadenceMatch[1] : '/MO';
+            return (
+              <div className="flex justify-between opacity-70">
+                <span>+ {cleanLabel}</span>
+                <span>
+                  ${price}
+                  {cadence}
+                </span>
+              </div>
+            );
+          })()}
         {successData.addWebChatAgent && (
           <div className="flex justify-between opacity-70">
             <span>WEB CHAT AGENT</span>
             <span>$250/MO</span>
           </div>
         )}
-        <div className="border-b border-dashed border-gray-400 my-2" />
-        <div className="flex justify-between font-bold text-lg">
-          <span>{cadence === 'monthly' ? 'DUE MONTHLY' : 'PROJECT TOTAL'}</span>
-          <span>
-            ${itemPriceString}
-            {cadenceLabel}
-          </span>
-        </div>
+        {canCheckout && (
+          <>
+            <div className="border-b border-dashed border-gray-400 my-2" />
+            <div className="flex justify-between font-bold text-lg">
+              <span>
+                {cadence === 'monthly' ? 'DUE MONTHLY' : 'PROJECT TOTAL'}
+              </span>
+              <span>
+                ${itemPriceString}
+                {cadenceLabel}
+              </span>
+            </div>
+          </>
+        )}
       </div>
 
       <div className="text-center text-xs space-y-2 bg-white/50 p-3 rounded">
-        <div className="font-bold text-[var(--s500)]">PAYMENT PENDING</div>
-        <div>Invoice sent to:</div>
+        <div className="font-bold text-[var(--s500)]">
+          {canCheckout ? 'PAYMENT PENDING' : 'REQUEST RECEIVED'}
+        </div>
+        <div>
+          {canCheckout
+            ? 'Confirmation will arrive at:'
+            : 'We will follow up at:'}
+        </div>
         <div className="font-bold">{successData.email}</div>
       </div>
 
       <div className="mt-6 text-[10px] text-center opacity-60">
-        THANK YOU FOR YOUR BUSINESS
+        THANKS FOR REACHING OUT
       </div>
+
+      {canCheckout && (
+        <Button
+          type="button"
+          onClick={() => {
+            checkoutMutation.mutate();
+          }}
+          className="w-full mt-6 bg-[var(--s500)] text-white hover:bg-[var(--s500)]/90 transition-colors"
+          disabled={checkoutMutation.isPending}
+        >
+          <CreditCard size={14} className="mr-2" aria-hidden />
+          {checkoutMutation.isPending
+            ? 'OPENING STRIPE...'
+            : cadence === 'monthly'
+              ? 'SUBSCRIBE'
+              : 'PAY WITH STRIPE'}
+        </Button>
+      )}
 
       <DialogClose asChild>
         <Button
           variant="outline"
-          className="w-full mt-6 border-black/20 text-black hover:bg-black hover:text-white transition-colors"
+          className="w-full mt-3 border-black/20 text-black hover:bg-black hover:text-white transition-colors"
         >
           CLOSE RECEIPT
         </Button>
@@ -107,10 +195,16 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
   const offering = getOfferingById(currentPackage);
   const {register, handleSubmit, reset, setValue} = useForm({
     defaultValues: {package: currentPackage},
+    shouldUseNativeValidation: true,
   });
   const {toast} = useToast();
   const [successData, setSuccessData] = useState(null);
-  const [startMode, setStartMode] = useState(null);
+  // Only show the "Talk to Sarah vs form" mode-select for AI Agent packages
+  // (Core/Elite) where Sarah genuinely demos what the user is buying. Website
+  // and SaaS flows skip straight to the form — Sarah is irrelevant for them.
+  const [startMode, setStartMode] = useState(
+    isAgentPackage(selectedPackage) ? null : 'form',
+  );
 
   useEffect(() => {
     setValue('package', currentPackage);
@@ -129,23 +223,34 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
     onSuccess(_, variables) {
       setSuccessData(variables);
       toast({
-        title: 'Order Received',
-        description: 'Invoice generated successfully.',
+        title: 'Got it',
+        description: 'We will be in touch with the next step.',
       });
       reset();
       onSuccess?.();
     },
-    onError(error) {
+    onError() {
       toast({
-        title: 'Error',
-        description: error.message,
+        title: 'Submission failed',
+        description: 'Could not reach our servers. Please try again.',
         variant: 'destructive',
+        duration: 10_000,
+        action: (
+          <ToastAction altText="Email Cody directly" asChild>
+            <a href="mailto:cody@wranngle.com">Email Cody</a>
+          </ToastAction>
+        ),
       });
     },
   });
 
   if (successData) {
-    return <OrderReceipt successData={successData} />;
+    return (
+      <>
+        <DialogTitle className="sr-only">Submission received</DialogTitle>
+        <OrderReceipt successData={successData} />
+      </>
+    );
   }
 
   const isAgent = isAgentPackage(currentPackage);
@@ -163,7 +268,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
           </DialogTitle>
           <DialogDescription>
             Test the live Sarah demo first, or send the details now. Either way,
-            this starts around {itemName}.
+            this starts with {itemName}.
           </DialogDescription>
         </DialogHeader>
 
@@ -173,7 +278,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
               type="button"
               onClick={() => {
                 globalThis.setTimeout(() => {
-                  openSarahWidget();
+                  goTalkToSarah();
                 }, 150);
               }}
               className="text-left rounded-lg border border-[var(--s500)]/35 bg-[var(--s500)]/10 p-4 hover:border-[var(--s500)] transition-colors"
@@ -225,21 +330,24 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
       <>
         <DialogHeader>
           <DialogTitle className="brand-font text-2xl">
-            {isTrial ? 'Start your trial' : 'Activate your plan'}
+            {isTrial ? 'Start your trial' : 'Request workspace setup'}
           </DialogTitle>
           <DialogDescription>
             {isTrial
               ? 'Email + company is all we need. No card. 14 days, then upgrade or walk.'
-              : `Tell us where to send the ${tierName} workspace invite.`}
+              : `Email + company is all we need. Cody handles ${tierName} workspace setup from there.`}
           </DialogDescription>
         </DialogHeader>
 
         <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-3 items-start">
-          <Zap className="text-[var(--s500)] shrink-0 mt-0.5" size={18} />
+          <Zap
+            className="text-[var(--s500)] shrink-0 mt-0.5"
+            size={18}
+            aria-hidden
+          />
           <div className="text-[12px] opacity-85 leading-relaxed">
-            Self-serve signup is almost ready. For now, Cody will personally
-            email you back with your workspace login — usually within a few
-            hours.
+            Workspace setup is currently manual. Cody emails your login back
+            personally — usually within a few hours.
           </div>
         </div>
 
@@ -270,13 +378,22 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
           </div>
           <div className="grid gap-2">
             <Label htmlFor="estimatedProposalsPerMonth">
-              Proposals you expect to generate per month
+              Proposals you expect to generate per month (Optional)
             </Label>
             <Input
               id="estimatedProposalsPerMonth"
               className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
               {...register('estimatedProposalsPerMonth')}
-              placeholder="10–50"
+              placeholder="10-50"
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="notes">Anything Cody should know? (Optional)</Label>
+            <Textarea
+              id="notes"
+              className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit min-h-[80px]"
+              {...register('notes')}
+              placeholder="Use case, integrations, compliance needs, timeline..."
             />
           </div>
           <input
@@ -307,7 +424,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
               ? 'Submitting...'
               : isTrial
                 ? 'Request trial access'
-                : `Activate ${tierName}`}
+                : `Request ${tierName} setup`}
           </Button>
         </form>
       </>
@@ -329,14 +446,15 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
 
       {currentPackage === 'basic' && (
         <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-4 items-start">
-          <Zap className="text-[var(--s500)] shrink-0" size={20} />
+          <Zap className="text-[var(--s500)] shrink-0" size={20} aria-hidden />
           <div>
             <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider mb-1">
               Recommended Upgrade
             </div>
             <p className="text-[11px] opacity-80 leading-relaxed mb-2">
-              Best Practice: 84% of trade businesses see 2x lead conversion when
-              combining <b>Voice Agent</b> with <b>Web Chat</b>.
+              Voice catches the after-hours phone call. <b>Web Chat</b> catches
+              the visitor who would rather type. Two different intent surfaces —
+              most trades leak leads on at least one.
             </p>
             <button
               type="button"
@@ -355,11 +473,11 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
         <>
           <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/10 rounded-lg flex gap-4 items-center">
             <div className="w-5 h-5 rounded-full bg-[var(--s500)] flex items-center justify-center text-white shrink-0">
-              <Check size={12} strokeWidth={4} />
+              <Check size={12} strokeWidth={4} aria-hidden />
             </div>
             <div>
               <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider">
-                Elite Agent Secured
+                Elite Agent Selected
               </div>
               <p className="text-[11px] opacity-80 leading-relaxed">
                 Priority 24/7 Coverage + Web Chat Integration included.
@@ -367,14 +485,19 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
             </div>
           </div>
           <div className="mt-3 p-4 border border-[var(--v500)]/30 bg-[var(--v500)]/5 rounded-lg flex gap-4 items-start">
-            <Zap className="text-[var(--v500)] shrink-0" size={20} />
+            <Zap
+              className="text-[var(--v500)] shrink-0"
+              size={20}
+              aria-hidden
+            />
             <div>
               <div className="text-xs font-bold text-[var(--v500)] uppercase tracking-wider mb-1">
-                Recommended Next Step
+                Worth Considering
               </div>
               <p className="text-[11px] opacity-80 leading-relaxed mb-2">
-                Your Elite Agent needs a home. Most Elite buyers ship a Landing
-                Page in 7 days so callers convert before they pick up the phone.
+                A Landing Page (7-day delivery) gives callers somewhere to
+                convert before they pick up the phone — common companion to an
+                Elite Agent setup.
               </p>
               <button
                 type="button"
@@ -383,7 +506,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
                 }}
                 className="mt-1 flex items-center gap-2 text-[10px] font-bold text-[var(--v500)] border border-[var(--v500)] px-3 py-1.5 rounded hover:bg-[var(--v500)] hover:text-white transition-all uppercase tracking-wide"
               >
-                Add Landing Page ($900) <ArrowRight size={10} />
+                Switch to Landing Page ($900) <ArrowRight size={10} />
               </button>
             </div>
           </div>
@@ -392,7 +515,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
 
       {currentPackage === 'landing-page' && (
         <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-4 items-start">
-          <Zap className="text-[var(--s500)] shrink-0" size={20} />
+          <Zap className="text-[var(--s500)] shrink-0" size={20} aria-hidden />
           <div>
             <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider mb-1">
               Recommended Upgrade
@@ -418,7 +541,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
         <>
           <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/10 rounded-lg flex gap-4 items-center">
             <div className="w-5 h-5 rounded-full bg-[var(--s500)] flex items-center justify-center text-white shrink-0">
-              <Check size={12} strokeWidth={4} />
+              <Check size={12} strokeWidth={4} aria-hidden />
             </div>
             <div>
               <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider">
@@ -431,15 +554,19 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
             </div>
           </div>
           <div className="mt-3 p-4 border border-[var(--v500)]/30 bg-[var(--v500)]/5 rounded-lg flex gap-4 items-start">
-            <Zap className="text-[var(--v500)] shrink-0" size={20} />
+            <Zap
+              className="text-[var(--v500)] shrink-0"
+              size={20}
+              aria-hidden
+            />
             <div>
               <div className="text-xs font-bold text-[var(--v500)] uppercase tracking-wider mb-1">
-                Recommended Pairing
+                Worth Considering
               </div>
               <p className="text-[11px] opacity-80 leading-relaxed mb-2">
-                Pair with a Core Agent so your contact form is not your only
-                after-hours capture. 84% of trade businesses with both see 2x
-                lead conversion.
+                A Core Agent so the contact form is not your only after-hours
+                capture. The form catches who emails; the agent catches who
+                actually calls.
               </p>
               <button
                 type="button"
@@ -448,7 +575,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
                 }}
                 className="mt-1 flex items-center gap-2 text-[10px] font-bold text-[var(--v500)] border border-[var(--v500)] px-3 py-1.5 rounded hover:bg-[var(--v500)] hover:text-white transition-all uppercase tracking-wide"
               >
-                Add Core Agent ($250/mo) <ArrowRight size={10} />
+                Switch to Core Agent ($250/mo) <ArrowRight size={10} />
               </button>
             </div>
           </div>
@@ -476,7 +603,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
             id="industry"
             className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
             {...register('industry', {required: true})}
-            placeholder="HVAC / Electrical / etc."
+            placeholder="HVAC / Plumbing / Electrical / etc."
           />
         </div>
         <div className="grid gap-2">
@@ -517,7 +644,7 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
               id="agentName"
               className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
               {...register('agentName')}
-              placeholder="Sarah, Max, Alex..."
+              placeholder="Alex, Jordan, Casey..."
               maxLength={50}
             />
             <p className="text-xs opacity-60">
@@ -540,7 +667,11 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
         </div>
         {!isAgent && (
           <div className="p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-4 items-start">
-            <Zap className="text-[var(--s500)] shrink-0" size={20} />
+            <Zap
+              className="text-[var(--s500)] shrink-0"
+              size={20}
+              aria-hidden
+            />
             <div>
               <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider mb-1">
                 Add-On: Web Chat Agent
@@ -578,8 +709,8 @@ const IntakeForm = ({selectedPackage, onSuccess}) => {
           disabled={mutation.isPending}
         >
           {mutation.isPending
-            ? 'Initializing...'
-            : `Confirm ${offering?.name ?? 'Order'}`}
+            ? 'Submitting...'
+            : `Request ${offering?.name ?? 'setup'}`}
         </Button>
       </form>
     </>

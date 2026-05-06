@@ -181,7 +181,7 @@ export default function GitHubRepoCard({
       href={data.html_url}
       target="_blank"
       rel="noreferrer"
-      className={`relative h-full p-6 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] ${surfaceClasses} flex flex-col block hover:rounded-[4px_24px_4px_24px] transition-all group`}
+      className={`relative h-full p-6 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] ${surfaceClasses} flex flex-col hover:rounded-[4px_24px_4px_24px] transition-all group`}
     >
       <div className="flex items-baseline justify-between gap-3 mb-2">
         <h3 className="brand-font text-lg font-bold group-hover:text-[var(--s500)] transition-colors flex items-center gap-2">

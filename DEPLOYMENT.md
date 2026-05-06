@@ -57,7 +57,37 @@ For stricter CORS security (optional):
    - **Environment**: Production
 3. Click **Save**
 
-### 2.3 Trigger Redeploy
+### 2.3 Optional: Add Stripe Checkout
+
+Stripe Checkout has no setup or monthly fee on standard pricing, but Stripe
+does charge per successful transaction. To enable checkout from the order
+receipt and route paid sessions into fulfillment:
+
+1. Click **Add variable**
+2. Set:
+   - **Variable name**: `STRIPE_SECRET_KEY`
+   - **Value**: Your Stripe secret key, preferably a restricted key that can create Checkout Sessions
+   - **Environment**: Production
+3. Click **Add variable**
+4. Set:
+   - **Variable name**: `SITE_URL`
+   - **Value**: `https://wranngle.com`
+   - **Environment**: Production
+5. In Stripe Dashboard, set public business policy URLs if you want Checkout
+   to show the required Terms checkbox. Checkout will still work without this,
+   but the site retries without `terms_of_service` consent if Stripe rejects it.
+6. Add a Stripe webhook endpoint in Stripe Workbench:
+   - **Endpoint URL**: `https://wranngle.com/api/stripe-webhook`
+   - **Events**: `checkout.session.completed`, `checkout.session.async_payment_succeeded`
+7. Copy the endpoint signing secret from Stripe.
+8. Click **Add variable**
+9. Set:
+   - **Variable name**: `STRIPE_WEBHOOK_SECRET`
+   - **Value**: The Stripe webhook endpoint signing secret (`whsec_...`)
+   - **Environment**: Production
+10. Click **Save**
+
+### 2.4 Trigger Redeploy
 
 After adding environment variables:
 
@@ -212,6 +242,18 @@ Monitor errors:
 
 - **Cause**: n8n webhook returned non-200 status
 - **Fix**: Check n8n workflow is active and webhook path is correct
+
+### Stripe Fulfillment Not Working
+
+**Error**: Checkout succeeds but n8n fulfillment does not run
+
+- **Cause**: Stripe webhook endpoint or `STRIPE_WEBHOOK_SECRET` is missing
+- **Fix**: Create the Stripe webhook for `https://wranngle.com/api/stripe-webhook`, set `STRIPE_WEBHOOK_SECRET`, and redeploy
+
+**Error**: Stripe webhook returns 400
+
+- **Cause**: Missing or invalid `Stripe-Signature` header, often from using the wrong webhook signing secret
+- **Fix**: Use the `whsec_...` secret from the exact live-mode endpoint that points at `https://wranngle.com/api/stripe-webhook`
 
 ### Rate Limiting Issues
 
