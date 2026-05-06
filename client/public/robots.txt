@@ -5,6 +5,7 @@ Sitemap: https://wranngle.com/sitemap.xml
 
 # LLM and enrichment crawler discovery hints.
 LLMs: https://wranngle.com/llms.txt
+LLMs-Full: https://wranngle.com/llms-full.txt
 Profile: https://wranngle.com/cody-arnold.md
 Company: https://wranngle.com/wranngle-systems.md
 StructuredData: https://wranngle.com/profile.json

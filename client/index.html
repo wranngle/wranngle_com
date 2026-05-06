@@ -53,8 +53,20 @@
     <link
       rel="alternate"
       type="text/markdown"
+      href="https://wranngle.com/llms-full.txt"
+      title="Wranngle Systems full LLM context"
+    />
+    <link
+      rel="alternate"
+      type="text/markdown"
       href="https://wranngle.com/cody-arnold.md"
       title="Cody Arnold profile"
+    />
+    <link
+      rel="alternate"
+      type="text/markdown"
+      href="https://wranngle.com/wranngle-systems.md"
+      title="Wranngle Systems profile"
     />
     <link
       rel="alternate"
@@ -104,46 +116,173 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Wranngle Systems",
-        "alternateName": "Wranngle",
-        "url": "https://wranngle.com",
-        "logo": "https://wranngle.com/wordmark.png",
-        "description": "AI voice agents for trades businesses (HVAC, plumbing, electrical). 24/7 call answering, lead capture, conversion-built websites, and gtm_ops — the proposal-generation runtime that turns inbound leads into branded PDFs with a full audit trail.",
-        "founder": {
-          "@type": "Person",
-          "name": "Cody Arnold",
-          "jobTitle": "Founder",
-          "url": "https://wranngle.com/about"
-        },
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "contactType": "customer service",
-          "email": "hello@wranngle.com",
-          "availableLanguage": ["en"]
-        },
-        "sameAs": [
-          "https://github.com/wranngle",
-          "https://www.linkedin.com/in/codyarnold96"
-        ],
-        "subjectOf": [
+        "@graph": [
           {
-            "@type": "DigitalDocument",
-            "name": "Wranngle Systems LLM context",
-            "url": "https://wranngle.com/llms.txt",
-            "encodingFormat": "text/plain"
+            "@type": "Person",
+            "@id": "https://wranngle.com/#cody-arnold",
+            "name": "Cody Arnold",
+            "url": "https://wranngle.com/about",
+            "mainEntityOfPage": "https://wranngle.com/about",
+            "image": "https://wranngle.com/portrait-cody.jpg",
+            "email": "mailto:cody@wranngle.com",
+            "jobTitle": [
+              "Founder",
+              "AI Automation Engineer",
+              "Voice AI Engineer",
+              "Workflow Automation Engineer",
+              "Full-stack TypeScript Developer"
+            ],
+            "worksFor": {
+              "@id": "https://wranngle.com/#organization"
+            },
+            "homeLocation": {
+              "@type": "Place",
+              "name": "Fort Wayne, Indiana, United States"
+            },
+            "sameAs": [
+              "https://github.com/wranngle",
+              "https://www.linkedin.com/in/codyarnold96"
+            ],
+            "knowsAbout": [
+              "AI automation",
+              "Voice AI",
+              "ElevenLabs Conversational AI",
+              "n8n workflow automation",
+              "CRM enrichment",
+              "Lead capture",
+              "Proposal generation",
+              "TypeScript",
+              "React",
+              "Vite",
+              "Cloudflare Pages Functions",
+              "ArkType",
+              "Bun",
+              "Python automation",
+              "PowerShell automation",
+              "MSP operations",
+              "Evaluation harnesses",
+              "Runbooks",
+              "Audit trails",
+              "Latency budgets"
+            ],
+            "skills": [
+              "AI automation",
+              "Voice AI engineering",
+              "Workflow automation",
+              "Full-stack TypeScript",
+              "Cloudflare serverless applications",
+              "n8n workflow design",
+              "Evaluation harnesses",
+              "Operational runbooks"
+            ],
+            "hasOccupation": [
+              {
+                "@type": "Occupation",
+                "name": "AI Automation Engineer",
+                "skills": [
+                  "Voice AI",
+                  "workflow automation",
+                  "CRM enrichment",
+                  "lead capture",
+                  "evaluation harnesses"
+                ],
+                "occupationLocation": {
+                  "@type": "Country",
+                  "name": "United States"
+                }
+              },
+              {
+                "@type": "Occupation",
+                "name": "Full-stack TypeScript Developer",
+                "skills": [
+                  "TypeScript",
+                  "React",
+                  "Vite",
+                  "Cloudflare Pages Functions",
+                  "ArkType"
+                ],
+                "occupationLocation": {
+                  "@type": "Country",
+                  "name": "United States"
+                }
+              }
+            ],
+            "subjectOf": [
+              {
+                "@type": "DigitalDocument",
+                "name": "Cody Arnold machine-readable profile",
+                "url": "https://wranngle.com/cody-arnold.md",
+                "encodingFormat": "text/markdown"
+              },
+              {
+                "@type": "DigitalDocument",
+                "name": "Wranngle Systems LLM context",
+                "url": "https://wranngle.com/llms.txt",
+                "encodingFormat": "text/plain"
+              },
+              {
+                "@type": "DigitalDocument",
+                "name": "Wranngle Systems full LLM context",
+                "url": "https://wranngle.com/llms-full.txt",
+                "encodingFormat": "text/markdown"
+              },
+              {
+                "@type": "DigitalDocument",
+                "name": "Wranngle structured profile graph",
+                "url": "https://wranngle.com/profile.json",
+                "encodingFormat": "application/ld+json"
+              }
+            ],
+            "description": "Cody Arnold is the founder of Wranngle Systems LLC and builds AI voice agents, workflow automation, lead capture systems, CRM enrichment flows, proposal-generation runtimes, and evaluation harnesses for service businesses."
           },
           {
-            "@type": "DigitalDocument",
-            "name": "Cody Arnold machine-readable profile",
-            "url": "https://wranngle.com/cody-arnold.md",
-            "encodingFormat": "text/markdown"
-          },
-          {
-            "@type": "DigitalDocument",
-            "name": "Wranngle structured profile graph",
-            "url": "https://wranngle.com/profile.json",
-            "encodingFormat": "application/ld+json"
+            "@type": "Organization",
+            "@id": "https://wranngle.com/#organization",
+            "name": "Wranngle Systems LLC",
+            "alternateName": "Wranngle Systems",
+            "url": "https://wranngle.com",
+            "logo": "https://wranngle.com/wordmark.png",
+            "email": "mailto:hello@wranngle.com",
+            "description": "AI voice agents for trades businesses (HVAC, plumbing, electrical). 24/7 call answering, lead capture, conversion-built websites, and gtm_ops, the proposal-generation runtime that turns inbound leads into branded PDFs with a full audit trail.",
+            "founder": {
+              "@id": "https://wranngle.com/#cody-arnold"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer service",
+              "email": "hello@wranngle.com",
+              "availableLanguage": ["en"]
+            },
+            "sameAs": [
+              "https://github.com/wranngle",
+              "https://www.linkedin.com/in/codyarnold96"
+            ],
+            "subjectOf": [
+              {
+                "@type": "DigitalDocument",
+                "name": "Wranngle Systems LLM context",
+                "url": "https://wranngle.com/llms.txt",
+                "encodingFormat": "text/plain"
+              },
+              {
+                "@type": "DigitalDocument",
+                "name": "Wranngle Systems full LLM context",
+                "url": "https://wranngle.com/llms-full.txt",
+                "encodingFormat": "text/markdown"
+              },
+              {
+                "@type": "DigitalDocument",
+                "name": "Wranngle Systems profile markdown",
+                "url": "https://wranngle.com/wranngle-systems.md",
+                "encodingFormat": "text/markdown"
+              },
+              {
+                "@type": "DigitalDocument",
+                "name": "Wranngle structured profile graph",
+                "url": "https://wranngle.com/profile.json",
+                "encodingFormat": "application/ld+json"
+              }
+            ]
           }
         ]
       }
