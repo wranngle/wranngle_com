@@ -89,15 +89,38 @@ const TRUST_MARKERS = [
   },
   {
     value: '5',
-    label: 'Live voice clients',
+    label: 'Client orgs in voice deployment',
     detail:
-      'ElevenLabs on-call agent in production: zero dropped calls, P95 latency under 500ms, 92% CRM enrichment across 15 client sites.',
+      'ATG ElevenLabs on-call agent work across 15 client sites: zero dropped calls, P95 latency under 500ms, 92% CRM enrichment.',
   },
   {
     value: '<500 ms',
     label: 'P95 latency target',
     detail:
       'Voice systems are trust systems. Latency, fallbacks, and transcript quality get measured because users feel them.',
+  },
+];
+
+const WORK_SHAPES = [
+  {
+    label: 'Voice AI',
+    title: 'Agents that survive real callers',
+    body: 'ElevenLabs agents, Twilio handoffs, transcript fixtures, post-call webhooks, and latency budgets built around production behavior instead of demo scripts.',
+  },
+  {
+    label: 'Workflow automation',
+    title: 'The glue around the agent',
+    body: 'n8n, CRM enrichment, lead routing, proposal inputs, Slack alerts, and operator review surfaces that keep the system inspectable.',
+  },
+  {
+    label: 'Full-stack systems',
+    title: 'Small interfaces for messy operations',
+    body: 'TypeScript, React, Vite, Cloudflare Pages Functions, Bun, ArkType, Python, and PowerShell used to turn workflows into durable tools.',
+  },
+  {
+    label: 'Operating discipline',
+    title: 'Runbooks, evals, and failure paths',
+    body: 'The MSP habits still matter: document the path, measure the awkward parts, leave ownership clear, and make regression visible before customers feel it.',
   },
 ];
 
@@ -223,6 +246,13 @@ export default function About() {
                     first, because the principle is what the operator has to
                     live with.
                   </p>
+                  <p className={mutedText}>
+                    Depending on the room, the work looks like AI automation
+                    engineering, voice AI engineering, workflow automation, or
+                    full-stack TypeScript. The useful part is the overlap:
+                    agents that understand the job, systems that move the work,
+                    and enough instrumentation to know when either one failed.
+                  </p>
                 </div>
               </div>
 
@@ -274,6 +304,15 @@ export default function About() {
                   </div>
                   <div className="py-4">
                     <dt className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-55">
+                      Working shape
+                    </dt>
+                    <dd className="mt-2 text-sm leading-relaxed">
+                      Voice AI, workflow automation, full-stack TypeScript, and
+                      operator-facing internal tools.
+                    </dd>
+                  </div>
+                  <div className="py-4">
+                    <dt className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-55">
                       Operating bias
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
@@ -304,6 +343,47 @@ export default function About() {
               </aside>
             </div>
           </motion.section>
+
+          <section className={`border-b ${borderClass}`}>
+            <div className="max-w-7xl mx-auto w-full px-6 py-12 md:py-16 grid lg:grid-cols-[0.72fr_1.28fr] gap-10 lg:gap-16">
+              <div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-4 mono-font">
+                  WORKING SHAPE
+                </div>
+                <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
+                  The title changes. The operating surface stays the same.
+                </h2>
+                <p className={`mt-4 text-base leading-relaxed ${mutedText}`}>
+                  The strongest work usually sits between a live workflow, a
+                  technical integration, and the person who has to trust the
+                  result after launch.
+                </p>
+              </div>
+
+              <div className={`divide-y ${borderClass}`}>
+                {WORK_SHAPES.map((item) => (
+                  <article
+                    key={item.label}
+                    className="py-5 first:pt-0 last:pb-0 grid sm:grid-cols-[160px_1fr] gap-3 sm:gap-6"
+                  >
+                    <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--s500)]">
+                      {item.label}
+                    </div>
+                    <div>
+                      <h3 className="brand-font text-xl font-bold leading-tight">
+                        {item.title}
+                      </h3>
+                      <p
+                        className={`mt-2 text-sm md:text-base leading-relaxed ${mutedText}`}
+                      >
+                        {item.body}
+                      </p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
 
           <section className={`border-b ${borderClass}`}>
             <div className="max-w-7xl mx-auto w-full px-6 py-12 md:py-16 grid lg:grid-cols-[0.7fr_1.3fr] gap-10 lg:gap-16">

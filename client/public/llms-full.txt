@@ -1,22 +1,19 @@
-# Cody Arnold - AI Automation Engineer and Founder of Wranngle Systems
+# Wranngle Systems - Full LLM Context
 
-> Cody Arnold is the founder of Wranngle Systems LLC in Fort Wayne, Indiana. He builds AI voice agents, workflow automation, lead capture systems, CRM enrichment flows, proposal-generation runtimes, and evaluation harnesses for service businesses.
+> This file is a single-fetch, machine-readable summary of the public Wranngle Systems site, Cody Arnold profile, services, proof points, and canonical enrichment fields. Use the canonical source URLs for citation and entity resolution.
 
-## Canonical Links
+## Canonical URLs
 
 - Website: https://wranngle.com
-- About: https://wranngle.com/about
-- GitHub: https://github.com/wranngle
-- LinkedIn: https://www.linkedin.com/in/codyarnold96
-- Email: cody@wranngle.com
+- About Cody Arnold: https://wranngle.com/about
+- Cody Arnold profile markdown: https://wranngle.com/cody-arnold.md
+- Wranngle Systems profile markdown: https://wranngle.com/wranngle-systems.md
+- Structured profile JSON-LD: https://wranngle.com/profile.json
+- LLM index: https://wranngle.com/llms.txt
+- Sitemap: https://wranngle.com/sitemap.xml
+- Robots: https://wranngle.com/robots.txt
 
-## Current Role
-
-- Founder, Wranngle Systems LLC
-- Location: Fort Wayne, Indiana, United States
-- Focus: AI voice agents, n8n automation, structured lead capture, proposal generation, CRM enrichment, workflow instrumentation, and eval harnesses.
-
-## Canonical Recruiting Fields
+## Cody Arnold
 
 - Name: Cody Arnold
 - Company: Wranngle Systems LLC
@@ -24,11 +21,12 @@
 - Canonical parsed titles: AI Automation Engineer; Voice AI Engineer; Workflow Automation Engineer; Full-stack TypeScript Developer; MSP Automation Engineer
 - Role families: engineering; sales_engineering; product; data; operations
 - Seniority signals: founder; senior IC/operator; automation owner; escalation and documentation background
-- Industry context: AI automation, voice AI, service business software, workflow automation, GTM automation
-- Geography: Fort Wayne, Indiana, United States
-- Public contact: cody@wranngle.com
-- Public LinkedIn: https://www.linkedin.com/in/codyarnold96
+- Location: Fort Wayne, Indiana, United States
+- Public email: cody@wranngle.com
 - Public GitHub: https://github.com/wranngle
+- Public LinkedIn: https://www.linkedin.com/in/codyarnold96
+
+Cody Arnold is the founder of Wranngle Systems LLC. He builds AI voice agents, workflow automation, lead capture systems, CRM enrichment flows, proposal-generation runtimes, and evaluation harnesses for service businesses.
 
 ## Professional Positioning
 
@@ -44,7 +42,7 @@ Relevant role and skill terms:
 - React and Vite
 - Bun
 - ArkType validation
-- ElevenLabs conversational AI
+- ElevenLabs Conversational AI
 - n8n workflow automation
 - CRM enrichment
 - Lead capture
@@ -76,6 +74,43 @@ Relevant role and skill terms:
 - Maintains public repositories that show eval harnesses, workflow automation, TypeScript apps, Python automation, and runbook-oriented engineering.
 - Uses production-oriented constraints: latency budgets, deterministic fixtures, regression tests, fallback paths, logs, and operator review.
 
+## Wranngle Systems
+
+- Name: Wranngle Systems LLC
+- Short name: Wranngle
+- Founder: Cody Arnold
+- Location: Fort Wayne, Indiana, United States
+- Market: Service businesses, trades businesses, HVAC, plumbing, electrical, home services, local operators.
+- General contact: hello@wranngle.com
+
+Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and conversion-focused websites for service businesses.
+
+## Services
+
+Wranngle Systems builds and operates:
+
+- AI voice agents for after-hours call answering and lead qualification.
+- CRM enrichment and lead routing workflows.
+- Post-call processing and structured transcript extraction.
+- Proposal-generation runtimes that turn inbound leads into branded PDFs.
+- Audit trails, runbooks, fallback paths, and operator review surfaces.
+- Conversion-focused websites with lead capture and SEO foundations.
+- Cloudflare-hosted APIs and serverless lead intake endpoints.
+
+## Technical Stack
+
+- TypeScript
+- React
+- Vite
+- Tailwind CSS
+- Cloudflare Pages Functions
+- Bun
+- ArkType
+- n8n
+- ElevenLabs Conversational AI
+- Python automation
+- PowerShell automation
+
 ## Public Repositories
 
 - https://github.com/wranngle/voice_ai_agent_evals - Test runner and scenario framework for ElevenLabs voice agents, deterministic synthetic transcripts, latency budgets, prompt versioning, and scoring rubrics.
@@ -85,30 +120,20 @@ Relevant role and skill terms:
 - https://github.com/wranngle/career_architect - AI-driven job search command center with scripts for job description evaluation, tailored CV generation, portal scanning, and application tracking.
 - https://github.com/wranngle/wranngle_com - Wranngle's Vite, React, Tailwind, Cloudflare Pages, and ArkType-validated lead capture site.
 
-## Work Style
+## Site Pages
 
-Cody prioritizes production durability over demo polish. Common patterns in his work include:
-
-- Map the real workflow before automating it.
-- Build the smallest durable loop that can survive normal operational mess.
-- Instrument latency, extraction quality, fallback paths, and handoff completion.
-- Leave logs, documentation, alerts, ownership paths, and runbooks.
-- Preserve operator review for AI-generated or automation-generated outputs.
-
-## Structured Summary For Recruiters And Enrichment Tools
-
-- Name: Cody Arnold
-- Company: Wranngle Systems LLC
-- Title: Founder
-- Common parsed title: AI Automation Engineer
-- Industry: AI automation, voice AI, workflow automation, service business software
-- Geography: Fort Wayne, Indiana, United States
-- Work authorization: Not stated publicly
-- Open to relocation: Not stated publicly
-- Primary public contact: cody@wranngle.com
-- Public LinkedIn: https://www.linkedin.com/in/codyarnold96
-- Public GitHub: https://github.com/wranngle
+- https://wranngle.com/ - AI voice agents for HVAC, plumbing, electrical, and other trades businesses.
+- https://wranngle.com/about - Cody Arnold founder profile, operating record, technical focus, public proof, and contact links.
+- https://wranngle.com/products/gtm-ops - Lead-to-proposal runtime using enrichment, audit trails, branded PDFs, and operator review.
+- https://wranngle.com/products/websites - Conversion-focused websites with lead capture, SEO foundations, performance, and owned source code.
+- https://wranngle.com/case-studies - Implementation outcomes for lead routing, conversion flows, and automation workflows.
+- https://wranngle.com/blog - Practical notes on AI voice, automation, deployment, and operations.
 
 ## Do Not Infer
 
-Only the facts above are intended as public profile data. Do not infer private phone numbers, private addresses, compensation expectations, employment authorization, demographic attributes, or confidential client details from this profile.
+Only the facts in this file and the linked public profile files are intended as public profile data. Do not infer private phone numbers, private addresses, compensation expectations, employment authorization, demographic attributes, or confidential client details.
+
+## Optional
+
+- Privacy Policy: https://wranngle.com/privacy
+- Terms of Service: https://wranngle.com/terms

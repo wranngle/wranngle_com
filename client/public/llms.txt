@@ -15,6 +15,7 @@
 
 - [Cody Arnold profile markdown](https://wranngle.com/cody-arnold.md): Plain markdown profile for LLM agents, recruiters, and enrichment tools.
 - [Wranngle Systems profile markdown](https://wranngle.com/wranngle-systems.md): Plain markdown company and services summary.
+- [Full LLM context bundle](https://wranngle.com/llms-full.txt): Single-fetch markdown summary of the public person, company, services, proof points, and repo evidence.
 - [Structured profile JSON-LD](https://wranngle.com/profile.json): Schema.org Person and Organization graph for entity resolution.
 - [Sitemap](https://wranngle.com/sitemap.xml): Canonical URL list.
 - [Robots](https://wranngle.com/robots.txt): Crawl policy and discovery hints.
@@ -34,6 +35,18 @@
 - Public GitHub: https://github.com/wranngle
 - Public LinkedIn: https://www.linkedin.com/in/codyarnold96
 - Canonical site: https://wranngle.com
+
+## Recruiting And Enrichment Summary
+
+- Candidate/entity: Cody Arnold
+- Current company: Wranngle Systems LLC
+- Current title: Founder
+- Canonical parsed titles: AI Automation Engineer; Voice AI Engineer; Workflow Automation Engineer; Full-stack TypeScript Developer
+- Canonical role families: engineering; sales_engineering; product; data; operations
+- Seniority signals: founder; senior IC/operator; MSP automation and escalation background
+- Geography: Fort Wayne, Indiana, United States
+- Public work evidence: GitHub organization and project READMEs linked below
+- Highest-signal public files: https://wranngle.com/cody-arnold.md, https://wranngle.com/profile.json, https://wranngle.com/llms-full.txt
 
 ## Core Terms
 
