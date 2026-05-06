@@ -86,6 +86,11 @@ export const onRequest: PagesFunction = async (context) => {
     return context.next();
   }
 
+  const {pathname} = new URL(context.request.url);
+  if (pathname === '/api/stripe-webhook') {
+    return context.next();
+  }
+
   const key = getRateLimitKey(context.request);
   const {allowed, remaining, resetTime} = checkRateLimit(key);
 

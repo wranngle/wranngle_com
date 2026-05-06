@@ -28,6 +28,9 @@ export function openSarahWidget() {
 
   if (!widget) return false;
 
+  globalThis.setTimeout(() => {
+    widget.dataset.visible = 'true';
+  }, 0);
   widget.scrollIntoView({behavior: 'smooth', block: 'center'});
   globalThis.setTimeout(() => {
     const button =

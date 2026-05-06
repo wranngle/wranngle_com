@@ -1,6 +1,8 @@
-name = "wranngle_com"
+name = "wranngle-com"
 compatibility_date = "2024-01-01"
 pages_build_output_dir = "dist"
 
 # Environment variables are configured in the Cloudflare Pages
 # Dashboard (Settings → Environment variables). Required: N8N_WEBHOOK_URL.
+# Optional: STRIPE_SECRET_KEY and SITE_URL enable Stripe Checkout receipts.
+# Optional: STRIPE_WEBHOOK_SECRET enables paid checkout fulfillment.

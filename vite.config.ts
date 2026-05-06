@@ -1,15 +1,17 @@
+import path from 'node:path';
+import {mkdir, readFile, writeFile} from 'node:fs/promises';
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
-import {mkdir, readFile, writeFile} from 'fs/promises';
 
 const spaHtmlRoutes = [
   'about',
   'built-by',
   'offerings',
   'privacy',
+  'products/ai-voice-agents',
   'products/gtm-ops',
   'products/gtm_ops',
+  'products/websites',
   'terms',
 ];
 

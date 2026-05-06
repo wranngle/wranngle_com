@@ -21,7 +21,7 @@ export default function PrivacyPolicy() {
         className={`min-h-screen flex flex-col ${isDark ? 'bg-page-dark' : 'bg-page-light'}`}
       >
         <SiteHeader isDark={isDark} toggleTheme={toggleTheme} />
-        <main className="flex-1 py-16 px-6">
+        <main id="main" className="flex-1 py-16 px-6">
           <style>{`
             .brand-font { font-family: 'Bricolage Grotesque', sans-serif; }
           `}</style>
@@ -87,7 +87,7 @@ export default function PrivacyPolicy() {
                   </li>
                   <li>
                     <strong>Support Communications:</strong> Messages, feedback,
-                    and correspondence with our support team
+                    and correspondence sent to us
                   </li>
                 </ul>
 
@@ -316,12 +316,15 @@ export default function PrivacyPolicy() {
                     multi-factor authentication for sensitive operations
                   </li>
                   <li>
-                    <strong>Monitoring:</strong> Continuous security monitoring
-                    and anomaly detection
+                    <strong>Monitoring:</strong> Cloudflare WAF and bot
+                    detection on the perimeter; application logs reviewed for
+                    anomalies
                   </li>
                   <li>
-                    <strong>Audits:</strong> Regular security assessments and
-                    penetration testing
+                    <strong>Audits:</strong> Dependency vulnerability scans,
+                    code review, and reliance on the security attestations of
+                    our infrastructure providers (Cloudflare, Stripe,
+                    ElevenLabs)
                   </li>
                   <li>
                     <strong>Data Isolation:</strong> Customer data is logically
@@ -400,8 +403,8 @@ export default function PrivacyPolicy() {
                 </ul>
 
                 <p className="opacity-80 mt-4">
-                  To exercise these rights, contact us at privacy@wranngle.com.
-                  We will respond within 30 days.
+                  To exercise these rights, contact us at hello@wranngle.com. We
+                  will respond within 30 days.
                 </p>
               </section>
 
@@ -523,7 +526,6 @@ export default function PrivacyPolicy() {
                 <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
                   <li>Posting the updated policy on our website</li>
                   <li>Sending email notification to your registered address</li>
-                  <li>Displaying a notice in the Service dashboard</li>
                 </ul>
                 <p className="opacity-80 mt-4">
                   Changes become effective 30 days after notification. Your
@@ -543,15 +545,11 @@ export default function PrivacyPolicy() {
                 <p className="opacity-80 font-mono text-sm mb-4">
                   Wranngle Systems LLC
                   <br />
-                  Email: privacy@wranngle.com
-                  <br />
-                  Data Protection Officer: dpo@wranngle.com
-                  <br />
-                  Sales: hello@wranngle.com
+                  Email: hello@wranngle.com
                 </p>
                 <p className="opacity-80 text-sm">
-                  For European users, our GDPR representative can be contacted
-                  at gdpr@wranngle.com
+                  Privacy, GDPR, and data-deletion requests all reach the same
+                  inbox — Cody handles them directly.
                 </p>
               </section>
             </div>

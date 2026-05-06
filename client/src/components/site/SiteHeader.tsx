@@ -7,39 +7,35 @@ import DarkModeToggle from './DarkModeToggle.tsx';
 import {OfferingsMegaMenu, AboutMegaMenu} from './MegaMenu.tsx';
 import {Dialog, DialogContent} from '@/components/ui/dialog.tsx';
 import IntakeForm from '@/components/IntakeForm.tsx';
-import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
-import type {OfferingItem} from '@/data/offerings.ts';
 import {goTalkToSarah} from '@/lib/sarah.ts';
 
 const LOGO_URL = '/wordmark.png';
+type HomeAbVariant = 'control' | 'value-first';
 
 type SiteHeaderProps = {
   isDark: boolean;
   toggleTheme: () => void;
+  homeAbVariant?: HomeAbVariant;
 };
 
-export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
+export default function SiteHeader({
+  isDark,
+  toggleTheme,
+  homeAbVariant = 'control',
+}: SiteHeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [factsItem, setFactsItem] = useState<OfferingItem | undefined>(
-    undefined,
-  );
-  const [intakePackage, setIntakePackage] = useState<string | undefined>(
-    undefined,
-  );
   const [deployOpen, setDeployOpen] = useState(false);
-
-  const handleSelectOffering = (item: OfferingItem) => {
-    if (item.facts) {
-      setFactsItem(item);
-    } else {
-      // Offerings without a facts spec sheet (e.g. websites) jump straight
-      // to the intake form preselected.
-      setIntakePackage(item.id);
-    }
-  };
+  const deployCta =
+    homeAbVariant === 'value-first' ? 'Build my stack' : 'Get my agent';
 
   return (
     <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[110] focus:px-4 focus:py-2 focus:rounded-md focus:bg-[var(--s500)] focus:text-white focus:font-bold focus:text-xs focus:uppercase focus:tracking-wider"
+      >
+        Skip to content
+      </a>
       <header
         className={`sticky top-0 z-50 border-b backdrop-blur-md h-20 flex items-center px-6 ${
           isDark
@@ -48,14 +44,18 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
         }`}
       >
         <div className="max-w-7xl mx-auto w-full flex justify-between items-center">
-          <Link href="/" className="inline-flex items-center">
+          <Link
+            href="/"
+            aria-label="Wranngle home"
+            className="inline-flex items-center"
+          >
             <img
               src={LOGO_URL}
-              alt="Wranngle"
+              alt=""
               className="h-14 w-auto"
               width="600"
               height="327"
-              fetchPriority="high"
+              fetchpriority="high"
             />
           </Link>
 
@@ -67,11 +67,26 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
               >
                 Home
               </Link>
-              <OfferingsMegaMenu
-                isDark={isDark}
-                onSelectOffering={handleSelectOffering}
-              />
+              <OfferingsMegaMenu isDark={isDark} />
               <AboutMegaMenu isDark={isDark} onTalkToSarah={goTalkToSarah} />
+              <Link
+                href="/api-docs"
+                className="text-sm font-medium hover:text-[var(--s500)] transition-colors"
+              >
+                API Docs
+              </Link>
+              <Link
+                href="/blog"
+                className="text-sm font-medium hover:text-[var(--s500)] transition-colors"
+              >
+                Blog
+              </Link>
+              <Link
+                href="/case-studies"
+                className="text-sm font-medium hover:text-[var(--s500)] transition-colors"
+              >
+                Case Studies
+              </Link>
               <DarkModeToggle isDark={isDark} toggle={toggleTheme} />
             </nav>
 
@@ -97,7 +112,7 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
                 }}
                 className="px-5 py-2.5 bg-[var(--s500)] text-white font-bold uppercase text-[10px] rounded-md shadow-lg hover:scale-105 transition-all flex items-center gap-2"
               >
-                DEPLOY AGENT <ArrowRight size={12} />
+                {deployCta} <ArrowRight size={12} />
               </button>
             </div>
 
@@ -109,7 +124,7 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
               }}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             >
-              {mobileOpen ? <X /> : <Menu />}
+              {mobileOpen ? <X aria-hidden /> : <Menu aria-hidden />}
             </button>
           </div>
         </div>
@@ -118,6 +133,9 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site navigation"
             initial={{opacity: 0, y: -20}}
             animate={{opacity: 1, y: 0}}
             exit={{opacity: 0, y: -20}}
@@ -153,6 +171,22 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
                 Offerings
               </a>
               <Link
+                href="/products/ai-voice-agents"
+                onClick={() => {
+                  setMobileOpen(false);
+                }}
+              >
+                AI Voice Agents
+              </Link>
+              <Link
+                href="/products/websites"
+                onClick={() => {
+                  setMobileOpen(false);
+                }}
+              >
+                Websites
+              </Link>
+              <Link
                 href="/products/gtm-ops"
                 onClick={() => {
                   setMobileOpen(false);
@@ -160,6 +194,30 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
                 className="mono-font"
               >
                 gtm_ops
+              </Link>
+              <Link
+                href="/case-studies"
+                onClick={() => {
+                  setMobileOpen(false);
+                }}
+              >
+                Case Studies
+              </Link>
+              <Link
+                href="/blog"
+                onClick={() => {
+                  setMobileOpen(false);
+                }}
+              >
+                Blog
+              </Link>
+              <Link
+                href="/api-docs"
+                onClick={() => {
+                  setMobileOpen(false);
+                }}
+              >
+                API Docs
               </Link>
               <button
                 type="button"
@@ -211,68 +269,12 @@ export default function SiteHeader({isDark, toggleTheme}: SiteHeaderProps) {
                 }}
                 className="w-full py-6 bg-[var(--s500)] text-white font-bold uppercase text-sm rounded-xl shadow-xl flex items-center justify-center gap-3"
               >
-                DEPLOY AGENT <ArrowRight size={18} />
+                {deployCta} <ArrowRight size={18} />
               </button>
             </nav>
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Spec-sheet popout, opened via mega-menu Offerings click. */}
-      <Dialog
-        open={Boolean(factsItem)}
-        onOpenChange={(open) => {
-          if (!open) setFactsItem(undefined);
-        }}
-      >
-        <DialogContent className="bg-transparent border-none shadow-none p-0 max-w-fit outline-none">
-          {factsItem?.facts && (
-            <div className="space-y-3">
-              <AgentFactsPopout
-                facts={factsItem.facts}
-                itemName={factsItem.name}
-                onGetStarted={() => {
-                  const {id} = factsItem;
-                  setFactsItem(undefined);
-                  // Defer to next tick — see App.tsx onGetStarted comment.
-                  globalThis.setTimeout(() => {
-                    setIntakePackage(id);
-                  }, 80);
-                }}
-                onCrossSell={(targetId) => {
-                  setFactsItem(undefined);
-                  globalThis.location.hash = `offerings-${targetId}`;
-                }}
-              />
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
-
-      {/* Intake form, opened from mega-menu (non-facts items) and the AgentFactsPopout CTA. */}
-      <Dialog
-        open={Boolean(intakePackage)}
-        onOpenChange={(open) => {
-          if (!open) setIntakePackage(undefined);
-        }}
-      >
-        <DialogContent
-          className={
-            isDark
-              ? 'bg-[#12111a] text-[#fcfaf5] border-white/10'
-              : 'bg-white text-[#12111a] border-black/10'
-          }
-        >
-          {intakePackage && (
-            <IntakeForm
-              selectedPackage={intakePackage}
-              onSuccess={() => {
-                /* dialog auto-closes when user closes the receipt */
-              }}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
 
       {/* Deploy Agent CTA in header — opens IntakeForm preselected to premium. */}
       <Dialog open={deployOpen} onOpenChange={setDeployOpen}>

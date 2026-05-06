@@ -31,6 +31,10 @@ function loadEnvKey(key: string): string {
 
 const N8N_API_KEY = loadEnvKey('N8N_API_KEY');
 const N8N_API = 'https://n8n.wranngle.com/api/v1';
+// Skip when the n8n API key isn't available — the suite hits the
+// production n8n control-plane to read execution state, which 401s
+// without auth. CI without secrets falls into this path.
+const describeIfCreds = N8N_API_KEY ? describe : describe.skip;
 
 const LEAD_INTAKE_WORKFLOW_ID = 'SY5XCbzxX32eCIeO';
 const UMS_WORKFLOW_ID = 'CBoXlSNiDOHA5YmA';
@@ -55,7 +59,7 @@ async function getLatestExecution(workflowId: string) {
 	return data.data?.[0];
 }
 
-describe('Lead Intake Notification Flow', () => {
+describeIfCreds('Lead Intake Notification Flow', () => {
 	describe('RUNTIME: Workflow executes without errors', () => {
 		it('should accept a lead submission and return success', async () => {
 			const response = await fetch(INTAKE_WEBHOOK, {

@@ -35,7 +35,10 @@ export default function NotFound() {
       >
         <SiteHeader isDark={isDark} toggleTheme={toggleTheme} />
 
-        <main className="flex-1 flex items-center justify-center px-6 py-20">
+        <main
+          id="main"
+          className="flex-1 flex items-center justify-center px-6 py-20"
+        >
           <div
             className={`relative max-w-lg w-full p-10 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] ${
               isDark

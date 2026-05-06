@@ -76,8 +76,10 @@ This is a static site with serverless API functions:
 - **Frontend**: React SPA built with Vite, served globally via Cloudflare Pages CDN
 - **API**: Cloudflare Pages Functions handle `/api/*` routes (e.g., `/api/leads`)
 - **Lead Capture**: Form submissions are validated with ArkType and forwarded to an n8n webhook
+- **Checkout**: `/api/checkout` creates Stripe Checkout Sessions with native consent collection when `STRIPE_SECRET_KEY` is configured
+- **Fulfillment**: `/api/stripe-webhook` verifies Stripe Checkout events and forwards paid sessions into the n8n lead flow
 - **Email System**: Production-ready transactional email templates with master inheritance
-- **Environment Variables**: Set `N8N_WEBHOOK_URL` in Cloudflare Pages dashboard
+- **Environment Variables**: Set `N8N_WEBHOOK_URL` and optional `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` / `SITE_URL` in Cloudflare Pages dashboard
 
 ## Email Templates
 
@@ -98,12 +100,14 @@ bun run email:test
 ```
 
 **Available Templates:**
+
 - Welcome email (onboarding)
 - Invoice/Receipt (billing)
 - Notification (real-time alerts)
 - Password reset (security)
 
 **Key Features:**
+
 - ✅ Cross-client compatible (Gmail, Outlook, Apple Mail, etc.)
 - ✅ Mobile responsive
 - ✅ Deliverability optimized (spam score: 8.5/10)

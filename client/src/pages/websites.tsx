@@ -1,24 +1,21 @@
-/* eslint-disable @typescript-eslint/no-deprecated -- lucide-react brand icon (Github) used intentionally for repo link; deprecation is upstream-future. */
 // @ts-nocheck
 import React, {useEffect, useState} from 'react';
 import {motion} from 'framer-motion';
 import {
-  Activity,
   ArrowRight,
-  Braces,
+  BarChart3,
   Check,
-  Clock3,
-  DatabaseZap,
-  ExternalLink,
+  Cloud,
+  Code2,
   FileText,
-  Github,
+  FormInput,
   Gauge,
-  Inbox,
-  FileCheck,
-  Play,
-  Send,
+  Globe2,
+  Layers3,
+  MousePointerClick,
+  Palette,
+  SearchCheck,
   ShieldCheck,
-  Sparkles,
   Workflow,
 } from 'lucide-react';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
@@ -35,86 +32,61 @@ import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import {getCategoryById, type OfferingItem} from '@/data/offerings.ts';
 
-// Production demo URL. The bare `gtm-ops.pages.dev` is the live
-// deploy; the `preview.` prefix that lived here previously is a
-// per-branch alias and reads as "not the real thing." Once DNS for
-// app.wranngle.com (or demo.wranngle.com) is provisioned, swap here.
-const GTM_OPS_DEMO_URL = 'https://gtm-ops.pages.dev';
-const GTM_OPS_REPO_URL = 'https://github.com/wranngle/gtm_ops';
-
 const HERO_METRICS = [
-  {value: '5 min', label: 'synthetic demo run'},
-  {value: '4 stages', label: 'audited proposal pipeline'},
-  {value: 'Open', label: 'runtime source on GitHub'},
+  {value: '7 days', label: 'landing page quickstart'},
+  {value: '95+', label: 'Lighthouse target'},
+  {value: 'Yours', label: 'source code ownership'},
 ];
 
-const PRODUCT_EVENTS = [
+const WEBSITE_SIGNALS = [
   {
-    label: 'Lead captured',
-    value: 'Voice agent',
-    tone: 'text-sky-400',
+    Icon: SearchCheck,
+    label: 'Search-ready',
+    body: 'Sitemap, metadata, OG cards, robots, and page structure are handled before launch.',
   },
   {
-    label: 'Clay enrichment',
-    value: 'Firmographics ready',
-    tone: 'text-emerald-400',
-  },
-  {
-    label: 'Proposal render',
-    value: 'Customer PDF queued',
-    tone: 'text-[var(--s500)]',
-  },
-];
-
-const OPS_SIGNALS = [
-  {
-    Icon: Clock3,
-    label: 'Faster handoff',
-    body: 'Turn intake notes into a proposal artifact before the lead cools off.',
+    Icon: FormInput,
+    label: 'Lead capture',
+    body: 'Forms route to email and n8n, so the site feeds the rest of your sales workflow.',
   },
   {
     Icon: ShieldCheck,
-    label: 'Receipts built in',
-    body: 'Every payload, prompt, enrichment pass, and render step stays attached.',
-  },
-  {
-    Icon: DatabaseZap,
-    label: 'Webhook native',
-    body: 'Forms, voice agents, CRM exports, and n8n can all feed the same run.',
+    label: 'Owned surface',
+    body: 'No locked-in page builder. You get the code, hosting path, and maintenance option.',
   },
 ];
 
-const PIPELINE_STEPS = [
+const BUILD_STEPS = [
   {
-    Icon: Inbox,
-    title: 'Lead intake',
-    body: 'Web chat, voice AI agent, contact form, webhook, internal company data, CRM export. Whatever shape the lead arrives in, gtm_ops normalizes it on the way in.',
+    Icon: MousePointerClick,
+    title: 'Conversion map',
+    body: 'Offer, audience, proof, objections, and contact path are decided before pixels move.',
   },
   {
-    Icon: Sparkles,
-    title: 'Lead enrichment',
-    body: 'Clay-powered enrichment plus research passes against the lead domain and yours. Firmographics, recent signals, and contact context arrive before drafting starts.',
+    Icon: Palette,
+    title: 'Custom design',
+    body: 'A practical visual system built around your business, not a theme marketplace template.',
   },
   {
-    Icon: FileCheck,
-    title: 'Branded proposal',
-    body: 'Your logo, colors, and proposal template. Structured LLM extraction fills typed fields; the renderer ships a branded proposal ready to send.',
+    Icon: Code2,
+    title: 'Performance build',
+    body: 'Responsive React/Tailwind implementation with image discipline and Core Web Vitals budget.',
   },
   {
-    Icon: Send,
-    title: 'Out the door',
-    body: 'Email, n8n, or your CRM. Every step writes to an audit log so you can reproduce any output.',
+    Icon: Workflow,
+    title: 'Automation handoff',
+    body: 'Lead forms, webhook payloads, analytics, and optional AI chat connect to your operating stack.',
   },
 ];
 
-export default function GtmOpsPage() {
+export default function WebsitesPage() {
   const {isDark, toggle: toggleTheme} = useDarkMode();
-  const category = getCategoryById('gtm_ops');
+  const category = getCategoryById('websites');
   const tiers = category?.items ?? [];
 
   useEffect(() => {
     globalThis.scrollTo(0, 0);
-    document.title = 'gtm_ops — Lead in, branded proposal out · Wranngle';
+    document.title = 'Websites that capture leads - Wranngle Systems';
   }, []);
 
   return (
@@ -127,7 +99,6 @@ export default function GtmOpsPage() {
         <SiteHeader isDark={isDark} toggleTheme={toggleTheme} />
 
         <main id="main" className="flex-1">
-          {/* Hero */}
           <section className="relative overflow-hidden border-b border-current/10">
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--s500)]/70 to-transparent" />
             <div className="max-w-7xl mx-auto w-full px-6 pt-10 pb-12 md:pt-14 md:pb-16">
@@ -138,45 +109,46 @@ export default function GtmOpsPage() {
               >
                 <div className="max-w-2xl">
                   <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
-                    PRODUCT // PROPOSAL OPS CONSOLE
+                    PRODUCT // CONVERSION SITE SYSTEM
                   </div>
                   <h1 className="brand-font text-5xl sm:text-6xl md:text-7xl font-bold leading-[0.95] mb-5">
-                    <span className="mono-font text-[0.82em]">gtm_ops</span>
+                    Websites that turn attention into work.
                   </h1>
                   <p className="text-xl md:text-2xl font-semibold leading-snug mb-4 max-w-xl">
-                    Lead capture, enrichment, and branded proposal generation in
-                    one operator surface.
+                    Fast, owned, lead-capture websites for operators who need
+                    the phone to ring and the inbox to stay organized.
                   </p>
                   <p className="text-base md:text-lg opacity-75 leading-relaxed mb-7 max-w-xl">
-                    Pipe a form, webhook, CRM export, or Wranngle voice agent
-                    into the same run. The console turns messy intake into a
-                    typed proposal PDF with a full audit trail attached.
+                    Wranngle builds the page, wires the forms, ships the source,
+                    and keeps maintenance optional. Landing page or full
+                    business site, the goal is the same: convert real buyers.
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-3">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <button
+                          type="button"
+                          className="h-12 px-5 bg-[var(--s500)] text-white font-bold uppercase text-xs rounded-md shadow-lg hover:scale-[1.02] transition-all inline-flex items-center justify-center gap-2"
+                        >
+                          Start a website <ArrowRight size={15} aria-hidden />
+                        </button>
+                      </DialogTrigger>
+                      <DialogContent
+                        className={
+                          isDark
+                            ? 'bg-[#12111a] text-[#fcfaf5] border-white/10'
+                            : 'bg-white text-[#12111a] border-black/10'
+                        }
+                      >
+                        <IntakeForm selectedPackage="business-site" />
+                      </DialogContent>
+                    </Dialog>
                     <a
-                      href={GTM_OPS_DEMO_URL}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="h-12 px-5 bg-[var(--s500)] text-white font-bold uppercase text-xs rounded-md shadow-lg hover:scale-[1.02] transition-all inline-flex items-center justify-center gap-2"
-                    >
-                      <Play size={15} fill="currentColor" aria-hidden /> Open
-                      live demo
-                      <ExternalLink size={14} aria-hidden />
-                      <span className="sr-only">(opens in new tab)</span>
-                    </a>
-                    <a
-                      href="/sample-proposal.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      download="wranngle-gtm-ops-sample-proposal.pdf"
+                      href="#pricing"
                       className="h-12 px-5 border border-current/25 font-bold uppercase text-xs rounded-md hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all inline-flex items-center justify-center gap-2"
                     >
-                      <FileText size={15} aria-hidden /> Sample proposal
-                      <span className="opacity-60 normal-case font-normal">
-                        · 3 MB PDF
-                      </span>
-                      <span className="sr-only">(downloads)</span>
+                      Compare packages
                     </a>
                   </div>
 
@@ -201,11 +173,11 @@ export default function GtmOpsPage() {
                   </div>
                 </div>
 
-                <ProductScreenshot isDark={isDark} />
+                <WebsitePreview isDark={isDark} />
               </motion.div>
 
               <div className="mt-10 grid md:grid-cols-3 gap-3">
-                {OPS_SIGNALS.map(({Icon, label, body}) => (
+                {WEBSITE_SIGNALS.map(({Icon, label, body}) => (
                   <div
                     key={label}
                     className={`rounded-md border p-4 ${
@@ -228,19 +200,18 @@ export default function GtmOpsPage() {
           </section>
 
           <div className="max-w-7xl mx-auto w-full px-6 py-14 md:py-20">
-            {/* 4-step pipeline */}
             <section className="mb-24 grid lg:grid-cols-[0.74fr_1.26fr] gap-10 items-start">
               <div className="lg:sticky lg:top-28">
                 <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-3 mono-font">
-                  THE PIPELINE
+                  THE BUILD FLOW
                 </div>
                 <h2 className="brand-font text-3xl md:text-4xl font-bold mb-4">
-                  Input to artifact, with receipts.
+                  Practical site work, not brochure theater.
                 </h2>
                 <p className="opacity-75 text-base leading-relaxed mb-6">
-                  The value is not another dashboard. It is a repeatable path
-                  from lead signal to customer-ready proposal, plus enough log
-                  detail to replay the run when the stakes are high.
+                  The site has one job: make trust legible and make the next
+                  action obvious. Design, copy, build, SEO, and automation stay
+                  tied to that job.
                 </p>
                 <div
                   className={`rounded-md border p-4 ${
@@ -250,22 +221,21 @@ export default function GtmOpsPage() {
                   }`}
                 >
                   <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mono-font mb-3">
-                    <Workflow size={14} /> Current run
+                    <BarChart3 size={14} /> Launch targets
                   </div>
                   <div className="space-y-3">
-                    {PRODUCT_EVENTS.map((event) => (
+                    {[
+                      ['Speed', 'Sub-2s first load target'],
+                      ['Capture', 'Form + webhook routing'],
+                      ['Ownership', 'Git handoff included'],
+                    ].map(([label, value]) => (
                       <div
-                        key={event.label}
+                        key={label}
                         className="flex items-start justify-between gap-3 text-sm"
                       >
-                        <div className="flex items-center gap-2 min-w-0">
-                          <span
-                            className={`mt-1 h-2 w-2 rounded-full ${event.tone} bg-current shrink-0`}
-                          />
-                          <span className="opacity-70">{event.label}</span>
-                        </div>
+                        <span className="opacity-70">{label}</span>
                         <span className="font-semibold text-right">
-                          {event.value}
+                          {value}
                         </span>
                       </div>
                     ))}
@@ -274,7 +244,7 @@ export default function GtmOpsPage() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
-                {PIPELINE_STEPS.map((step, index) => {
+                {BUILD_STEPS.map((step, index) => {
                   const {Icon} = step;
                   return (
                     <div
@@ -307,65 +277,60 @@ export default function GtmOpsPage() {
               </div>
             </section>
 
-            {/* Pricing tiers */}
             <section id="pricing" className="mb-24 scroll-mt-24">
               <div className="text-center mb-10">
                 <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-3 mono-font">
                   PRICING
                 </div>
                 <h2 className="brand-font text-3xl md:text-4xl font-bold mb-3">
-                  Three tiers. One runtime.
+                  Pick the website shape.
                 </h2>
                 <p className="opacity-70 max-w-xl mx-auto text-base">
-                  Pick the volume you need. Plus covers a real solo or
-                  small-team cadence; Pro adds SSO, custom domain, and unlimited
-                  throughput when an org needs controls.
+                  One focused landing page when speed matters. A business site
+                  when you need pages, CMS, analytics, and a longer shelf life.
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
                 {tiers.map((item) => (
-                  <GtmOpsTile key={item.id} item={item} isDark={isDark} />
+                  <WebsiteTierTile key={item.id} item={item} isDark={isDark} />
                 ))}
               </div>
             </section>
 
-            {/* Footer note + GitHub link */}
-            <section className="border-t border-current/10 pt-10 grid md:grid-cols-2 gap-8">
+            <section
+              className={`rounded-md border p-6 md:p-8 grid md:grid-cols-[1.08fr_0.92fr] gap-8 items-center ${
+                isDark
+                  ? 'border-white/10 bg-[#18181b]'
+                  : 'border-black/10 bg-white'
+              }`}
+            >
               <div>
                 <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-3 mono-font">
-                  BUILT IN PUBLIC
+                  PAIRS WELL WITH VOICE AI
                 </div>
-                <h3 className="brand-font text-2xl font-bold mb-3">
-                  Source is open. Receipts are public.
+                <h3 className="brand-font text-2xl md:text-3xl font-bold mb-3">
+                  A good site should not be your only after-hours capture.
                 </h3>
-                <p className="text-sm opacity-70 leading-relaxed mb-4">
-                  The runtime, pipeline, and ops console are inspectable before
-                  you sign up. Run it locally, inspect the architecture, or use
-                  the hosted demo with synthetic data.
+                <p className="text-sm md:text-base opacity-70 leading-relaxed">
+                  Add Sarah-style web chat or a full voice agent when the site
+                  is ready. The website handles intent you can see. The agent
+                  handles the calls and typed questions that happen after hours.
                 </p>
-                <a
-                  href={GTM_OPS_REPO_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-bold border border-current/30 hover:border-[var(--s500)] hover:text-[var(--s500)] transition-colors px-4 py-2 rounded-md"
-                >
-                  <Github size={16} /> github.com/wranngle/gtm_ops
-                </a>
               </div>
-              <div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-3 mono-font">
-                  AUDIT-FIRST BY DESIGN
-                </div>
-                <h3 className="brand-font text-2xl font-bold mb-3">
-                  Every proposal is reproducible.
-                </h3>
-                <p className="text-sm opacity-70 leading-relaxed">
-                  Intake, enrichment, extraction, and render events are keyed to
-                  the lead. Replay a proposal from the original payload, compare
-                  a prompt revision against a previous run, or export the chain
-                  when a customer asks how the recommendation was made.
-                </p>
+              <div className="flex flex-col sm:flex-row md:flex-col gap-3">
+                <a
+                  href="/#talk-to-sarah"
+                  className="h-12 px-5 bg-[var(--s500)] text-white font-bold uppercase text-xs rounded-md shadow-lg hover:scale-[1.02] transition-all inline-flex items-center justify-center gap-2"
+                >
+                  Talk to Sarah <ArrowRight size={15} aria-hidden />
+                </a>
+                <a
+                  href="/#offerings-basic"
+                  className="h-12 px-5 border border-current/25 font-bold uppercase text-xs rounded-md hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all inline-flex items-center justify-center gap-2"
+                >
+                  See AI agent tiers
+                </a>
               </div>
             </section>
           </div>
@@ -377,7 +342,7 @@ export default function GtmOpsPage() {
   );
 }
 
-function ProductScreenshot({isDark}: {isDark: boolean}) {
+function WebsitePreview({isDark}: {isDark: boolean}) {
   return (
     <div className="relative">
       <div
@@ -400,8 +365,8 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
             <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
           </div>
           <div className="min-w-0 flex items-center gap-2 text-[10px] uppercase tracking-widest mono-font opacity-60">
-            <Activity size={13} className="text-[var(--s500)] shrink-0" />
-            <span className="truncate">gtm_ops.pages.dev / console</span>
+            <Globe2 size={13} className="text-[var(--s500)] shrink-0" />
+            <span className="truncate">wranngle.com / website build</span>
           </div>
           <div className="hidden sm:flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400">
             <span className="h-2 w-2 rounded-full bg-current" />
@@ -413,11 +378,11 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
           <div
             className={`absolute inset-0 ${
               isDark
-                ? 'bg-[linear-gradient(135deg,rgba(255,95,0,0.10),rgba(59,130,246,0.08),rgba(207,60,105,0.08))]'
-                : 'bg-[linear-gradient(135deg,rgba(255,95,0,0.08),rgba(59,130,246,0.06),rgba(207,60,105,0.05))]'
+                ? 'bg-[linear-gradient(135deg,rgba(255,95,0,0.10),rgba(93,140,97,0.10),rgba(207,60,105,0.08))]'
+                : 'bg-[linear-gradient(135deg,rgba(255,95,0,0.08),rgba(93,140,97,0.08),rgba(207,60,105,0.05))]'
             }`}
           />
-          <div className="relative grid sm:grid-cols-[0.72fr_1.28fr] gap-3 min-h-[370px]">
+          <div className="relative grid sm:grid-cols-[0.78fr_1.22fr] gap-3 min-h-[370px]">
             <aside
               className={`hidden sm:flex flex-col rounded-md border p-3 ${
                 isDark
@@ -426,41 +391,23 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
               }`}
             >
               <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--s500)] mb-4">
-                Run queue
+                Launch stack
               </div>
-              <div className="space-y-2">
-                {['Acme HVAC', 'Northline Solar', 'King Plumbing'].map(
-                  (lead, index) => (
-                    <div
-                      key={lead}
-                      className={`rounded-md border p-3 ${
-                        index === 0
-                          ? 'border-[rgba(255,95,0,0.5)] bg-[var(--s500)]/10'
-                          : isDark
-                            ? 'border-white/10 bg-white/[0.03]'
-                            : 'border-black/10 bg-black/[0.03]'
-                      }`}
-                    >
-                      <div className="font-bold text-sm leading-none">
-                        {lead}
-                      </div>
-                      <div className="mt-1 text-[10px] uppercase tracking-wider opacity-60">
-                        {index === 0 ? 'Ready to render' : 'Enrichment'}
-                      </div>
-                    </div>
-                  ),
-                )}
-              </div>
+              <PreviewRow Icon={Gauge} label="Performance" value="95+" />
+              <PreviewRow Icon={SearchCheck} label="SEO basics" value="Ready" />
+              <PreviewRow Icon={Cloud} label="Hosting" value="Cloudflare" />
               <div className="mt-auto rounded-md border border-emerald-500/30 bg-emerald-500/10 p-3">
                 <div className="flex items-center gap-2 text-emerald-400">
-                  <Gauge size={15} />
+                  <FormInput size={15} />
                   <span className="mono-font text-[10px] uppercase tracking-widest">
-                    Median
+                    Lead path
                   </span>
                 </div>
-                <div className="mt-2 brand-font text-2xl font-bold">12m</div>
+                <div className="mt-2 brand-font text-2xl font-bold">
+                  Form {'->'} n8n
+                </div>
                 <div className="text-[10px] uppercase tracking-wider opacity-60">
-                  lead to PDF (synthetic demo)
+                  email + workflow handoff
                 </div>
               </div>
             </aside>
@@ -472,27 +419,27 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
                 }`}
               >
                 <img
-                  src="/assets/rcs/demo-preview.png"
-                  alt="gtm_ops live demo console preview"
+                  src="/assets/rcs/hero-welcome.png"
+                  alt="Website hero and welcome screen preview"
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#12111a]/95 via-[#12111a]/60 to-[#12111a]/20" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#12111a]/95 via-[#12111a]/60 to-[#12111a]/15" />
                 <div className="relative z-10 p-4 text-white">
                   <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--s500)] mb-3">
-                    Live demo screenshot
+                    Conversion surface
                   </div>
                   <h2 className="brand-font text-2xl font-bold leading-tight mb-2">
-                    Acme HVAC proposal run
+                    Hero, proof, CTA, form
                   </h2>
                   <p className="text-sm text-white/70 max-w-sm leading-relaxed">
-                    Intake fields, enrichment context, proposal status, and the
-                    audit chain stay visible in the same workspace.
+                    The first screen says what you do, who it is for, why to
+                    trust you, and what happens next.
                   </p>
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-[1.08fr_0.92fr] gap-3 flex-1">
+              <div className="grid md:grid-cols-[0.94fr_1.06fr] gap-3 flex-1">
                 <div
                   className={`rounded-md border p-4 ${
                     isDark
@@ -502,39 +449,34 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
                 >
                   <div className="flex items-center justify-between gap-3 mb-4">
                     <div>
-                      <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--s500)] flex items-center gap-2">
-                        Extraction
-                        <span className="text-[8px] tracking-wider px-1.5 py-0.5 rounded bg-[var(--s500)]/15 text-[var(--s500)]">
-                          DEMO DATA
-                        </span>
+                      <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--s500)]">
+                        Build checklist
                       </div>
                       <h3 className="brand-font text-xl font-bold">
-                        Scope builder
+                        Launch-ready
                       </h3>
                     </div>
-                    <div className="h-9 w-9 rounded-md bg-[var(--s500)]/10 text-[var(--s500)] flex items-center justify-center">
-                      <Braces size={17} />
-                    </div>
+                    <Layers3 size={18} className="text-[var(--s500)]" />
                   </div>
-
                   <div className="space-y-3">
                     {[
-                      ['Lead type', 'Commercial HVAC'],
-                      ['Budget signal', '$18k - $26k'],
-                      ['Urgency', 'Before July shutdown'],
-                    ].map(([label, value]) => (
+                      'Responsive layout',
+                      'OG social cards',
+                      'Webhook forms',
+                    ].map((label) => (
                       <div
                         key={label}
-                        className={`rounded-md border px-3 py-2 ${
+                        className={`rounded-md border px-3 py-2 flex items-center justify-between gap-3 ${
                           isDark
                             ? 'border-white/10 bg-white/[0.03]'
                             : 'border-black/10 bg-black/[0.03]'
                         }`}
                       >
-                        <div className="text-[10px] uppercase tracking-wider opacity-60">
-                          {label}
-                        </div>
-                        <div className="text-sm font-semibold">{value}</div>
+                        <span className="text-sm font-semibold">{label}</span>
+                        <Check
+                          size={15}
+                          className="text-emerald-400 shrink-0"
+                        />
                       </div>
                     ))}
                   </div>
@@ -550,13 +492,13 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
                   <div className="flex items-center justify-between gap-3 mb-3">
                     <div>
                       <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--v500)]">
-                        Output
+                        Analytics
                       </div>
                       <h3 className="brand-font text-xl font-bold">
-                        Proposal PDF
+                        Lead signal
                       </h3>
                     </div>
-                    <FileText size={18} className="text-[var(--v500)]" />
+                    <BarChart3 size={18} className="text-[var(--v500)]" />
                   </div>
                   <div
                     className={`relative rounded-md overflow-hidden border flex-1 min-h-[132px] ${
@@ -564,15 +506,15 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
                     }`}
                   >
                     <img
-                      src="/assets/rcs/proposal-ready.png"
-                      alt="gtm_ops proposal-ready output preview"
+                      src="/assets/rcs/analytics-dashboard.png"
+                      alt="Website analytics and lead dashboard preview"
                       loading="lazy"
                       className="absolute inset-0 h-full w-full object-cover"
                     />
                     <div className="absolute inset-x-0 bottom-0 p-3 bg-[#12111a]/80 text-white">
-                      <div className="text-sm font-bold">Ready to send</div>
+                      <div className="text-sm font-bold">Pipeline visible</div>
                       <div className="text-[10px] uppercase tracking-wider text-white/60">
-                        Branded artifact generated
+                        visitors, forms, and follow-up
                       </div>
                     </div>
                   </div>
@@ -586,7 +528,27 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
   );
 }
 
-function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
+function PreviewRow({Icon, label, value}) {
+  return (
+    <div className="mb-2 rounded-md border border-current/10 bg-current/[0.03] p-3">
+      <div className="flex items-center gap-2 text-[var(--s500)]">
+        <Icon size={15} />
+        <span className="mono-font text-[10px] uppercase tracking-widest">
+          {label}
+        </span>
+      </div>
+      <div className="mt-1 text-sm font-bold">{value}</div>
+    </div>
+  );
+}
+
+function WebsiteTierTile({
+  item,
+  isDark,
+}: {
+  item: OfferingItem;
+  isDark: boolean;
+}) {
   const [factsOpen, setFactsOpen] = useState(false);
   const [intakeOpen, setIntakeOpen] = useState(false);
   const priceLabel = item.price === '0' ? 'Free' : `$${item.price}`;
@@ -608,7 +570,7 @@ function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
           <div className="flex justify-between items-start mb-2 mt-6">
             <div>
               <div className="mono-font text-[10px] text-[var(--s500)] tracking-[0.08em] mb-1">
-                gtm_ops
+                WEBSITE BUILD
               </div>
               <h3 className="brand-font text-2xl font-bold">{item.name}</h3>
             </div>
@@ -627,23 +589,22 @@ function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
               </div>
               {item.monthlyAddon && (
                 <div className="text-sm opacity-60 mt-1">
-                  or ${item.monthlyAddon.price}
-                  {item.monthlyAddon.label}
+                  + ${item.monthlyAddon.price}/mo {item.monthlyAddon.label}
                 </div>
               )}
             </div>
             <ul className="space-y-3 mb-8 flex-1">
-              {item.features.map((f, i) => (
+              {item.features.map((feature, index) => (
                 <li
-                  key={i}
+                  key={index}
                   className="flex items-center gap-3 text-sm opacity-80"
                 >
                   <Check
                     size={16}
                     className="text-[var(--s500)] shrink-0"
                     aria-hidden
-                  />{' '}
-                  {f}
+                  />
+                  {feature}
                 </li>
               ))}
             </ul>
@@ -661,7 +622,7 @@ function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
               </DialogTrigger>
               <DialogContent className="bg-transparent border-none shadow-none p-0 max-w-fit outline-none">
                 <DialogTitle className="sr-only">
-                  gtm_ops {item.name} spec sheet
+                  {item.name} website spec sheet
                 </DialogTitle>
                 <AgentFactsPopout
                   facts={item.facts}
@@ -674,18 +635,7 @@ function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
                   }}
                   onCrossSell={(targetId) => {
                     setFactsOpen(false);
-                    if (
-                      targetId === 'gtm-ops-trial' ||
-                      targetId === 'gtm-ops-plus' ||
-                      targetId === 'gtm-ops-pro'
-                    ) {
-                      // Stay on this page — scroll to pricing.
-                      const target = document.querySelector('#pricing');
-                      target?.scrollIntoView({behavior: 'smooth'});
-                    } else {
-                      // Cross-sell to ai-agents/websites lives on home page.
-                      globalThis.location.href = `/#offerings-${targetId}`;
-                    }
+                    globalThis.location.href = `/#offerings-${targetId}`;
                   }}
                 />
               </DialogContent>

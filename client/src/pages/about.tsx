@@ -2,7 +2,16 @@
 // @ts-nocheck
 import React, {useEffect} from 'react';
 import {motion} from 'framer-motion';
-import {Linkedin, Github, Mail, Globe, ArrowRight} from 'lucide-react';
+import {
+  ArrowRight,
+  BadgeCheck,
+  FileText,
+  Gauge,
+  Github,
+  Linkedin,
+  Mail,
+  PhoneCall,
+} from 'lucide-react';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
 import SiteFooter from '@/components/site/SiteFooter.tsx';
 import {useDarkMode} from '@/components/site/DarkModeToggle.tsx';
@@ -17,15 +26,15 @@ type RepoEntry = {
 const REPOS: RepoEntry[] = [
   {
     fullName: 'wranngle/voice_ai_agent_evals',
-    role: 'Eval harness',
+    role: 'Voice evals',
     blurb:
-      'Test runner and scenario framework for ElevenLabs voice agents — deterministic synthetic transcripts, latency budgets (TTFB p95 ≤ 800ms, end-to-first-audio p95 ≤ 1.4s, total-turn p95 ≤ 3.0s), prompt versioning, scoring rubric.',
+      'Test runner and scenario framework for ElevenLabs voice agents: deterministic synthetic transcripts, latency budgets, prompt versioning, and a scoring rubric for user-facing failures.',
   },
   {
     fullName: 'wranngle/gtm_ops',
-    role: 'Runtime + architecture',
+    role: 'Ops runtime',
     blurb:
-      'Voice-AI-led GTM motion runtime. Inbound voice agent enriches the lead from CRM context, structured LLM extraction generates a branded PDF proposal, every step writes audit logs, operators review in the ops-console.',
+      'Voice-AI-led GTM runtime. Inbound calls enrich from CRM context, structured extraction creates proposal inputs, and every step leaves an audit trail for operator review.',
   },
   {
     fullName: 'wranngle/n8n',
@@ -35,21 +44,106 @@ const REPOS: RepoEntry[] = [
   },
   {
     fullName: 'wranngle/tradingbot',
-    role: 'Quant infra',
+    role: 'Systems rigor',
     blurb:
-      'Algorithmic trading research surface — strategy harness, backtests, and live-paper plumbing. DevOps-style rigor (deterministic fixtures, audit trails, latency budgets) applied to a different domain.',
+      'Algorithmic trading research surface with strategy harnesses, backtests, live-paper plumbing, deterministic fixtures, audit trails, and latency budgets.',
   },
   {
     fullName: 'wranngle/career_architect',
     role: 'Python automation',
     blurb:
-      'Public runtime + Next.js landing page for an AI-driven job search command center. CLI scripts for JD evaluation, tailored CV generation, portal scanning, and application tracking.',
+      'AI-driven job search command center with scripts for JD evaluation, tailored CV generation, portal scanning, and application tracking.',
   },
   {
     fullName: 'wranngle/wranngle_com',
-    role: 'Marketing site',
+    role: 'This site',
     blurb:
-      'This site. Vite + React + Tailwind on Cloudflare Pages, ArkType-validated lead capture, brand-token design system mirrored from gtm_ops.',
+      'Vite, React, Tailwind, and Cloudflare Pages with ArkType-validated lead capture and brand tokens mirrored from the Wranngle product surface.',
+  },
+];
+
+const TRUST_MARKERS = [
+  {
+    value: '10 years',
+    label: 'MSP operating depth',
+    detail:
+      'Automation, escalation, documentation, and support work inside environments where downtime is not theoretical.',
+  },
+  {
+    value: '500+',
+    label: 'Client environments',
+    detail:
+      'Enough variety to distrust fragile demos and design for weird real-world edge cases first.',
+  },
+  {
+    value: '4,000+',
+    label: 'Endpoints supported',
+    detail:
+      'Python and PowerShell automation that absorbed the recurring drudgery so engineers stayed on the work that needed a human.',
+  },
+  {
+    value: '700',
+    label: 'SOP guides authored',
+    detail:
+      'Runbooks, handoffs, and repeatable patterns for a 10-person team that had to keep moving without guesswork.',
+  },
+  {
+    value: '5',
+    label: 'Live voice clients',
+    detail:
+      'ElevenLabs on-call agent in production: zero dropped calls, P95 latency under 500ms, 92% CRM enrichment across 15 client sites.',
+  },
+  {
+    value: '<500 ms',
+    label: 'P95 latency target',
+    detail:
+      'Voice systems are trust systems. Latency, fallbacks, and transcript quality get measured because users feel them.',
+  },
+];
+
+const PRINCIPLES = [
+  {
+    Icon: BadgeCheck,
+    title: 'Earn trust before speed',
+    body: 'Automation only gets useful when someone can inspect what happened, why it happened, and where the handoff went.',
+  },
+  {
+    Icon: PhoneCall,
+    title: 'Start where work leaks',
+    body: 'For service businesses, the leak is often a missed call, an after-hours voicemail, or the CRM note nobody wrote.',
+  },
+  {
+    Icon: Gauge,
+    title: 'Measure the awkward parts',
+    body: 'Latency budgets, enrichment success, transcript fixtures, and regression prompts matter because voice systems fail in front of users, not in staging.',
+  },
+  {
+    Icon: FileText,
+    title: 'Leave receipts',
+    body: 'A workflow is not finished until the next operator can see the inputs, outputs, ownership, and failure path.',
+  },
+];
+
+const METHOD = [
+  {
+    step: '01',
+    title: 'Trace the real day',
+    body: 'Calls, tickets, forms, texts, spreadsheets, and the person everyone quietly routes around. The unofficial workflow is usually the honest one.',
+  },
+  {
+    step: '02',
+    title: 'Build the smallest durable loop',
+    body: 'Answer, qualify, enrich, route, record. The first version should survive normal mess, not impress a perfect demo script.',
+  },
+  {
+    step: '03',
+    title: 'Instrument the failure modes',
+    body: 'Measure latency, extraction quality, fallback paths, and handoff completion so decisions are based on data. In voice, failures are immediate and public.',
+  },
+  {
+    step: '04',
+    title: 'Hand it off like an operator will own it',
+    body: 'Logs, docs, alerts, permissions, and runbooks are part of the product. If support cannot reason about it, it is not done.',
   },
 ];
 
@@ -72,12 +166,6 @@ const SOCIALS = [
     Icon: Mail,
     external: false,
   },
-  {
-    label: 'Wranngle',
-    href: 'https://wranngle.com',
-    Icon: Globe,
-    external: true,
-  },
 ];
 
 export default function About() {
@@ -85,8 +173,11 @@ export default function About() {
 
   useEffect(() => {
     globalThis.scrollTo(0, 0);
-    document.title = 'About — Wranngle';
+    document.title = 'Cody Arnold - About Wranngle';
   }, []);
+
+  const borderClass = isDark ? 'border-white/10' : 'border-black/10';
+  const mutedText = isDark ? 'text-[#d8d1c4]/75' : 'text-[#342f28]/75';
 
   return (
     <div
@@ -97,224 +188,380 @@ export default function About() {
       >
         <SiteHeader isDark={isDark} toggleTheme={toggleTheme} />
 
-        <main className="flex-1 max-w-7xl mx-auto w-full px-6 py-16 md:py-24">
-          {/* Hero */}
+        <main id="main" className="flex-1 w-full">
           <motion.section
-            initial={{opacity: 0, y: 20}}
+            initial={{opacity: 0, y: 16}}
             animate={{opacity: 1, y: 0}}
-            className="mb-16 relative overflow-hidden rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] noise-overlay p-10 md:p-14"
-            style={{
-              background: isDark
-                ? 'linear-gradient(135deg, rgba(255,95,0,0.08), rgba(207,60,105,0.06))'
-                : 'linear-gradient(135deg, rgba(255,95,0,0.06), rgba(207,60,105,0.04))',
-              borderColor: isDark
-                ? 'rgba(255,255,255,0.10)'
-                : 'rgba(0,0,0,0.05)',
-            }}
+            className={`border-b ${borderClass}`}
           >
-            <div className="relative z-10 max-w-3xl">
-              <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
-                ABOUT // WRANNGLE_SYSTEMS
-              </div>
-              <h1 className="brand-font text-4xl md:text-6xl font-bold leading-tight mb-6">
-                AI should answer the phone,{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--s500)] to-[var(--v500)]">
-                  not add another dashboard.
-                </span>
-              </h1>
-              <p className="text-lg opacity-80 max-w-2xl leading-relaxed">
-                Wranngle ships practical AI systems for trades businesses —
-                voice agents that qualify the call, lead pipelines that
-                don&apos;t drop work overnight, and proposal automation with
-                receipts. Built from the MSP side of the world: logs, handoffs,
-                fallbacks, clear ownership.
-              </p>
-            </div>
-          </motion.section>
-
-          {/* Two-column: Wranngle (company) + Cody (engineer + portrait) */}
-          <section className="grid md:grid-cols-2 gap-8 mb-20">
-            <article
-              className={`relative p-8 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] ${
-                isDark
-                  ? 'border-white/10 bg-[#18181b]'
-                  : 'border-black/5 bg-white'
-              } noise-overlay overflow-hidden`}
-            >
-              <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-3 mono-font">
-                COMPANY
-              </div>
-              <h2 className="brand-font text-3xl font-bold mb-4">
-                Wranngle Systems
-              </h2>
-              <p className="text-base leading-relaxed opacity-85 mb-4">
-                Voice-AI-led GTM motion runtime for trades businesses — HVAC,
-                plumbing, electrical, and adjacent service operators who lose
-                revenue every time the phone rings after-hours.
-              </p>
-              <p className="text-base leading-relaxed opacity-85">
-                Answer the call, qualify the intent, route the handoff, leave
-                receipts. The stack is voice AI, n8n, structured extraction, and
-                enough discipline to make the output repeatable.
-              </p>
-            </article>
-
-            <article
-              className={`relative p-8 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--v500)] ${
-                isDark
-                  ? 'border-white/10 bg-[#18181b]'
-                  : 'border-black/5 bg-white'
-              } noise-overlay overflow-hidden`}
-            >
-              <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-3 mono-font">
-                ENGINEER
-              </div>
-              <div className="flex items-start gap-5 mb-4">
-                <div
-                  className={`relative shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-[var(--v500)] ${
-                    isDark ? 'bg-[#0f0f13]' : 'bg-[#f4eed8]'
-                  } flex items-center justify-center`}
-                >
-                  <span
-                    className="absolute inset-0 flex items-center justify-center brand-font text-2xl font-bold opacity-40 select-none"
-                    aria-hidden
-                  >
-                    CA
-                  </span>
-                  <img
-                    src="/portrait-cody.jpg"
-                    alt="Cody Arnold"
-                    className="relative z-10 w-full h-full object-cover scale-110 origin-center"
-                    onError={(e) => {
-                      // If portrait isn't published yet, hide the broken image
-                      // and the CA initials placeholder underneath shows through.
-                      (e.currentTarget as HTMLImageElement).style.display =
-                        'none';
-                    }}
-                  />
+            <div className="max-w-7xl mx-auto w-full px-6 py-12 md:py-20 grid lg:grid-cols-[minmax(0,1fr)_360px] gap-8 lg:gap-16 items-start">
+              <div className="max-w-3xl">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
+                  ABOUT WRANNGLE
                 </div>
-                <div className="min-w-0">
-                  <h2 className="brand-font text-3xl font-bold leading-tight">
-                    Cody Arnold
-                  </h2>
-                  <p className="text-xs opacity-60 mt-1 leading-tight">
-                    Founder / Principal Solutions Architect · Fort Wayne, IN
+                <h1 className="brand-font text-4xl md:text-5xl font-bold leading-tight">
+                  Cody Arnold
+                </h1>
+                <p className={`mt-3 text-base md:text-lg ${mutedText}`}>
+                  Founder, Wranngle. Fort Wayne, Indiana.
+                </p>
+
+                <div className="mt-8 space-y-5 text-base md:text-xl leading-relaxed">
+                  <p>
+                    Wranngle exists because most "AI for service businesses"
+                    pitches quietly ask the business to bend around the tool.
+                    The work I care about is the opposite: keep the day intact,
+                    answer the phone, capture what was said, route it where work
+                    already lives, and leave a trail the owner can audit before
+                    coffee.
+                  </p>
+                  <p className={mutedText}>
+                    The practice grew out of automation work inside an MSP —
+                    voice agents, workflow plumbing, and the connective tissue
+                    between the CRM, the dispatcher, and the audit log. The
+                    receipts are further down the page. The principle comes
+                    first, because the principle is what the operator has to
+                    live with.
                   </p>
                 </div>
               </div>
-              <p className="text-base leading-relaxed opacity-85 mb-3">
-                Ten years inside an MSP — running automation across{' '}
-                <span className="font-bold">500+ client environments</span> and{' '}
-                <span className="font-bold">4,000+ endpoints</span>. Reduced
-                manual oversight by 40% with Python/PowerShell at scale, then
-                authored a 700-guide SOP framework so a 10-person team could
-                ship the same patterns repeatably.
-              </p>
-              <p className="text-base leading-relaxed opacity-85">
-                Productized an on-call ElevenLabs Conversational AI agent now
-                live at 5 clients —{' '}
-                <span className="mono-font text-[13px]">P95 &lt; 500 ms</span>,
-                100% call success, 92% enrichment success, regression-tested via
-                a synthetic-conversation harness. That work secured the
-                ElevenLabs Startup Grant.
-              </p>
-            </article>
+
+              <aside
+                className={`lg:sticky lg:top-28 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto border-l ${borderClass} pl-6`}
+                aria-label="Cody Arnold profile summary"
+              >
+                <div className="flex items-center gap-4">
+                  <div
+                    className={`relative shrink-0 w-20 h-20 rounded-full overflow-hidden border-2 border-[var(--s500)] ${
+                      isDark ? 'bg-[#0f0f13]' : 'bg-[#f4eed8]'
+                    } flex items-center justify-center`}
+                  >
+                    <span
+                      className="absolute inset-0 flex items-center justify-center brand-font text-2xl font-bold opacity-35 select-none"
+                      aria-hidden
+                    >
+                      CA
+                    </span>
+                    <img
+                      src="/portrait-cody.jpg"
+                      alt="Cody Arnold"
+                      className="relative z-10 w-full h-full object-cover scale-110 origin-center"
+                      onError={(event) => {
+                        event.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--s500)]">
+                      Wranngle, in one line
+                    </p>
+                    <p className="mt-1 text-sm leading-relaxed opacity-80">
+                      Voice and workflow automation for service businesses where
+                      downtime is not theoretical.
+                    </p>
+                  </div>
+                </div>
+
+                <dl className={`mt-8 divide-y ${borderClass} hidden md:block`}>
+                  <div className="py-4">
+                    <dt className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-55">
+                      Current focus
+                    </dt>
+                    <dd className="mt-2 text-sm leading-relaxed">
+                      ElevenLabs voice agents, n8n automation, structured lead
+                      capture, proposal generation, and eval harnesses.
+                    </dd>
+                  </div>
+                  <div className="py-4">
+                    <dt className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-55">
+                      Operating bias
+                    </dt>
+                    <dd className="mt-2 text-sm leading-relaxed">
+                      Logs, fallbacks, ownership, and documentation before
+                      scale.
+                    </dd>
+                  </div>
+                  <div className="py-4">
+                    <dt className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-55">
+                      Recent proof
+                    </dt>
+                    <dd className="mt-2 text-sm leading-relaxed">
+                      On-call ElevenLabs voice agent covering 15 client sites:
+                      P95 under 500ms, 92% CRM enrichment, regression-tested
+                      before release.
+                    </dd>
+                  </div>
+                  <div className="py-4">
+                    <dt className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-55">
+                      Outside read
+                    </dt>
+                    <dd className="mt-2 text-sm leading-relaxed">
+                      ElevenLabs Startup Grant, 2025 — for the on-call voice
+                      work that became this practice.
+                    </dd>
+                  </div>
+                </dl>
+              </aside>
+            </div>
+          </motion.section>
+
+          <section className={`border-b ${borderClass}`}>
+            <div className="max-w-7xl mx-auto w-full px-6 py-12 md:py-16 grid lg:grid-cols-[0.7fr_1.3fr] gap-10 lg:gap-16">
+              <div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
+                  OPERATING RECORD
+                </div>
+                <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
+                  The proof I trust is operational.
+                </h2>
+                <p className={`mt-4 text-base leading-relaxed ${mutedText}`}>
+                  The numbers came from systems someone had to support after the
+                  build was done.
+                </p>
+              </div>
+
+              <dl className={`divide-y ${borderClass}`}>
+                {TRUST_MARKERS.map((item) => (
+                  <div
+                    key={`${item.value}-${item.label}`}
+                    className="py-5 first:pt-0 last:pb-0 grid sm:grid-cols-[120px_1fr] gap-4"
+                  >
+                    <dt>
+                      <span className="block brand-font text-3xl font-bold text-[var(--s500)] leading-none">
+                        {item.value}
+                      </span>
+                      <span className="block mt-2 text-sm font-bold">
+                        {item.label}
+                      </span>
+                    </dt>
+                    <dd
+                      className={`text-sm md:text-base leading-relaxed ${mutedText}`}
+                    >
+                      {item.detail}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </section>
 
-          {/* Public repos grid */}
-          <section className="mb-20">
-            <a
-              href="https://github.com/wranngle"
-              target="_blank"
-              rel="noreferrer"
-              className={`inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-md border transition-colors hover:border-[var(--s500)] hover:text-[var(--s500)] ${
-                isDark
-                  ? 'border-white/15 bg-white/5'
-                  : 'border-black/15 bg-black/5'
-              }`}
+          <section className="max-w-7xl mx-auto w-full px-6 py-16 md:py-20 grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16">
+            <div>
+              <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-4 mono-font">
+                THE WHY
+              </div>
+              <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
+                Do not ask operators to reorganize around the tool.
+              </h2>
+            </div>
+            <div
+              className={`space-y-5 text-base md:text-lg leading-relaxed ${mutedText}`}
             >
-              <Github size={14} />
-              <span className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-80">
-                github.com/wranngle
-              </span>
-            </a>
-            <div className="flex items-baseline justify-between mb-8 flex-wrap gap-3">
-              <h2 className="brand-font text-3xl md:text-4xl font-bold">
-                GitHub projects
-              </h2>
-              <a
-                href="https://github.com/wranngle"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-bold text-[var(--s500)] hover:underline"
-              >
-                View all on GitHub <ArrowRight size={14} />
-              </a>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {REPOS.map((repo) => (
-                <GitHubRepoCard
-                  key={repo.fullName}
-                  fullName={repo.fullName}
-                  role={repo.role}
-                  fallbackBlurb={repo.blurb}
-                  isDark={isDark}
-                />
-              ))}
-            </div>
-          </section>
-
-          {/* Socials */}
-          <section className="mb-20">
-            <h2 className="brand-font text-3xl md:text-4xl font-bold mb-6">
-              Connect
-            </h2>
-            <div className="flex flex-wrap items-center gap-6">
-              {SOCIALS.map(({label, href, Icon, external}) => (
-                <a
-                  key={label}
-                  href={href}
-                  {...(external ? {target: '_blank', rel: 'noreferrer'} : {})}
-                  className={`inline-flex items-center gap-3 px-5 py-3 rounded-md border ${
-                    isDark
-                      ? 'border-white/10 hover:border-[var(--s500)]'
-                      : 'border-black/10 hover:border-[var(--s500)]'
-                  } hover:text-[var(--s500)] transition-all`}
-                >
-                  <Icon size={20} />
-                  <span className="font-medium text-sm">{label}</span>
-                </a>
-              ))}
-            </div>
-          </section>
-
-          {/* Talk to Sarah CTA */}
-          <section
-            className={`mb-12 p-8 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] ${
-              isDark
-                ? 'border-white/10 bg-[#18181b]'
-                : 'border-black/5 bg-white'
-            } text-center noise-overlay overflow-hidden relative`}
-          >
-            <div className="relative z-10">
-              <h2 className="brand-font text-3xl font-bold mb-3">
-                Want to see it in action?
-              </h2>
-              <p className="opacity-70 mb-6 max-w-xl mx-auto">
-                Sarah is our live demo voice agent. She runs in the corner of
-                the home page — go say hi.
+              <p>
+                A lot of AI software quietly asks the business to change shape
+                around the tool. That is backwards for the operators I care
+                about. They already have customers calling, techs moving,
+                dispatchers switching context, and owners trying to keep the day
+                from leaking revenue.
               </p>
-              <a
-                href="/#talk-to-sarah"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--s500)] text-white font-bold uppercase text-xs rounded-lg shadow-lg hover:scale-105 transition-all"
-              >
-                Talk to Sarah <ArrowRight size={14} />
-              </a>
+              <p>
+                The better promise is continuity. If a missed call becomes a
+                qualified lead, if the CRM has the useful facts, if the proposal
+                can be drafted from evidence, and if the owner can audit the
+                path afterward, the system earned its place before anybody
+                opened a new tab.
+              </p>
+              <p>
+                Software is secondary. First, the workflow has to prove it
+                deserves to exist.
+              </p>
+            </div>
+          </section>
+
+          <section className={`border-y ${borderClass}`}>
+            <div className="max-w-7xl mx-auto w-full px-6 py-16 md:py-20">
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-8">
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
+                    PRINCIPLES
+                  </div>
+                  <h2 className="brand-font text-3xl md:text-4xl font-bold">
+                    What has to be true
+                  </h2>
+                </div>
+                <p
+                  className={`max-w-xl text-sm md:text-base leading-relaxed ${mutedText}`}
+                >
+                  These are the constraints I design around before talking about
+                  scale, polish, or a bigger roadmap.
+                </p>
+              </div>
+
+              <div className={`divide-y ${borderClass}`}>
+                {PRINCIPLES.map(({Icon, title, body}, index) => (
+                  <article
+                    key={title}
+                    className="py-6 first:pt-0 last:pb-0 grid md:grid-cols-[52px_240px_1fr] lg:grid-cols-[52px_260px_1fr] gap-4 md:gap-6 items-start"
+                  >
+                    <div className="flex items-center gap-3 md:block">
+                      <span className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-55">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <Icon
+                        size={20}
+                        className="text-[var(--s500)] md:mt-3"
+                        aria-hidden
+                      />
+                    </div>
+                    <h3 className="brand-font text-xl font-bold leading-tight">
+                      {title}
+                    </h3>
+                    <p
+                      className={`text-sm md:text-base leading-relaxed ${mutedText}`}
+                    >
+                      {body}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="max-w-7xl mx-auto w-full px-6 py-16 md:py-20 grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16">
+            <div>
+              <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-4 mono-font">
+                HOW I WORK
+              </div>
+              <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
+                Find the smallest loop that survives production.
+              </h2>
+              <p className={`mt-4 text-base leading-relaxed ${mutedText}`}>
+                Map what actually breaks in the workflow, build the minimal
+                version that handles it reliably, measure the failure modes, and
+                hand it off so the next person can own it without asking me.
+              </p>
+            </div>
+
+            <div className={`divide-y ${borderClass}`}>
+              {METHOD.map((item) => (
+                <article
+                  key={item.step}
+                  className="py-5 first:pt-0 last:pb-0 grid sm:grid-cols-[72px_1fr] gap-4"
+                >
+                  <div className="mono-font text-[11px] font-bold uppercase tracking-widest text-[var(--s500)]">
+                    {item.step}
+                  </div>
+                  <div>
+                    <h3 className="brand-font text-xl font-bold">
+                      {item.title}
+                    </h3>
+                    <p
+                      className={`mt-2 text-sm md:text-base leading-relaxed ${mutedText}`}
+                    >
+                      {item.body}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className={`border-t ${borderClass}`}>
+            <div className="max-w-7xl mx-auto w-full px-6 py-16 md:py-20">
+              <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
+                <div className="max-w-2xl">
+                  <a
+                    href="https://github.com/wranngle"
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-md border transition-colors hover:border-[var(--s500)] hover:text-[var(--s500)] ${
+                      isDark
+                        ? 'border-white/15 bg-white/5'
+                        : 'border-black/15 bg-black/5'
+                    }`}
+                  >
+                    <Github size={14} aria-hidden />
+                    <span className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-80">
+                      github.com/wranngle
+                    </span>
+                  </a>
+                  <h2 className="brand-font text-3xl md:text-4xl font-bold">
+                    Public proof
+                  </h2>
+                  <p className={`mt-4 text-base leading-relaxed ${mutedText}`}>
+                    The repositories are not a polished portfolio museum. They
+                    are the receipts: evals, workflow plumbing, operating
+                    surfaces, and the adjacent systems work that shows how I
+                    think.
+                  </p>
+                </div>
+                <a
+                  href="https://github.com/wranngle"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-[var(--s500)] hover:underline"
+                >
+                  View all on GitHub <ArrowRight size={14} />
+                </a>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {REPOS.map((repo) => (
+                  <GitHubRepoCard
+                    key={repo.fullName}
+                    fullName={repo.fullName}
+                    role={repo.role}
+                    fallbackBlurb={repo.blurb}
+                    isDark={isDark}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className={`border-t ${borderClass}`}>
+            <div className="max-w-7xl mx-auto w-full px-6 py-14 md:py-16 grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-14 items-start">
+              <div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
+                  CONTACT
+                </div>
+                <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
+                  Start with the messy version.
+                </h2>
+              </div>
+              <div>
+                <p
+                  className={`text-base md:text-lg leading-relaxed ${mutedText}`}
+                >
+                  The fastest conversation is the unpolished one: what breaks,
+                  what people work around, what you already tried, and what you
+                  need to trust before automating it.
+                </p>
+                <div className="mt-7 flex flex-wrap items-center gap-3">
+                  {SOCIALS.map(({label, href, Icon, external}) => (
+                    <a
+                      key={label}
+                      href={href}
+                      {...(external
+                        ? {target: '_blank', rel: 'noreferrer'}
+                        : {})}
+                      className={`inline-flex min-h-11 items-center gap-3 px-4 py-2 rounded-md border ${
+                        isDark
+                          ? 'border-white/10 hover:border-[var(--s500)]'
+                          : 'border-black/10 hover:border-[var(--s500)]'
+                      } hover:text-[var(--s500)] transition-colors`}
+                    >
+                      <Icon size={18} aria-hidden />
+                      <span className="font-medium text-sm">{label}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
           </section>
         </main>
 
-        <SiteFooter isDark={isDark} />
+        <SiteFooter isDark={isDark} showCta={false} />
       </div>
     </div>
   );

@@ -166,7 +166,10 @@ export default function AgentFactsPopout({
                     fontFamily: 'JetBrains Mono, ui-monospace, monospace',
                   }}
                 >
-                  ${annualMonthly}
+                  $
+                  {Number.isInteger(annualMonthly)
+                    ? annualMonthly
+                    : annualMonthly.toFixed(2)}
                 </span>
                 <span className="text-[10px] block font-bold mt-[-4px]">
                   /mo
@@ -346,7 +349,7 @@ export default function AgentFactsPopout({
             ? '* Plan limits reset monthly on the billing anniversary. Annual plans billed up-front; monthly plans cancel any time. SSO + custom domain require a verified workspace. Audit logs retained 12 months on Plus, indefinitely on Pro.'
             : isWebsite
               ? '* Scope reflects what is included in the project quote. Out-of-scope changes priced separately. Source code is delivered to you on completion. Maintenance is optional and month-to-month.'
-              : '* The % Fair Use (FU) indicates the capacity included in the base price before standard overage rates apply. Mid-annual cancellation of the Discount Price is subject to cancellation fees. API access not available. White-labeling included. All agents are trade-specific.'}
+              : '* The % Fair Use figure shows capacity included in the base price before standard overage rates apply. Mid-annual cancellation of the Discount Price is subject to cancellation fees. White-labeling included. All agents are trade-specific.'}
         </div>
 
         {onGetStarted && (
