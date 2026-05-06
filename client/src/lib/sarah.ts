@@ -41,6 +41,37 @@ export function openSarahWidget() {
   return true;
 }
 
+export function collapseSarahWidget(widget?: HTMLElement) {
+  if (typeof document === 'undefined') return;
+
+  const target =
+    widget ?? document.querySelector<HTMLElement>('elevenlabs-convai');
+
+  if (!target) return;
+
+  const collapseDetail = {action: 'collapse'};
+  const collapseEventName = 'elevenlabs-agent:expand';
+
+  document.dispatchEvent(
+    new CustomEvent(collapseEventName, {detail: collapseDetail}),
+  );
+  target.dispatchEvent(
+    new CustomEvent(collapseEventName, {detail: {...collapseDetail}}),
+  );
+
+  target.dispatchEvent(
+    new KeyboardEvent('keydown', {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      which: 27,
+      bubbles: false,
+    }),
+  );
+
+  delete target.dataset.visible;
+}
+
 export function goTalkToSarah() {
   if (openSarahWidget()) return;
   globalThis.location.assign('/#talk-to-sarah');
