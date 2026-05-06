@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {useEffect} from 'react';
 import {ArrowRight, Building2, TrendingUp} from 'lucide-react';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
