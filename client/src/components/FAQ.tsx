@@ -14,7 +14,7 @@ const FAQ_ITEMS: FAQItem[] = [
     group: 'Getting started',
     question: 'How fast can I be live?',
     answer:
-      'Most agents go live in 1–2 weeks. That covers phone provisioning, training the agent on your services and pricing, and a couple rounds of test calls before we hand it the line.',
+      'Plan on 1–2 weeks from kickoff. That covers phone provisioning, training the agent on your services and pricing, and a couple rounds of test calls before we hand it the line.',
   },
   {
     group: 'Getting started',
@@ -39,13 +39,13 @@ const FAQ_ITEMS: FAQItem[] = [
     group: 'How it works',
     question: 'How accurate is lead qualification?',
     answer:
-      '95%+ at sorting service calls from spam in our test fleet. You set the criteria; the agent learns from your feedback. It\'s tuned for the trades — it knows the difference between an emergency call and a "do you do roofing?" call.',
+      'It depends on your call mix — a single percentage does not honestly cover every business. We test against fixtures of real trades-call transcripts (emergencies, vendors, wrong numbers, "do you do roofing?") and measure your actual first-month performance before tuning. The scoring rubric is open source: github.com/wranngle/voice_ai_agent_evals.',
   },
   {
     group: 'How it works',
     question: 'How does it compare to a human answering service?',
     answer:
-      'Cheaper at any real call volume. Deeper system integrations. Onboards in days instead of weeks. And you can clone a voice or pick a custom one — most answering services give you a script-reader on a dial-tone.',
+      'Predictable monthly cost — no per-minute meter that spikes during call surges. Deeper integrations with your CRM, calendar, and n8n flows. Onboards in days instead of weeks. And you can pick a custom voice or clone one, where most human services follow a fixed script.',
   },
   {
     group: 'How it works',
@@ -70,7 +70,7 @@ const FAQ_ITEMS: FAQItem[] = [
     group: 'Money & limits',
     question: 'What if I blow past my plan limits?',
     answer:
-      "Limits exist to stop abuse — not to nickel-and-dime you. No customer has hit the cap in earnest. If you do, we'll raise it. Standard overage rates kick in only after that conversation.",
+      "Limits exist to stop abuse — not to nickel-and-dime you. If a real workload hits the cap, we'll raise it before any overage fees kick in. You'll never get a surprise bill from us.",
   },
   {
     group: 'Money & limits',
@@ -83,7 +83,7 @@ const FAQ_ITEMS: FAQItem[] = [
     group: 'Trust & data',
     question: 'Is caller data safe?',
     answer:
-      'Encrypted at rest and in transit. GDPR- and CCPA-aligned. You own the data; you can export or delete it any time. Recordings retained 90 days by default — longer retention available on request.',
+      'Encrypted at rest and in transit. GDPR- and CCPA-aligned. You own the data; export or deletion requests are processed within 30 days. Recordings retained 90 days by default — longer retention available on request.',
   },
   // Product
   {
@@ -225,10 +225,10 @@ function FAQRow({
         id={panelId}
         role="region"
         aria-labelledby={buttonId}
-        hidden={!isOpen}
+        aria-hidden={!isOpen}
         className="overflow-hidden transition-all duration-300 ease-out"
         style={{
-          maxHeight: isOpen ? 320 : 0,
+          maxHeight: isOpen ? 600 : 0,
           paddingBottom: isOpen ? 24 : 0,
         }}
       >

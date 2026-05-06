@@ -15,23 +15,19 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
-import {OFFERING_CATEGORIES, type OfferingItem} from '@/data/offerings.ts';
+import {OFFERING_CATEGORIES} from '@/data/offerings.ts';
 
 type OfferingsMegaMenuProps = {
   isDark: boolean;
-  onSelectOffering: (item: OfferingItem) => void;
 };
 
 /**
  * OfferingsMegaMenu — 3 columns, one per OFFERING_CATEGORIES entry
  * (AI Agents, Websites, gtm_ops). Tiers stack vertically inside each
- * column. Clicking a tier opens that offering's spec-sheet popout via
- * the parent's onSelectOffering handler.
+ * column. Category headers open the dedicated landing page; tier links jump
+ * to the corresponding home-page tile group for quick comparison.
  */
-export function OfferingsMegaMenu({
-  isDark,
-  onSelectOffering,
-}: OfferingsMegaMenuProps) {
+export function OfferingsMegaMenu({isDark}: OfferingsMegaMenuProps) {
   const [open, setOpen] = useState(false);
   const surfaceClasses = isDark
     ? 'bg-[#18181b] border-white/10 text-[#fcfaf5]'
@@ -57,13 +53,12 @@ export function OfferingsMegaMenu({
         <div className="grid grid-cols-3 gap-0">
           {OFFERING_CATEGORIES.map((cat, catIndex) => {
             const isLast = catIndex === OFFERING_CATEGORIES.length - 1;
-            // gtm_ops gets its own dedicated landing page; the other
-            // categories scroll the home-page Offerings section to the
-            // matching tab via the `#offerings-cat-<id>` hash convention.
             const headerHref =
               cat.id === 'gtm_ops'
                 ? '/products/gtm-ops'
-                : `/#offerings-cat-${cat.id}`;
+                : cat.id === 'websites'
+                  ? '/products/websites'
+                  : '/products/ai-voice-agents';
             const navigate = () => {
               // Close the dropdown first — Radix doesn't auto-close on
               // non-Item clicks, so without this the menu visibly hangs
@@ -81,8 +76,8 @@ export function OfferingsMegaMenu({
 
             return (
               // Column-as-link: hovering anywhere in the column primes the
-              // column-level destination; an inner tier button overrides
-              // via stopPropagation + its own onSelectOffering handler.
+              // category destination; an inner tier link overrides via
+              // stopPropagation and jumps to that exact tier tile.
               <div
                 key={cat.id}
                 role="link"
@@ -105,7 +100,7 @@ export function OfferingsMegaMenu({
                     {cat.name}
                   </span>
                   <span className="text-[9px] uppercase font-bold tracking-wider opacity-50 group-hover/col:opacity-100 group-hover/col:text-[var(--s500)] shrink-0 transition-opacity">
-                    {cat.id === 'gtm_ops' ? 'Product page →' : 'View all →'}
+                    View page →
                   </span>
                 </div>
                 <div className="text-[10px] opacity-50 mb-3 leading-snug">
@@ -113,15 +108,12 @@ export function OfferingsMegaMenu({
                 </div>
                 <div className="space-y-1">
                   {cat.items.map((item) => (
-                    <button
+                    <a
                       key={item.id}
-                      type="button"
+                      href={`/#offerings-${item.id}`}
                       onClick={(e) => {
-                        // Stop the column-level handler from firing; this
-                        // tier's spec-sheet popout takes precedence.
                         e.stopPropagation();
                         setOpen(false);
-                        onSelectOffering(item);
                       }}
                       className="w-full text-left px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/15 transition-colors group/item flex items-start justify-between gap-2"
                     >
@@ -149,7 +141,7 @@ export function OfferingsMegaMenu({
                         size={14}
                         className="opacity-40 group-hover/item:opacity-100 group-hover/item:text-[var(--s500)] group-hover/item:translate-x-0.5 transition-all mt-1 shrink-0"
                       />
-                    </button>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -237,6 +229,18 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
                 </span>
               </button>
               <Link
+                href="/products/ai-voice-agents"
+                className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
+              >
+                AI Voice Agents
+              </Link>
+              <Link
+                href="/products/websites"
+                className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
+              >
+                Websites
+              </Link>
+              <Link
                 href="/products/gtm-ops"
                 className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold mono-font"
               >
@@ -273,7 +277,7 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
             >
               hello@wranngle.com
               <div className="text-[10px] opacity-60 font-normal mt-0.5">
-                Sales + workspace setup
+                Quotes, demos, and workspace setup
               </div>
             </a>
 
@@ -288,7 +292,7 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
                 aria-label="LinkedIn"
                 className="hover:text-[var(--s500)] transition-colors"
               >
-                <Linkedin size={18} />
+                <Linkedin size={18} aria-hidden />
               </a>
               <a
                 href="https://github.com/wranngle"
@@ -297,14 +301,14 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
                 aria-label="GitHub"
                 className="hover:text-[var(--s500)] transition-colors"
               >
-                <Github size={18} />
+                <Github size={18} aria-hidden />
               </a>
               <a
                 href="mailto:hello@wranngle.com"
                 aria-label="Email"
                 className="hover:text-[var(--s500)] transition-colors"
               >
-                <Mail size={18} />
+                <Mail size={18} aria-hidden />
               </a>
             </div>
           </div>

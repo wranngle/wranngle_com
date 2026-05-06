@@ -1,7 +1,7 @@
 {
   "name": "Wranngle Systems",
   "short_name": "Wranngle",
-  "description": "Voice-AI-led GTM motion runtime for trades businesses. 24/7 voice agents, lead capture, and the gtm_ops proposal-generation SaaS.",
+  "description": "AI voice agents for trades businesses (HVAC, plumbing, electrical). 24/7 call answering, lead capture, conversion-built websites, and gtm_ops — the proposal-generation runtime that turns inbound leads into branded PDFs.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

@@ -68,7 +68,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
     id: 'ai-agents',
     name: 'AI Agents',
     description:
-      'Always-on voice + web + SMS agents. Trained on your trade. Recurring subscription, cancel annually.',
+      'Always-on voice + web + SMS agents. Trained on your trade. Monthly cancellable; annual plans save up to 20%.',
     items: [
       {
         id: 'basic',
@@ -77,12 +77,12 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         priceCadence: 'monthly',
         description:
           'Always-on voice receptionist. Captures the leads that hit voicemail today, without ringing your cell at 2am.',
-        cta: 'Deploy Core Agent',
+        cta: 'Get Core Agent',
         features: [
           '24/7 voice answering on a forwarded line',
           'Trade-specific training (HVAC, plumbing, electrical, roofing…)',
           'Lead scoring + qualification',
-          'SMS notification to your phone within 30s of a call',
+          'SMS notification to your phone within minutes of a call',
           'Email lead capture with caller transcript',
           'Standard support, business-hours response',
         ],
@@ -97,7 +97,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           specs: {
             coverage: 'After-hours + overflow',
             ingredients:
-              'NATURAL LANGUAGE PROCESSING, LEAD SCORING ALGORITHM, TWILIO VOICE STACK, SHARED SMS POOL, ONE-WAY NOTIFICATIONS, 99.9% UPTIME SLA, TRADE-SPECIFIC TRAINING DATA.',
+              'NATURAL LANGUAGE PROCESSING, LEAD SCORING ALGORITHM, TWILIO VOICE STACK, SHARED SMS POOL, ONE-WAY NOTIFICATIONS, TRADE-SPECIFIC TRAINING DATA.',
           },
           limits: {minutes: '1,000', sms: '500'},
           features: [
@@ -124,7 +124,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         description:
           'Voice + web chat + two-way SMS, 24/7. Cal.com booking, custom voice, and a unified inbox so nothing falls through.',
         badge: 'Most Popular',
-        cta: 'Deploy Elite Agent',
+        cta: 'Get Elite Agent',
         features: [
           'Triple-channel: voice, web chat, two-way SMS',
           '24/7/365 priority coverage',
@@ -145,7 +145,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           specs: {
             coverage: '24/7/365 priority',
             ingredients:
-              'ELEVENLABS NEURAL VOICE, DUAL-AGENT ON-CALL LOGIC, CAL.COM BOOKING SYNC, 10DLC COMPLIANT TWO-WAY SMS, UNIFIED INBOX ENGINE, SUB-300MS LATENCY TARGET.',
+              'ELEVENLABS NEURAL VOICE, DUAL-AGENT ON-CALL LOGIC, CAL.COM BOOKING SYNC, 10DLC COMPLIANT TWO-WAY SMS, UNIFIED INBOX ENGINE, SUB-500MS P95 LATENCY TARGET.',
           },
           limits: {minutes: '2,500', sms: '1,500'},
           features: [
@@ -170,7 +170,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
     id: 'websites',
     name: 'Websites',
     description:
-      'Built once, owned by you, maintained monthly. Project + maintenance — not a subscription you can never escape.',
+      'Built once, owned by you, maintained monthly. Project + maintenance — yours to take and host elsewhere any time.',
     items: [
       {
         id: 'landing-page',
@@ -179,6 +179,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         priceCadence: 'one-time',
         description:
           'One conversion-focused page, shipped in 7 days. Mobile-first, SEO-foundations, contact form wired straight to your inbox.',
+        badge: 'Quickstart',
         cta: 'Start Landing Page',
         monthlyAddon: {price: '100', label: 'maintenance'},
         features: [
@@ -293,10 +294,10 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         price: '0',
         priceCadence: 'monthly',
         description:
-          'Full-feature 14-day evaluation of gtm_ops. Lead in, branded proposal out — no card required.',
+          '14-day evaluation of gtm_ops with Plus-tier features. Lead in, branded proposal out — 5 proposals, no card required.',
         cta: 'Start gtm_ops Trial',
         features: [
-          '14-day full-feature trial',
+          '14-day evaluation of Plus-tier features',
           'Up to 5 proposals during trial',
           'Branded PDF generation',
           'Demo data preloaded',
@@ -318,14 +319,14 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
               'GEMINI EXTRACTION ENGINE, BRANDED PDF RENDERER, DEMO DATA SEEDS, AUDIT LOG, EVENT REPLAY, CLOUDFLARE PAGES DELIVERY, NO CREDIT CARD GATE.',
           },
           saasLimits: {
-            proposalsCap: '5 (trial cap)',
+            proposalsCap: '5 over 14 days',
             users: '1',
             sso: false,
             customDomain: false,
             auditChain: 'Standard',
           },
           features: [
-            '14-day full-feature access',
+            '14-day evaluation of Plus-tier features',
             '5 proposals during trial',
             'Branded PDF output',
             'Demo data preloaded',
@@ -349,7 +350,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           'For solo operators and small teams running real proposals. Branded PDFs, custom workspace, full audit chain.',
         badge: 'Most Popular',
         cta: 'Start gtm_ops Plus',
-        monthlyAddon: {price: '200', label: '/yr annual plan'},
+        monthlyAddon: {price: '200', label: '/yr (annual, 17% off)'},
         features: [
           '50 proposals per month',
           'Branded PDFs with your logo + colors',
@@ -374,8 +375,8 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
               'GEMINI EXTRACTION ENGINE, BRANDED PDF RENDERER, CUSTOM LOGO + COLOR INJECTION, LEAD INTAKE FORMS, N8N WEBHOOK BUS, FULL AUDIT LOG, CLOUDFLARE D1 PERSISTENCE.',
           },
           saasLimits: {
-            proposalsCap: '50 / mo',
-            users: '3 seats',
+            proposalsCap: '50',
+            users: '3',
             sso: false,
             customDomain: false,
             auditChain: 'Full',
@@ -404,7 +405,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         priceCadence: 'monthly',
         description:
           'For teams who need SSO, custom domains, and unlimited throughput. Built for ops orgs that ship hundreds of proposals.',
-        cta: 'Talk to Sales',
+        cta: 'Talk to Cody',
         monthlyAddon: {price: '990', label: '/yr annual plan'},
         features: [
           'Unlimited proposals',
@@ -413,7 +414,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           'Team workspaces with role-based access',
           'Custom domain (proposals.yourco.com)',
           'Advanced audit chain (immutable, exportable)',
-          'Priority support + SLA',
+          'Priority support',
           'Onboarding session included',
         ],
         facts: {
@@ -427,11 +428,11 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           specs: {
             coverage: 'Unlimited proposals, multi-team',
             ingredients:
-              'GOOGLE + AZURE AD SSO, TEAM WORKSPACES, ROLE-BASED ACCESS, CUSTOM DOMAIN ROUTING, IMMUTABLE AUDIT CHAIN, EXPORT-READY COMPLIANCE LOGS, PRIORITY SUPPORT + SLA.',
+              'GOOGLE + AZURE AD SSO, TEAM WORKSPACES, ROLE-BASED ACCESS, CUSTOM DOMAIN ROUTING, IMMUTABLE AUDIT CHAIN, EXPORT-READY COMPLIANCE LOGS, PRIORITY SUPPORT.',
           },
           saasLimits: {
             proposalsCap: 'Unlimited',
-            users: 'Unlimited seats',
+            users: 'Unlimited',
             sso: true,
             customDomain: true,
             auditChain: 'Immutable + exportable',
@@ -443,7 +444,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
             'Team workspaces + RBAC',
             'Custom domain',
             'Immutable audit chain',
-            'Priority support + SLA',
+            'Priority support',
             'Onboarding session',
           ],
           crossSell: {

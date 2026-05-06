@@ -21,7 +21,7 @@ export default function TermsOfService() {
         className={`min-h-screen flex flex-col ${isDark ? 'bg-page-dark' : 'bg-page-light'}`}
       >
         <SiteHeader isDark={isDark} toggleTheme={toggleTheme} />
-        <main className="flex-1 py-16 px-6">
+        <main id="main" className="flex-1 py-16 px-6">
           <style>{`
             .brand-font { font-family: 'Bricolage Grotesque', sans-serif; }
           `}</style>
@@ -138,9 +138,9 @@ export default function TermsOfService() {
                   <li>SMS segments: $0.05 per additional segment</li>
                 </ul>
                 <p className="opacity-80 mt-4">
-                  You will receive usage alerts when approaching your plan
-                  limits. Overage charges are billed in arrears on your next
-                  invoice.
+                  You will not be charged for overages without prior notice.
+                  Overage charges, if applicable after that conversation, are
+                  billed in arrears on your next invoice.
                 </p>
               </section>
 
@@ -299,8 +299,8 @@ export default function TermsOfService() {
                 </h2>
                 <p className="opacity-80 mb-4">
                   We reserve the right to modify these Terms at any time. We
-                  will notify you of material changes via email or through the
-                  Service at least 30 days before they take effect.
+                  will notify you of material changes via email at least 30 days
+                  before they take effect.
                 </p>
                 <p className="opacity-80">
                   Your continued use of the Service after changes become
@@ -372,9 +372,7 @@ export default function TermsOfService() {
                 <p className="opacity-80 font-mono text-sm">
                   Wranngle Systems LLC
                   <br />
-                  Email: legal@wranngle.com
-                  <br />
-                  Sales: hello@wranngle.com
+                  Email: hello@wranngle.com
                 </p>
               </section>
             </div>

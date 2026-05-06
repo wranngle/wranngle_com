@@ -2,11 +2,12 @@
 // @ts-nocheck
 import React from 'react';
 import {Link} from 'wouter';
-import {Linkedin, Github, Mail, Globe, ArrowRight} from 'lucide-react';
+import {Linkedin, Github, Mail, ArrowRight} from 'lucide-react';
 import {OFFERING_CATEGORIES} from '@/data/offerings.ts';
 
 type SiteFooterProps = {
   isDark: boolean;
+  showCta?: boolean;
 };
 
 /**
@@ -15,7 +16,7 @@ type SiteFooterProps = {
  * Site / Offerings / Legal / Connect.
  * Offering links anchor to /#offerings-<id> on the home page.
  */
-export default function SiteFooter({isDark}: SiteFooterProps) {
+export default function SiteFooter({isDark, showCta = true}: SiteFooterProps) {
   const borderClass = isDark ? 'border-white/10' : 'border-black/10';
   const linkBase =
     'hover:text-[var(--s500)] transition-colors block text-sm py-1';
@@ -27,38 +28,40 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
   return (
     <footer className={`mt-auto border-t ${borderClass} pt-12 pb-8 px-6`}>
       <div className="max-w-7xl mx-auto">
-        <div
-          className={`mb-12 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6 ${
-            isDark
-              ? 'border-white/10 bg-[#18181b]'
-              : 'border-black/5 bg-[#12111a] text-[#fcfaf5]'
-          }`}
-        >
-          <div>
-            <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-3">
-              READY WHEN YOU ARE
+        {showCta && (
+          <div
+            className={`mb-12 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] p-8 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6 ${
+              isDark
+                ? 'border-white/10 bg-[#18181b]'
+                : 'border-black/5 bg-[#12111a] text-[#fcfaf5]'
+            }`}
+          >
+            <div>
+              <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-3">
+                READY WHEN YOU ARE
+              </div>
+              <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
+                Stop letting good calls go to voicemail.
+              </h2>
             </div>
-            <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
-              Stop letting good calls go to voicemail.
-            </h2>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="/#talk-to-sarah"
+                className="inline-flex items-center gap-2 px-5 py-3 border border-current/25 rounded-lg text-xs font-bold uppercase tracking-wider hover:border-[var(--s500)] hover:text-[var(--s500)] transition-colors"
+              >
+                Talk to Sarah
+              </a>
+              <a
+                href="/#offerings"
+                className="inline-flex items-center gap-2 px-5 py-3 bg-[var(--s500)] text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[var(--s500)]/90 transition-colors"
+              >
+                See Plans <ArrowRight size={14} />
+              </a>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <a
-              href="/#talk-to-sarah"
-              className="inline-flex items-center gap-2 px-5 py-3 border border-current/25 rounded-lg text-xs font-bold uppercase tracking-wider hover:border-[var(--s500)] hover:text-[var(--s500)] transition-colors"
-            >
-              Talk to Sarah
-            </a>
-            <a
-              href="/#offerings"
-              className="inline-flex items-center gap-2 px-5 py-3 bg-[var(--s500)] text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[var(--s500)]/90 transition-colors"
-            >
-              Deploy Agent <ArrowRight size={14} />
-            </a>
-          </div>
-        </div>
+        )}
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           {/* Site — logo bottom-aligned below the link list */}
           <div className="flex flex-col h-full">
             <div className={colHeading}>Site</div>
@@ -71,6 +74,12 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
             <a href="/#talk-to-sarah" className={linkBase}>
               Talk to Sarah
             </a>
+            <Link href="/products/ai-voice-agents" className={linkBase}>
+              AI Voice Agents
+            </Link>
+            <Link href="/products/websites" className={linkBase}>
+              Websites
+            </Link>
             <Link href="/products/gtm-ops" className={linkBase}>
               gtm_ops
             </Link>
@@ -80,7 +89,9 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
             <div className="mt-auto pt-6 self-start">
               <img
                 src="/wordmark.png"
-                alt="Wranngle"
+                alt=""
+                aria-hidden
+                loading="lazy"
                 className="block h-10 w-auto max-w-[136px]"
                 width="600"
                 height="327"
@@ -91,7 +102,13 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
           {/* Offerings */}
           <div>
             <div className={colHeading}>Offerings</div>
-            <Link href="/products/gtm_ops" className={`${linkBase} mono-font`}>
+            <Link href="/products/ai-voice-agents" className={linkBase}>
+              AI Voice Agents
+            </Link>
+            <Link href="/products/websites" className={linkBase}>
+              Websites
+            </Link>
+            <Link href="/products/gtm-ops" className={`${linkBase} mono-font`}>
               gtm_ops
             </Link>
             {offeringItems.map((item) => (
@@ -120,6 +137,20 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
             <Link href="/terms" className={linkBase}>
               Terms of Service
             </Link>
+            <Link href="/api-docs" className={linkBase}>
+              API Documentation
+            </Link>
+          </div>
+
+          {/* Resources */}
+          <div>
+            <div className={colHeading}>Resources</div>
+            <Link href="/blog" className={linkBase}>
+              Blog
+            </Link>
+            <Link href="/case-studies" className={linkBase}>
+              Case Studies
+            </Link>
           </div>
 
           {/* Connect */}
@@ -133,7 +164,7 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
                 aria-label="LinkedIn"
                 className="hover:text-[var(--s500)] transition-colors"
               >
-                <Linkedin size={20} />
+                <Linkedin size={20} aria-hidden />
               </a>
               <a
                 href="https://github.com/wranngle"
@@ -142,23 +173,14 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
                 aria-label="GitHub"
                 className="hover:text-[var(--s500)] transition-colors"
               >
-                <Github size={20} />
+                <Github size={20} aria-hidden />
               </a>
               <a
                 href="mailto:cody@wranngle.com"
                 aria-label="Email"
                 className="hover:text-[var(--s500)] transition-colors"
               >
-                <Mail size={20} />
-              </a>
-              <a
-                href="https://wranngle.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Wranngle"
-                className="hover:text-[var(--s500)] transition-colors"
-              >
-                <Globe size={20} />
+                <Mail size={20} aria-hidden />
               </a>
             </div>
           </div>
@@ -168,7 +190,7 @@ export default function SiteFooter({isDark}: SiteFooterProps) {
           className={`pt-6 border-t ${borderClass} flex flex-col md:flex-row justify-between items-center gap-4 text-xs mono-font opacity-60`}
         >
           <div>© 2026 Wranngle Systems LLC</div>
-          <div>Voice-AI-led GTM motion runtime for trades businesses</div>
+          <div>AI voice agents and lead automation for trades businesses</div>
         </div>
       </div>
     </footer>

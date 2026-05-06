@@ -24,6 +24,17 @@
   # for camera/geolocation/payment/usb/etc. on this site.
   Permissions-Policy: microphone=(self), camera=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), midi=(), display-capture=(), fullscreen=(self)
 
+  # MIME-sniff hardening — refuse to interpret a response with an
+  # unexpected content type as an active resource. Defends against
+  # smuggled HTML inside an asset that would otherwise execute.
+  X-Content-Type-Options: nosniff
+
+  # Referrer-Policy — strip path + query when navigating cross-origin
+  # so visitor URLs (which can carry hash-state, marketing query
+  # params, etc.) don't leak to third-party destinations. Same-origin
+  # navigations still carry the full referrer.
+  Referrer-Policy: strict-origin-when-cross-origin
+
 # Hashed bundles in /assets/* — content-addressable, so cache forever.
 # Vite includes a content hash in every filename (index-DpOR-9It.js etc.),
 # so a redeploy ships a new URL and the old one stays valid in caches
