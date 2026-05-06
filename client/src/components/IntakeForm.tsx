@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {useState, useEffect} from 'react';
 import {Link} from 'wouter';
 import {Check, ArrowRight, Zap, CreditCard} from 'lucide-react';
@@ -19,11 +18,28 @@ import {ToastAction} from '@/components/ui/toast.tsx';
 import {getOfferingById} from '@/data/offerings.ts';
 import {goTalkToSarah} from '@/lib/sarah.ts';
 
-const isAgentPackage = (id) => id === 'basic' || id === 'premium';
-const isSaasPackage = (id) =>
+// All user-controlled fields the form may post to /api/leads. The form
+// schema is open: many fields are package-conditional, so optional is the
+// honest shape rather than a discriminated union we'd have to refactor on
+// every offering change.
+type IntakeFormData = {
+  package: string;
+  businessName?: string;
+  email?: string;
+  industry?: string;
+  ownerName?: string;
+  phone?: string;
+  estimatedProposalsPerMonth?: string;
+  notes?: string;
+  agentName?: string;
+  addWebChatAgent?: boolean;
+};
+
+const isAgentPackage = (id: string) => id === 'basic' || id === 'premium';
+const isSaasPackage = (id: string) =>
   id === 'gtm-ops-trial' || id === 'gtm-ops-plus' || id === 'gtm-ops-pro';
 
-function OrderReceipt({successData}) {
+function OrderReceipt({successData}: {successData: IntakeFormData}) {
   const {toast} = useToast();
   const submittedOffering = getOfferingById(successData.package);
   const itemName =
@@ -43,12 +59,12 @@ function OrderReceipt({successData}) {
           businessName: successData.businessName,
         }),
       });
-      const payload = await res.json();
+      const payload: {url?: string; error?: string} = await res.json();
       if (!res.ok || !payload.url) {
         throw new Error(payload.error || 'Stripe checkout is unavailable');
       }
 
-      return payload;
+      return {url: payload.url};
     },
     onSuccess(payload) {
       globalThis.location.assign(payload.url);
@@ -190,16 +206,26 @@ function OrderReceipt({successData}) {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function -- intentional noop default; callers without a close-action can omit onSuccess.
-const IntakeForm = ({selectedPackage, onSuccess = () => {}}) => {
+type IntakeFormProps = {
+  selectedPackage: string;
+  onSuccess?: () => void;
+};
+
+const IntakeForm = ({
+  selectedPackage,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function -- intentional noop default; callers without a close-action can omit onSuccess.
+  onSuccess = () => {},
+}: IntakeFormProps) => {
   const [currentPackage, setCurrentPackage] = useState(selectedPackage);
   const offering = getOfferingById(currentPackage);
-  const {register, handleSubmit, reset, setValue} = useForm({
+  const {register, handleSubmit, reset, setValue} = useForm<IntakeFormData>({
     defaultValues: {package: currentPackage},
     shouldUseNativeValidation: true,
   });
   const {toast} = useToast();
-  const [successData, setSuccessData] = useState(null);
+  const [successData, setSuccessData] = useState<IntakeFormData | undefined>(
+    undefined,
+  );
   // Only show the "Talk to Sarah vs form" mode-select for AI Agent packages
   // (Core/Elite) where Sarah genuinely demos what the user is buying. Website
   // and SaaS flows skip straight to the form — Sarah is irrelevant for them.
@@ -211,7 +237,7 @@ const IntakeForm = ({selectedPackage, onSuccess = () => {}}) => {
     setValue('package', currentPackage);
   }, [currentPackage, setValue]);
 
-  const mutation = useMutation({
+  const mutation = useMutation<unknown, Error, IntakeFormData>({
     async mutationFn(data) {
       const res = await fetch('/api/leads', {
         method: 'POST',
