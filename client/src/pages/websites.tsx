@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {useEffect, useState} from 'react';
 import {motion} from 'framer-motion';
 import {
@@ -17,6 +16,7 @@ import {
   SearchCheck,
   ShieldCheck,
   Workflow,
+  type LucideIcon,
 } from 'lucide-react';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
 import SiteFooter from '@/components/site/SiteFooter.tsx';
@@ -83,6 +83,7 @@ export default function WebsitesPage() {
   const {isDark, toggle: toggleTheme} = useDarkMode();
   const category = getCategoryById('websites');
   const tiers = category?.items ?? [];
+  const [heroIntakeOpen, setHeroIntakeOpen] = useState(false);
 
   useEffect(() => {
     globalThis.scrollTo(0, 0);
@@ -125,7 +126,10 @@ export default function WebsitesPage() {
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <Dialog>
+                    <Dialog
+                      open={heroIntakeOpen}
+                      onOpenChange={setHeroIntakeOpen}
+                    >
                       <DialogTrigger asChild>
                         <button
                           type="button"
@@ -141,7 +145,12 @@ export default function WebsitesPage() {
                             : 'bg-white text-[#12111a] border-black/10'
                         }
                       >
-                        <IntakeForm selectedPackage="business-site" />
+                        <IntakeForm
+                          selectedPackage="business-site"
+                          onSuccess={() => {
+                            setHeroIntakeOpen(false);
+                          }}
+                        />
                       </DialogContent>
                     </Dialog>
                     <a
@@ -528,7 +537,15 @@ function WebsitePreview({isDark}: {isDark: boolean}) {
   );
 }
 
-function PreviewRow({Icon, label, value}) {
+function PreviewRow({
+  Icon,
+  label,
+  value,
+}: {
+  Icon: LucideIcon;
+  label: string;
+  value: string;
+}) {
   return (
     <div className="mb-2 rounded-md border border-current/10 bg-current/[0.03] p-3">
       <div className="flex items-center gap-2 text-[var(--s500)]">
@@ -663,7 +680,12 @@ function WebsiteTierTile({
                   : 'bg-white text-[#12111a] border-black/10'
               }
             >
-              <IntakeForm selectedPackage={item.id} />
+              <IntakeForm
+                selectedPackage={item.id}
+                onSuccess={() => {
+                  setIntakeOpen(false);
+                }}
+              />
             </DialogContent>
           </Dialog>
         </div>
