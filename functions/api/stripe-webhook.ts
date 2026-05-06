@@ -66,6 +66,8 @@ const FULFILLMENT_EVENT_TYPES = new Set([
   'checkout.session.async_payment_succeeded',
 ]);
 const SIGNATURE_TOLERANCE_SECONDS = 300;
+const FULFILLMENT_DEDUPE_WINDOW_MS = 24 * 60 * 60 * 1000;
+const fulfillmentDedupeStore = new Map<string, number>();
 
 const securityHeaders = {
   'X-Content-Type-Options': 'nosniff',
@@ -85,19 +87,46 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function cleanString(value: unknown, fallback = '', maxLength = 500) {
-  return typeof value === 'string'
-    ? value
-        .replaceAll(/<[^>]*>/g, '')
-        .replaceAll(/[<>]/g, '')
-        .trim()
-        .slice(0, maxLength)
-    : fallback;
+  if (typeof value !== 'string') return fallback;
+  // Iterate the tag-stripping regex until the string stops changing —
+  // single-pass `replaceAll` leaves nested patterns like `<scr<script>ipt>`
+  // partially decoded (CodeQL js/incomplete-multi-character-sanitization).
+  // After the loop, strip any leftover angle brackets as a final guard.
+  let stripped = value;
+  let previous;
+  do {
+    previous = stripped;
+    stripped = stripped.replaceAll(/<[^>]*>/g, '');
+  } while (stripped !== previous);
+
+  return stripped.replaceAll(/[<>]/g, '').trim().slice(0, maxLength);
 }
 
 function getObjectId(value: unknown) {
   if (typeof value === 'string') return value;
   if (isRecord(value) && typeof value.id === 'string') return value.id;
   return '';
+}
+
+function cleanupFulfillmentDedupeStore(now = Date.now()): void {
+  for (const [key, expiresAt] of fulfillmentDedupeStore) {
+    if (expiresAt <= now) fulfillmentDedupeStore.delete(key);
+  }
+}
+
+function claimFulfillment(payload: FulfillmentPayload): boolean {
+  const now = Date.now();
+  cleanupFulfillmentDedupeStore(now);
+
+  const key =
+    payload.stripe.sessionId && payload.stripe.sessionId !== 'unknown_session'
+      ? `session:${payload.stripe.sessionId}`
+      : `event:${payload.stripe.eventId}`;
+
+  if (fulfillmentDedupeStore.has(key)) return false;
+
+  fulfillmentDedupeStore.set(key, now + FULFILLMENT_DEDUPE_WINDOW_MS);
+  return true;
 }
 
 function getMetadataValue(
@@ -186,7 +215,7 @@ function getCheckoutSession(
   event: StripeEvent,
 ): StripeCheckoutSession | undefined {
   const object = event.data?.object;
-  return isRecord(object) ? (object as StripeCheckoutSession) : undefined;
+  return isRecord(object) ? object : undefined;
 }
 
 export function shouldFulfillCheckoutEvent(event: StripeEvent) {
@@ -341,6 +370,18 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   try {
     const payload = buildFulfillmentPayload(event);
+    if (!claimFulfillment(payload)) {
+      console.error(
+        'Duplicate Stripe fulfillment suppressed',
+        payload.stripe.sessionId,
+        payload.stripe.eventId,
+      );
+      return new Response(
+        JSON.stringify({received: true, forwarded: false, duplicate: true}),
+        {status: 200, headers: jsonHeaders},
+      );
+    }
+
     const webhookResponse = await forwardToLeadFlow(payload, context.env);
     if (!webhookResponse.ok) {
       console.error(
