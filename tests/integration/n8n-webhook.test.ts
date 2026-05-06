@@ -10,8 +10,13 @@ const WEBHOOK_URL =
 	'https://n8n.wranngle.com/webhook/universal-message-v1';
 const WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET || '';
 const TEST_PHONE = process.env.TEST_PHONE_NUMBER || '';
+// Skip when we lack the live secret + test phone — the suite calls the
+// production n8n webhook and would 401 / fail validation. Run locally
+// (or in CI with secrets) by providing N8N_WEBHOOK_SECRET + TEST_PHONE_NUMBER.
+const describeIfCreds =
+	WEBHOOK_SECRET && TEST_PHONE ? describe : describe.skip;
 
-describe('n8n Webhook Integration', () => {
+describeIfCreds('n8n Webhook Integration', () => {
 	describe('Authentication', () => {
 		it('should accept requests with valid secret header', async () => {
 			const response = await fetch(WEBHOOK_URL, {
