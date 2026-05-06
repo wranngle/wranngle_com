@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-deprecated -- lucide-react brand icon (Github) used intentionally for repo link; deprecation is upstream-future. */
-// @ts-nocheck
 import React, {useEffect, useState} from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import {motion} from 'framer-motion';
@@ -686,7 +685,12 @@ function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
                   : 'bg-white text-[#12111a] border-black/10'
               }
             >
-              <IntakeForm selectedPackage={item.id} />
+              <IntakeForm
+                selectedPackage={item.id}
+                onSuccess={() => {
+                  setIntakeOpen(false);
+                }}
+              />
             </DialogContent>
           </Dialog>
         </div>
