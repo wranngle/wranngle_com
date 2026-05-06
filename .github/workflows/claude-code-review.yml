@@ -29,10 +29,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           persist-credentials: false
 
+      # If the PR modifies this workflow file itself, the Claude action's
+      # token exchange refuses (workflow-on-PR must match the version on
+      # main, by design). Skip the review step in that case so the job
+      # passes; the next PR that doesn't touch the workflow will run normally.
+      - name: Detect self-modifying PR
+        id: self-mod
+        run: |
+          set -euo pipefail
+          base="${{ github.event.pull_request.base.sha }}"
+          if git diff --name-only "$base"...HEAD | grep -qE '^\.github/workflows/claude-code-review\.yml$'; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::PR modifies claude-code-review.yml; skipping live Claude review (will run on the next PR after merge)."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Run Claude Code Review
+        if: steps.self-mod.outputs.skip != 'true'
         id: claude-review
         uses: anthropics/claude-code-action@751daac6068906a8e8bef1773d3e2efecdc60fe3  # v1
         with:
