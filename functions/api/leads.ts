@@ -139,14 +139,14 @@ function normalizeDedupeValue(value: string | undefined): string {
 }
 
 function stableHash(input: string): string {
-  let hash = 2_166_136_261;
+  let hash = 0;
 
-  for (let i = 0; i < input.length; i++) {
-    hash ^= input.charCodeAt(i);
-    hash = Math.imul(hash, 16_777_619);
+  for (const character of input) {
+    hash =
+      (hash * 31 + (character.codePointAt(0) ?? 0)) % Number.MAX_SAFE_INTEGER;
   }
 
-  return (hash >>> 0).toString(16);
+  return hash.toString(36);
 }
 
 function cleanupLeadDedupeStore(): void {
