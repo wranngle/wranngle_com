@@ -179,7 +179,6 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         priceCadence: 'one-time',
         description:
           'One conversion-focused page, shipped in 7 days. Mobile-first, SEO-foundations, contact form wired straight to your inbox.',
-        badge: 'Quickstart',
         cta: 'Start Landing Page',
         monthlyAddon: {price: '100', label: 'maintenance'},
         features: [

@@ -142,12 +142,6 @@ export default function SiteFooter({isDark, showCta = true}: SiteFooterProps) {
           {/* Resources */}
           <div>
             <div className={colHeading}>Resources</div>
-            <Link href="/blog" className={linkBase}>
-              Blog
-            </Link>
-            <Link href="/case-studies" className={linkBase}>
-              Case Studies
-            </Link>
             <a href="/llms.txt" className={linkBase}>
               LLM Context
             </a>

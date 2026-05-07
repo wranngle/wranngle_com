@@ -366,18 +366,6 @@ const IntakeForm = ({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-3 items-start">
-          <Zap
-            className="text-[var(--s500)] shrink-0 mt-0.5"
-            size={18}
-            aria-hidden
-          />
-          <div className="text-[12px] opacity-85 leading-relaxed">
-            Workspace setup is currently manual. Cody emails your login back
-            personally — usually within a few hours.
-          </div>
-        </div>
-
         <form
           onSubmit={handleSubmit((data) => {
             mutation.mutate(data);

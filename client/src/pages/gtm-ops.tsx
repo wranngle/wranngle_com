@@ -4,6 +4,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import {motion} from 'framer-motion';
 import {
   Activity,
+  ArrowLeft,
   ArrowRight,
   Check,
   Clock3,
@@ -34,22 +35,18 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from '@/components/ui/carousel.tsx';
 import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import {getCategoryById, type OfferingItem} from '@/data/offerings.ts';
 
-// Production demo URL. app.wranngle.com is the canonical console host —
-// gtm-ops.pages.dev was a marketing-page middleman that added a click
-// before the operator could reach the actual surface. Linking here
-// drops users straight into the console.
-const GTM_OPS_DEMO_URL = 'https://app.wranngle.com';
+// Production demo URL. apps.wranngle.com is the canonical console host
+// (Cloudflare Pages custom domain).
+const GTM_OPS_DEMO_URL = 'https://apps.wranngle.com';
 const GTM_OPS_REPO_URL = 'https://github.com/wranngle/gtm_ops';
 // Real screenshots of the deployed console. Bundled into wranngle_com's
-// public dir (not hot-linked from app.wranngle.com) so the hero renders
-// even before DNS for app.wranngle.com lands. Source: gtm_ops repo's
+// public dir (not hot-linked from apps.wranngle.com) so the hero renders
+// even before DNS lands. Source: gtm_ops repo's
 // apps/ops-console/assets/screenshots/. Refresh by running
 //   cp ~/projects/gtm_ops/apps/ops-console/assets/screenshots/console-*.png \
 //      client/public/assets/gtm-ops/
@@ -460,7 +457,7 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
           </div>
           <div className="min-w-0 flex items-center gap-2 text-[10px] uppercase tracking-widest mono-font opacity-60">
             <Activity size={13} className="text-[var(--s500)] shrink-0" />
-            <span className="truncate">app.wranngle.com / console</span>
+            <span className="truncate">apps.wranngle.com / console</span>
           </div>
           <div className="hidden sm:flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400">
             <span className="h-2 w-2 rounded-full bg-current" />
@@ -507,36 +504,77 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="left-3 hidden sm:inline-flex" />
-          <CarouselNext className="right-3 hidden sm:inline-flex" />
         </Carousel>
 
         <div
-          className={`flex items-center justify-center gap-2 py-3 border-t ${
+          className={`flex items-center justify-center gap-3 py-3 border-t ${
             isDark
               ? 'border-white/10 bg-white/[0.02]'
               : 'border-black/10 bg-black/[0.02]'
           }`}
         >
-          {DEMO_SCREENSHOTS.map((shot, index) => (
-            <button
-              key={shot.src}
-              type="button"
-              onClick={() => api?.scrollTo(index)}
-              aria-label={`Go to ${shot.label} (slide ${index + 1} of ${
-                DEMO_SCREENSHOTS.length
-              })`}
-              aria-current={current === index ? 'true' : undefined}
-              className={`h-1.5 rounded-full transition-all ${
-                current === index
-                  ? 'w-6 bg-[var(--s500)]'
-                  : 'w-1.5 bg-current opacity-30 hover:opacity-60'
-              }`}
-            />
-          ))}
+          <CarouselNavButton
+            direction="prev"
+            disabled={!api?.canScrollPrev()}
+            onClick={() => api?.scrollPrev()}
+            isDark={isDark}
+          />
+          <div className="flex items-center justify-center gap-2">
+            {DEMO_SCREENSHOTS.map((shot, index) => (
+              <button
+                key={shot.src}
+                type="button"
+                onClick={() => api?.scrollTo(index)}
+                aria-label={`Go to ${shot.label} (slide ${index + 1} of ${
+                  DEMO_SCREENSHOTS.length
+                })`}
+                aria-current={current === index ? 'true' : undefined}
+                className={`h-1.5 rounded-full transition-all ${
+                  current === index
+                    ? 'w-6 bg-[var(--s500)]'
+                    : 'w-1.5 bg-current opacity-30 hover:opacity-60'
+                }`}
+              />
+            ))}
+          </div>
+          <CarouselNavButton
+            direction="next"
+            disabled={!api?.canScrollNext()}
+            onClick={() => api?.scrollNext()}
+            isDark={isDark}
+          />
         </div>
       </div>
     </div>
+  );
+}
+
+function CarouselNavButton({
+  direction,
+  disabled,
+  onClick,
+  isDark,
+}: {
+  direction: 'prev' | 'next';
+  disabled?: boolean;
+  onClick: () => void;
+  isDark: boolean;
+}) {
+  const Icon = direction === 'prev' ? ArrowLeft : ArrowRight;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={direction === 'prev' ? 'Previous slide' : 'Next slide'}
+      className={`h-7 w-7 inline-flex items-center justify-center rounded-full border transition-colors disabled:opacity-30 disabled:cursor-not-allowed ${
+        isDark
+          ? 'border-white/15 hover:border-[var(--s500)] hover:text-[var(--s500)]'
+          : 'border-black/15 hover:border-[var(--s500)] hover:text-[var(--s500)]'
+      }`}
+    >
+      <Icon size={13} aria-hidden />
+    </button>
   );
 }
 

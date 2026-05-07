@@ -68,18 +68,6 @@ export default function SiteHeader({
               </Link>
               <OfferingsMegaMenu isDark={isDark} />
               <AboutMegaMenu isDark={isDark} onTalkToSarah={goTalkToSarah} />
-              <Link
-                href="/blog"
-                className="text-sm font-medium hover:text-[var(--s500)] transition-colors"
-              >
-                Blog
-              </Link>
-              <Link
-                href="/case-studies"
-                className="text-sm font-medium hover:text-[var(--s500)] transition-colors"
-              >
-                Case Studies
-              </Link>
               <DarkModeToggle isDark={isDark} toggle={toggleTheme} />
             </nav>
 
@@ -187,22 +175,6 @@ export default function SiteHeader({
                 className="mono-font"
               >
                 gtm_ops
-              </Link>
-              <Link
-                href="/case-studies"
-                onClick={() => {
-                  setMobileOpen(false);
-                }}
-              >
-                Case Studies
-              </Link>
-              <Link
-                href="/blog"
-                onClick={() => {
-                  setMobileOpen(false);
-                }}
-              >
-                Blog
               </Link>
               <button
                 type="button"
