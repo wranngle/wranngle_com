@@ -6,8 +6,6 @@ import PrivacyPolicy from './pages/privacy-policy.tsx';
 import About from './pages/about.tsx';
 import GtmOps from './pages/gtm-ops.tsx';
 import Websites from './pages/websites.tsx';
-import BlogPage from './pages/blog.tsx';
-import CaseStudies from './pages/case-studies.tsx';
 import NotFound from './pages/not-found.tsx';
 
 const CANONICAL_ORIGIN = 'https://wranngle.com';
@@ -63,16 +61,6 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
     title: 'AI Voice Agents for Trades — Wranngle Systems',
     description:
       '24/7 AI voice agents for HVAC, plumbing, electrical, and trades businesses. Capture missed calls, qualify leads, and route handoffs.',
-  },
-  '/blog': {
-    title: 'Wranngle Blog — AI and Operations Notes',
-    description:
-      'Deployment notes, product playbooks, and practical guidance on AI voice and lead automation.',
-  },
-  '/case-studies': {
-    title: 'Case Studies — Wranngle Systems',
-    description:
-      'Real implementation outcomes for lead routing, conversion flows, and automation workflows.',
   },
   '/privacy': {
     title: 'Privacy Policy — Wranngle Systems',
@@ -162,8 +150,6 @@ export default function Router() {
         <Route path="/products/websites" component={Websites} />
         <Route path="/products/gtm-ops" component={GtmOps} />
         <Route path="/products/gtm_ops" component={GtmOps} />
-        <Route path="/blog" component={BlogPage} />
-        <Route path="/case-studies" component={CaseStudies} />
         <Route path="/terms" component={TermsOfService} />
         <Route path="/privacy" component={PrivacyPolicy} />
         <Route component={NotFound} />

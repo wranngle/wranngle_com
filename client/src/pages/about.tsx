@@ -225,7 +225,7 @@ export default function About() {
                   Cody Arnold
                 </h1>
                 <p className={`mt-3 text-base md:text-lg ${mutedText}`}>
-                  Founder, Wranngle. Fort Wayne, Indiana.
+                  Founder, Wranngle.
                 </p>
 
                 <div className="mt-8 space-y-5 text-base md:text-xl leading-relaxed">
@@ -568,10 +568,9 @@ export default function About() {
                     Public proof
                   </h2>
                   <p className={`mt-4 text-base leading-relaxed ${mutedText}`}>
-                    The repositories are not a polished portfolio museum. They
-                    are the receipts: evals, workflow plumbing, operating
-                    surfaces, and the adjacent systems work that shows how I
-                    think.
+                    These repos are where I tinker, build, and ship in public —
+                    the working files behind the products, not a curated
+                    portfolio.
                   </p>
                 </div>
                 <a

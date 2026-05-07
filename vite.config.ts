@@ -5,9 +5,7 @@ import react from '@vitejs/plugin-react';
 
 const spaHtmlRoutes = [
   'about',
-  'blog',
   'built-by',
-  'case-studies',
   'offerings',
   'privacy',
   'products/ai-voice-agents',
@@ -23,7 +21,7 @@ const routeMeta: Record<
   string,
   {canonicalPath: string; title: string; description: string}
 > = {
-  'about': {
+  about: {
     canonicalPath: '/about',
     title: 'Cody Arnold - About Wranngle',
     description:
@@ -35,25 +33,13 @@ const routeMeta: Record<
     description:
       'Why Wranngle exists, the operating principles behind the practice, and the public repos that show how the work actually gets done.',
   },
-  'blog': {
-    canonicalPath: '/blog',
-    title: 'Wranngle Blog - AI and Operations Notes',
-    description:
-      'Deployment notes, product playbooks, and practical guidance on AI voice and lead automation.',
-  },
-  'case-studies': {
-    canonicalPath: '/case-studies',
-    title: 'Case Studies - Wranngle Systems',
-    description:
-      'Real implementation outcomes for lead routing, conversion flows, and automation workflows.',
-  },
-  'offerings': {
+  offerings: {
     canonicalPath: '/',
     title: 'AI Voice Agents for Trades - Wranngle Systems',
     description:
       '24/7 AI voice agents for HVAC, plumbing, electrical, and trades businesses. Capture missed calls, qualify leads, and route handoffs.',
   },
-  'privacy': {
+  privacy: {
     canonicalPath: '/privacy',
     title: 'Privacy Policy - Wranngle Systems',
     description:
@@ -83,7 +69,7 @@ const routeMeta: Record<
     description:
       'Conversion-focused landing pages and business websites built with fast performance, lead capture, SEO foundations, and owned source code.',
   },
-  'terms': {
+  terms: {
     canonicalPath: '/terms',
     title: 'Terms of Service - Wranngle Systems',
     description:

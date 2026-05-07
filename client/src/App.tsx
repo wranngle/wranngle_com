@@ -29,7 +29,9 @@ import {
   collapseSarahWidget,
   ensureSarahWidgetScript,
   goTalkToSarah,
+  isSarahExpanded,
   openSarahWidget,
+  syncSarahVisibility,
 } from '@/lib/sarah.ts';
 
 const INITIAL_DIM = {w: 0, h: 0};
@@ -145,66 +147,55 @@ const WranngleLanding = () => {
       );
     /* eslint-enable @typescript-eslint/no-restricted-types */
 
-    const isSarahCollapseControl = (path: EventTarget[]) =>
-      path.some((node: EventTarget) => {
-        if (!(node instanceof HTMLElement) || node.tagName !== 'BUTTON') {
-          return false;
-        }
-
-        const label = (
-          node.ariaLabel ||
-          node.title ||
-          node.innerText ||
-          ''
-        ).toLowerCase();
-
-        return (
-          label.includes('close') ||
-          label.includes('minimize') ||
-          label.includes('collapse') ||
-          label.includes('dismiss')
-        );
-      });
-
-    const isSarahShadowHit = (widget: HTMLElement, path: EventTarget[]) =>
-      Boolean(
-        widget.shadowRoot &&
-        path.some(
-          (node: EventTarget) =>
-            node instanceof Node &&
-            node !== widget &&
-            node.getRootNode() === widget.shadowRoot,
-        ),
+    const hitSarahWidget = (widget: HTMLElement, path: EventTarget[]) => {
+      if (path.includes(widget)) return true;
+      const root = widget.shadowRoot;
+      if (!root) return false;
+      return path.some(
+        (node: EventTarget) =>
+          node instanceof Node &&
+          node !== widget &&
+          node.getRootNode() === root,
       );
+    };
 
     const handleSarahPointerDown = (e: PointerEvent) => {
       // Bail if click is inside any Radix-managed surface (Dialog, DropdownMenu,
-      // Popover, Tooltip…). Without this, opening the mega-menu fires this
-      // handler on the same tick and the bubbling Escape we dispatch below
-      // reaches Radix's document keydown listener — which closes the menu
-      // we just opened. (Same risk for any popper-based UI.)
-      const {target} = e;
-      if (isRadixSurfaceClick(target)) return;
+      // Popover, Tooltip…). Otherwise opening the mega-menu fires this handler
+      // on the same tick and we'd race the menu's own state.
+      if (isRadixSurfaceClick(e.target)) return;
 
       const widget = document.querySelector<HTMLElement>('elevenlabs-convai');
-      if (!widget?.dataset.visible) return;
+      if (!widget) return;
 
       const path = e.composedPath?.() ?? [];
-      const hitSarahHost =
-        path.includes(widget) ||
-        (target instanceof Node && widget.contains(target));
-      const hitSarahShadow = isSarahShadowHit(widget, path);
+      const insideWidget = hitSarahWidget(widget, path);
 
-      if (!hitSarahHost || !hitSarahShadow) {
-        collapseSarahWidget(widget);
+      if (!insideWidget) {
+        // Outside-click while expanded: actively collapse it. If it's
+        // already in orb state but our `data-visible` flag is stale, just
+        // clear the flag so the CSS restores pointer-events: none (this is
+        // the case that was leaving the page un-clickable after a manual
+        // close — the widget had collapsed itself but the flag persisted).
+        if (isSarahExpanded(widget)) {
+          collapseSarahWidget(widget);
+        } else if (widget.dataset.visible === 'true') {
+          delete widget.dataset.visible;
+        }
+
         return;
       }
 
-      if (isSarahCollapseControl(path)) {
-        globalThis.setTimeout(() => {
-          collapseSarahWidget(widget);
-        }, 0);
-      }
+      // Click landed inside the widget. The user may have toggled it open
+      // or closed via the widget's own controls. After the widget settles,
+      // re-read its actual size and sync our data-visible flag, so:
+      //   - opening from the orb sets data-visible=true (CSS keeps it lit)
+      //   - manually closing via the close button removes data-visible,
+      //     which restores `pointer-events: none` so the rest of the page
+      //     becomes clickable again.
+      globalThis.setTimeout(() => {
+        syncSarahVisibility(widget);
+      }, 250);
     };
 
     globalThis.addEventListener('pointerdown', handleSarahPointerDown, {
