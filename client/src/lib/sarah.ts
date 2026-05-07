@@ -41,6 +41,32 @@ export function openSarahWidget() {
   return true;
 }
 
+// Collapsed orb is small (~80px). Expanded chat panel is much larger. Use
+// this to detect "did the widget actually go back to the orb?" since the
+// shadow-DOM widget exposes no public API for state.
+const SARAH_COLLAPSED_MAX_DIMENSION = 200;
+
+export function isSarahExpanded(widget: HTMLElement) {
+  const rect = widget.getBoundingClientRect();
+  return (
+    rect.width > SARAH_COLLAPSED_MAX_DIMENSION ||
+    rect.height > SARAH_COLLAPSED_MAX_DIMENSION
+  );
+}
+
+export function syncSarahVisibility(widget?: HTMLElement) {
+  if (typeof document === 'undefined') return;
+  const target =
+    widget ?? document.querySelector<HTMLElement>('elevenlabs-convai');
+  if (!target) return;
+
+  if (isSarahExpanded(target)) {
+    target.dataset.visible = 'true';
+  } else {
+    delete target.dataset.visible;
+  }
+}
+
 export function collapseSarahWidget(widget?: HTMLElement) {
   if (typeof document === 'undefined') return;
 
@@ -49,27 +75,22 @@ export function collapseSarahWidget(widget?: HTMLElement) {
 
   if (!target) return;
 
-  const collapseDetail = {action: 'collapse'};
-  const collapseEventName = 'elevenlabs-agent:expand';
+  // The widget exposes no public collapse API — events dispatched at the
+  // host don't enter shadow DOM. Simulating a click on the widget's own
+  // close/toggle button is the only reliable lever.
+  const root = target.shadowRoot;
+  const closeButton =
+    root?.querySelector<HTMLButtonElement>(
+      'button[aria-label*="close" i], button[aria-label*="minimize" i], button[aria-label*="end" i], button[aria-label*="dismiss" i]',
+    ) ?? root?.querySelector<HTMLButtonElement>('button');
+  closeButton?.click();
 
-  document.dispatchEvent(
-    new CustomEvent(collapseEventName, {detail: collapseDetail}),
-  );
-  target.dispatchEvent(
-    new CustomEvent(collapseEventName, {detail: {...collapseDetail}}),
-  );
-
-  target.dispatchEvent(
-    new KeyboardEvent('keydown', {
-      key: 'Escape',
-      code: 'Escape',
-      keyCode: 27,
-      which: 27,
-      bubbles: false,
-    }),
-  );
-
+  // Belt-and-suspenders: clear the visibility flag now AND re-sync after
+  // the widget's collapse animation settles, in case the click missed.
   delete target.dataset.visible;
+  globalThis.setTimeout(() => {
+    syncSarahVisibility(target);
+  }, 350);
 }
 
 export function goTalkToSarah() {

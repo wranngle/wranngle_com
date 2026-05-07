@@ -18,7 +18,6 @@
 - Name: Wranngle Systems LLC
 - Short name: Wranngle
 - Founder: Cody Arnold
-- Location: Fort Wayne, Indiana, United States
 - Market: Service businesses, trades businesses, HVAC, plumbing, electrical, home services, local operators.
 
 ## Services

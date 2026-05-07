@@ -8,8 +8,6 @@
 - [About Cody Arnold](https://wranngle.com/about): Founder profile, operating record, technical focus, public proof, and contact links.
 - [gtm_ops](https://wranngle.com/products/gtm-ops): Lead-to-proposal runtime using enrichment, audit trails, branded PDFs, and operator review.
 - [Websites](https://wranngle.com/products/websites): Conversion-focused websites with lead capture, SEO foundations, performance, and owned source code.
-- [Case Studies](https://wranngle.com/case-studies): Implementation outcomes for lead routing, conversion flows, and automation workflows.
-- [Blog](https://wranngle.com/blog): Practical notes on AI voice, automation, deployment, and operations.
 
 ## Clean Machine-Readable Files
 
@@ -29,7 +27,6 @@
 
 - Person: Cody Arnold
 - Company: Wranngle Systems LLC
-- Location: Fort Wayne, Indiana, United States
 - Primary email: cody@wranngle.com
 - General email: hello@wranngle.com
 - Public GitHub: https://github.com/wranngle
@@ -44,9 +41,9 @@
 - Canonical parsed titles: AI Automation Engineer; Voice AI Engineer; Workflow Automation Engineer; Full-stack TypeScript Developer
 - Canonical role families: engineering; sales_engineering; product; data; operations
 - Seniority signals: founder; senior IC/operator; MSP automation and escalation background
-- Geography: Fort Wayne, Indiana, United States
 - Public work evidence: GitHub organization and project READMEs linked below
 - Highest-signal public files: https://wranngle.com/cody-arnold.md, https://wranngle.com/profile.json, https://wranngle.com/llms-full.txt
+
 
 ## Core Terms
 

@@ -1,6 +1,6 @@
 # Cody Arnold - AI Automation Engineer and Founder of Wranngle Systems
 
-> Cody Arnold is the founder of Wranngle Systems LLC in Fort Wayne, Indiana. He builds AI voice agents, workflow automation, lead capture systems, CRM enrichment flows, proposal-generation runtimes, and evaluation harnesses for service businesses.
+> Cody Arnold is the founder of Wranngle Systems LLC. He builds AI voice agents, workflow automation, lead capture systems, CRM enrichment flows, proposal-generation runtimes, and evaluation harnesses for service businesses.
 
 ## Canonical Links
 
@@ -13,7 +13,6 @@
 ## Current Role
 
 - Founder, Wranngle Systems LLC
-- Location: Fort Wayne, Indiana, United States
 - Focus: AI voice agents, n8n automation, structured lead capture, proposal generation, CRM enrichment, workflow instrumentation, and eval harnesses.
 
 ## Canonical Recruiting Fields
@@ -25,7 +24,6 @@
 - Role families: engineering; sales_engineering; product; data; operations
 - Seniority signals: founder; senior IC/operator; automation owner; escalation and documentation background
 - Industry context: AI automation, voice AI, service business software, workflow automation, GTM automation
-- Geography: Fort Wayne, Indiana, United States
 - Public contact: cody@wranngle.com
 - Public LinkedIn: https://www.linkedin.com/in/codyarnold96
 - Public GitHub: https://github.com/wranngle
@@ -102,7 +100,6 @@ Cody prioritizes production durability over demo polish. Common patterns in his 
 - Title: Founder
 - Common parsed title: AI Automation Engineer
 - Industry: AI automation, voice AI, workflow automation, service business software
-- Geography: Fort Wayne, Indiana, United States
 - Work authorization: Not stated publicly
 - Open to relocation: Not stated publicly
 - Primary public contact: cody@wranngle.com
