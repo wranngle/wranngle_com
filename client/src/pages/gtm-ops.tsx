@@ -40,12 +40,12 @@ import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import {getCategoryById, type OfferingItem} from '@/data/offerings.ts';
 
-// Production demo URL. apps.wranngle.com is the canonical console host
-// (Cloudflare Pages custom domain).
-const GTM_OPS_DEMO_URL = 'https://apps.wranngle.com';
+// Production demo URL. app.wranngle.com is the canonical console host
+// (Cloudflare Pages custom domain on the gtm-ops project).
+const GTM_OPS_DEMO_URL = 'https://app.wranngle.com';
 const GTM_OPS_REPO_URL = 'https://github.com/wranngle/gtm_ops';
 // Real screenshots of the deployed console. Bundled into wranngle_com's
-// public dir (not hot-linked from apps.wranngle.com) so the hero renders
+// public dir (not hot-linked from app.wranngle.com) so the hero renders
 // even before DNS lands. Source: gtm_ops repo's
 // apps/ops-console/assets/screenshots/. Refresh by running
 //   cp ~/projects/gtm_ops/apps/ops-console/assets/screenshots/console-*.png \
@@ -457,7 +457,7 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
           </div>
           <div className="min-w-0 flex items-center gap-2 text-[10px] uppercase tracking-widest mono-font opacity-60">
             <Activity size={13} className="text-[var(--s500)] shrink-0" />
-            <span className="truncate">apps.wranngle.com / console</span>
+            <span className="truncate">app.wranngle.com / console</span>
           </div>
           <div className="hidden sm:flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400">
             <span className="h-2 w-2 rounded-full bg-current" />
