@@ -21,6 +21,11 @@ warnings when shellcheck is installed, and block yamllint failures when
 yamllint is installed. GitHub Actions should confirm the same checks, not be
 the first place a deterministic bootstrap defect is discovered.
 
+Repository-administration advisory scans, including OpenSSF Scorecard, are
+non-blocking. Findings that require branch protection or ruleset changes should
+upload SARIF and annotations, but must not fail generated repo-content
+workflows.
+
 Legacy self-repair or AI-review workflows that create notification loops are
 retired into `old/` during bootstrap. Current automation may open PRs and rely
 on required checks, but it must not keep pushing failing repairs into the same
