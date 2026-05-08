@@ -412,7 +412,7 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
   // operator can read a slide. Reduced-motion users get a static carousel
   // and swap manually with prev/next or pagination dots.
 
-  const autoplayPlugin = React.useRef(
+  const [autoplayPlugin] = React.useState(() =>
     // eslint-disable-next-line new-cap -- Autoplay is the embla plugin factory; upstream API is uppercase.
     Autoplay({
       delay: 6000,
@@ -421,7 +421,10 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
       stopOnFocusIn: true,
     }),
   );
-  const plugins = reducedMotion ? [] : [autoplayPlugin.current];
+  // useState lazy-init runs the factory exactly once. The shadcn carousel
+  // example uses useRef(Autoplay({...})), but that re-evaluates the factory
+  // every render and discards all but the first instance.
+  const plugins = reducedMotion ? [] : [autoplayPlugin];
   const [api, setApi] = React.useState<CarouselApi | undefined>();
   const [current, setCurrent] = React.useState(0);
 
