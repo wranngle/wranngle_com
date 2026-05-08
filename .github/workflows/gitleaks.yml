@@ -25,6 +25,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          export PUPPETEER_SKIP_DOWNLOAD=true
+          export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
           url="https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
           curl -fsSLo /tmp/gitleaks.tar.gz "$url"
           printf '%s  %s\n' "$GITLEAKS_SHA256_LINUX_X64" /tmp/gitleaks.tar.gz | sha256sum -c -

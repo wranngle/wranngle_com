@@ -97,6 +97,8 @@ desktop.ini
 # Editors / IDEs
 .idea/
 .vscode/
+.cursor/
+.zed/
 *.swp
 *.swo
 *~
@@ -113,8 +115,33 @@ desktop.ini
 .claude/
 .codex/
 .gemini/
-.symphony/workspaces/
+.symphony/
 .assessment.cache
+.work/attempts/
+openspec/
+.claude/commands/openspec/
+.gemini/commands/openspec/
+.agent-runs/
+/worked/
+.autosync/
+
+# Local integrations
+.mcp.json
+mcp-server-config.json
+
+# E2E Test & Browser Artifacts
+playwright-report/
+playwright-console-report/
+test-results/
+test-results-console/
+screenshot-*.png
+screenshot-*.jpg
+
+# Output & Media Generation
+/output/
+/output_test/
+/exports/
+/raw/
 
 # Crash dumps & cores
 *.dump
@@ -137,8 +164,7 @@ pnpm-debug.log*
 .cache/
 tmp/
 temp/
-old/*
-!old/.gitkeep
+old/
 
 # --- Node (github/gitignore) ---
 # Logs
