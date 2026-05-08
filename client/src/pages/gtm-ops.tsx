@@ -408,14 +408,18 @@ export default function GtmOpsPage() {
 
 function ProductScreenshot({isDark}: {isDark: boolean}) {
   const reducedMotion = usePrefersReducedMotion();
-  // 5s per slide is long enough to read the screenshot caption + see the
-  // visual; auto-advance pauses on user interaction (hover/focus/touch).
-  // Reduced-motion users get a static carousel — they swap manually with
-  // the prev/next buttons or dots.
+  // Auto-advance pauses on hover, focus, and pointer interaction so the
+  // operator can read a slide. Reduced-motion users get a static carousel
+  // and swap manually with prev/next or pagination dots.
 
   const autoplayPlugin = React.useRef(
     // eslint-disable-next-line new-cap -- Autoplay is the embla plugin factory; upstream API is uppercase.
-    Autoplay({delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true}),
+    Autoplay({
+      delay: 6000,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+      stopOnFocusIn: true,
+    }),
   );
   const plugins = reducedMotion ? [] : [autoplayPlugin.current];
   const [api, setApi] = React.useState<CarouselApi | undefined>();
