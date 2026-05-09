@@ -6,7 +6,7 @@
  * and sends them via Twilio API without shell escaping issues.
  */
 
-import { MessageBuilder } from '../email-templates/sms/build/message-builder';
+import {MessageBuilder} from '../email-templates/sms/build/message-builder';
 
 function requireEnv(name: string): string {
   const value = process.env[name];
@@ -14,6 +14,7 @@ function requireEnv(name: string): string {
     console.error(`❌ Missing required environment variable: ${name}`);
     process.exit(1);
   }
+
   return value;
 }
 
@@ -31,15 +32,20 @@ interface SendResult {
   characterCount: number;
 }
 
-async function sendSms(to: string, body: string): Promise<{ success: boolean; sid?: string; error?: string }> {
+async function sendSms(
+  to: string,
+  body: string,
+): Promise<{success: boolean; sid?: string; error?: string}> {
   const url = `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`;
 
-  const credentials = Buffer.from(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`).toString('base64');
+  const credentials = Buffer.from(
+    `${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`,
+  ).toString('base64');
 
   const response = await fetch(url, {
     method: 'POST',
     headers: {
-      'Authorization': `Basic ${credentials}`,
+      Authorization: `Basic ${credentials}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: new URLSearchParams({
@@ -52,10 +58,10 @@ async function sendSms(to: string, body: string): Promise<{ success: boolean; si
   const data = await response.json();
 
   if (response.ok) {
-    return { success: true, sid: data.sid };
+    return {success: true, sid: data.sid};
   }
 
-  return { success: false, error: data.message || 'Unknown error' };
+  return {success: false, error: data.message || 'Unknown error'};
 }
 
 async function main() {
@@ -150,7 +156,7 @@ async function main() {
   };
 
   for (const templateName of templates) {
-    const variables = sampleData[templateName] || { FIRST_NAME: 'Cody' };
+    const variables = sampleData[templateName] || {FIRST_NAME: 'Cody'};
 
     try {
       const message = await builder.build(templateName, {
@@ -185,7 +191,9 @@ async function main() {
       }
 
       // Small delay between messages
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve) => {
+        setTimeout(resolve, 500);
+      });
     } catch (error) {
       console.log(`  ✗ Error: ${error}`);
       results.push({

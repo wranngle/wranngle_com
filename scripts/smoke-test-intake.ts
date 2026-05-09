@@ -17,11 +17,15 @@ function requireEnv(name: string): string {
     console.error(`❌ Missing required environment variable: ${name}`);
     process.exit(1);
   }
+
   return value;
 }
 
-const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || 'https://n8n.wranngle.com/webhook/wranngle-intake-form';
-const N8N_API_URL = process.env.N8N_API_URL || 'https://n8n.wranngle.com/api/v1';
+const N8N_WEBHOOK_URL =
+  process.env.N8N_WEBHOOK_URL ||
+  'https://n8n.wranngle.com/webhook/wranngle-intake-form';
+const N8N_API_URL =
+  process.env.N8N_API_URL || 'https://n8n.wranngle.com/api/v1';
 const N8N_API_KEY = requireEnv('N8N_API_KEY');
 const WORKFLOW_ID = requireEnv('N8N_WORKFLOW_ID');
 const SMTP2GO_API_KEY = requireEnv('SMTP2GO_API_KEY');
@@ -63,12 +67,14 @@ function generateTestLead(tier: 'core' | 'elite', index = 0): LeadPayload {
 }
 
 // Submit lead to webhook
-async function submitLead(payload: LeadPayload): Promise<{ success: boolean; response: unknown; duration: number }> {
+async function submitLead(
+  payload: LeadPayload,
+): Promise<{success: boolean; response: unknown; duration: number}> {
   const start = performance.now();
   try {
     const response = await fetch(N8N_WEBHOOK_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(payload),
     });
     const data = await response.json();
@@ -87,44 +93,61 @@ async function submitLead(payload: LeadPayload): Promise<{ success: boolean; res
 }
 
 // Get recent n8n executions
-async function getRecentExecutions(limit = 10): Promise<Array<{ id: string; status: string; startedAt: string }>> {
-  const response = await fetch(`${N8N_API_URL}/executions?workflowId=${WORKFLOW_ID}&limit=${limit}`, {
-    headers: { 'X-N8N-API-KEY': N8N_API_KEY },
-  });
-  const result = await response.json() as { data: Array<{ id: string; status: string; startedAt: string }> };
+async function getRecentExecutions(
+  limit = 10,
+): Promise<Array<{id: string; status: string; startedAt: string}>> {
+  const response = await fetch(
+    `${N8N_API_URL}/executions?workflowId=${WORKFLOW_ID}&limit=${limit}`,
+    {
+      headers: {'X-N8N-API-KEY': N8N_API_KEY},
+    },
+  );
+  const result = (await response.json()) as {
+    data: Array<{id: string; status: string; startedAt: string}>;
+  };
   return result.data || [];
 }
 
 // Get execution details
-async function getExecutionDetails(id: string): Promise<{ status: string; data?: unknown }> {
+async function getExecutionDetails(
+  id: string,
+): Promise<{status: string; data?: unknown}> {
   const response = await fetch(`${N8N_API_URL}/executions/${id}`, {
-    headers: { 'X-N8N-API-KEY': N8N_API_KEY },
+    headers: {'X-N8N-API-KEY': N8N_API_KEY},
   });
-  return response.json() as Promise<{ status: string; data?: unknown }>;
+  return response.json() as Promise<{status: string; data?: unknown}>;
 }
 
 // Check SMTP2GO for recent activity
-async function checkSmtpActivity(): Promise<{ delivered: number; bounced: number; rejected: number }> {
+async function checkSmtpActivity(): Promise<{
+  delivered: number;
+  bounced: number;
+  rejected: number;
+}> {
   const endDate = new Date();
   const startDate = new Date();
   startDate.setHours(startDate.getHours() - 1); // Last hour
 
   const response = await fetch('https://api.smtp2go.com/v3/activity/search', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
       api_key: SMTP2GO_API_KEY,
       start_date: startDate.toISOString().split('T')[0],
       end_date: endDate.toISOString().split('T')[0],
     }),
   });
-  const data = await response.json() as { data: { events: Array<{ event: string }> } };
+  const data = (await response.json()) as {
+    data: {events: Array<{event: string}>};
+  };
   const events = data.data?.events || [];
 
   return {
-    delivered: events.filter(e => e.event === 'delivered').length,
-    bounced: events.filter(e => e.event === 'hard-bounced' || e.event === 'soft-bounced').length,
-    rejected: events.filter(e => e.event === 'rejected').length,
+    delivered: events.filter((e) => e.event === 'delivered').length,
+    bounced: events.filter(
+      (e) => e.event === 'hard-bounced' || e.event === 'soft-bounced',
+    ).length,
+    rejected: events.filter((e) => e.event === 'rejected').length,
   };
 }
 
@@ -146,13 +169,15 @@ async function testTierSubmission(tier: 'core' | 'elite'): Promise<TestResult> {
   }
 
   // Wait for n8n to process
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  await new Promise((resolve) => {
+    setTimeout(resolve, 2000);
+  });
 
   // Verify execution
   const executions = await getRecentExecutions(5);
   const recentExec = executions[0];
 
-  if (!recentExec || recentExec.status !== 'success') {
+  if (recentExec?.status !== 'success') {
     return {
       name: `${tier.toUpperCase()} Tier Submission`,
       passed: false,
@@ -176,20 +201,25 @@ async function testStressSubmissions(count = 5): Promise<TestResult> {
   const start = performance.now();
   console.log(`\n  🔥 Stress test: ${count} rapid submissions...`);
 
-  const promises = Array.from({ length: count }, (_, i) =>
-    submitLead(generateTestLead(i % 2 === 0 ? 'core' : 'elite', i))
+  const promises = Array.from({length: count}, async (_, i) =>
+    submitLead(generateTestLead(i % 2 === 0 ? 'core' : 'elite', i)),
   );
 
   const results = await Promise.all(promises);
-  const successCount = results.filter(r => r.success).length;
-  const avgDuration = results.reduce((sum, r) => sum + r.duration, 0) / results.length;
+  const successCount = results.filter((r) => r.success).length;
+  const avgDuration =
+    results.reduce((sum, r) => sum + r.duration, 0) / results.length;
 
   // Wait for n8n to process all
-  await new Promise(resolve => setTimeout(resolve, 5000));
+  await new Promise((resolve) => {
+    setTimeout(resolve, 5000);
+  });
 
   // Verify executions
   const executions = await getRecentExecutions(count + 2);
-  const successExecutions = executions.filter(e => e.status === 'success').length;
+  const successExecutions = executions.filter(
+    (e) => e.status === 'success',
+  ).length;
 
   const passed = successCount === count && successExecutions >= count;
 
@@ -217,20 +247,26 @@ async function testEmailDelivery(): Promise<TestResult> {
   }
 
   // Count successful executions in last 3
-  const successfulExecs = executions.filter(e => e.status === 'success');
+  const successfulExecs = executions.filter((e) => e.status === 'success');
 
   // Check SMTP2GO for suppressions
   let suppressionWarning = '';
   try {
-    const suppResponse = await fetch('https://api.smtp2go.com/v3/suppression/view', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ api_key: SMTP2GO_API_KEY }),
-    });
-    const suppData = await suppResponse.json() as { data: { results: Array<{ email_address: string }> } };
+    const suppResponse = await fetch(
+      'https://api.smtp2go.com/v3/suppression/view',
+      {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({api_key: SMTP2GO_API_KEY}),
+      },
+    );
+    const suppData = (await suppResponse.json()) as {
+      data: {results: Array<{email_address: string}>};
+    };
     const suppressions = suppData.data?.results || [];
-    if (suppressions.some(s => s.email_address === 'sales@wranngle.com')) {
-      suppressionWarning = ' ⚠️ WARNING: sales@wranngle.com is on suppression list!';
+    if (suppressions.some((s) => s.email_address === 'sales@wranngle.com')) {
+      suppressionWarning =
+        ' ⚠️ WARNING: sales@wranngle.com is on suppression list!';
     }
   } catch {
     // Ignore suppression check errors
@@ -252,15 +288,26 @@ async function testEmailDelivery(): Promise<TestResult> {
 async function runSmokeTests() {
   const args = process.argv.slice(2);
   const isStressTest = args.includes('--stress');
-  const stressCount = parseInt(args.find(a => a.startsWith('--count='))?.split('=')[1] || '5', 10);
+  const stressCount = Number.parseInt(
+    args.find((a) => a.startsWith('--count='))?.split('=')[1] || '5',
+    10,
+  );
 
-  console.log('═══════════════════════════════════════════════════════════════');
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
   console.log('  SMOKE TEST: Lead Intake → n8n → Email');
-  console.log('═══════════════════════════════════════════════════════════════');
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
   console.log(`  Webhook: ${N8N_WEBHOOK_URL}`);
   console.log(`  Workflow: ${WORKFLOW_ID}`);
-  console.log(`  Mode: ${isStressTest ? `Stress (${stressCount} submissions)` : 'Standard'}`);
-  console.log('═══════════════════════════════════════════════════════════════');
+  console.log(
+    `  Mode: ${isStressTest ? `Stress (${stressCount} submissions)` : 'Standard'}`,
+  );
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
 
   const results: TestResult[] = [];
 
@@ -279,9 +326,13 @@ async function runSmokeTests() {
   }
 
   // Print results
-  console.log('\n═══════════════════════════════════════════════════════════════');
+  console.log(
+    '\n═══════════════════════════════════════════════════════════════',
+  );
   console.log('  RESULTS');
-  console.log('═══════════════════════════════════════════════════════════════\n');
+  console.log(
+    '═══════════════════════════════════════════════════════════════\n',
+  );
 
   let allPassed = true;
   for (const result of results) {
@@ -292,24 +343,32 @@ async function runSmokeTests() {
     if (result.executionId) {
       console.log(`   Execution: ${result.executionId}`);
     }
+
     console.log('');
     if (!result.passed) allPassed = false;
   }
 
   // Final summary
-  const passedCount = results.filter(r => r.passed).length;
-  console.log('═══════════════════════════════════════════════════════════════');
+  const passedCount = results.filter((r) => r.passed).length;
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
   if (allPassed) {
     console.log(`✅ ALL TESTS PASSED (${passedCount}/${results.length})`);
   } else {
-    console.log(`❌ SOME TESTS FAILED (${passedCount}/${results.length} passed)`);
+    console.log(
+      `❌ SOME TESTS FAILED (${passedCount}/${results.length} passed)`,
+    );
   }
-  console.log('═══════════════════════════════════════════════════════════════');
+
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
 
   process.exit(allPassed ? 0 : 1);
 }
 
-runSmokeTests().catch(err => {
-  console.error('❌ Smoke test failed:', err);
+runSmokeTests().catch((error) => {
+  console.error('❌ Smoke test failed:', error);
   process.exit(1);
 });

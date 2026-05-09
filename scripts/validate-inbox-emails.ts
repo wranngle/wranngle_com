@@ -2,11 +2,11 @@
  * Validate emails in inbox against design system
  */
 
-import { spawn } from 'child_process';
+import {spawn} from 'node:child_process';
 
 interface Email {
   subject: string;
-  body: { content: string };
+  body: {content: string};
   receivedDateTime: string;
 }
 
@@ -15,24 +15,41 @@ const REQUIRED_COLORS = ['#ff5f00', '#12111a'];
 
 // Coherence issues to check for
 const COHERENCE_ISSUES = [
-  { pattern: /reply to this email/i, issue: '"Reply to this email" with noreply sender' },
-  { pattern: /contact support(?!@)/i, issue: 'Vague "contact support" without email' },
-  { pattern: /contact our support team(?!.*@)/i, issue: 'Vague support reference without email' },
+  {
+    pattern: /reply to this email/i,
+    issue: '"Reply to this email" with noreply sender',
+  },
+  {
+    pattern: /contact support(?!@)/i,
+    issue: 'Vague "contact support" without email',
+  },
+  {
+    pattern: /contact our support team(?!.*@)/i,
+    issue: 'Vague support reference without email',
+  },
 ];
 
 async function getEmails(): Promise<Email[]> {
   return new Promise((resolve, reject) => {
-    const proc = spawn('m365', ['outlook', 'message', 'list', '--output', 'json'], { shell: true });
+    const proc = spawn(
+      'm365',
+      ['outlook', 'message', 'list', '--output', 'json'],
+      {shell: true},
+    );
     let stdout = '';
     let stderr = '';
 
-    proc.stdout.on('data', (data) => { stdout += data; });
-    proc.stderr.on('data', (data) => { stderr += data; });
+    proc.stdout.on('data', (data) => {
+      stdout += data;
+    });
+    proc.stderr.on('data', (data) => {
+      stderr += data;
+    });
     proc.on('close', (code) => {
-      if (code !== 0) {
-        reject(new Error(stderr));
-      } else {
+      if (code === 0) {
         resolve(JSON.parse(stdout));
+      } else {
+        reject(new Error(stderr));
       }
     });
   });
@@ -41,9 +58,13 @@ async function getEmails(): Promise<Email[]> {
 async function main() {
   const testRunId = process.argv[2] || '1769293686299';
 
-  console.log('═══════════════════════════════════════════════════════════════');
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
   console.log('  INBOX VALIDATION - ALL TEMPLATE TYPES');
-  console.log('═══════════════════════════════════════════════════════════════');
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
   console.log(`  Test Run ID: ${testRunId}\n`);
 
   const emails = await getEmails();
@@ -62,11 +83,17 @@ async function main() {
     const html = email.body.content.toLowerCase();
     const subject = email.subject.replace(`[${testRunId}]`, '').trim();
 
-    const hasDeprecated = DEPRECATED_COLORS.some((c) => html.includes(c.toLowerCase()));
-    const hasRequired = REQUIRED_COLORS.every((c) => html.includes(c.toLowerCase()));
+    const hasDeprecated = DEPRECATED_COLORS.some((c) =>
+      html.includes(c.toLowerCase()),
+    );
+    const hasRequired = REQUIRED_COLORS.every((c) =>
+      html.includes(c.toLowerCase()),
+    );
 
     // Check for coherence issues
-    const coherenceIssues = COHERENCE_ISSUES.filter((check) => check.pattern.test(html));
+    const coherenceIssues = COHERENCE_ISSUES.filter((check) =>
+      check.pattern.test(html),
+    );
     const hasCoherenceIssues = coherenceIssues.length > 0;
 
     const passed = !hasDeprecated && hasRequired && !hasCoherenceIssues;
@@ -75,25 +102,40 @@ async function main() {
 
     const icon = passed ? '✅' : '❌';
     console.log(`${icon} ${subject}`);
-    console.log(`   Deprecated colors: ${hasDeprecated ? '❌ FOUND' : '✅ None'}`);
-    console.log(`   Required colors:   ${hasRequired ? '✅ Present' : '❌ Missing'}`);
-    console.log(`   Coherence:         ${hasCoherenceIssues ? '❌ Issues found' : '✅ Pass'}`);
+    console.log(
+      `   Deprecated colors: ${hasDeprecated ? '❌ FOUND' : '✅ None'}`,
+    );
+    console.log(
+      `   Required colors:   ${hasRequired ? '✅ Present' : '❌ Missing'}`,
+    );
+    console.log(
+      `   Coherence:         ${hasCoherenceIssues ? '❌ Issues found' : '✅ Pass'}`,
+    );
     if (hasCoherenceIssues) {
-      coherenceIssues.forEach((issue) => {
+      for (const issue of coherenceIssues) {
         console.log(`     ⚠️  ${issue.issue}`);
-      });
+      }
     }
+
     console.log('');
   }
 
-  console.log('═══════════════════════════════════════════════════════════════');
-  console.log(allPassed ? '✅ ALL TEMPLATES PASS DESIGN SYSTEM VALIDATION' : '❌ SOME TEMPLATES FAILED');
-  console.log('═══════════════════════════════════════════════════════════════');
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
+  console.log(
+    allPassed
+      ? '✅ ALL TEMPLATES PASS DESIGN SYSTEM VALIDATION'
+      : '❌ SOME TEMPLATES FAILED',
+  );
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
 
   process.exit(allPassed ? 0 : 1);
 }
 
-main().catch((err) => {
-  console.error('Error:', err);
+main().catch((error) => {
+  console.error('Error:', error);
   process.exit(1);
 });

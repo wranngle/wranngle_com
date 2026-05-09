@@ -10,14 +10,16 @@
  * Run: bun run test:email:e2e
  */
 
-import { EmailTemplateBuilder } from '../email-templates/build/template-builder';
+import {EmailTemplateBuilder} from '../email-templates/build/template-builder';
 
-const SMTP2GO_API_KEY = process.env.SMTP2GO_API_KEY;
+const {SMTP2GO_API_KEY} = process.env;
 if (!SMTP2GO_API_KEY) {
   console.error('❌ Missing required environment variable: SMTP2GO_API_KEY');
   process.exit(1);
 }
-const TEST_RECIPIENT = process.env.TEST_RECIPIENT_EMAIL || 'noreply@wranngle.com';
+
+const TEST_RECIPIENT =
+  process.env.TEST_RECIPIENT_EMAIL || 'noreply@wranngle.com';
 const FROM_EMAIL = process.env.FROM_EMAIL || 'noreply@wranngle.com';
 
 // Design system validation
@@ -101,7 +103,7 @@ const TEMPLATE_CONFIGS: TemplateTestConfig[] = [
       USER_EMAIL: TEST_RECIPIENT,
       RESET_URL: 'https://wranngle.com/reset?token=e2e-test',
       EXPIRY_TIME: '1 hour',
-      EXPIRY_TIMESTAMP: new Date(Date.now() + 3600000).toISOString(),
+      EXPIRY_TIMESTAMP: new Date(Date.now() + 3_600_000).toISOString(),
       REQUEST_IP: '127.0.0.1',
       REQUEST_TIME: new Date().toISOString(),
       REQUEST_LOCATION: 'E2E Test Server',
@@ -142,11 +144,11 @@ interface SendResult {
 async function sendEmail(
   to: string,
   subject: string,
-  html: string
-): Promise<{ success: boolean; messageId?: string; error?: string }> {
+  html: string,
+): Promise<{success: boolean; messageId?: string; error?: string}> {
   const response = await fetch('https://api.smtp2go.com/v3/email/send', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
       api_key: SMTP2GO_API_KEY,
       sender: FROM_EMAIL,
@@ -157,18 +159,21 @@ async function sendEmail(
   });
 
   const data = (await response.json()) as {
-    data?: { succeeded?: number; email_id?: string };
+    data?: {succeeded?: number; email_id?: string};
     request_id?: string;
   };
 
   if (data.data?.succeeded === 1) {
-    return { success: true, messageId: data.data.email_id || data.request_id };
+    return {success: true, messageId: data.data.email_id || data.request_id};
   }
 
-  return { success: false, error: JSON.stringify(data) };
+  return {success: false, error: JSON.stringify(data)};
 }
 
-function validateHtml(html: string, templateName: string): { errors: string[]; warnings: string[] } {
+function validateHtml(
+  html: string,
+  templateName: string,
+): {errors: string[]; warnings: string[]} {
   const errors: string[] = [];
   const warnings: string[] = [];
   const htmlLower = html.toLowerCase();
@@ -192,6 +197,7 @@ function validateHtml(html: string, templateName: string): { errors: string[]; w
     if (!html.includes('border-radius: 8px')) {
       warnings.push(`Button border-radius may not be 8px in ${templateName}`);
     }
+
     if (!html.includes('font-size: 14px')) {
       warnings.push(`Button font-size may not be 14px in ${templateName}`);
     }
@@ -206,20 +212,28 @@ function validateHtml(html: string, templateName: string): { errors: string[]; w
   const openTables = (html.match(/<table/gi) || []).length;
   const closeTables = (html.match(/<\/table>/gi) || []).length;
   if (openTables !== closeTables) {
-    errors.push(`Unbalanced table tags in ${templateName}: ${openTables} open, ${closeTables} close`);
+    errors.push(
+      `Unbalanced table tags in ${templateName}: ${openTables} open, ${closeTables} close`,
+    );
   }
 
-  return { errors, warnings };
+  return {errors, warnings};
 }
 
 async function runE2ETests(): Promise<void> {
-  console.log('═══════════════════════════════════════════════════════════════');
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
   console.log('  EMAIL TEMPLATE E2E SAUSAGE FACTORY');
-  console.log('═══════════════════════════════════════════════════════════════');
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
   console.log(`  Recipient: ${TEST_RECIPIENT}`);
   console.log(`  Templates: ${TEMPLATE_CONFIGS.length}`);
   console.log(`  Timestamp: ${new Date().toISOString()}`);
-  console.log('═══════════════════════════════════════════════════════════════\n');
+  console.log(
+    '═══════════════════════════════════════════════════════════════\n',
+  );
 
   const builder = new EmailTemplateBuilder();
   const results: SendResult[] = [];
@@ -230,7 +244,9 @@ async function runE2ETests(): Promise<void> {
 
     try {
       // Build template
-      const html = await builder.build(config.name, config.variables, { inlineCSS: true });
+      const html = await builder.build(config.name, config.variables, {
+        inlineCSS: true,
+      });
 
       // Validate HTML
       const validation = validateHtml(html, config.name);
@@ -255,9 +271,13 @@ async function runE2ETests(): Promise<void> {
       results.push(result);
 
       if (result.success) {
-        console.log(`   ✅ Sent (${result.htmlSize} bytes, ID: ${result.messageId})`);
+        console.log(
+          `   ✅ Sent (${result.htmlSize} bytes, ID: ${result.messageId})`,
+        );
       } else {
-        console.log(`   ❌ Failed: ${result.error || result.validationErrors.join(', ')}`);
+        console.log(
+          `   ❌ Failed: ${result.error || result.validationErrors.join(', ')}`,
+        );
       }
 
       if (validation.warnings.length > 0) {
@@ -280,12 +300,18 @@ async function runE2ETests(): Promise<void> {
 
   // Wait for delivery
   console.log('⏳ Waiting 5 seconds for email delivery...\n');
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  await new Promise((resolve) => {
+    setTimeout(resolve, 5000);
+  });
 
   // Summary
-  console.log('═══════════════════════════════════════════════════════════════');
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
   console.log('  RESULTS');
-  console.log('═══════════════════════════════════════════════════════════════\n');
+  console.log(
+    '═══════════════════════════════════════════════════════════════\n',
+  );
 
   const passed = results.filter((r) => r.success);
   const failed = results.filter((r) => !r.success);
@@ -302,7 +328,9 @@ async function runE2ETests(): Promise<void> {
     console.log(`│ ${name} │ ${status}     │ ${size} │ ${msgId} │`);
   }
 
-  console.log('└─────────────────┴────────┴───────────┴─────────────────────┘\n');
+  console.log(
+    '└─────────────────┴────────┴───────────┴─────────────────────┘\n',
+  );
 
   // Validation summary
   const allErrors = results.flatMap((r) => r.validationErrors);
@@ -310,27 +338,34 @@ async function runE2ETests(): Promise<void> {
 
   if (allErrors.length > 0) {
     console.log('❌ VALIDATION ERRORS:');
-    allErrors.forEach((e) => console.log(`   - ${e}`));
+    for (const e of allErrors) console.log(`   - ${e}`);
     console.log('');
   }
 
   if (allWarnings.length > 0) {
     console.log('⚠️  VALIDATION WARNINGS:');
-    allWarnings.forEach((w) => console.log(`   - ${w}`));
+    for (const w of allWarnings) console.log(`   - ${w}`);
     console.log('');
   }
 
   // Final verdict
-  console.log('═══════════════════════════════════════════════════════════════');
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
   if (failed.length === 0) {
     console.log(`✅ ALL ${results.length} TEMPLATES PASSED`);
     console.log(`   Test Run ID: ${testRunId}`);
-    console.log(`   Check inbox for emails with subject containing [${testRunId}]`);
+    console.log(
+      `   Check inbox for emails with subject containing [${testRunId}]`,
+    );
   } else {
     console.log(`❌ ${failed.length}/${results.length} TEMPLATES FAILED`);
     console.log(`   Failed: ${failed.map((r) => r.template).join(', ')}`);
   }
-  console.log('═══════════════════════════════════════════════════════════════');
+
+  console.log(
+    '═══════════════════════════════════════════════════════════════',
+  );
 
   // Output test run ID for inbox validation
   console.log(`\n📬 To validate in inbox, search for: [${testRunId}]`);
@@ -338,7 +373,7 @@ async function runE2ETests(): Promise<void> {
   process.exit(failed.length > 0 ? 1 : 0);
 }
 
-runE2ETests().catch((err) => {
-  console.error('❌ E2E test failed:', err);
+runE2ETests().catch((error) => {
+  console.error('❌ E2E test failed:', error);
   process.exit(1);
 });

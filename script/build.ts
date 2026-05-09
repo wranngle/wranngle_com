@@ -1,21 +1,21 @@
-import { build as viteBuild } from "vite";
-import { rm } from "fs/promises";
+import {rm} from 'node:fs/promises';
+import {build as viteBuild} from 'vite';
 
 async function buildAll() {
-  if (process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH.startsWith("wip/")) {
-    console.log("Skipping Cloudflare build for wip branch.");
+  if (process.env.CF_PAGES_BRANCH?.startsWith('wip/')) {
+    console.log('Skipping Cloudflare build for wip branch.');
     process.exit(0);
   }
 
-  await rm("dist", { recursive: true, force: true });
+  await rm('dist', {recursive: true, force: true});
 
-  console.log("building client for Cloudflare Pages...");
+  console.log('building client for Cloudflare Pages...');
   await viteBuild();
 
-  console.log("build complete - output in dist/");
+  console.log('build complete - output in dist/');
 }
 
-buildAll().catch((err) => {
-  console.error(err);
+buildAll().catch((error) => {
+  console.error(error);
   process.exit(1);
 });

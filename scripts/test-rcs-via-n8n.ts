@@ -7,15 +7,20 @@
  */
 
 const TEST_PHONE = process.argv[2] || process.env.TEST_PHONE_NUMBER;
-const WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || 'https://n8n.wranngle.com/webhook/universal-message-v1';
+const WEBHOOK_URL =
+  process.env.N8N_WEBHOOK_URL ||
+  'https://n8n.wranngle.com/webhook/universal-message-v1';
 const WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET;
-const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
-const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
+const {TWILIO_ACCOUNT_SID} = process.env;
+const {TWILIO_AUTH_TOKEN} = process.env;
 
 if (!TEST_PHONE) {
-  console.error('❌ Missing test phone: pass as argv[2] or set TEST_PHONE_NUMBER');
+  console.error(
+    '❌ Missing test phone: pass as argv[2] or set TEST_PHONE_NUMBER',
+  );
   process.exit(1);
 }
+
 if (!WEBHOOK_SECRET) {
   console.error('❌ Missing required environment variable: N8N_WEBHOOK_SECRET');
   process.exit(1);
@@ -138,7 +143,9 @@ interface TestResult {
   duration: number;
 }
 
-async function sendMessage(testCase: TestCase): Promise<{ messageSid?: string; error?: string }> {
+async function sendMessage(
+  testCase: TestCase,
+): Promise<{messageSid?: string; error?: string}> {
   const response = await fetch(WEBHOOK_URL, {
     method: 'POST',
     headers: {
@@ -156,24 +163,30 @@ async function sendMessage(testCase: TestCase): Promise<{ messageSid?: string; e
   const data = await response.json();
 
   if (!response.ok || !data.success) {
-    return { error: data.message || data.error || 'Unknown error' };
+    return {error: data.message || data.error || 'Unknown error'};
   }
 
-  return { messageSid: data.message_sid };
+  return {messageSid: data.message_sid};
 }
 
-async function verifyDelivery(messageSid: string): Promise<{ status: string; channel: string }> {
+async function verifyDelivery(
+  messageSid: string,
+): Promise<{status: string; channel: string}> {
   // Wait 2 seconds for Twilio to process
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise((resolve) => {
+    setTimeout(resolve, 2000);
+  });
 
-  const auth = Buffer.from(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`).toString('base64');
+  const auth = Buffer.from(
+    `${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`,
+  ).toString('base64');
   const response = await fetch(
     `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages/${messageSid}.json`,
     {
       headers: {
         Authorization: `Basic ${auth}`,
       },
-    }
+    },
   );
 
   if (!response.ok) {
@@ -213,7 +226,11 @@ async function runTest(testCase: TestCase): Promise<TestResult> {
 
     return {
       template: testCase.template,
-      success: delivery.status === 'delivered' || delivery.status === 'sent' || delivery.status === 'accepted' || delivery.status === 'queued',
+      success:
+        delivery.status === 'delivered' ||
+        delivery.status === 'sent' ||
+        delivery.status === 'accepted' ||
+        delivery.status === 'queued',
       messageSid: result.messageSid,
       deliveryStatus: delivery.status,
       channel: delivery.channel,
@@ -233,7 +250,7 @@ async function runAllTests(): Promise<void> {
   console.log('🚀 Starting E2E Test: Universal Message Sender');
   console.log(`📱 Target phone: ${TEST_PHONE}`);
   console.log(`🌐 Webhook: ${WEBHOOK_URL}`);
-  console.log('=' .repeat(60));
+  console.log('='.repeat(60));
 
   if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN) {
     console.error('❌ Missing Twilio credentials in environment');
@@ -247,13 +264,15 @@ async function runAllTests(): Promise<void> {
     results.push(result);
 
     // Wait 1 second between tests to avoid rate limits
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
   }
 
   // Print summary
   console.log('\n' + '='.repeat(60));
   console.log('📊 TEST SUMMARY');
-  console.log('=' .repeat(60));
+  console.log('='.repeat(60));
 
   const successful = results.filter((r) => r.success);
   const failed = results.filter((r) => !r.success);
@@ -264,7 +283,9 @@ async function runAllTests(): Promise<void> {
   if (successful.length > 0) {
     console.log('\n✅ PASSED:');
     for (const result of successful) {
-      console.log(`   • ${result.template.padEnd(25)} ${result.deliveryStatus?.padEnd(12)} ${result.channel} (${result.duration}ms)`);
+      console.log(
+        `   • ${result.template.padEnd(25)} ${result.deliveryStatus?.padEnd(12)} ${result.channel} (${result.duration}ms)`,
+      );
     }
   }
 
@@ -278,7 +299,7 @@ async function runAllTests(): Promise<void> {
   // Print next steps
   console.log('\n' + '='.repeat(60));
   console.log('📋 NEXT STEPS (Phase 4.2):');
-  console.log('=' .repeat(60));
+  console.log('='.repeat(60));
   console.log('1. Log into Twilio Console: https://console.twilio.com/');
   console.log('2. Navigate to: Messaging > Logs > Messages');
   console.log('3. Filter: Last 1 hour');
@@ -287,7 +308,9 @@ async function runAllTests(): Promise<void> {
   console.log('   • Channel: "RCS" (not "SMS")');
   console.log('   • Body: Correct template content');
   console.log('5. Screenshot for evidence');
-  console.log('\nNote: RCS may fall back to SMS if recipient device does not support RCS.');
+  console.log(
+    '\nNote: RCS may fall back to SMS if recipient device does not support RCS.',
+  );
 
   process.exit(failed.length > 0 ? 1 : 0);
 }

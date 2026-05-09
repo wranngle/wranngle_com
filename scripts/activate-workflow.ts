@@ -6,7 +6,7 @@
  */
 
 const WORKFLOW_ID = process.argv[2] || 'CBoXlSNiDOHA5YmA';
-const N8N_API_KEY = process.env.N8N_API_KEY;
+const {N8N_API_KEY} = process.env;
 const N8N_BASE_URL = 'https://n8n.wranngle.com/api/v1';
 
 if (!N8N_API_KEY) {
@@ -29,7 +29,9 @@ async function activateWorkflow(workflowId: string): Promise<void> {
   }
 
   const workflow = await getResponse.json();
-  console.log(`📋 Workflow: ${workflow.name} (currently ${workflow.active ? 'active' : 'inactive'})`);
+  console.log(
+    `📋 Workflow: ${workflow.name} (currently ${workflow.active ? 'active' : 'inactive'})`,
+  );
 
   if (workflow.active) {
     console.log('✅ Workflow is already active');
@@ -38,13 +40,16 @@ async function activateWorkflow(workflowId: string): Promise<void> {
 
   // Try dedicated activation endpoint
   console.log('🔄 Activating workflow...');
-  let updateResponse = await fetch(`${N8N_BASE_URL}/workflows/${workflowId}/activate`, {
-    method: 'POST',
-    headers: {
-      'X-N8N-API-KEY': N8N_API_KEY,
-      'Content-Type': 'application/json',
+  let updateResponse = await fetch(
+    `${N8N_BASE_URL}/workflows/${workflowId}/activate`,
+    {
+      method: 'POST',
+      headers: {
+        'X-N8N-API-KEY': N8N_API_KEY,
+        'Content-Type': 'application/json',
+      },
     },
-  });
+  );
 
   // If dedicated endpoint doesn't exist, try settings update
   if (!updateResponse.ok && updateResponse.status === 404) {
@@ -68,7 +73,9 @@ async function activateWorkflow(workflowId: string): Promise<void> {
 
   const updated = await updateResponse.json();
   console.log(`✅ Workflow activated successfully!`);
-  console.log(`📍 Webhook URL: https://n8n.wranngle.com/webhook/${workflow.nodes.find((n: any) => n.type === 'n8n-nodes-base.webhook')?.parameters?.path || 'unknown'}`);
+  console.log(
+    `📍 Webhook URL: https://n8n.wranngle.com/webhook/${workflow.nodes.find((n: any) => n.type === 'n8n-nodes-base.webhook')?.parameters?.path || 'unknown'}`,
+  );
 }
 
 activateWorkflow(WORKFLOW_ID).catch((error) => {
