@@ -1,7 +1,7 @@
 {
   "$schema": "https://wranngle.local/schemas/automation-policy.v1.json",
   "version": 1,
-  "mode": "managed",
+  "mode": "paused",
   "repo_class": "owned-greenfield",
   "integration": {
     "default": "integrate_when_green",
