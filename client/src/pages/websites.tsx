@@ -35,7 +35,7 @@ import {getCategoryById, type OfferingItem} from '@/data/offerings.ts';
 const HERO_METRICS = [
   {value: '7 days', label: 'landing page quickstart'},
   {value: '95+', label: 'Lighthouse target'},
-  {value: 'Yours', label: 'source code ownership'},
+  {value: 'Yours', label: 'source code included'},
 ];
 
 const WEBSITE_SIGNALS = [
@@ -47,20 +47,20 @@ const WEBSITE_SIGNALS = [
   {
     Icon: FormInput,
     label: 'Lead capture',
-    body: 'Forms route to email and n8n, so the site feeds the rest of your sales workflow.',
+    body: 'Forms send clean lead details to email and n8n instead of leaving them buried in a plugin inbox.',
   },
   {
     Icon: ShieldCheck,
-    label: 'Owned surface',
-    body: 'No locked-in page builder. You get the code, hosting path, and maintenance option.',
+    label: 'Code included',
+    body: 'No page-builder lock-in. You get the source, hosting setup, and an optional maintenance plan.',
   },
 ];
 
 const BUILD_STEPS = [
   {
     Icon: MousePointerClick,
-    title: 'Conversion map',
-    body: 'Offer, audience, proof, objections, and contact path are decided before pixels move.',
+    title: 'Offer map',
+    body: 'Clarify the offer, audience, trust signals, objections, and contact path before design starts.',
   },
   {
     Icon: Palette,
@@ -75,7 +75,7 @@ const BUILD_STEPS = [
   {
     Icon: Workflow,
     title: 'Automation handoff',
-    body: 'Lead forms, webhook payloads, analytics, and optional AI chat connect to your operating stack.',
+    body: 'Connect lead forms, webhook payloads, analytics, and optional AI chat to the tools you already use.',
   },
 ];
 
@@ -110,19 +110,20 @@ export default function WebsitesPage() {
               >
                 <div className="max-w-2xl">
                   <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
-                    PRODUCT // CONVERSION SITE SYSTEM
+                    WEBSITE BUILD
                   </div>
                   <h1 className="brand-font text-5xl sm:text-6xl md:text-7xl font-bold leading-[0.95] mb-5">
-                    Websites that turn attention into work.
+                    Websites built to capture leads.
                   </h1>
                   <p className="text-xl md:text-2xl font-semibold leading-snug mb-4 max-w-xl">
-                    Fast, owned, lead-capture websites for operators who need
-                    the phone to ring and the inbox to stay organized.
+                    Fast, owned websites for service businesses that need a
+                    clear offer, working forms, and a clean handoff.
                   </p>
                   <p className="text-base md:text-lg opacity-75 leading-relaxed mb-7 max-w-xl">
                     Wranngle builds the page, wires the forms, ships the source,
                     and keeps maintenance optional. Landing page or full
-                    business site, the goal is the same: convert real buyers.
+                    business site, the goal is the same: turn visitors into
+                    reachable leads.
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-3">
@@ -215,12 +216,12 @@ export default function WebsitesPage() {
                   THE BUILD FLOW
                 </div>
                 <h2 className="brand-font text-3xl md:text-4xl font-bold mb-4">
-                  Practical site work, not brochure theater.
+                  Site work tied to lead capture.
                 </h2>
                 <p className="opacity-75 text-base leading-relaxed mb-6">
-                  The site has one job: make trust legible and make the next
-                  action obvious. Design, copy, build, SEO, and automation stay
-                  tied to that job.
+                  The site has one job: explain the service, make the business
+                  credible, and make the next step obvious. Design, copy, SEO,
+                  and automation stay tied to that job.
                 </p>
                 <div
                   className={`rounded-md border p-4 ${
@@ -316,15 +317,15 @@ export default function WebsitesPage() {
             >
               <div>
                 <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-3 mono-font">
-                  PAIRS WELL WITH VOICE AI
+                  ADD CHAT OR VOICE
                 </div>
                 <h3 className="brand-font text-2xl md:text-3xl font-bold mb-3">
-                  A good site should not be your only after-hours capture.
+                  Add chat or voice when the site starts producing leads.
                 </h3>
                 <p className="text-sm md:text-base opacity-70 leading-relaxed">
-                  Add Sarah-style web chat or a full voice agent when the site
-                  is ready. The website handles intent you can see. The agent
-                  handles the calls and typed questions that happen after hours.
+                  A website can collect forms. A web chat or voice agent can
+                  answer questions, qualify callers, and send the details to the
+                  same follow-up path after hours.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row md:flex-col gap-3">
@@ -436,14 +437,14 @@ function WebsitePreview({isDark}: {isDark: boolean}) {
                 <div className="absolute inset-0 bg-gradient-to-r from-[#12111a]/95 via-[#12111a]/60 to-[#12111a]/15" />
                 <div className="relative z-10 p-4 text-white">
                   <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--s500)] mb-3">
-                    Conversion surface
+                    Lead page
                   </div>
                   <h2 className="brand-font text-2xl font-bold leading-tight mb-2">
-                    Hero, proof, CTA, form
+                    Offer, trust, CTA, form
                   </h2>
                   <p className="text-sm text-white/70 max-w-sm leading-relaxed">
                     The first screen says what you do, who it is for, why to
-                    trust you, and what happens next.
+                    contact you, and what happens next.
                   </p>
                 </div>
               </div>
@@ -504,7 +505,7 @@ function WebsitePreview({isDark}: {isDark: boolean}) {
                         Analytics
                       </div>
                       <h3 className="brand-font text-xl font-bold">
-                        Lead signal
+                        Lead activity
                       </h3>
                     </div>
                     <BarChart3 size={18} className="text-[var(--v500)]" />
@@ -521,7 +522,7 @@ function WebsitePreview({isDark}: {isDark: boolean}) {
                       className="absolute inset-0 h-full w-full object-cover"
                     />
                     <div className="absolute inset-x-0 bottom-0 p-3 bg-[#12111a]/80 text-white">
-                      <div className="text-sm font-bold">Pipeline visible</div>
+                      <div className="text-sm font-bold">Follow-up visible</div>
                       <div className="text-[10px] uppercase tracking-wider text-white/60">
                         visitors, forms, and follow-up
                       </div>

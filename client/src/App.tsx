@@ -26,46 +26,43 @@ import SiteFooter from '@/components/site/SiteFooter.tsx';
 import {useDarkMode} from '@/components/site/DarkModeToggle.tsx';
 import {
   SARAH_AGENT_ID,
-  collapseSarahWidget,
   ensureSarahWidgetScript,
   goTalkToSarah,
-  isSarahExpanded,
   openSarahWidget,
-  syncSarahVisibility,
 } from '@/lib/sarah.ts';
 
 const INITIAL_DIM = {w: 0, h: 0};
 const CONSOLE_LINES = [
-  {text: '[INFO] System initializing...', color: 'text-gray-400'},
-  {text: '> Detecting missed calls (Last 24h)...', color: 'text-gray-300'},
-  {text: '[WARN] 14 Potential Leads Unanswered', color: 'text-yellow-400'},
-  {text: '> Loading HVAC/Plumbing Knowledge Base...', color: 'text-cyan-400'},
-  {text: '> Syncing Calendar Availability...', color: 'text-cyan-400'},
-  {text: '> Est. Recovered Revenue: $4,200/mo', color: 'text-green-400'},
-  {text: '\n[READY] Agent awaiting deployment command.', color: 'text-white'},
+  {text: '[LIVE] After-hours forwarding enabled', color: 'text-gray-400'},
+  {text: '> New caller: emergency plumbing request', color: 'text-gray-300'},
+  {text: '[CHECK] Service area confirmed', color: 'text-green-400'},
+  {text: '> Collected name, phone, address, and issue', color: 'text-cyan-400'},
+  {text: '> Booking window matched to calendar', color: 'text-cyan-400'},
+  {text: '> Sent transcript and summary to dispatch', color: 'text-green-400'},
+  {text: '\n[READY] Next call can be answered.', color: 'text-white'},
 ];
 
 const VOICE_HERO_METRICS = [
   {value: '24/7', label: 'after-hours coverage'},
-  {value: '2,500', label: 'Elite voice minutes'},
-  {value: '3', label: 'channels: voice · web · SMS'},
+  {value: '2,500', label: 'included voice minutes'},
+  {value: '3', label: 'channels: voice, web, SMS'},
 ];
 
 const VOICE_OPS_SIGNALS = [
   {
     Icon: PhoneCall,
-    label: 'Answers first',
+    label: 'Answers missed calls',
     body: 'Forward missed, overflow, and after-hours calls before the lead hits voicemail.',
   },
   {
     Icon: MessageSquareText,
-    label: 'Captures context',
-    body: 'Caller details, urgency, job type, and transcript land in a structured handoff.',
+    label: 'Gets the job details',
+    body: 'Name, contact info, address, urgency, job type, and transcript land in one handoff.',
   },
   {
     Icon: CalendarCheck,
-    label: 'Routes action',
-    body: 'Escalate hot jobs, book windows, and notify the right person while intent is fresh.',
+    label: 'Hands off cleanly',
+    body: 'Book available windows, flag urgent calls, and notify the person who owns the next step.',
   },
 ];
 
@@ -135,77 +132,10 @@ const WranngleLanding = () => {
   const [abVariant] = useState<HomeAbVariant>(() => resolveHomeAbVariant());
 
   const heroCta =
-    abVariant === 'value-first' ? 'Deploy my full flow' : 'Get my agent';
+    abVariant === 'value-first' ? 'Build my call flow' : 'Get call coverage';
 
   useEffect(() => {
     ensureSarahWidgetScript();
-
-    /* eslint-disable @typescript-eslint/no-restricted-types -- e.target is `EventTarget | null` per DOM spec; converting to undefined makes callsites fail. */
-    const isRadixSurfaceClick = (target: EventTarget | null) =>
-      (target as Element | null)?.closest?.(
-        '[role="dialog"], [role="menu"], [role="listbox"], [data-radix-popper-content-wrapper], [data-radix-portal]',
-      );
-    /* eslint-enable @typescript-eslint/no-restricted-types */
-
-    const hitSarahWidget = (widget: HTMLElement, path: EventTarget[]) => {
-      if (path.includes(widget)) return true;
-      const root = widget.shadowRoot;
-      if (!root) return false;
-      return path.some(
-        (node: EventTarget) =>
-          node instanceof Node &&
-          node !== widget &&
-          node.getRootNode() === root,
-      );
-    };
-
-    const handleSarahPointerDown = (e: PointerEvent) => {
-      // Bail if click is inside any Radix-managed surface (Dialog, DropdownMenu,
-      // Popover, Tooltip…). Otherwise opening the mega-menu fires this handler
-      // on the same tick and we'd race the menu's own state.
-      if (isRadixSurfaceClick(e.target)) return;
-
-      const widget = document.querySelector<HTMLElement>('elevenlabs-convai');
-      if (!widget) return;
-
-      const path = e.composedPath?.() ?? [];
-      const insideWidget = hitSarahWidget(widget, path);
-
-      if (!insideWidget) {
-        // Outside-click while expanded: actively collapse it. If it's
-        // already in orb state but our `data-visible` flag is stale, just
-        // clear the flag so the CSS restores pointer-events: none (this is
-        // the case that was leaving the page un-clickable after a manual
-        // close — the widget had collapsed itself but the flag persisted).
-        if (isSarahExpanded(widget)) {
-          collapseSarahWidget(widget);
-        } else if (widget.dataset.visible === 'true') {
-          delete widget.dataset.visible;
-        }
-
-        return;
-      }
-
-      // Click landed inside the widget. The user may have toggled it open
-      // or closed via the widget's own controls. After the widget settles,
-      // re-read its actual size and sync our data-visible flag, so:
-      //   - opening from the orb sets data-visible=true (CSS keeps it lit)
-      //   - manually closing via the close button removes data-visible,
-      //     which restores `pointer-events: none` so the rest of the page
-      //     becomes clickable again.
-      globalThis.setTimeout(() => {
-        syncSarahVisibility(widget);
-      }, 250);
-    };
-
-    globalThis.addEventListener('pointerdown', handleSarahPointerDown, {
-      capture: true,
-    });
-    return () => {
-      globalThis.removeEventListener('pointerdown', handleSarahPointerDown, {
-        capture: true,
-      });
-    };
   }, []);
 
   // Scroll to anchor on hash navigation (e.g. /#offerings, /#offerings-premium).
@@ -238,23 +168,23 @@ const WranngleLanding = () => {
               <motion.div
                 initial={{opacity: 0, y: 20}}
                 animate={{opacity: 1, y: 0}}
-                className="grid lg:grid-cols-[0.86fr_1.14fr] gap-10 xl:gap-14 items-center"
+                className="grid lg:grid-cols-[0.86fr_1.14fr] gap-10 xl:gap-14 items-start"
               >
                 <div className="max-w-2xl">
                   <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
-                    PRODUCT // AI VOICE AGENT CONSOLE
+                    AI CALL ANSWERING
                   </div>
                   <h1 className="brand-font text-5xl sm:text-6xl md:text-7xl font-bold leading-[0.95] mb-5">
                     AI voice agents that answer before voicemail.
                   </h1>
                   <p className="text-xl md:text-2xl font-semibold leading-snug mb-4 max-w-xl">
                     24/7 call answering, qualification, booking, and handoff for
-                    trades businesses that cannot afford another missed lead.
+                    trades teams that lose work when nobody picks up.
                   </p>
                   <p className="text-base md:text-lg opacity-75 leading-relaxed mb-7 max-w-xl">
-                    Sarah is the live demo. Forward after-hours or overflow
-                    calls, let the agent gather the job details, and get the
-                    lead where your team already works.
+                    Sarah is the live demo. Send missed and after-hours calls to
+                    the agent, collect the job details, and route the summary to
+                    the tools your team already checks.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Dialog>
@@ -334,14 +264,14 @@ const WranngleLanding = () => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,95,0,0.03),transparent_70%)] pointer-events-none" />
             <div className="mb-24 relative z-10">
               <h2 className="brand-font text-5xl md:text-6xl font-bold mb-6 max-w-3xl leading-tight">
-                What the agent <br />
+                What it handles <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--s500)] to-[var(--v500)]">
-                  actually does
+                  on every call
                 </span>{' '}
               </h2>
               <p className="opacity-60 max-w-xl text-lg leading-relaxed">
-                No "AI transformation" fog. The agent answers, qualifies, books,
-                and sends the lead where you already work.
+                The agent answers, asks the right questions, books when it can,
+                and sends a clean handoff to your team.
               </p>
             </div>
 
@@ -355,11 +285,11 @@ const WranngleLanding = () => {
                 <RadarWatchdog />
                 <div className="mt-8 relative z-10">
                   <h3 className="brand-font text-2xl font-bold mb-2">
-                    Never miss a call
+                    Cover the phones
                   </h3>
                   <p className="text-sm opacity-60 leading-relaxed">
-                    Every ring gets answered, including 2 AM, holidays, and the
-                    hours when your crew is already on a job.
+                    Missed, overflow, and after-hours calls get answered while
+                    your team is driving, working, or off the clock.
                   </p>
                 </div>
               </TerminalCard>
@@ -373,11 +303,11 @@ const WranngleLanding = () => {
                 <SpectralAnalyzer />
                 <div className="mt-8 relative z-10">
                   <h3 className="brand-font text-2xl font-bold mb-2">
-                    Filter spam, capture revenue
+                    Qualify the request
                   </h3>
                   <p className="text-sm opacity-60 leading-relaxed">
-                    The agent sorts service calls from junk, gathers the
-                    details, and escalates only the leads worth your time.
+                    The agent separates real jobs from junk, gathers the
+                    details, and marks what needs a fast response.
                   </p>
                 </div>
               </TerminalCard>
@@ -391,11 +321,11 @@ const WranngleLanding = () => {
                 <SynapseLink />
                 <div className="mt-8 relative z-10">
                   <h3 className="brand-font text-2xl font-bold mb-2">
-                    Texts you the lead
+                    Send the handoff
                   </h3>
                   <p className="text-sm opacity-60 leading-relaxed">
-                    Name, address, job type, urgency, and transcript arrive in a
-                    structured handoff while the caller is still warm.
+                    Name, address, job type, urgency, and transcript arrive
+                    together so dispatch can act without replaying the call.
                   </p>
                 </div>
               </TerminalCard>
@@ -422,9 +352,13 @@ const WranngleLanding = () => {
           avatar-orb-color-1="#ff5f00"
           avatar-orb-color-2="#cf3c69"
           action-text="Talk to Sarah"
+          expand-text="Talk to Sarah"
+          collapse-text="Collapse"
           start-call-text="Start voice demo"
+          end-call-text="End voice demo"
           listening-text="Sarah is listening"
           speaking-text="Sarah is speaking"
+          placement="bottom-right"
         ></elevenlabs-convai>
       </div>
     </div>
@@ -509,8 +443,8 @@ function OfferingsSection({
           What we build
         </h2>
         <p className="text-lg opacity-60 max-w-xl mx-auto">
-          Voice agents, websites, and the gtm_ops proposal pipeline. Pick the
-          surface that fixes the bottleneck.
+          Voice agents, websites, and proposal workflows for teams that need
+          fewer missed leads and cleaner follow-up.
         </p>
       </div>
 
@@ -566,11 +500,11 @@ function OfferingsSection({
                 >
                   <div className="min-w-0">
                     <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-1">
-                      DEDICATED PRODUCT PAGE
+                      PRODUCT DETAILS
                     </div>
                     <p className="text-sm font-bold leading-tight">
-                      See the website build flow, launch targets, and package
-                      comparison before picking a tier.
+                      Review the website build process, launch targets, and
+                      package comparison before picking a tier.
                     </p>
                   </div>
                   <ArrowRight
@@ -593,11 +527,11 @@ function OfferingsSection({
                 >
                   <div className="min-w-0">
                     <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-1">
-                      DEDICATED PRODUCT PAGE
+                      PRODUCT DETAILS
                     </div>
                     <p className="text-sm font-bold leading-tight">
-                      See the full gtm_ops pipeline, demo, and architecture
-                      before picking a tier.
+                      Review the proposal workflow, demo, and implementation
+                      notes before picking a tier.
                     </p>
                   </div>
                   <ArrowRight
@@ -816,16 +750,15 @@ function TalkToSarahSection({isDark}: {isDark: boolean}) {
       >
         <div className="relative z-10">
           <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4">
-            LIVE // ELEVENLABS CONVAI
+            LIVE VOICE DEMO
           </div>
           <h2 className="brand-font text-4xl md:text-5xl font-bold leading-tight mb-5">
-            Hear it for yourself. <br />
+            Try the call flow. <br />
             <span className="text-[var(--s500)]">Talk to Sarah.</span>
           </h2>
           <p className="text-base md:text-lg opacity-75 leading-relaxed max-w-xl mb-7">
-            Sarah is the live demo agent. Pretend you need a plumber at 11 PM:
-            she will answer, qualify the job, collect the handoff, and show the
-            customer experience your callers would get.
+            Pretend you need a plumber at 11 PM. Sarah will answer, ask for the
+            job details, and show the kind of handoff your team would receive.
           </p>
           <div className="flex flex-wrap gap-3">
             <button
@@ -907,8 +840,8 @@ function SarahOrbHero({isDark}: {isDark: boolean}) {
       </div>
 
       <div className="pointer-events-none absolute inset-x-4 bottom-4 flex flex-wrap items-end justify-between gap-3 mono-font text-[10px] text-white/65">
-        <span>"Thanks for calling. What is going on?"</span>
-        <span className="text-[#5d8c61]">Powered by ElevenLabs UI</span>
+        <span>"Thanks for calling. What can we help with?"</span>
+        <span className="text-[#5d8c61]">ElevenLabs voice demo</span>
       </div>
     </button>
   );
@@ -947,13 +880,13 @@ function FounderNote({isDark}: {isDark: boolean}) {
           </div>
           <div className="min-w-0 flex-1">
             <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-1.5">
-              BUILT BY AN OPERATOR
+              BUILT BY CODY ARNOLD
             </div>
             <p className="brand-font text-base md:text-lg font-bold leading-snug">
-              "AI should answer the phone, not add another dashboard."
+              "The useful system is the one your team can check and trust."
             </p>
             <p className="text-xs opacity-60 mt-1.5">
-              Cody Arnold, founder · Read the operator story →
+              Cody Arnold, founder · Read about Cody →
             </p>
           </div>
           <ArrowRight
@@ -1158,8 +1091,8 @@ const RadarWatchdog = () => {
       />
 
       <div className="absolute z-10 text-[8px] font-mono text-[var(--s500)] flex flex-col items-center">
-        <span>TGT_ACQ</span>
-        <span className="tabular-nums">34.9023</span>
+        <span>CALLS</span>
+        <span className="tabular-nums">14 OPEN</span>
       </div>
     </div>
   );
@@ -1198,9 +1131,9 @@ const SpectralAnalyzer = () => {
         <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
         <TypewriterSequence
           sequence={[
-            '> VOICE_MATCH_CONFIRMED',
-            '> SENTIMENT: POSITIVE',
-            '> ROUTING_TO_SALES',
+            '> SERVICE_AREA_CONFIRMED',
+            '> JOB_TYPE: WATER_HEATER',
+            '> DISPATCH_SUMMARY_READY',
           ]}
         />
       </div>
