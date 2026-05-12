@@ -315,7 +315,10 @@
 
     <!-- ?v=3 cache-busts the favicon rebake (80% safe-area rule from
          logo_maker DESIGN.md). Bump the version on every PNG rebake; the
-         static file itself keeps its long max-age from _headers. -->
+         static file itself keeps its long max-age from _headers. The
+         .ico is for legacy lookups (Slack unfurl, Outlook, RSS readers,
+         IE/legacy Windows pinning) that probe /favicon.ico at the root. -->
+    <link rel="icon" type="image/x-icon" sizes="32x32" href="/favicon.ico?v=3" />
     <link rel="icon" type="image/png" href="/favicon.png?v=3" />
     <link
       rel="apple-touch-icon"

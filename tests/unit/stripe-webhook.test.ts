@@ -144,7 +144,7 @@ describe('Stripe webhook endpoint', () => {
           'https://n8n.example.test/webhook/wranngle-intake-form',
         N8N_WEBHOOK_SECRET: 'n8n-secret',
       },
-    } as never);
+    });
     const payload = (await fetchMock.mock.calls[0][1]?.body) as string;
 
     expect(response.status).toBe(200);
@@ -178,7 +178,7 @@ describe('Stripe webhook endpoint', () => {
         N8N_WEBHOOK_URL:
           'https://n8n.example.test/webhook/wranngle-intake-form',
       },
-    } as never);
+    });
 
     expect(response.status).toBe(400);
     expect(fetchMock).not.toHaveBeenCalled();
