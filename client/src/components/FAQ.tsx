@@ -25,14 +25,14 @@ const FAQ_ITEMS: FAQItem[] = [
     group: 'Getting started',
     question: 'How does the agent learn my business?',
     answer:
-      'During onboarding we feed it your service areas, pricing ranges, common questions, and policies. The agent gets sharper as we feed it real call transcripts. Updates go through Wranngle for now — no self-serve dashboard yet.',
+      'During onboarding we add your service areas, pricing ranges, common questions, and policies. After launch, we tune the agent from real call transcripts. Updates go through Wranngle for now — no self-serve dashboard yet.',
   },
   // How it works
   {
     group: 'How it works',
     question: 'What happens when a call needs a human?',
     answer:
-      "The agent recognizes when it's in over its head. Elite tier hot-transfers to your mobile. Core tier captures details and texts you immediately so you can call back — full transcript included.",
+      'The agent hands off when a call falls outside its instructions. Elite tier hot-transfers to your mobile. Core tier captures details and texts you immediately so you can call back — transcript included.',
   },
   {
     group: 'How it works',
@@ -67,9 +67,9 @@ const FAQ_ITEMS: FAQItem[] = [
   // Money & limits
   {
     group: 'Money & limits',
-    question: 'What if I blow past my plan limits?',
+    question: 'What if usage exceeds my plan limits?',
     answer:
-      "Limits exist to stop abuse — not to nickel-and-dime you. If a real workload hits the cap, we'll raise it before any overage fees kick in. You'll never get a surprise bill from us.",
+      "Limits prevent abuse and keep the plan sized correctly. If normal business volume hits the cap, we'll review it with you before any overage fees apply. No surprise bills.",
   },
   {
     group: 'Money & limits',
@@ -95,7 +95,7 @@ const FAQ_ITEMS: FAQItem[] = [
     group: 'Product',
     question: 'What is gtm_ops?',
     answer:
-      'gtm_ops is the proposal-generation runtime behind the Wranngle stack. Lead in, branded proposal out, with a full audit trail and a live no-signup demo. See the dedicated product page for the pipeline and tiers.',
+      'gtm_ops is a proposal console for turning lead details into branded PDFs. It includes enrichment, templates, a run log, and a live no-signup demo. See the dedicated product page for the pipeline and tiers.',
   },
 ];
 
@@ -126,7 +126,7 @@ export default function FAQ({isDark = true}: FAQProps) {
           <h2 className="brand-font text-4xl md:text-5xl font-extrabold leading-[1.05] tracking-tight mb-4">
             Straight answers,
             <br />
-            <span className="text-[var(--s500)]">no fine print.</span>
+            <span className="text-[var(--s500)]">clear terms.</span>
           </h2>
           <p className="text-base opacity-70 leading-relaxed max-w-sm">
             Got something we didn&apos;t cover?{' '}

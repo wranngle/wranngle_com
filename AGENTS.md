@@ -1,5 +1,19 @@
 # Project Agent Instructions
 
+## Fast Live Deployment
+
+When the user asks to deploy, publish, ship, or make a finished change live on
+the actual app, prefer the direct Cloudflare Pages upload path instead of
+waiting for GitHub-triggered Cloudflare builds:
+
+```bash
+bun run deploy:live
+```
+
+Use `bun run deploy:upload` only when `dist/` is already freshly built from the
+current source. The direct path targets the production Pages project
+`wranngle-com` on branch `main`.
+
 
 <!-- dotfiles-import: GEMINI.md sha256:bb9a645e5a9a015ee0410d6262fa53054e017b89224924d3cd663bb241534b09 -->
 # Wranngle Systems - Project Context
@@ -70,7 +84,7 @@ Data models are defined in `shared/schema.ts`. This file exports Arktype schemas
 
 ### ElevenLabs Integration
 - The conversational agent is embedded using the `<elevenlabs-convai>` custom element.
-- **Agent ID:** `agent_xxxx_demo`.
+- **Agent ID:** `agent_7801kqqqhjmcfdsa1m2a8t9w6t5c`.
 - The integration script is dynamically injected in `App.tsx`.
 
 <!-- /dotfiles-import: GEMINI.md sha256:bb9a645e5a9a015ee0410d6262fa53054e017b89224924d3cd663bb241534b09 -->

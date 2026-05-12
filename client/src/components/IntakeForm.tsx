@@ -468,8 +468,8 @@ const IntakeForm = ({
             </div>
             <p className="text-[11px] opacity-80 leading-relaxed mb-2">
               Voice catches the after-hours phone call. <b>Web Chat</b> catches
-              the visitor who would rather type. Two different intent surfaces —
-              most trades leak leads on at least one.
+              the visitor who would rather type. Most trades lose leads in at
+              least one of those paths.
             </p>
             <button
               type="button"

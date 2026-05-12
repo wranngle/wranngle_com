@@ -52,7 +52,7 @@ Wraps `llm.sh` to generate the form body from a one-liner, then `gh issue create
 
 PRs MUST reference an issue with `Closes #N` / `Fixes #N` in the body. The PR template enforces this. On merge, the issue auto-closes and (if Projects v2 is wired up) status flips to Done.
 
-If a PR has no linked issue, file one first — even a one-line research issue. The audit trail is the point.
+If a PR has no linked issue, file one first — even a one-line research issue. The decision record is the point.
 
 ## What lives in Projects v2 (not labels)
 
@@ -99,7 +99,7 @@ Workflow `pr-link-check.yml` runs on PR open / edit. It scans the body for `Clos
 - Adds the `pr-needs-issue` label
 - Does not post routine bot comments
 
-If the linkage is later added, the label is removed automatically. Non-blocking — solo work doesn't get gated, but the audit trail surfaces.
+If the linkage is later added, the label is removed automatically. Non-blocking — solo work doesn't get gated, but the missing decision record stays visible.
 
 ## Auto-merge
 

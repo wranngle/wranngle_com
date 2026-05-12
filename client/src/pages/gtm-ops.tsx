@@ -73,8 +73,8 @@ const DEMO_SCREENSHOTS = [
 
 const HERO_METRICS = [
   {value: '5 min', label: 'synthetic demo run'},
-  {value: '4 stages', label: 'audited proposal pipeline'},
-  {value: 'Open', label: 'runtime source on GitHub'},
+  {value: '4 steps', label: 'logged proposal run'},
+  {value: 'Open', label: 'source code on GitHub'},
 ];
 
 const PRODUCT_EVENTS = [
@@ -98,18 +98,18 @@ const PRODUCT_EVENTS = [
 const OPS_SIGNALS = [
   {
     Icon: Clock3,
-    label: 'Faster handoff',
-    body: 'Turn intake notes into a proposal artifact before the lead cools off.',
+    label: 'Quicker quote prep',
+    body: 'Turn intake notes into a draft proposal while the lead is still fresh.',
   },
   {
     Icon: ShieldCheck,
-    label: 'Receipts built in',
-    body: 'Every payload, prompt, enrichment pass, and render step stays attached.',
+    label: 'Run log included',
+    body: 'Keep the intake payload, enrichment result, prompt output, and PDF render together.',
   },
   {
     Icon: DatabaseZap,
-    label: 'Webhook native',
-    body: 'Forms, voice agents, CRM exports, and n8n can all feed the same run.',
+    label: 'Webhook-ready',
+    body: 'Feed the same proposal flow from forms, voice agents, CRM exports, or n8n.',
   },
 ];
 
@@ -117,22 +117,22 @@ const PIPELINE_STEPS = [
   {
     Icon: Inbox,
     title: 'Lead intake',
-    body: 'Web chat, voice AI agent, contact form, webhook, internal company data, CRM export. Whatever shape the lead arrives in, gtm_ops normalizes it on the way in.',
+    body: 'Accept web chat, voice-agent notes, contact forms, webhooks, internal records, or CRM exports. gtm_ops normalizes the fields before drafting starts.',
   },
   {
     Icon: Sparkles,
     title: 'Lead enrichment',
-    body: 'Clay-powered enrichment plus research passes against the lead domain and yours. Firmographics, recent signals, and contact context arrive before drafting starts.',
+    body: 'Add company details, domain research, recent signals, and contact context so the proposal does not start from a blank form.',
   },
   {
     Icon: FileCheck,
     title: 'Branded proposal',
-    body: 'Your logo, colors, and proposal template. Structured LLM extraction fills typed fields; the renderer ships a branded proposal ready to send.',
+    body: 'Use your logo, colors, and proposal template. Structured extraction fills typed fields; the renderer creates a PDF your team can review and send.',
   },
   {
     Icon: Send,
-    title: 'Out the door',
-    body: 'Email, n8n, or your CRM. Every step writes to an audit log so you can reproduce any output.',
+    title: 'Delivery handoff',
+    body: 'Send the PDF to email, n8n, or your CRM. Each step writes to the run log so a proposal can be reproduced later.',
   },
 ];
 
@@ -167,19 +167,19 @@ export default function GtmOpsPage() {
               >
                 <div className="max-w-2xl">
                   <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
-                    PRODUCT // PROPOSAL OPS CONSOLE
+                    PROPOSAL CONSOLE
                   </div>
                   <h1 className="brand-font text-5xl sm:text-6xl md:text-7xl font-bold leading-[0.95] mb-5">
                     <span className="mono-font text-[0.82em]">gtm_ops</span>
                   </h1>
                   <p className="text-xl md:text-2xl font-semibold leading-snug mb-4 max-w-xl">
                     Lead capture, enrichment, and branded proposal generation in
-                    one operator surface.
+                    one working console.
                   </p>
                   <p className="text-base md:text-lg opacity-75 leading-relaxed mb-7 max-w-xl">
                     Pipe a form, webhook, CRM export, or Wranngle voice agent
-                    into the same run. The console turns messy intake into a
-                    typed proposal PDF with a full audit trail attached.
+                    into the same flow. The console turns incomplete intake into
+                    a typed proposal PDF and keeps the run history attached.
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-3">
@@ -261,15 +261,15 @@ export default function GtmOpsPage() {
             <section className="mb-24 grid lg:grid-cols-[0.74fr_1.26fr] gap-10 items-start">
               <div className="lg:sticky lg:top-28">
                 <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-3 mono-font">
-                  THE PIPELINE
+                  PROPOSAL FLOW
                 </div>
                 <h2 className="brand-font text-3xl md:text-4xl font-bold mb-4">
-                  Input to artifact, with receipts.
+                  From lead details to proposal draft.
                 </h2>
                 <p className="opacity-75 text-base leading-relaxed mb-6">
-                  The value is not another dashboard. It is a repeatable path
-                  from lead signal to customer-ready proposal, plus enough log
-                  detail to replay the run when the stakes are high.
+                  The useful part is the handoff: capture the lead, enrich the
+                  company, fill the proposal fields, render the PDF, and keep a
+                  record of what happened.
                 </p>
                 <div
                   className={`rounded-md border p-4 ${
@@ -343,12 +343,11 @@ export default function GtmOpsPage() {
                   PRICING
                 </div>
                 <h2 className="brand-font text-3xl md:text-4xl font-bold mb-3">
-                  Three tiers. One runtime.
+                  Pick the proposal volume.
                 </h2>
                 <p className="opacity-70 max-w-xl mx-auto text-base">
-                  Pick the volume you need. Plus covers a real solo or
-                  small-team cadence; Pro adds SSO, custom domain, and unlimited
-                  throughput when an org needs controls.
+                  Trial is for testing the flow. Plus covers a small team. Pro
+                  adds SSO, a custom domain, and higher-volume controls.
                 </p>
               </div>
 
@@ -363,15 +362,15 @@ export default function GtmOpsPage() {
             <section className="border-t border-current/10 pt-10 grid md:grid-cols-2 gap-8">
               <div>
                 <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-3 mono-font">
-                  BUILT IN PUBLIC
+                  SOURCE + DEMO
                 </div>
                 <h3 className="brand-font text-2xl font-bold mb-3">
-                  Source is open. Receipts are public.
+                  Source is open. Demo data is inspectable.
                 </h3>
                 <p className="text-sm opacity-70 leading-relaxed mb-4">
-                  The runtime, pipeline, and ops console are inspectable before
-                  you sign up. Run it locally, inspect the architecture, or use
-                  the hosted demo with synthetic data.
+                  The runtime and console are visible before you sign up. Run it
+                  locally, inspect the architecture, or use the hosted demo with
+                  synthetic data.
                 </p>
                 <a
                   href={GTM_OPS_REPO_URL}
@@ -384,7 +383,7 @@ export default function GtmOpsPage() {
               </div>
               <div>
                 <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-3 mono-font">
-                  AUDIT-FIRST BY DESIGN
+                  RUN LOGS
                 </div>
                 <h3 className="brand-font text-2xl font-bold mb-3">
                   Every proposal is reproducible.
@@ -392,8 +391,8 @@ export default function GtmOpsPage() {
                 <p className="text-sm opacity-70 leading-relaxed">
                   Intake, enrichment, extraction, and render events are keyed to
                   the lead. Replay a proposal from the original payload, compare
-                  a prompt revision against a previous run, or export the chain
-                  when a customer asks how the recommendation was made.
+                  a prompt revision against a previous run, or export the log
+                  when a customer asks how the output was produced.
                 </p>
               </div>
             </section>
@@ -409,7 +408,7 @@ export default function GtmOpsPage() {
 function ProductScreenshot({isDark}: {isDark: boolean}) {
   const reducedMotion = usePrefersReducedMotion();
   // Auto-advance pauses on hover, focus, and pointer interaction so the
-  // operator can read a slide. Reduced-motion users get a static carousel
+  // Users can read a slide. Reduced-motion users get a static carousel
   // and swap manually with prev/next or pagination dots.
 
   const [autoplayPlugin] = React.useState(() =>
