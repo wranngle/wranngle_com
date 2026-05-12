@@ -105,9 +105,12 @@ export function goTalkToSarah() {
 
 /**
  * The widget ships no outside-click-to-dismiss; capture-phase pointerdown
- * on document is the only lever. Detect "expanded" by the presence of the
- * vendor's "Collapse" button in the shadow root — it only renders inside
- * the expanded sheet, so absence means already-collapsed and nothing to do.
+ * on document is the only lever. Detect "expanded" by the vendor's
+ * aria-label="Collapse" button in the shadow root — that aria-label is
+ * what the vendor uses for the toggle button when the sheet is open
+ * (collapsed bubble has aria-label="Start Wranngling" instead). The
+ * visible text on both is "Talk to Sarah" from our text patch, so the
+ * aria-label is the only stable signal across collapsed vs expanded.
  */
 function installSarahOutsideClickCollapse() {
   if (sarahOutsideClickInstalled) return;
@@ -120,9 +123,9 @@ function installSarahOutsideClickCollapse() {
       const root = widget?.shadowRoot;
       if (!widget || !root) return;
 
-      const collapseBtn = [
-        ...root.querySelectorAll<HTMLButtonElement>('button'),
-      ].find((b) => b.textContent?.trim().toLowerCase() === 'collapse');
+      const collapseBtn = root.querySelector<HTMLButtonElement>(
+        'button[aria-label="Collapse"]',
+      );
       if (!collapseBtn) return;
 
       const path = event.composedPath();
