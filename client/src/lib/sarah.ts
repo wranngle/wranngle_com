@@ -2,15 +2,12 @@ export const SARAH_AGENT_ID = 'agent_7801kqqqhjmcfdsa1m2a8t9w6t5c';
 
 let sarahTextPatchInstalled = false;
 let sarahTextObserver: MutationObserver | undefined;
-let bodyPointerEventsGuardInstalled = false;
 const SARAH_VENDOR_DEFAULT_CTA = ['Start', ['Wran', 'ngling'].join('')].join(
   ' ',
 );
 
 export function ensureSarahWidgetScript() {
   if (typeof document === 'undefined') return;
-
-  installBodyPointerEventsGuard();
 
   const scriptId = 'el-convai-v1';
   if (document.getElementById(scriptId)) return;
@@ -101,69 +98,4 @@ function installSarahTextPatch() {
 export function goTalkToSarah() {
   if (openSarahWidget()) return;
   globalThis.location.assign('/#talk-to-sarah');
-}
-
-/**
- * Cross-tree pointer-events leak: the widget bundle ships its own
- * @radix-ui/react-dismissable-layer copy. Each copy module-scopes its
- * `originalBodyPointerEvents` capture, so when host + widget layers
- * interleave, one copy restores `'none'` and the page stalls. The widget
- * bubble keeps working because shadow children set `pointer-events:auto`.
- *
- * Detection on `body[style]` mutation. Hold when any of these say "a
- * layer is still legitimately open" (then we are NOT the leak):
- *   - `[data-radix-focus-guard]` body children — Radix inserts them only
- *     inside open `*ContentImpl` (verified in react-dialog and
- *     react-popover at this lockfile pin) and ref-counts removal.
- *   - `[role=dialog|alertdialog|menu][data-state="open"]` in light DOM
- *     or the widget's open shadow root (proven open by the CTA rename
- *     working via `widget.shadowRoot.querySelectorAll`).
- */
-function installBodyPointerEventsGuard() {
-  if (bodyPointerEventsGuardInstalled) return;
-  bodyPointerEventsGuardInstalled = true;
-
-  const OPEN_LAYER_SELECTOR =
-    '[data-state="open"][role="dialog"],' +
-    '[data-state="open"][role="alertdialog"],' +
-    '[data-state="open"][role="menu"]';
-
-  const hasOpenLayer = () => {
-    if (document.querySelector('[data-radix-focus-guard]')) return true;
-    if (document.querySelector(OPEN_LAYER_SELECTOR)) return true;
-    const widget = document.querySelector<HTMLElement>('elevenlabs-convai');
-    const root = widget?.shadowRoot;
-    return Boolean(root?.querySelector(OPEN_LAYER_SELECTOR));
-  };
-
-  let prevLocked = false;
-
-  const check = () => {
-    const locked = document.body.style.pointerEvents === 'none';
-
-    if (locked !== prevLocked) {
-      if (locked) {
-        document.documentElement.dataset.sarahBodyLocked = 'true';
-      } else {
-        delete document.documentElement.dataset.sarahBodyLocked;
-      }
-
-      prevLocked = locked;
-    }
-
-    if (!locked || hasOpenLayer()) return;
-
-    document.body.style.pointerEvents = '';
-    console.warn(
-      '[sarah] cleared stale body{pointer-events:none}; ' +
-        'cross-tree dismissable-layer leak. See client/src/lib/sarah.ts.',
-    );
-  };
-
-  new MutationObserver(check).observe(document.body, {
-    attributes: true,
-    attributeFilter: ['style'],
-  });
-
-  check();
 }
