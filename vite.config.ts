@@ -55,19 +55,19 @@ const routeMeta: Record<
     canonicalPath: '/products/gtm-ops',
     title: 'gtm_ops - Lead in, branded proposal out - Wranngle',
     description:
-      'gtm_ops turns inbound leads into branded PDF proposals. Clay-powered enrichment, full audit trail, live demo with synthetic data. No signup.',
+      'gtm_ops turns inbound leads into branded PDF proposals. Enrichment, run logs, live demo with synthetic data. No signup.',
   },
   'products/gtm_ops': {
     canonicalPath: '/products/gtm-ops',
     title: 'gtm_ops - Lead in, branded proposal out - Wranngle',
     description:
-      'gtm_ops turns inbound leads into branded PDF proposals. Clay-powered enrichment, full audit trail, live demo with synthetic data. No signup.',
+      'gtm_ops turns inbound leads into branded PDF proposals. Enrichment, run logs, live demo with synthetic data. No signup.',
   },
   'products/websites': {
     canonicalPath: '/products/websites',
     title: 'Websites that capture leads - Wranngle Systems',
     description:
-      'Conversion-focused landing pages and business websites built with fast performance, lead capture, SEO foundations, and owned source code.',
+      'Landing pages and business websites built with fast performance, lead capture, SEO foundations, and owned source code.',
   },
   terms: {
     canonicalPath: '/terms',

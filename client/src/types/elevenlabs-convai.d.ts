@@ -39,8 +39,12 @@ declare global {
           'override-prompt'?: string;
           'override-first-message'?: string;
           'override-voice-id'?: string;
+          placement?: string;
           'server-location'?: string;
           'start-call-text'?: string;
+          'end-call-text'?: string;
+          'expand-text'?: string;
+          'collapse-text'?: string;
           expandable?: string;
           variant?: string;
         },

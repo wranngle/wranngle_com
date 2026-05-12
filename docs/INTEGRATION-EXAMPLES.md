@@ -187,7 +187,7 @@ await sendTransactionalEmail({
 
 ## Error Handling
 
-### Robust Error Handling
+### Retry And Error Handling
 
 ```typescript
 async function sendEmailWithRetry(

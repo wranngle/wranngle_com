@@ -68,7 +68,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
     id: 'ai-agents',
     name: 'AI Agents',
     description:
-      'Always-on voice + web + SMS agents. Trained on your trade. Monthly cancellable; annual plans save up to 20%.',
+      'Voice, web chat, and SMS agents for service businesses. They answer, qualify, route, and log leads without a long contract.',
     items: [
       {
         id: 'basic',
@@ -76,7 +76,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         price: '250',
         priceCadence: 'monthly',
         description:
-          'Always-on voice receptionist. Captures the leads that hit voicemail today, without ringing your cell at 2am.',
+          'Voice receptionist for overflow and after-hours calls. It captures caller details and sends the transcript to your team.',
         cta: 'Get Core Agent',
         features: [
           '24/7 voice answering on a forwarded line',
@@ -97,7 +97,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           specs: {
             coverage: 'After-hours + overflow',
             ingredients:
-              'NATURAL LANGUAGE PROCESSING, LEAD SCORING ALGORITHM, TWILIO VOICE STACK, SHARED SMS POOL, ONE-WAY NOTIFICATIONS, TRADE-SPECIFIC TRAINING DATA.',
+              'Forwarded business line, call transcript, lead scoring, trade-specific prompts, SMS alerts, email notifications.',
           },
           limits: {minutes: '1,000', sms: '500'},
           features: [
@@ -111,7 +111,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           ],
           crossSell: {
             label:
-              'Pair with a Landing Page so callers convert before they call',
+              'Pair with a landing page so form leads and phone leads land in one follow-up path',
             offeringId: 'landing-page',
           },
         },
@@ -122,7 +122,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         price: '500',
         priceCadence: 'monthly',
         description:
-          'Voice + web chat + two-way SMS, 24/7. Cal.com booking, custom voice, and a unified inbox so nothing falls through.',
+          'Voice, web chat, and two-way SMS with booking and human handoff. Built for teams that need coverage across more than one channel.',
         badge: 'Most Popular',
         cta: 'Get Elite Agent',
         features: [
@@ -145,7 +145,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           specs: {
             coverage: '24/7/365 priority',
             ingredients:
-              'ELEVENLABS NEURAL VOICE, DUAL-AGENT ON-CALL LOGIC, CAL.COM BOOKING SYNC, 10DLC COMPLIANT TWO-WAY SMS, UNIFIED INBOX ENGINE, SUB-500MS P95 LATENCY TARGET.',
+              'ElevenLabs voice, on-call routing rules, Cal.com booking, compliant two-way SMS, shared inbox, priority support.',
           },
           limits: {minutes: '2,500', sms: '1,500'},
           features: [
@@ -159,7 +159,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           ],
           crossSell: {
             label:
-              'Most Elite buyers add a Business Site so the agent has a home to send leads',
+              'Add a business site when the agent, forms, and service pages need to work together',
             offeringId: 'business-site',
           },
         },
@@ -170,7 +170,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
     id: 'websites',
     name: 'Websites',
     description:
-      'Built once, owned by you, maintained monthly. Project + maintenance — yours to take and host elsewhere any time.',
+      'Owned websites with lead forms, SEO basics, hosting, and optional maintenance. You get the source code.',
     items: [
       {
         id: 'landing-page',
@@ -178,7 +178,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         price: '900',
         priceCadence: 'one-time',
         description:
-          'One conversion-focused page, shipped in 7 days. Mobile-first, SEO-foundations, contact form wired straight to your inbox.',
+          'One focused page shipped in 7 days. Mobile-first, SEO basics, and a contact form wired to email and n8n.',
         cta: 'Start Landing Page',
         monthlyAddon: {price: '100', label: 'maintenance'},
         features: [
@@ -199,9 +199,9 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           addon: {price: 100, label: '/mo maintenance (optional)'},
           pricing: {monthly: 100, annualMonthly: 100, addon: 900},
           specs: {
-            coverage: 'One-page conversion surface',
+            coverage: 'One-page lead capture site',
             ingredients:
-              'VITE BUNDLER, MOBILE-FIRST BREAKPOINTS, CLOUDFLARE PAGES CDN, ARKTYPE FORM VALIDATION, N8N LEAD WEBHOOK, CORE WEB VITALS BUDGET, SOURCE CODE OWNERSHIP.',
+              'Vite build, responsive layout, Cloudflare Pages hosting, validated contact form, n8n lead webhook, Core Web Vitals budget, Git handoff.',
           },
           delivery: {
             timeline: '7 days',
@@ -219,7 +219,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           ],
           crossSell: {
             label:
-              'Add a Web Chat Agent so the page captures leads after hours, too',
+              'Add web chat when visitors need answers before they fill out the form',
             offeringId: 'premium',
           },
         },
@@ -230,15 +230,15 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         price: '3,500',
         priceCadence: 'one-time',
         description:
-          'Up to 5 pages, headless CMS, analytics, lead-capture automation. Shipped in 3 weeks. Owned by you.',
+          'Up to 5 pages with CMS editing, analytics, and lead routing. Shipped in 3 weeks with source code included.',
         badge: 'Best Value',
         cta: 'Start Business Site',
         monthlyAddon: {price: '250', label: 'maintenance'},
         features: [
           'Up to 5 pages with custom design',
           'Headless CMS (you edit copy without us)',
-          'Privacy-first analytics dashboard',
-          'Lead capture → n8n automation pipeline',
+          'Analytics dashboard',
+          'Lead capture → n8n routing',
           'Lighthouse 90+ performance budget',
           'Cloudflare hosting (first year included)',
           'Source code ownership (Git handoff)',
@@ -255,7 +255,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           specs: {
             coverage: 'Up to 5 pages + headless CMS',
             ingredients:
-              'VITE + REACT + TAILWIND, HEADLESS CMS (PAYLOAD/SANITY), CLOUDFLARE PAGES, PRIVACY-FIRST ANALYTICS, N8N LEAD-CAPTURE PIPELINE, PERFORMANCE BUDGETS, GIT HANDOFF.',
+              'React + Tailwind build, headless CMS, Cloudflare Pages hosting, analytics, n8n lead routing, performance budget, Git handoff.',
           },
           delivery: {
             timeline: '3 weeks',
@@ -265,8 +265,8 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           features: [
             'Up to 5 custom-designed pages',
             'Headless CMS integration',
-            'Privacy-first analytics',
-            'Lead capture → n8n automation',
+            'Analytics dashboard',
+            'Lead capture → n8n routing',
             'Performance optimization (LH 90+)',
             'Cloudflare hosting (first year)',
             'Source code ownership',
@@ -274,7 +274,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           ],
           crossSell: {
             label:
-              'Pair with a Core Agent so the contact form is not your only after-hours capture',
+              'Pair with a Core Agent when calls matter as much as form submissions',
             offeringId: 'basic',
           },
         },
@@ -285,7 +285,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
     id: 'gtm_ops',
     name: 'gtm_ops',
     description:
-      'The proposal-generation runtime from the Wranngle stack. Lead in, branded proposal out, with demo fixtures when you just want to inspect the flow.',
+      'A proposal console for turning lead details into branded PDFs with enrichment, templates, and a run log.',
     items: [
       {
         id: 'gtm-ops-trial',
@@ -293,14 +293,14 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         price: '0',
         priceCadence: 'monthly',
         description:
-          '14-day evaluation of gtm_ops with Plus-tier features. Lead in, branded proposal out — 5 proposals, no card required.',
+          '14-day trial with Plus features, 5 proposal runs, demo data, and no credit card required.',
         cta: 'Start gtm_ops Trial',
         features: [
           '14-day evaluation of Plus-tier features',
           'Up to 5 proposals during trial',
           'Branded PDF generation',
           'Demo data preloaded',
-          'Gemini-powered extraction',
+          'Gemini field extraction',
           'No credit card required',
           'Upgrade or cancel anytime',
         ],
@@ -315,7 +315,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           specs: {
             coverage: '14-day evaluation window',
             ingredients:
-              'GEMINI EXTRACTION ENGINE, BRANDED PDF RENDERER, DEMO DATA SEEDS, AUDIT LOG, EVENT REPLAY, CLOUDFLARE PAGES DELIVERY, NO CREDIT CARD GATE.',
+              'Gemini extraction, branded PDF renderer, demo data, run log, event replay, Cloudflare Pages delivery, no credit card.',
           },
           saasLimits: {
             proposalsCap: '5 over 14 days',
@@ -329,13 +329,13 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
             '5 proposals during trial',
             'Branded PDF output',
             'Demo data preloaded',
-            'Gemini-powered extraction',
+            'Gemini field extraction',
             'Audit log',
             'No credit card required',
           ],
           crossSell: {
             label:
-              'Outgrowing the trial? Plus unlocks 50 proposals/mo + custom branding',
+              'Use Plus when you need 50 proposal runs per month and custom branding',
             offeringId: 'gtm-ops-plus',
           },
         },
@@ -346,7 +346,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         price: '20',
         priceCadence: 'monthly',
         description:
-          'For solo operators and small teams running real proposals. Branded PDFs, custom workspace, full audit chain.',
+          'For solo operators and small teams sending real proposals. Includes branded PDFs, workspace branding, forms, webhooks, and a full run log.',
         badge: 'Most Popular',
         cta: 'Start gtm_ops Plus',
         monthlyAddon: {price: '200', label: '/yr (annual, 17% off)'},
@@ -357,7 +357,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           'Lead intake forms',
           'Full audit log',
           'n8n webhook integration',
-          'Gemini-powered extraction',
+          'Gemini field extraction',
           'Email support',
         ],
         facts: {
@@ -371,7 +371,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           specs: {
             coverage: '50 proposals/mo per workspace',
             ingredients:
-              'GEMINI EXTRACTION ENGINE, BRANDED PDF RENDERER, CUSTOM LOGO + COLOR INJECTION, LEAD INTAKE FORMS, N8N WEBHOOK BUS, FULL AUDIT LOG, CLOUDFLARE D1 PERSISTENCE.',
+              'Gemini extraction, branded PDF renderer, custom logo and colors, lead intake forms, n8n webhooks, full run log, Cloudflare D1 storage.',
           },
           saasLimits: {
             proposalsCap: '50',
@@ -387,12 +387,12 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
             'Lead intake forms',
             'Full audit log',
             'n8n webhook integration',
-            'Gemini-powered extraction',
+            'Gemini field extraction',
             'Email support',
           ],
           crossSell: {
             label:
-              'Need SSO, team workspaces, or unlimited proposals? Pro tier ships with all of it',
+              'Use Pro when you need SSO, team workspaces, custom domain, or unlimited proposal runs',
             offeringId: 'gtm-ops-pro',
           },
         },
@@ -403,7 +403,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         price: '99',
         priceCadence: 'monthly',
         description:
-          'For teams who need SSO, custom domains, and unlimited throughput. Built for ops orgs that ship hundreds of proposals.',
+          'For teams that need SSO, role-based access, a custom domain, and unlimited proposal runs.',
         cta: 'Talk to Cody',
         monthlyAddon: {price: '990', label: '/yr annual plan'},
         features: [
@@ -412,7 +412,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           'SSO (Google + Azure AD)',
           'Team workspaces with role-based access',
           'Custom domain (proposals.yourco.com)',
-          'Advanced audit chain (immutable, exportable)',
+          'Exportable run log',
           'Priority support',
           'Onboarding session included',
         ],
@@ -427,14 +427,14 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           specs: {
             coverage: 'Unlimited proposals, multi-team',
             ingredients:
-              'GOOGLE + AZURE AD SSO, TEAM WORKSPACES, ROLE-BASED ACCESS, CUSTOM DOMAIN ROUTING, IMMUTABLE AUDIT CHAIN, EXPORT-READY COMPLIANCE LOGS, PRIORITY SUPPORT.',
+              'Google and Azure AD SSO, team workspaces, role-based access, custom domain routing, exportable logs, priority support.',
           },
           saasLimits: {
             proposalsCap: 'Unlimited',
             users: 'Unlimited',
             sso: true,
             customDomain: true,
-            auditChain: 'Immutable + exportable',
+            auditChain: 'Exportable',
           },
           features: [
             'Unlimited proposals',
@@ -442,13 +442,13 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
             'SSO (Google + Azure AD)',
             'Team workspaces + RBAC',
             'Custom domain',
-            'Immutable audit chain',
+            'Exportable run log',
             'Priority support',
             'Onboarding session',
           ],
           crossSell: {
             label:
-              'Want a custom AI agent funnelling leads into gtm_ops? See the Elite Agent',
+              'Add an Elite Agent when phone and chat leads should feed gtm_ops directly',
             offeringId: 'premium',
           },
         },

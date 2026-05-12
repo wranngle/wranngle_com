@@ -1,5 +1,5 @@
 /**
- * Comprehensive E2E Test Suite for Wranngle Email Templates
+ * E2E test suite for Wranngle email templates.
  *
  * Tests the entire email template infrastructure:
  * - Template Builder class functionality
@@ -34,6 +34,11 @@ const TEMPLATE_NAMES = [
   'notification',
   'password-reset',
   'lead-intake',
+  'sales-cold-outreach',
+  'sales-demo-followup',
+  'sales-proposal-sent',
+  'sales-quote-followup',
+  'sales-winback',
 ];
 
 // Design system colors

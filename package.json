@@ -17,6 +17,8 @@
     "build": "bun run script/build.ts",
     "preview": "wrangler pages dev dist",
     "deploy": "wrangler pages deploy dist",
+    "deploy:live": "bun run build && wrangler pages deploy dist --project-name wranngle-com --branch main --commit-dirty=true",
+    "deploy:upload": "wrangler pages deploy dist --project-name wranngle-com --branch main --commit-dirty=true",
     "check": "tsc",
     "lint": "xo",
     "lint:fix": "xo --fix",

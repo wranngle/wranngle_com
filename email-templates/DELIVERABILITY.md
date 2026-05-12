@@ -168,7 +168,7 @@ Best sending times (B2B):
 
 #### Recommended ESPs
 1. **SendGrid** - Reliable, great APIs, good deliverability
-2. **Mailgun** - Developer-friendly, powerful routing
+2. **Mailgun** - Developer-friendly routing
 3. **Amazon SES** - Cost-effective, requires warm-up
 4. **Postmark** - Best for transactional emails
 

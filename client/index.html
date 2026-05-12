@@ -155,10 +155,10 @@
               "Bun",
               "Python automation",
               "PowerShell automation",
-              "MSP operations",
+              "IT operations",
               "Evaluation harnesses",
               "Runbooks",
-              "Audit trails",
+              "Run logs",
               "Latency budgets"
             ],
             "skills": [
@@ -239,7 +239,7 @@
             "url": "https://wranngle.com",
             "logo": "https://wranngle.com/wordmark.png",
             "email": "mailto:hello@wranngle.com",
-            "description": "AI voice agents for trades businesses (HVAC, plumbing, electrical). 24/7 call answering, lead capture, conversion-built websites, and gtm_ops, the proposal-generation runtime that turns inbound leads into branded PDFs with a full audit trail.",
+            "description": "AI voice agents for trades businesses (HVAC, plumbing, electrical). 24/7 call answering, lead capture, service-business websites, and gtm_ops proposal generation with run logs.",
             "founder": {
               "@id": "https://wranngle.com/#cody-arnold"
             },
@@ -313,8 +313,18 @@
       })();
     </script>
 
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <!-- ?v=3 cache-busts the favicon rebake (80% safe-area rule from
+         logo_maker DESIGN.md). Bump the version on every PNG rebake; the
+         static file itself keeps its long max-age from _headers. The
+         .ico is for legacy lookups (Slack unfurl, Outlook, RSS readers,
+         IE/legacy Windows pinning) that probe /favicon.ico at the root. -->
+    <link rel="icon" type="image/x-icon" sizes="32x32" href="/favicon.ico?v=3" />
+    <link rel="icon" type="image/png" href="/favicon.png?v=3" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-touch-icon.png?v=3"
+    />
     <link rel="manifest" href="/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -340,8 +350,8 @@
     <noscript>
       <!-- Static fallback for visitors with JavaScript disabled (NoScript /
            Tor / lynx / non-JS crawlers). Mirrors the hero pitch + the
-           single contact path. Not a marketing surface; just enough so
-           the page isn't a blank rectangle. -->
+           single contact path. This keeps the page useful when the app
+           cannot run. -->
       <div
         style="
           max-width: 640px;
@@ -359,7 +369,7 @@
           Wranngle Systems
         </h1>
         <p style="opacity: 0.8; margin: 0 0 1rem;">
-          Voice-AI agents for trades businesses — 24/7 call answering, lead
+          AI voice agents for trades businesses — 24/7 call answering, lead
           qualification, and the gtm_ops proposal-generation runtime.
         </p>
         <p style="opacity: 0.8; margin: 0 0 1rem;">

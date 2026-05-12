@@ -1,6 +1,6 @@
 # Wranngle Systems - AI Voice Agents and Workflow Automation
 
-> Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and conversion-focused websites for service businesses.
+> Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and service-business websites.
 
 ## Canonical Links
 
@@ -28,8 +28,8 @@ Wranngle Systems builds and operates:
 - CRM enrichment and lead routing workflows.
 - Post-call processing and structured transcript extraction.
 - Proposal-generation runtimes that turn inbound leads into branded PDFs.
-- Audit trails, runbooks, fallback paths, and operator review surfaces.
-- Conversion-focused websites with lead capture and SEO foundations.
+- Run logs, runbooks, fallback paths, and review screens.
+- Service-business websites with lead capture and SEO foundations.
 - Cloudflare-hosted APIs and serverless lead intake endpoints.
 
 ## Technical Stack
@@ -50,11 +50,11 @@ The public Wranngle site and related projects use:
 
 ## Differentiators
 
-- Voice systems are treated as trust systems: latency, handoff quality, transcript accuracy, and fallbacks are measured.
+- Voice systems are measured on latency, handoff quality, transcript accuracy, and fallbacks.
 - Automation work is designed around existing operator workflows instead of forcing a business to reorganize around software.
-- Proposal and lead workflows preserve audit trails so humans can inspect inputs, outputs, ownership, and failure paths.
+- Proposal and lead workflows preserve run logs so humans can inspect inputs, outputs, ownership, and failure paths.
 - The public repositories include eval harnesses, workflow plumbing, and operational tooling rather than only marketing demos.
 
 ## Recruiting And Enrichment Keywords
 
-AI voice agents, voice AI, ElevenLabs conversational AI, AI automation, workflow automation, n8n, lead capture, CRM enrichment, home services automation, service business software, proposal generation, GTM automation, TypeScript, React, Vite, Cloudflare Pages, serverless API, ArkType, eval harness, audit trail, runbook, MSP operations.
+AI voice agents, voice AI, ElevenLabs conversational AI, AI automation, workflow automation, n8n, lead capture, CRM enrichment, home services automation, service business software, proposal generation, GTM automation, TypeScript, React, Vite, Cloudflare Pages, serverless API, ArkType, eval harness, run log, runbook, IT operations.
