@@ -2,12 +2,15 @@ export const SARAH_AGENT_ID = 'agent_7801kqqqhjmcfdsa1m2a8t9w6t5c';
 
 let sarahTextPatchInstalled = false;
 let sarahTextObserver: MutationObserver | undefined;
+let sarahOutsideClickInstalled = false;
 const SARAH_VENDOR_DEFAULT_CTA = ['Start', ['Wran', 'ngling'].join('')].join(
   ' ',
 );
 
 export function ensureSarahWidgetScript() {
   if (typeof document === 'undefined') return;
+
+  installSarahOutsideClickCollapse();
 
   const scriptId = 'el-convai-v1';
   if (document.getElementById(scriptId)) return;
@@ -98,4 +101,40 @@ function installSarahTextPatch() {
 export function goTalkToSarah() {
   if (openSarahWidget()) return;
   globalThis.location.assign('/#talk-to-sarah');
+}
+
+/**
+ * The widget ships no outside-click-to-dismiss; capture-phase pointerdown
+ * on document is the only lever. Detect "expanded" by the presence of the
+ * vendor's "Collapse" button in the shadow root — it only renders inside
+ * the expanded sheet, so absence means already-collapsed and nothing to do.
+ */
+function installSarahOutsideClickCollapse() {
+  if (sarahOutsideClickInstalled) return;
+  sarahOutsideClickInstalled = true;
+
+  globalThis.addEventListener(
+    'pointerdown',
+    (event) => {
+      const widget = document.querySelector<HTMLElement>('elevenlabs-convai');
+      const root = widget?.shadowRoot;
+      if (!widget || !root) return;
+
+      const collapseBtn = [
+        ...root.querySelectorAll<HTMLButtonElement>('button'),
+      ].find((b) => b.textContent?.trim().toLowerCase() === 'collapse');
+      if (!collapseBtn) return;
+
+      const path = event.composedPath();
+      const insideWidget =
+        path.includes(widget) ||
+        path.some(
+          (node) => node instanceof Node && node.getRootNode() === root,
+        );
+      if (insideWidget) return;
+
+      collapseBtn.click();
+    },
+    {capture: true},
+  );
 }
