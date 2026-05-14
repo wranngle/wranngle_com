@@ -224,6 +224,26 @@ const WranngleLanding = () => {
                     </ButtonGhost>
                   </div>
 
+                  <figure
+                    className={`mt-8 overflow-hidden rounded-md border max-w-xl ${
+                      isDark
+                        ? 'border-white/10 bg-white/[0.03]'
+                        : 'border-black/10 bg-white/60'
+                    }`}
+                    aria-label="Wranngle case-study walkthrough"
+                    data-testid="demo-hero-video"
+                  >
+                    <video
+                      src="/demo-hero.mp4"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      className="w-full h-auto block"
+                    />
+                  </figure>
+
                   <div className="mt-8 grid grid-cols-3 gap-3 max-w-xl">
                     {VOICE_HERO_METRICS.map((metric) => (
                       <div
