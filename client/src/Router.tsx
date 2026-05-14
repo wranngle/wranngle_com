@@ -6,6 +6,7 @@ import PrivacyPolicy from './pages/privacy-policy.tsx';
 import About from './pages/about.tsx';
 import GtmOps from './pages/gtm-ops.tsx';
 import Websites from './pages/websites.tsx';
+import Pricing from './routes/pricing.tsx';
 import NotFound from './pages/not-found.tsx';
 
 const CANONICAL_ORIGIN = 'https://wranngle.com';
@@ -71,6 +72,11 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
     title: 'Terms of Service — Wranngle Systems',
     description:
       'Terms of Service for the Wranngle Systems platform — voice agents, websites, and the gtm_ops SaaS.',
+  },
+  '/pricing': {
+    title: 'Pricing — Wranngle Systems',
+    description:
+      'Three plans (Starter, Professional, Enterprise) for AI voice agents at HVAC, plumbing, and electrical businesses. No contracts, no setup fees.',
   },
 };
 
@@ -152,6 +158,7 @@ export default function Router() {
         <Route path="/products/gtm_ops" component={GtmOps} />
         <Route path="/terms" component={TermsOfService} />
         <Route path="/privacy" component={PrivacyPolicy} />
+        <Route path="/pricing" component={Pricing} />
         <Route component={NotFound} />
       </Switch>
     </>
