@@ -7,6 +7,7 @@ import About from './pages/about.tsx';
 import GtmOps from './pages/gtm-ops.tsx';
 import Websites from './pages/websites.tsx';
 import NotFound from './pages/not-found.tsx';
+import VerticalRoute from './routes/verticals/VerticalRoute.tsx';
 
 const CANONICAL_ORIGIN = 'https://wranngle.com';
 
@@ -71,6 +72,21 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
     title: 'Terms of Service — Wranngle Systems',
     description:
       'Terms of Service for the Wranngle Systems platform — voice agents, websites, and the gtm_ops SaaS.',
+  },
+  '/verticals/hvac': {
+    title: 'HVAC AI Voice Agents — Wranngle Systems',
+    description:
+      'AI voice agents for HVAC contractors. 24/7 after-hours call answering, lead capture, and dispatch handoff for heating, ventilation, and air-conditioning service businesses.',
+  },
+  '/verticals/plumbing': {
+    title: 'Plumbing AI Voice Agents — Wranngle Systems',
+    description:
+      'AI voice agents for plumbing contractors. Emergency call triage, after-hours intake, and qualified-lead routing for residential and commercial plumbing.',
+  },
+  '/verticals/roofing': {
+    title: 'Roofing AI Voice Agents — Wranngle Systems',
+    description:
+      'AI voice agents for roofing contractors. Storm-event call surge handling, inspection scheduling, and qualified-lead capture for roofing service businesses.',
   },
 };
 
@@ -152,6 +168,15 @@ export default function Router() {
         <Route path="/products/gtm_ops" component={GtmOps} />
         <Route path="/terms" component={TermsOfService} />
         <Route path="/privacy" component={PrivacyPolicy} />
+        <Route path="/verticals/hvac">
+          <VerticalRoute slug="hvac" />
+        </Route>
+        <Route path="/verticals/plumbing">
+          <VerticalRoute slug="plumbing" />
+        </Route>
+        <Route path="/verticals/roofing">
+          <VerticalRoute slug="roofing" />
+        </Route>
         <Route component={NotFound} />
       </Switch>
     </>
