@@ -15,6 +15,7 @@ import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import Ticker from '@/components/Ticker.tsx';
 import RoiCalculator from '@/components/RoiCalculator.tsx';
+import AgentDemoButton from '@/components/AgentDemoButton.tsx';
 import {
   Dialog,
   DialogContent,
@@ -244,6 +245,7 @@ const WranngleLanding = () => {
                       className="w-full h-auto block"
                     />
                   </figure>
+                  <AgentDemoButton isDark={isDark} />
 
                   <div className="mt-8 grid grid-cols-3 gap-3 max-w-xl">
                     {VOICE_HERO_METRICS.map((metric) => (
