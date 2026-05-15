@@ -39,10 +39,10 @@
         "Bun",
         "Python automation",
         "PowerShell automation",
-        "MSP operations",
+        "IT operations",
         "Evaluation harnesses",
         "Runbooks",
-        "Audit trails",
+        "Run logs",
         "Latency budgets"
       ],
       "skills": [
@@ -144,7 +144,7 @@
           "encodingFormat": "text/markdown"
         }
       ],
-      "description": "Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and conversion-focused websites for service businesses."
+      "description": "Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and service-business websites."
     }
   ]
 }

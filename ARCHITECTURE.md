@@ -1,6 +1,6 @@
 # Architecture
 
-`wranngle_com` is the customer-facing site for Wranngle, a voice-AI product for trades businesses. Static SPA (Vite + React + Tailwind) deployed to Cloudflare Pages, with serverless API routes implemented as Cloudflare Pages Functions.
+`wranngle_com` is the customer-facing site for Wranngle, an AI voice-agent product for trades businesses. Static SPA (Vite + React + Tailwind) deployed to Cloudflare Pages, with serverless API routes implemented as Cloudflare Pages Functions.
 
 ## Surface
 

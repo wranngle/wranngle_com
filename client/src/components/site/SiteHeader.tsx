@@ -25,7 +25,9 @@ export default function SiteHeader({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [deployOpen, setDeployOpen] = useState(false);
   const deployCta =
-    homeAbVariant === 'value-first' ? 'Build my stack' : 'Get my agent';
+    homeAbVariant === 'value-first'
+      ? 'Build my call flow'
+      : 'Get call coverage';
 
   return (
     <>

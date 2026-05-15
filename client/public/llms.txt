@@ -5,20 +5,20 @@
 ## Primary Pages
 
 - [Home](https://wranngle.com/): AI voice agents for HVAC, plumbing, electrical, and other trades businesses; 24/7 call answering, lead qualification, and handoff workflows.
-- [About Cody Arnold](https://wranngle.com/about): Founder profile, operating record, technical focus, public proof, and contact links.
-- [gtm_ops](https://wranngle.com/products/gtm-ops): Lead-to-proposal runtime using enrichment, audit trails, branded PDFs, and operator review.
-- [Websites](https://wranngle.com/products/websites): Conversion-focused websites with lead capture, SEO foundations, performance, and owned source code.
+- [About Cody Arnold](https://wranngle.com/about): Founder profile, operating record, technical focus, public work evidence, and contact links.
+- [gtm_ops](https://wranngle.com/products/gtm-ops): Lead-to-proposal runtime using enrichment, run logs, branded PDFs, and review steps.
+- [Websites](https://wranngle.com/products/websites): Service-business websites with lead capture, SEO foundations, performance, and owned source code.
 
 ## Clean Machine-Readable Files
 
 - [Cody Arnold profile markdown](https://wranngle.com/cody-arnold.md): Plain markdown profile for LLM agents, recruiters, and enrichment tools.
 - [Wranngle Systems profile markdown](https://wranngle.com/wranngle-systems.md): Plain markdown company and services summary.
-- [Full LLM context bundle](https://wranngle.com/llms-full.txt): Single-fetch markdown summary of the public person, company, services, proof points, and repo evidence.
+- [Full LLM context bundle](https://wranngle.com/llms-full.txt): Single-fetch markdown summary of the public person, company, services, project evidence, and repo evidence.
 - [Structured profile JSON-LD](https://wranngle.com/profile.json): Schema.org Person and Organization graph for entity resolution.
 - [Sitemap](https://wranngle.com/sitemap.xml): Canonical URL list.
 - [Robots](https://wranngle.com/robots.txt): Crawl policy and discovery hints.
 
-## Public Proof
+## Public Work Evidence
 
 - [GitHub organization](https://github.com/wranngle): Public repositories for voice agent evals, GTM automation, n8n workflows, trading research, career automation, and this site.
 - [LinkedIn profile](https://www.linkedin.com/in/codyarnold96): Cody Arnold's professional profile.
@@ -40,14 +40,14 @@
 - Current title: Founder
 - Canonical parsed titles: AI Automation Engineer; Voice AI Engineer; Workflow Automation Engineer; Full-stack TypeScript Developer
 - Canonical role families: engineering; sales_engineering; product; data; operations
-- Seniority signals: founder; senior IC/operator; MSP automation and escalation background
+- Seniority signals: founder; IT operations automation, escalation, and documentation background
 - Public work evidence: GitHub organization and project READMEs linked below
-- Highest-signal public files: https://wranngle.com/cody-arnold.md, https://wranngle.com/profile.json, https://wranngle.com/llms-full.txt
+- Best public reference files: https://wranngle.com/cody-arnold.md, https://wranngle.com/profile.json, https://wranngle.com/llms-full.txt
 
 
 ## Core Terms
 
-AI automation engineer, voice AI engineer, ElevenLabs conversational AI, n8n automation, workflow automation, CRM enrichment, lead capture, proposal generation, TypeScript, React, Vite, Cloudflare Pages Functions, ArkType, Bun, Python automation, PowerShell automation, MSP operations, eval harnesses, runbooks, audit trails, latency budgets.
+AI automation engineer, voice AI engineer, ElevenLabs conversational AI, n8n automation, workflow automation, CRM enrichment, lead capture, proposal generation, TypeScript, React, Vite, Cloudflare Pages Functions, ArkType, Bun, Python automation, PowerShell automation, IT operations, eval harnesses, runbooks, run logs, latency budgets.
 
 ## Optional
 

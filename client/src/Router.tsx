@@ -7,6 +7,8 @@ import About from './pages/about.tsx';
 import GtmOps from './pages/gtm-ops.tsx';
 import Websites from './pages/websites.tsx';
 import NotFound from './pages/not-found.tsx';
+import VerticalLanding from './pages/vertical-landing.tsx';
+import {VERTICALS} from './data/verticals.ts';
 
 const CANONICAL_ORIGIN = 'https://wranngle.com';
 
@@ -50,12 +52,12 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
   '/products/gtm-ops': {
     title: 'gtm_ops — Lead in, branded proposal out · Wranngle',
     description:
-      'gtm_ops turns inbound leads into branded PDF proposals. Clay-powered enrichment, full audit trail, live demo with synthetic data. No signup.',
+      'gtm_ops turns inbound leads into branded PDF proposals. Enrichment, run logs, live demo with synthetic data. No signup.',
   },
   '/products/websites': {
     title: 'Websites that capture leads — Wranngle Systems',
     description:
-      'Conversion-focused landing pages and business websites built with fast performance, lead capture, SEO foundations, and owned source code.',
+      'Landing pages and business websites built with fast performance, lead capture, SEO foundations, and owned source code.',
   },
   '/products/ai-voice-agents': {
     title: 'AI Voice Agents for Trades — Wranngle Systems',
@@ -72,6 +74,15 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
     description:
       'Terms of Service for the Wranngle Systems platform — voice agents, websites, and the gtm_ops SaaS.',
   },
+  ...Object.fromEntries(
+    VERTICALS.map((v) => [
+      `/${v.slug}`,
+      {
+        title: `${v.displayName} — ${v.headline}`,
+        description: v.subhead,
+      },
+    ]),
+  ),
 };
 
 /**
@@ -152,6 +163,15 @@ export default function Router() {
         <Route path="/products/gtm_ops" component={GtmOps} />
         <Route path="/terms" component={TermsOfService} />
         <Route path="/privacy" component={PrivacyPolicy} />
+        {/* Per-vertical landing pages — copy sourced from
+            content/verticals.yaml via client/src/data/verticals.ts.
+            Slugs match the round-1 schema.org/Service JSON-LD work
+            on Service.serviceArea (PR #75). */}
+        {VERTICALS.map((vertical) => (
+          <Route key={vertical.slug} path={`/${vertical.slug}`}>
+            <VerticalLanding vertical={vertical} />
+          </Route>
+        ))}
         <Route component={NotFound} />
       </Switch>
     </>

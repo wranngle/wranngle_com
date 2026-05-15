@@ -1,13 +1,13 @@
 # Wranngle Email Template System
 
-A production-ready, cross-compatible email template system with master template inheritance, deliverability optimization, and live preview capabilities.
+A production email template system with master template inheritance, deliverability checks, and live previews.
 
 ## 🎯 Features
 
 - **Master Template Inheritance** - Single source of truth that cascades to all child templates
 - **Cross-Client Compatible** - Works across Gmail, Outlook, Apple Mail, and 90+ email clients
-- **Mobile Responsive** - Optimized for desktop and mobile devices
-- **Deliverability Optimized** - Built-in best practices for maximum inbox placement
+- **Mobile Responsive** - Built for desktop and mobile devices
+- **Deliverability Checks** - Authentication, size, and content checks before send
 - **Brand Consistent** - Matches Wranngle's visual identity and design philosophy
 - **Developer Friendly** - TypeScript-based builder with variable replacement
 - **Live Preview** - Visual preview dashboard for rapid iteration
@@ -257,9 +257,9 @@ The master template (`master/master-template.html`) contains:
 
 **To update:** Edit `master/master-template.html` and rebuild all templates. Changes cascade automatically.
 
-## 📊 Deliverability Optimization
+## 📊 Deliverability Checks
 
-Our templates are optimized for maximum inbox placement:
+Templates are checked against the basics that affect inbox placement:
 
 ✅ **Technical:**
 - SPF/DKIM/DMARC authentication ready
@@ -278,7 +278,7 @@ Our templates are optimized for maximum inbox placement:
 - Touch-friendly buttons (44px+)
 - Readable fonts (16px minimum)
 
-See [DELIVERABILITY.md](./DELIVERABILITY.md) for comprehensive best practices.
+See [DELIVERABILITY.md](./DELIVERABILITY.md) for setup and testing notes.
 
 ## 🧪 Testing
 

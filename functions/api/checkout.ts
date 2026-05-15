@@ -36,7 +36,7 @@ const CHECKOUT_PACKAGES: Record<string, CheckoutPackage> = {
   'landing-page': {
     id: 'landing-page',
     name: 'Landing Page',
-    description: 'One conversion-focused custom page.',
+    description: 'One custom lead-capture page.',
     unitAmount: 90_000,
     mode: 'payment',
   },

@@ -1,6 +1,6 @@
 # Wranngle Email Design System
 
-A comprehensive guide to maintaining visual consistency across all Wranngle email templates.
+Visual rules for Wranngle email templates.
 
 ---
 
@@ -524,12 +524,12 @@ preferredChannel: 'email' | 'sms' | 'both'
 
 ### What is RCS?
 
-Rich Communication Services (RCS) is the next-generation messaging protocol that upgrades SMS with:
+Rich Communication Services (RCS) upgrades SMS with:
 - **Branded Sender**: Company logo and name instead of phone number
 - **Rich Media**: Images, carousels, and formatted text
 - **Suggested Actions**: Interactive buttons (Call, Visit Website, Quick Replies)
 - **Read Receipts**: Know when messages are delivered and read
-- **Automatic SMS Fallback**: Seamlessly falls back to SMS when RCS unavailable
+- **Automatic SMS Fallback**: Falls back to SMS when RCS is unavailable
 
 ### RCS Sender Configuration
 

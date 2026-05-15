@@ -54,6 +54,9 @@
   Cache-Control: public, max-age=2592000, must-revalidate
 /favicon.png
   Cache-Control: public, max-age=2592000, must-revalidate
+/favicon.ico
+  Content-Type: image/x-icon
+  Cache-Control: public, max-age=2592000, must-revalidate
 /apple-touch-icon.png
   Cache-Control: public, max-age=2592000, must-revalidate
 /manifest.json

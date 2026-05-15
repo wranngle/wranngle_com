@@ -33,7 +33,7 @@ const REPOS: RepoEntry[] = [
     fullName: 'wranngle/gtm_ops',
     role: 'Ops runtime',
     blurb:
-      'Voice-AI-led GTM runtime. Inbound calls enrich from CRM context, structured extraction creates proposal inputs, and every step leaves an audit trail for operator review.',
+      'GTM runtime for inbound calls, CRM context, structured extraction, proposal inputs, and reviewable logs.',
   },
   {
     fullName: 'wranngle/n8n',
@@ -43,28 +43,28 @@ const REPOS: RepoEntry[] = [
   },
   {
     fullName: 'wranngle/tradingbot',
-    role: 'Systems rigor',
+    role: 'Testing discipline',
     blurb:
-      'Algorithmic trading research surface with strategy harnesses, backtests, live-paper plumbing, deterministic fixtures, audit trails, and latency budgets.',
+      'Algorithmic trading research app with strategy harnesses, backtests, live-paper plumbing, deterministic fixtures, run logs, and latency budgets.',
   },
   {
     fullName: 'wranngle/career_architect',
     role: 'Python automation',
     blurb:
-      'AI-driven job search command center with scripts for JD evaluation, tailored CV generation, portal scanning, and application tracking.',
+      'Job-search automation scripts for JD evaluation, tailored CV generation, portal scanning, and application tracking.',
   },
   {
     fullName: 'wranngle/wranngle_com',
     role: 'This site',
     blurb:
-      'Vite, React, Tailwind, and Cloudflare Pages with ArkType-validated lead capture and brand tokens mirrored from the Wranngle product surface.',
+      'Vite, React, Tailwind, and Cloudflare Pages with ArkType-validated lead capture and shared Wranngle brand tokens.',
   },
 ];
 
 const TRUST_MARKERS = [
   {
     value: '10 years',
-    label: 'MSP operating depth',
+    label: 'IT operations experience',
     detail:
       'Automation, escalation, documentation, and support work inside environments where downtime is not theoretical.',
   },
@@ -72,13 +72,13 @@ const TRUST_MARKERS = [
     value: '500+',
     label: 'Client environments',
     detail:
-      'Enough variety to distrust fragile demos and design for weird real-world edge cases first.',
+      'A wide range of small-business environments, support tools, and edge cases.',
   },
   {
     value: '4,000+',
     label: 'Endpoints supported',
     detail:
-      'Python and PowerShell automation that absorbed the recurring drudgery so engineers stayed on the work that needed a human.',
+      'Python and PowerShell automation for recurring support work, reporting, and maintenance tasks.',
   },
   {
     value: '700',
@@ -96,66 +96,66 @@ const TRUST_MARKERS = [
     value: '<500 ms',
     label: 'P95 latency target',
     detail:
-      'Voice systems are trust systems. Latency, fallbacks, and transcript quality get measured because users feel them.',
+      'Latency, fallbacks, and transcript quality are measured because callers notice delays immediately.',
   },
 ];
 
 const WORK_SHAPES = [
   {
     label: 'Voice AI',
-    title: 'Agents that survive real callers',
+    title: 'Voice agents for real calls',
     body: 'ElevenLabs agents, Twilio handoffs, transcript fixtures, post-call webhooks, and latency budgets built around production behavior instead of demo scripts.',
   },
   {
     label: 'Workflow automation',
-    title: 'The glue around the agent',
-    body: 'n8n, CRM enrichment, lead routing, proposal inputs, Slack alerts, and operator review surfaces that keep the system inspectable.',
+    title: 'Workflow plumbing around the agent',
+    body: 'n8n, CRM enrichment, lead routing, proposal inputs, Slack alerts, and review screens that keep the system inspectable.',
   },
   {
     label: 'Full-stack systems',
-    title: 'Small interfaces for messy operations',
+    title: 'Interfaces for daily operations',
     body: 'TypeScript, React, Vite, Cloudflare Pages Functions, Bun, ArkType, Python, and PowerShell used to turn workflows into durable tools.',
   },
   {
     label: 'Operating discipline',
-    title: 'Runbooks, evals, and failure paths',
-    body: 'The MSP habits still matter: document the path, measure the awkward parts, leave ownership clear, and make regression visible before customers feel it.',
+    title: 'Runbooks and failure paths',
+    body: 'The operations habits still matter: document the path, measure the failure-prone parts, make ownership clear, and catch regressions before customers feel them.',
   },
 ];
 
 const PRINCIPLES = [
   {
     Icon: BadgeCheck,
-    title: 'Earn trust before speed',
+    title: 'Make it auditable',
     body: 'Automation only gets useful when someone can inspect what happened, why it happened, and where the handoff went.',
   },
   {
     Icon: PhoneCall,
-    title: 'Start where work leaks',
+    title: 'Fix the missed handoff',
     body: 'For service businesses, the leak is often a missed call, an after-hours voicemail, or the CRM note nobody wrote.',
   },
   {
     Icon: Gauge,
-    title: 'Measure the awkward parts',
+    title: 'Measure failure points',
     body: 'Latency budgets, enrichment success, transcript fixtures, and regression prompts matter because voice systems fail in front of users, not in staging.',
   },
   {
     Icon: FileText,
-    title: 'Leave receipts',
-    body: 'A workflow is not finished until the next operator can see the inputs, outputs, ownership, and failure path.',
+    title: 'Keep a run log',
+    body: 'A workflow is not finished until the next person can see the inputs, outputs, ownership, and failure path.',
   },
 ];
 
 const METHOD = [
   {
     step: '01',
-    title: 'Trace the real day',
-    body: 'Calls, tickets, forms, texts, spreadsheets, and the person everyone quietly routes around. The unofficial workflow is usually the honest one.',
+    title: 'Map the current workflow',
+    body: 'Calls, tickets, forms, texts, spreadsheets, and manual handoffs. The current workaround usually shows where the system has to improve.',
   },
   {
     step: '02',
-    title: 'Build the smallest durable loop',
-    body: 'Answer, qualify, enrich, route, record. The first version should survive normal mess, not impress a perfect demo script.',
+    title: 'Build the first reliable loop',
+    body: 'Answer, qualify, enrich, route, record. The first version should handle normal edge cases, not only a perfect demo script.',
   },
   {
     step: '03',
@@ -164,7 +164,7 @@ const METHOD = [
   },
   {
     step: '04',
-    title: 'Hand it off like an operator will own it',
+    title: 'Handoff with logs and docs',
     body: 'Logs, docs, alerts, permissions, and runbooks are part of the product. If support cannot reason about it, it is not done.',
   },
 ];
@@ -230,27 +230,23 @@ export default function About() {
 
                 <div className="mt-8 space-y-5 text-base md:text-xl leading-relaxed">
                   <p>
-                    Wranngle exists because most "AI for service businesses"
-                    pitches quietly ask the business to bend around the tool.
-                    The work I care about is the opposite: keep the day intact,
-                    answer the phone, capture what was said, route it where work
-                    already lives, and leave a trail the owner can audit before
-                    coffee.
+                    Wranngle builds AI voice agents and workflow automation for
+                    service businesses. The goal is straightforward: answer
+                    calls, capture the details, route work to the tools already
+                    in use, and make the activity easy to review.
                   </p>
                   <p className={mutedText}>
-                    The practice grew out of automation work inside an MSP —
-                    voice agents, workflow plumbing, and the connective tissue
-                    between the CRM, the dispatcher, and the audit log. The
-                    receipts are further down the page. The principle comes
-                    first, because the principle is what the operator has to
-                    live with.
+                    I started this work in IT operations, where automation had
+                    to support live service work instead of sitting beside it.
+                    That background still shapes the projects: voice agents,
+                    workflow plumbing, CRM updates, dispatch handoffs, and logs
+                    that make the result understandable later.
                   </p>
                   <p className={mutedText}>
-                    Depending on the room, the work looks like AI automation
-                    engineering, voice AI engineering, workflow automation, or
-                    full-stack TypeScript. The useful part is the overlap:
-                    agents that understand the job, systems that move the work,
-                    and enough instrumentation to know when either one failed.
+                    The work spans voice AI, workflow automation, and full-stack
+                    TypeScript. I focus on the handoff between them: what the
+                    agent understood, where the work went next, and how the team
+                    can tell if something failed.
                   </p>
                 </div>
               </div>
@@ -282,7 +278,7 @@ export default function About() {
                   </div>
                   <div className="min-w-0">
                     <p className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--s500)]">
-                      Wranngle, in one line
+                      What Wranngle does
                     </p>
                     <p className="mt-1 text-sm leading-relaxed opacity-80">
                       Voice and workflow automation for service businesses where
@@ -303,16 +299,16 @@ export default function About() {
                   </div>
                   <div className="py-4">
                     <dt className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-55">
-                      Working shape
+                      Work covered
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
                       Voice AI, workflow automation, full-stack TypeScript, and
-                      operator-facing internal tools.
+                      internal tools.
                     </dd>
                   </div>
                   <div className="py-4">
                     <dt className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-55">
-                      Operating bias
+                      How I build
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
                       Logs, fallbacks, ownership, and documentation before
@@ -321,7 +317,7 @@ export default function About() {
                   </div>
                   <div className="py-4">
                     <dt className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-55">
-                      Recent proof
+                      Recent work
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
                       On-call ElevenLabs voice agent covering 15 client sites:
@@ -331,7 +327,7 @@ export default function About() {
                   </div>
                   <div className="py-4">
                     <dt className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-55">
-                      Outside read
+                      External note
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
                       ElevenLabs Startup Grant, 2025 — for the on-call voice
@@ -347,15 +343,15 @@ export default function About() {
             <div className="max-w-7xl mx-auto w-full px-6 py-12 md:py-16 grid lg:grid-cols-[0.72fr_1.28fr] gap-10 lg:gap-16">
               <div>
                 <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-4 mono-font">
-                  WORKING SHAPE
+                  WORK AREAS
                 </div>
                 <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
-                  The title changes. The operating surface stays the same.
+                  What I build
                 </h2>
                 <p className={`mt-4 text-base leading-relaxed ${mutedText}`}>
-                  The strongest work usually sits between a live workflow, a
-                  technical integration, and the person who has to trust the
-                  result after launch.
+                  Most projects combine a live workflow, a technical
+                  integration, and a clear handoff for the people using it after
+                  launch.
                 </p>
               </div>
 
@@ -388,14 +384,14 @@ export default function About() {
             <div className="max-w-7xl mx-auto w-full px-6 py-12 md:py-16 grid lg:grid-cols-[0.7fr_1.3fr] gap-10 lg:gap-16">
               <div>
                 <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
-                  OPERATING RECORD
+                  RESULTS
                 </div>
                 <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
-                  The proof I trust is operational.
+                  Results from supported systems
                 </h2>
                 <p className={`mt-4 text-base leading-relaxed ${mutedText}`}>
-                  The numbers came from systems someone had to support after the
-                  build was done.
+                  These numbers come from support work and production systems,
+                  not isolated demos.
                 </p>
               </div>
 
@@ -427,33 +423,28 @@ export default function About() {
           <section className="max-w-7xl mx-auto w-full px-6 py-16 md:py-20 grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16">
             <div>
               <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-4 mono-font">
-                THE WHY
+                APPROACH
               </div>
               <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
-                Do not ask operators to reorganize around the tool.
+                Fit the existing workflow
               </h2>
             </div>
             <div
               className={`space-y-5 text-base md:text-lg leading-relaxed ${mutedText}`}
             >
               <p>
-                A lot of AI software quietly asks the business to change shape
-                around the tool. That is backwards for the operators I care
-                about. They already have customers calling, techs moving,
-                dispatchers switching context, and owners trying to keep the day
-                from leaking revenue.
+                Many AI products require teams to change how they work before
+                the software creates value. Service businesses do not have that
+                luxury. Customers are calling, technicians are moving, and
+                dispatchers are switching context all day.
               </p>
               <p>
-                The better promise is continuity. If a missed call becomes a
-                qualified lead, if the CRM has the useful facts, if the proposal
-                can be drafted from evidence, and if the owner can audit the
-                path afterward, the system earned its place before anybody
-                opened a new tab.
+                The better target is continuity. A missed call should become a
+                qualified lead. The CRM should get the useful facts. A proposal
+                should start from captured details. The owner should be able to
+                review what happened afterward.
               </p>
-              <p>
-                Software is secondary. First, the workflow has to prove it
-                deserves to exist.
-              </p>
+              <p>The workflow comes first. The software has to fit it.</p>
             </div>
           </section>
 
@@ -465,14 +456,13 @@ export default function About() {
                     PRINCIPLES
                   </div>
                   <h2 className="brand-font text-3xl md:text-4xl font-bold">
-                    What has to be true
+                    Rules for useful automation
                   </h2>
                 </div>
                 <p
                   className={`max-w-xl text-sm md:text-base leading-relaxed ${mutedText}`}
                 >
-                  These are the constraints I design around before talking about
-                  scale, polish, or a bigger roadmap.
+                  These are the requirements I check before adding more scope.
                 </p>
               </div>
 
@@ -512,12 +502,12 @@ export default function About() {
                 HOW I WORK
               </div>
               <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
-                Find the smallest loop that survives production.
+                Ship the smallest reliable loop
               </h2>
               <p className={`mt-4 text-base leading-relaxed ${mutedText}`}>
-                Map what actually breaks in the workflow, build the minimal
-                version that handles it reliably, measure the failure modes, and
-                hand it off so the next person can own it without asking me.
+                Map the current process, build the first reliable version,
+                measure the failure modes, and hand it off with enough context
+                for someone else to maintain it.
               </p>
             </div>
 
@@ -565,12 +555,11 @@ export default function About() {
                     </span>
                   </a>
                   <h2 className="brand-font text-3xl md:text-4xl font-bold">
-                    Public proof
+                    Code and working examples
                   </h2>
                   <p className={`mt-4 text-base leading-relaxed ${mutedText}`}>
-                    These repos are where I tinker, build, and ship in public —
-                    the working files behind the products, not a curated
-                    portfolio.
+                    These repos show the working files behind the products:
+                    evals, automation flows, product code, and experiments.
                   </p>
                 </div>
                 <a
@@ -604,16 +593,16 @@ export default function About() {
                   CONTACT
                 </div>
                 <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
-                  Start with the messy version.
+                  Tell me where the workflow breaks
                 </h2>
               </div>
               <div>
                 <p
                   className={`text-base md:text-lg leading-relaxed ${mutedText}`}
                 >
-                  The fastest conversation is the unpolished one: what breaks,
-                  what people work around, what you already tried, and what you
-                  need to trust before automating it.
+                  Send the current process, the failure points, what you already
+                  tried, and the conditions automation has to satisfy before it
+                  would be useful.
                 </p>
                 <div className="mt-7 flex flex-wrap items-center gap-3">
                   {SOCIALS.map(({label, href, Icon, external}) => (

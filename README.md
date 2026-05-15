@@ -59,6 +59,19 @@ To deploy to Cloudflare Pages:
 bun run deploy
 ```
 
+For fast production updates after a local change, build locally and upload
+directly to the live Cloudflare Pages project:
+
+```bash
+bun run deploy:live
+```
+
+If `dist/` is already freshly built, upload it without rebuilding:
+
+```bash
+bun run deploy:upload
+```
+
 ## Project Structure
 
 - `client/`: React frontend source code.
@@ -83,7 +96,7 @@ This is a static site with serverless API functions:
 
 ## Email Templates
 
-This project includes a comprehensive email template system. See [`email-templates/README.md`](email-templates/README.md) for full documentation.
+This project includes an email template system. See [`email-templates/README.md`](email-templates/README.md) for full documentation.
 
 ### Quick Start
 
@@ -108,11 +121,10 @@ bun run email:test
 
 **Key Features:**
 
-- ✅ Cross-client compatible (Gmail, Outlook, Apple Mail, etc.)
-- ✅ Mobile responsive
-- ✅ Deliverability optimized (spam score: 8.5/10)
-- ✅ Brand-consistent design
-- ✅ Master template inheritance
+- Cross-client compatible (Gmail, Outlook, Apple Mail, etc.)
+- Mobile responsive
+- Brand-consistent design
+- Master template inheritance
 
 ## License
 

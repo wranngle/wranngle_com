@@ -170,6 +170,27 @@ The 11th request should return `429 Too Many Requests`.
 
 Continuous deployment is automatically enabled. Any push to `main` branch will trigger a new deployment.
 
+### Fast Local Production Deploy
+
+For small changes where waiting on Cloudflare's GitHub-triggered remote build
+queue is unnecessary, build locally and upload `dist/` directly to the
+production Pages project:
+
+```bash
+bun run deploy:live
+```
+
+This runs `bun run build`, then uploads to project `wranngle-com` on branch
+`main`. Use this when the goal is to make the actual app live quickly after a
+local edit.
+
+If `dist/` is already freshly built from the current source, skip the rebuild
+and upload the existing artifact:
+
+```bash
+bun run deploy:upload
+```
+
 ### 5.1 Deployment Workflow
 
 ```
@@ -302,11 +323,11 @@ Changes are instant (no rebuild required).
 
 Cloudflare Pages Free Tier:
 
-- ✅ Unlimited requests
-- ✅ Unlimited bandwidth
-- ✅ 500 builds/month
-- ✅ 1 build at a time
-- ✅ Custom domains
-- ✅ SSL certificates
+- Unlimited requests
+- Unlimited bandwidth
+- 500 builds/month
+- 1 build at a time
+- Custom domains
+- SSL certificates
 
 This project stays within free tier limits.
