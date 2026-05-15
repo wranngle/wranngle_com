@@ -7,6 +7,7 @@ import About from './pages/about.tsx';
 import GtmOps from './pages/gtm-ops.tsx';
 import Websites from './pages/websites.tsx';
 import Pricing from './routes/pricing.tsx';
+import Pilot from './pages/pilot.tsx';
 import NotFound from './pages/not-found.tsx';
 
 const CANONICAL_ORIGIN = 'https://wranngle.com';
@@ -77,6 +78,11 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
     title: 'Pricing — Wranngle Systems',
     description:
       'Three plans for AI voice agents that answer, qualify, and route calls for busy teams. No contracts, no setup fees.',
+  },
+  '/pilot': {
+    title: 'Pilot Agreement — Wranngle Systems',
+    description:
+      '30-day click-through pilot agreement for the Wranngle Systems voice agent + gtm_ops bundle. Flat $1,000, refund on miss.',
   },
 };
 
@@ -159,6 +165,7 @@ export default function Router() {
         <Route path="/terms" component={TermsOfService} />
         <Route path="/privacy" component={PrivacyPolicy} />
         <Route path="/pricing" component={Pricing} />
+        <Route path="/pilot" component={Pilot} />
         <Route component={NotFound} />
       </Switch>
     </>
