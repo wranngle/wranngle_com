@@ -14,6 +14,7 @@ import {OFFERING_CATEGORIES, type OfferingItem} from '@/data/offerings.ts';
 import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import Ticker from '@/components/Ticker.tsx';
+import RoiCalculator from '@/components/RoiCalculator.tsx';
 import {
   Dialog,
   DialogContent,
@@ -373,6 +374,8 @@ const WranngleLanding = () => {
               </TerminalCard>
             </div>
           </section>
+
+          <RoiCalculator isDark={isDark} />
 
           <OfferingsSection isDark={isDark} abVariant={abVariant} />
 
