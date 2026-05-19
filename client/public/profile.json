@@ -14,7 +14,7 @@
         "AI Automation Engineer",
         "Voice AI Engineer",
         "Workflow Automation Engineer",
-        "Full-stack TypeScript Developer"
+        "Product Systems Builder"
       ],
       "worksFor": {
         "@id": "https://wranngle.com/#organization"
@@ -38,7 +38,6 @@
         "ArkType",
         "Bun",
         "Python automation",
-        "PowerShell automation",
         "IT operations",
         "Evaluation harnesses",
         "Runbooks",
@@ -49,7 +48,7 @@
         "AI automation",
         "Voice AI engineering",
         "Workflow automation",
-        "Full-stack TypeScript",
+        "Product systems",
         "Cloudflare serverless applications",
         "n8n workflow design",
         "Evaluation harnesses",
@@ -73,7 +72,7 @@
         },
         {
           "@type": "Occupation",
-          "name": "Full-stack TypeScript Developer",
+          "name": "Product Systems Builder",
           "skills": [
             "TypeScript",
             "React",

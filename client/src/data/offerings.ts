@@ -404,7 +404,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         priceCadence: 'monthly',
         description:
           'For teams that need SSO, role-based access, a custom domain, and unlimited proposal runs.',
-        cta: 'Talk to Cody',
+        cta: 'Talk to Sales',
         monthlyAddon: {price: '990', label: '/yr annual plan'},
         features: [
           'Unlimited proposals',

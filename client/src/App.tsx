@@ -34,13 +34,26 @@ import {
 
 const INITIAL_DIM = {w: 0, h: 0};
 const CONSOLE_LINES = [
-  {text: '[LIVE] After-hours forwarding enabled', color: 'text-gray-400'},
-  {text: '> New caller: urgent after-hours request', color: 'text-gray-300'},
-  {text: '[CHECK] Account context confirmed', color: 'text-green-400'},
-  {text: '> Collected name, phone, address, and issue', color: 'text-cyan-400'},
-  {text: '> Booking window matched to calendar', color: 'text-cyan-400'},
-  {text: '> Sent transcript and summary to team', color: 'text-green-400'},
-  {text: '\n[READY] Next call can be answered.', color: 'text-white'},
+  {text: '[LIVE] Call coverage active', color: 'text-gray-400'},
+  {text: '> Missed call: new request after hours', color: 'text-gray-300'},
+  {
+    text: '[ASK] Confirming name, callback, and request type',
+    color: 'text-cyan-400',
+  },
+  {
+    text: '> Caller asks about availability and next steps',
+    color: 'text-gray-300',
+  },
+  {
+    text: '[ROUTE] Urgent issue flagged for the on-call owner',
+    color: 'text-green-400',
+  },
+  {text: '> Follow-up summary sent to CRM and inbox', color: 'text-cyan-400'},
+  {
+    text: '[BRANCH] Non-urgent question queued for morning review',
+    color: 'text-violet-300',
+  },
+  {text: '\n[READY] Next caller gets the right path.', color: 'text-white'},
 ];
 
 const VOICE_HERO_METRICS = [
@@ -176,16 +189,16 @@ const WranngleLanding = () => {
                     AI CALL ANSWERING
                   </div>
                   <h1 className="brand-font text-5xl sm:text-6xl md:text-7xl font-bold leading-[0.95] mb-5">
-                    AI voice agents that answer before voicemail.
+                    AI call coverage for busy teams.
                   </h1>
                   <p className="text-xl md:text-2xl font-semibold leading-snug mb-4 max-w-xl">
-                    24/7 call answering, qualification, scheduling, and handoff
-                    for teams that lose work when nobody picks up.
+                    Answer, qualify, schedule, and hand off calls when your team
+                    is busy, closed, or already helping someone else.
                   </p>
                   <p className="text-base md:text-lg opacity-75 leading-relaxed mb-7 max-w-xl">
-                    Sarah is the live demo. Send missed and after-hours calls to
-                    the agent, collect the request details, and route the
-                    summary to the tools your team already checks.
+                    Sarah is the live demo. She asks for the useful details,
+                    separates urgent requests from routine follow-up, and sends
+                    the summary to the tools your team already checks.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Dialog>

@@ -39,9 +39,9 @@ const HomeComponent = PRODUCT_COMPONENT[HOME_PRODUCT];
  */
 const ROUTE_META: Record<string, {title: string; description: string}> = {
   '/': {
-    title: 'Wranngle Systems | AI Voice Agents for Busy Teams',
+    title: 'Wranngle Systems | AI Call Coverage for Busy Teams',
     description:
-      'Automate after-hours calls with Wranngle Systems. 24/7 AI voice agents, lead capture, qualification, and clean handoffs for busy teams.',
+      'Wranngle Systems builds AI call coverage for busy teams: call answering, qualification, scheduling, and clean handoffs.',
   },
   '/about': {
     title: 'Cody Arnold - About Wranngle',
@@ -59,9 +59,9 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
       'Landing pages and business websites built with fast performance, lead capture, SEO foundations, and owned source code.',
   },
   '/products/ai-voice-agents': {
-    title: 'AI Voice Agents for Busy Teams — Wranngle Systems',
+    title: 'AI Call Coverage for Busy Teams — Wranngle Systems',
     description:
-      '24/7 AI voice agents that capture missed calls, qualify leads, answer common questions, and route clean handoffs to your team.',
+      'Answer, qualify, schedule, and hand off calls when your team is busy, closed, or already helping someone else.',
   },
   '/privacy': {
     title: 'Privacy Policy — Wranngle Systems',

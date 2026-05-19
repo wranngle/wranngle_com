@@ -311,7 +311,14 @@ const IntakeForm = ({
               className="text-left rounded-lg border border-[var(--s500)]/35 bg-[var(--s500)]/10 p-4 hover:border-[var(--s500)] transition-colors"
             >
               <div className="flex items-center justify-between gap-4">
-                <div>
+                <span
+                  className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-[var(--s500)]/40 bg-[#101014] shadow-[0_0_24px_rgba(255,95,0,0.24)]"
+                  aria-hidden
+                >
+                  <span className="absolute inset-1 rounded-full bg-[radial-gradient(circle_at_35%_35%,rgba(255,255,255,0.75),rgba(255,95,0,0.45)_32%,rgba(207,60,105,0.5)_58%,transparent_76%)]" />
+                  <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,transparent_42%,rgba(255,95,0,0.38)_65%,transparent_72%)] animate-pulse" />
+                </span>
+                <div className="min-w-0">
                   <div className="text-sm font-bold uppercase tracking-wider text-[var(--s500)]">
                     Talk it out with Sarah
                   </div>
