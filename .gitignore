@@ -314,3 +314,4 @@ vite.config.ts.timestamp-*
 openspec/
 .claude/commands/openspec/
 .gemini/commands/openspec/
+.artifacts/
