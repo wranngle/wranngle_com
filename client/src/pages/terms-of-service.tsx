@@ -63,7 +63,7 @@ export default function TermsOfService() {
                 </h2>
                 <p className="opacity-80 mb-4">
                   Wranngle Systems provides AI-powered voice agents designed to
-                  handle inbound calls for trades businesses, plus the gtm_ops
+                  handle inbound calls for organizations, plus the gtm_ops
                   proposal-generation runtime. The Service includes:
                 </p>
                 <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">

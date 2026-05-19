@@ -56,7 +56,7 @@ export function buildMessageBody(
 
     'password-reset': `Reset your password: ${getVar(variables, 'RESET_URL', 'link')}. Expires in ${getVar(variables, 'EXPIRY_TIME', '1 hour')}.`,
 
-    'lead-intake': `New lead: ${getVar(variables, 'BUSINESS_NAME', 'Business')} (${getVar(variables, 'INDUSTRY', 'industry')}) - ${getVar(variables, 'OWNER_NAME', 'Owner')}, ${getVar(variables, 'PHONE', 'phone')}`,
+    'lead-intake': `New lead: ${getVar(variables, 'BUSINESS_NAME', 'Business')} (${getVar(variables, 'INDUSTRY', 'business type')}) - ${getVar(variables, 'OWNER_NAME', 'Owner')}, ${getVar(variables, 'PHONE', 'phone')}`,
 
     'sales-cold-outreach': `Hi ${getVar(variables, 'FIRST_NAME', 'there')}! ${getVar(variables, 'REP_NAME', 'We')} noticed ${getVar(variables, 'COMPANY', 'your company')} could benefit from Wranngle. Demo? wranngle.com`,
 

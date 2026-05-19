@@ -116,8 +116,8 @@ export default function WebsitesPage() {
                     Websites built to capture leads.
                   </h1>
                   <p className="text-xl md:text-2xl font-semibold leading-snug mb-4 max-w-xl">
-                    Fast, owned websites for service businesses that need a
-                    clear offer, working forms, and a clean handoff.
+                    Fast, owned websites for teams that need a clear offer,
+                    working forms, and a clean handoff.
                   </p>
                   <p className="text-base md:text-lg opacity-75 leading-relaxed mb-7 max-w-xl">
                     Wranngle builds the page, wires the forms, ships the source,

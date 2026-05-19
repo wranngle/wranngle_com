@@ -186,7 +186,7 @@ export default function SiteFooter({isDark, showCta = true}: SiteFooterProps) {
           className={`pt-6 border-t ${borderClass} flex flex-col md:flex-row justify-between items-center gap-4 text-xs mono-font opacity-60`}
         >
           <div>© 2026 Wranngle Systems LLC</div>
-          <div>AI voice agents and lead automation for trades businesses</div>
+          <div>AI voice agents and lead automation for busy teams</div>
         </div>
       </div>
     </footer>

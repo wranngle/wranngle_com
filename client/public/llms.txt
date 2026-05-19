@@ -1,13 +1,13 @@
 # Wranngle Systems - AI voice and workflow automation
 
-> Wranngle Systems is Cody Arnold's AI automation practice for service businesses. The public site documents voice AI agents, lead capture, CRM enrichment, proposal generation, Cloudflare-hosted web apps, and production-oriented eval/runbook practices.
+> Wranngle Systems is Cody Arnold's AI automation practice for busy teams. The public site documents voice AI agents, lead capture, CRM enrichment, proposal generation, Cloudflare-hosted web apps, and production-oriented eval/runbook practices.
 
 ## Primary Pages
 
-- [Home](https://wranngle.com/): AI voice agents for HVAC, plumbing, electrical, and other trades businesses; 24/7 call answering, lead qualification, and handoff workflows.
+- [Home](https://wranngle.com/): AI voice agents for busy teams; 24/7 call answering, lead qualification, and handoff workflows.
 - [About Cody Arnold](https://wranngle.com/about): Founder profile, operating record, technical focus, public work evidence, and contact links.
 - [gtm_ops](https://wranngle.com/products/gtm-ops): Lead-to-proposal runtime using enrichment, run logs, branded PDFs, and review steps.
-- [Websites](https://wranngle.com/products/websites): Service-business websites with lead capture, SEO foundations, performance, and owned source code.
+- [Websites](https://wranngle.com/products/websites): Business websites with lead capture, SEO foundations, performance, and owned source code.
 
 ## Clean Machine-Readable Files
 
@@ -20,7 +20,7 @@
 
 ## Public Work Evidence
 
-- [GitHub organization](https://github.com/wranngle): Public repositories for voice agent evals, GTM automation, n8n workflows, trading research, career automation, and this site.
+- [GitHub organization](https://github.com/wranngle): Public repositories for voice agent evals, GTM automation, n8n workflows, research tooling, career automation, and this site.
 - [LinkedIn profile](https://www.linkedin.com/in/codyarnold96): Cody Arnold's professional profile.
 
 ## Entity Summary

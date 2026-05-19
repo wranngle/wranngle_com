@@ -35,9 +35,9 @@ const routeMeta: Record<
   },
   offerings: {
     canonicalPath: '/',
-    title: 'AI Voice Agents for Trades - Wranngle Systems',
+    title: 'AI Voice Agents for Busy Teams - Wranngle Systems',
     description:
-      '24/7 AI voice agents for HVAC, plumbing, electrical, and trades businesses. Capture missed calls, qualify leads, and route handoffs.',
+      '24/7 AI voice agents that capture missed calls, qualify leads, answer common questions, and route clean handoffs to your team.',
   },
   privacy: {
     canonicalPath: '/privacy',
@@ -47,9 +47,9 @@ const routeMeta: Record<
   },
   'products/ai-voice-agents': {
     canonicalPath: '/',
-    title: 'AI Voice Agents for Trades - Wranngle Systems',
+    title: 'AI Voice Agents for Busy Teams - Wranngle Systems',
     description:
-      '24/7 AI voice agents for HVAC, plumbing, electrical, and trades businesses. Capture missed calls, qualify leads, and route handoffs.',
+      '24/7 AI voice agents that capture missed calls, qualify leads, answer common questions, and route clean handoffs to your team.',
   },
   'products/gtm-ops': {
     canonicalPath: '/products/gtm-ops',

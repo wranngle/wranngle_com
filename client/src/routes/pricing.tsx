@@ -33,8 +33,8 @@ export default function PricingPage() {
                 Pick a plan that fits the call volume.
               </h1>
               <p className="text-xl md:text-2xl font-semibold leading-snug mb-3 max-w-3xl mx-auto">
-                Three packages for HVAC, plumbing, electrical, and other trades
-                businesses. No contracts, no setup fees.
+                Three packages for busy teams that need reliable call coverage.
+                No contracts, no setup fees.
               </p>
             </div>
           </section>

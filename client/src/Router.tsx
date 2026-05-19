@@ -39,9 +39,9 @@ const HomeComponent = PRODUCT_COMPONENT[HOME_PRODUCT];
  */
 const ROUTE_META: Record<string, {title: string; description: string}> = {
   '/': {
-    title: 'Wranngle Systems | AI Voice Agents for HVAC, Plumbing & Electrical',
+    title: 'Wranngle Systems | AI Voice Agents for Busy Teams',
     description:
-      'Automate your after-hours calls with Wranngle Systems. 24/7 AI voice agents and lead capture for HVAC, plumbing, and electrical businesses.',
+      'Automate after-hours calls with Wranngle Systems. 24/7 AI voice agents, lead capture, qualification, and clean handoffs for busy teams.',
   },
   '/about': {
     title: 'Cody Arnold - About Wranngle',
@@ -59,9 +59,9 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
       'Landing pages and business websites built with fast performance, lead capture, SEO foundations, and owned source code.',
   },
   '/products/ai-voice-agents': {
-    title: 'AI Voice Agents for Trades — Wranngle Systems',
+    title: 'AI Voice Agents for Busy Teams — Wranngle Systems',
     description:
-      '24/7 AI voice agents for HVAC, plumbing, electrical, and trades businesses. Capture missed calls, qualify leads, and route handoffs.',
+      '24/7 AI voice agents that capture missed calls, qualify leads, answer common questions, and route clean handoffs to your team.',
   },
   '/privacy': {
     title: 'Privacy Policy — Wranngle Systems',
@@ -76,7 +76,7 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
   '/pricing': {
     title: 'Pricing — Wranngle Systems',
     description:
-      'Three plans (Starter, Professional, Enterprise) for AI voice agents at HVAC, plumbing, and electrical businesses. No contracts, no setup fees.',
+      'Three plans for AI voice agents that answer, qualify, and route calls for busy teams. No contracts, no setup fees.',
   },
 };
 

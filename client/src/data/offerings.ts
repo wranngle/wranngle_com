@@ -68,7 +68,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
     id: 'ai-agents',
     name: 'AI Agents',
     description:
-      'Voice, web chat, and SMS agents for service businesses. They answer, qualify, route, and log leads without a long contract.',
+      'Voice, web chat, and SMS agents for teams that need reliable lead capture. They answer, qualify, route, and log leads without a long contract.',
     items: [
       {
         id: 'basic',
@@ -80,7 +80,7 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         cta: 'Get Core Agent',
         features: [
           '24/7 voice answering on a forwarded line',
-          'Trade-specific training (HVAC, plumbing, electrical, roofing…)',
+          'Company-specific training on your services, pricing, and policies',
           'Lead scoring + qualification',
           'SMS notification to your phone within minutes of a call',
           'Email lead capture with caller transcript',
@@ -97,16 +97,16 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           specs: {
             coverage: 'After-hours + overflow',
             ingredients:
-              'Forwarded business line, call transcript, lead scoring, trade-specific prompts, SMS alerts, email notifications.',
+              'Forwarded business line, call transcript, lead scoring, workflow-specific prompts, SMS alerts, email notifications.',
           },
           limits: {minutes: '1,000', sms: '500'},
           features: [
             'Voice agent (single channel)',
-            'Service-call detection',
+            'Customer-request detection',
             'Lead scoring & qualification',
             'One-way SMS notify (shared pool)',
             'Forwarding to your mobile on hot leads',
-            'Trade-specific training data',
+            'Company-specific training data',
             'Standard support',
           ],
           crossSell: {
