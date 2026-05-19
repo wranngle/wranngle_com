@@ -464,14 +464,14 @@ describe('Lead Intake Template', () => {
 
   test('renders business information section', () => {
     expect(html).toContain('Business Information');
-    expect(html).toContain('Acme Plumbing Co');
+    expect(html).toContain('Acme Services Co');
     // Note: & is HTML-escaped to &amp; for XSS prevention
-    expect(html).toContain('Plumbing &amp; HVAC');
+    expect(html).toContain('Customer Operations');
   });
 
   test('renders contact details with orange styling (not sky blue)', () => {
     expect(html).toContain('Contact Details');
-    expect(html).toContain('john@acmeplumbing.com');
+    expect(html).toContain('john@acmeservices.com');
     expect(html).toContain('(555) 123-4567');
     // Should use orange, NOT sky blue
     expect(html.toLowerCase()).not.toContain('#0ea5e9');

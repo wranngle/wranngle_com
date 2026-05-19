@@ -106,8 +106,8 @@ async function main() {
     },
     'lead-intake': {
       FIRST_NAME: 'Cody',
-      BUSINESS_NAME: 'Acme Plumbing',
-      INDUSTRY: 'HVAC',
+      BUSINESS_NAME: 'Acme Services',
+      INDUSTRY: 'Customer Operations',
       OWNER_NAME: 'John Smith',
       PHONE: '(555) 123-4567',
       STATUS: 'PENDING',

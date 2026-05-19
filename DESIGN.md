@@ -26,7 +26,7 @@ emails, and proposal artifacts visually coherent.
 
 ### Positioning sub-line
 
-> The 24/7 AI Voice Agent for small trades businesses. Stop missing leads.
+> The 24/7 AI Voice Agent for busy teams. Stop missing leads.
 
 ### Aesthetic identity
 
@@ -499,8 +499,8 @@ padding: 24px;
   (live demos, console output, real numbers) instead of describing it.
 - **Console-coded technical credibility.** Bracketed labels, monospaced metadata,
   and visible "system status" cues build trust with technical buyers.
-- **Trades-business-readable.** Primary audience is HVAC / Plumbing / Electrical
-  small businesses. Avoid AI jargon; lead with outcomes ("stop missing leads",
+- **Business-readable.** Primary audience is busy teams that need reliable call
+  coverage. Avoid AI jargon; lead with outcomes ("stop missing leads",
   "24/7 coverage", "$X recovered/month").
 
 ### 9.2 Surface-specific tone

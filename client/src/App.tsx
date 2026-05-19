@@ -13,6 +13,7 @@ import {Link} from 'wouter';
 import {OFFERING_CATEGORIES, type OfferingItem} from '@/data/offerings.ts';
 import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
+import Ticker from '@/components/Ticker.tsx';
 import {
   Dialog,
   DialogContent,
@@ -255,6 +256,13 @@ const WranngleLanding = () => {
                 ))}
               </div>
             </div>
+          </section>
+
+          <section
+            aria-label="Live anonymized bookings"
+            className="px-6 max-w-7xl mx-auto w-full pt-10 md:pt-14"
+          >
+            <Ticker isDark={isDark} />
           </section>
 
           <section
