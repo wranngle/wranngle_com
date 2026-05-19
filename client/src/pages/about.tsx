@@ -66,19 +66,19 @@ const TRUST_MARKERS = [
     value: '10 years',
     label: 'IT operations experience',
     detail:
-      'Automation, escalation, documentation, and support work inside environments where downtime is not theoretical.',
+      'Automation, escalation, documentation, and support work in live operating environments.',
   },
   {
     value: '500+',
     label: 'Client environments',
     detail:
-      'A wide range of small-business environments, support tools, and edge cases.',
+      'A wide range of business environments, support tools, and edge cases.',
   },
   {
     value: '4,000+',
     label: 'Endpoints supported',
     detail:
-      'Python and PowerShell automation for recurring support work, reporting, and maintenance tasks.',
+      'Automation for recurring support work, reporting, maintenance tasks, and internal handoffs.',
   },
   {
     value: '700',
@@ -87,8 +87,8 @@ const TRUST_MARKERS = [
       'Runbooks, handoffs, and repeatable patterns for a 10-person team that had to keep moving without guesswork.',
   },
   {
-    value: '5',
-    label: 'Client orgs in voice deployment',
+    value: '15',
+    label: 'Client sites in voice deployment',
     detail:
       'ATG ElevenLabs on-call agent work across 15 client sites: zero dropped calls, P95 latency under 500ms, 92% CRM enrichment.',
   },
@@ -103,8 +103,8 @@ const TRUST_MARKERS = [
 const WORK_SHAPES = [
   {
     label: 'Voice AI',
-    title: 'Voice agents for real calls',
-    body: 'ElevenLabs agents, Twilio handoffs, transcript fixtures, post-call webhooks, and latency budgets built around production behavior instead of demo scripts.',
+    title: 'Voice agents that cover the phones',
+    body: 'ElevenLabs agents, Twilio handoffs, transcript fixtures, post-call webhooks, and latency budgets for calls that need a clean next step.',
   },
   {
     label: 'Workflow automation',
@@ -112,9 +112,9 @@ const WORK_SHAPES = [
     body: 'n8n, CRM enrichment, lead routing, proposal inputs, Slack alerts, and review screens that keep the system inspectable.',
   },
   {
-    label: 'Full-stack systems',
+    label: 'Product systems',
     title: 'Interfaces for daily operations',
-    body: 'TypeScript, React, Vite, Cloudflare Pages Functions, Bun, ArkType, Python, and PowerShell used to turn workflows into durable tools.',
+    body: 'Dashboards, automations, evals, run logs, and review screens that connect intake, decisions, and handoffs.',
   },
   {
     label: 'Operating discipline',
@@ -225,7 +225,7 @@ export default function About() {
                   Cody Arnold
                 </h1>
                 <p className={`mt-3 text-base md:text-lg ${mutedText}`}>
-                  Founder, Wranngle.
+                  AI automation engineer and founder of Wranngle.
                 </p>
 
                 <div className="mt-8 space-y-5 text-base md:text-xl leading-relaxed">
@@ -244,10 +244,10 @@ export default function About() {
                     logs that make the result understandable later.
                   </p>
                   <p className={mutedText}>
-                    The work spans voice AI, workflow automation, and full-stack
-                    TypeScript. I focus on the handoff between them: what the
-                    agent understood, where the work went next, and how the team
-                    can tell if something failed.
+                    I work as an AI automation engineer across voice agents,
+                    workflow systems, and the interfaces around them. The focus
+                    is the handoff: what the agent understood, where the work
+                    went next, and how the team can tell if something failed.
                   </p>
                 </div>
               </div>
@@ -282,8 +282,8 @@ export default function About() {
                       What Wranngle does
                     </p>
                     <p className="mt-1 text-sm leading-relaxed opacity-80">
-                      Voice and workflow automation for teams where downtime is
-                      not theoretical.
+                      Voice agents, workflow automation, and practical systems
+                      for teams that need cleaner handoffs.
                     </p>
                   </div>
                 </div>
@@ -294,8 +294,8 @@ export default function About() {
                       Current focus
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
-                      ElevenLabs voice agents, n8n automation, structured lead
-                      capture, proposal generation, and eval harnesses.
+                      Voice agents, workflow automation, lead capture, proposal
+                      generation, and eval harnesses.
                     </dd>
                   </div>
                   <div className="py-4">
@@ -303,8 +303,8 @@ export default function About() {
                       Work covered
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
-                      Voice AI, workflow automation, full-stack TypeScript, and
-                      internal tools.
+                      Voice AI, workflow automation, product interfaces, and
+                      internal operating tools.
                     </dd>
                   </div>
                   <div className="py-4">
@@ -312,8 +312,8 @@ export default function About() {
                       How I build
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
-                      Logs, fallbacks, ownership, and documentation before
-                      scale.
+                      Clear logs, explicit fallbacks, named ownership, and
+                      enough documentation to operate the system later.
                     </dd>
                   </div>
                   <div className="py-4">
@@ -321,7 +321,7 @@ export default function About() {
                       Recent work
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
-                      On-call ElevenLabs voice agent covering 15 client sites:
+                      ElevenLabs voice agent coverage across 15 client sites:
                       P95 under 500ms, 92% CRM enrichment, regression-tested
                       before release.
                     </dd>
@@ -445,7 +445,9 @@ export default function About() {
                 should start from captured details. The owner should be able to
                 review what happened afterward.
               </p>
-              <p>The workflow comes first. The software has to fit it.</p>
+              <p>
+                The system should meet the team where the work already happens.
+              </p>
             </div>
           </section>
 
@@ -558,10 +560,6 @@ export default function About() {
                   <h2 className="brand-font text-3xl md:text-4xl font-bold">
                     Code and working examples
                   </h2>
-                  <p className={`mt-4 text-base leading-relaxed ${mutedText}`}>
-                    These repos show the working files behind the products:
-                    evals, automation flows, product code, and experiments.
-                  </p>
                 </div>
                 <a
                   href="https://github.com/wranngle"
@@ -594,16 +592,16 @@ export default function About() {
                   CONTACT
                 </div>
                 <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
-                  Tell me where the workflow breaks
+                  Tell me what you want to improve
                 </h2>
               </div>
               <div>
                 <p
                   className={`text-base md:text-lg leading-relaxed ${mutedText}`}
                 >
-                  Send the current process, the failure points, what you already
-                  tried, and the conditions automation has to satisfy before it
-                  would be useful.
+                  Send the rough version: what happens today, where it gets
+                  stuck, and what a better handoff would look like. I will help
+                  turn that into a concrete next step.
                 </p>
                 <div className="mt-7 flex flex-wrap items-center gap-3">
                   {SOCIALS.map(({label, href, Icon, external}) => (

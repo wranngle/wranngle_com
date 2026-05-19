@@ -46,7 +46,6 @@ The public Wranngle site and related projects use:
 - n8n
 - ElevenLabs Conversational AI
 - Python automation
-- PowerShell automation
 
 ## Differentiators
 

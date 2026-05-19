@@ -20,7 +20,7 @@
 - Name: Cody Arnold
 - Company: Wranngle Systems LLC
 - Current title: Founder
-- Canonical parsed titles: AI Automation Engineer; Voice AI Engineer; Workflow Automation Engineer; Full-stack TypeScript Developer; IT Automation Engineer
+- Canonical parsed titles: AI Automation Engineer; Voice AI Engineer; Workflow Automation Engineer; Product Systems Builder; IT Automation Engineer
 - Role families: engineering; sales_engineering; product; data; operations
 - Seniority signals: founder; IT operations automation, escalation, and documentation background
 - Practice context: AI automation, voice AI, workflow software, workflow automation, GTM automation
@@ -37,7 +37,7 @@ Relevant role and skill terms:
 - AI Automation Engineer
 - Voice AI Engineer
 - Workflow Automation Engineer
-- Full-stack TypeScript Developer
+- Product Systems Builder
 - Cloudflare Pages Functions
 - React and Vite
 - Bun
@@ -48,7 +48,6 @@ Relevant role and skill terms:
 - Lead capture
 - Proposal generation
 - Python automation
-- PowerShell automation
 - IT operations
 - Technical documentation and runbooks
 - Evaluation harnesses and regression testing

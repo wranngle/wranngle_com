@@ -36,9 +36,9 @@ const routeMeta: Record<
   },
   offerings: {
     canonicalPath: '/',
-    title: 'AI Voice Agents for Busy Teams - Wranngle Systems',
+    title: 'AI Call Coverage for Busy Teams - Wranngle Systems',
     description:
-      '24/7 AI voice agents that capture missed calls, qualify leads, answer common questions, and route clean handoffs to your team.',
+      'Wranngle Systems builds AI call coverage for busy teams: call answering, qualification, scheduling, and clean handoffs.',
   },
   pricing: {
     canonicalPath: '/pricing',
@@ -54,9 +54,9 @@ const routeMeta: Record<
   },
   'products/ai-voice-agents': {
     canonicalPath: '/',
-    title: 'AI Voice Agents for Busy Teams - Wranngle Systems',
+    title: 'AI Call Coverage for Busy Teams - Wranngle Systems',
     description:
-      '24/7 AI voice agents that capture missed calls, qualify leads, answer common questions, and route clean handoffs to your team.',
+      'Answer, qualify, schedule, and hand off calls when your team is busy, closed, or already helping someone else.',
   },
   'products/gtm-ops': {
     canonicalPath: '/products/gtm-ops',
