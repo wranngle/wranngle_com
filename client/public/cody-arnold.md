@@ -1,6 +1,6 @@
 # Cody Arnold - AI Automation Engineer and Founder of Wranngle Systems
 
-> Cody Arnold is the founder of Wranngle Systems LLC. He builds AI voice agents, workflow automation, lead capture systems, CRM enrichment flows, proposal-generation runtimes, and evaluation harnesses for service businesses.
+> Cody Arnold is the founder of Wranngle Systems LLC. He builds AI voice agents, workflow automation, lead capture systems, CRM enrichment flows, proposal-generation runtimes, and evaluation harnesses for busy teams.
 
 ## Canonical Links
 
@@ -23,14 +23,14 @@
 - Canonical parsed titles: AI Automation Engineer; Voice AI Engineer; Workflow Automation Engineer; Full-stack TypeScript Developer; IT Automation Engineer
 - Role families: engineering; sales_engineering; product; data; operations
 - Seniority signals: founder; IT operations automation, escalation, and documentation background
-- Industry context: AI automation, voice AI, service business software, workflow automation, GTM automation
+- Practice context: AI automation, voice AI, workflow software, workflow automation, GTM automation
 - Public contact: cody@wranngle.com
 - Public LinkedIn: https://www.linkedin.com/in/codyarnold96
 - Public GitHub: https://github.com/wranngle
 
 ## Professional Positioning
 
-Cody works at the intersection of AI automation, service business operations, and production systems. His work emphasizes clear handoffs, logs, fallbacks, documentation, latency measurement, and structured data extraction.
+Cody works at the intersection of AI automation, customer operations, and production systems. His work emphasizes clear handoffs, logs, fallbacks, documentation, latency measurement, and structured data extraction.
 
 Relevant role and skill terms:
 
@@ -79,7 +79,7 @@ Relevant role and skill terms:
 - https://github.com/wranngle/voice_ai_agent_evals - Test runner and scenario framework for ElevenLabs voice agents, deterministic synthetic transcripts, latency budgets, prompt versioning, and scoring rubrics.
 - https://github.com/wranngle/gtm_ops - GTM runtime for inbound calls, CRM context, structured extraction, proposal inputs, and run logs.
 - https://github.com/wranngle/n8n - Sanitized n8n flows for lead intake, enrichment, voice routing, post-call processing, and webhook security middleware.
-- https://github.com/wranngle/tradingbot - Algorithmic trading research app with strategy harnesses, backtests, deterministic fixtures, run logs, and latency budgets.
+- https://github.com/wranngle/tradingbot - Algorithmic research app with strategy harnesses, simulations, deterministic fixtures, run logs, and latency budgets.
 - https://github.com/wranngle/career_architect - Job-search automation scripts for JD evaluation, tailored CV generation, portal scanning, and application tracking.
 - https://github.com/wranngle/wranngle_com - Wranngle's Vite, React, Tailwind, Cloudflare Pages, and ArkType-validated lead capture site.
 
@@ -99,7 +99,7 @@ Cody prioritizes production durability. Common patterns in his work include:
 - Company: Wranngle Systems LLC
 - Title: Founder
 - Common parsed title: AI Automation Engineer
-- Industry: AI automation, voice AI, workflow automation, service business software
+- Context: AI automation, voice AI, workflow automation, workflow software
 - Work authorization: Not stated publicly
 - Open to relocation: Not stated publicly
 - Primary public contact: cody@wranngle.com

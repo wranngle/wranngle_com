@@ -25,7 +25,7 @@ const FAQ_ITEMS: FAQItem[] = [
     group: 'Getting started',
     question: 'How does the agent learn my business?',
     answer:
-      'During onboarding we add your service areas, pricing ranges, common questions, and policies. After launch, we tune the agent from real call transcripts. Updates go through Wranngle for now — no self-serve dashboard yet.',
+      'During onboarding we add your coverage rules, pricing ranges, common questions, and policies. After launch, we tune the agent from real call transcripts. Updates go through Wranngle for now — no self-serve dashboard yet.',
   },
   // How it works
   {
@@ -38,7 +38,7 @@ const FAQ_ITEMS: FAQItem[] = [
     group: 'How it works',
     question: 'How accurate is lead qualification?',
     answer:
-      'It depends on your call mix — a single percentage does not honestly cover every business. We test against fixtures of real trades-call transcripts (emergencies, vendors, wrong numbers, "do you do roofing?") and measure your actual first-month performance before tuning. The scoring rubric is open source: github.com/wranngle/voice_ai_agent_evals.',
+      'It depends on your call mix — a single percentage does not honestly cover every business. We test against fixtures of real customer-call transcripts (urgent requests, vendors, wrong numbers, and out-of-scope questions) and measure your actual first-month performance before tuning. The scoring rubric is open source: github.com/wranngle/voice_ai_agent_evals.',
   },
   {
     group: 'How it works',

@@ -73,7 +73,8 @@ export default function PrivacyPolicy() {
                 <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
                   <li>
                     <strong>Account Information:</strong> Business name,
-                    industry, contact person name, email address, phone number
+                    business type or use case, contact person name, email
+                    address, phone number
                   </li>
                   <li>
                     <strong>Payment Information:</strong> Credit card details,
@@ -302,8 +303,8 @@ export default function PrivacyPolicy() {
                   6. Data Security
                 </h2>
                 <p className="opacity-80 mb-4">
-                  We implement industry-standard security measures to protect
-                  your information:
+                  We implement widely used security measures to protect your
+                  information:
                 </p>
                 <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
                   <li>

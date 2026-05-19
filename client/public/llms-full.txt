@@ -25,11 +25,11 @@
 - Public GitHub: https://github.com/wranngle
 - Public LinkedIn: https://www.linkedin.com/in/codyarnold96
 
-Cody Arnold is the founder of Wranngle Systems LLC. He builds AI voice agents, workflow automation, lead capture systems, CRM enrichment flows, proposal-generation runtimes, and evaluation harnesses for service businesses.
+Cody Arnold is the founder of Wranngle Systems LLC. He builds AI voice agents, workflow automation, lead capture systems, CRM enrichment flows, proposal-generation runtimes, and evaluation harnesses for busy teams.
 
 ## Professional Positioning
 
-Cody works at the intersection of AI automation, service business operations, and production systems. His work emphasizes clear handoffs, logs, fallbacks, documentation, latency measurement, and structured data extraction.
+Cody works at the intersection of AI automation, customer operations, and production systems. His work emphasizes clear handoffs, logs, fallbacks, documentation, latency measurement, and structured data extraction.
 
 Relevant role and skill terms:
 
@@ -78,10 +78,10 @@ Relevant role and skill terms:
 - Name: Wranngle Systems LLC
 - Short name: Wranngle
 - Founder: Cody Arnold
-- Market: Service businesses, trades businesses, HVAC, plumbing, electrical, home services, local operators.
+- Audience: Busy teams, growing companies, customer-facing operators, and organizations with repeatable handoff workflows.
 - General contact: hello@wranngle.com
 
-Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and service-business websites.
+Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and business websites.
 
 ## Services
 
@@ -92,7 +92,7 @@ Wranngle Systems builds and operates:
 - Post-call processing and structured transcript extraction.
 - Proposal-generation runtimes that turn inbound leads into branded PDFs.
 - Run logs, runbooks, fallback paths, and review screens.
-- Service-business websites with lead capture and SEO foundations.
+- Business websites with lead capture and SEO foundations.
 - Cloudflare-hosted APIs and serverless lead intake endpoints.
 
 ## Technical Stack
@@ -114,16 +114,16 @@ Wranngle Systems builds and operates:
 - https://github.com/wranngle/voice_ai_agent_evals - Test runner and scenario framework for ElevenLabs voice agents, deterministic synthetic transcripts, latency budgets, prompt versioning, and scoring rubrics.
 - https://github.com/wranngle/gtm_ops - GTM runtime for inbound calls, CRM context, structured extraction, proposal inputs, and run logs.
 - https://github.com/wranngle/n8n - Sanitized n8n flows for lead intake, enrichment, voice routing, post-call processing, and webhook security middleware.
-- https://github.com/wranngle/tradingbot - Algorithmic trading research app with strategy harnesses, backtests, deterministic fixtures, run logs, and latency budgets.
+- https://github.com/wranngle/tradingbot - Algorithmic research app with strategy harnesses, simulations, deterministic fixtures, run logs, and latency budgets.
 - https://github.com/wranngle/career_architect - Job-search automation scripts for JD evaluation, tailored CV generation, portal scanning, and application tracking.
 - https://github.com/wranngle/wranngle_com - Wranngle's Vite, React, Tailwind, Cloudflare Pages, and ArkType-validated lead capture site.
 
 ## Site Pages
 
-- https://wranngle.com/ - AI voice agents for HVAC, plumbing, electrical, and other trades businesses.
+- https://wranngle.com/ - AI voice agents for busy teams.
 - https://wranngle.com/about - Cody Arnold founder profile, operating record, technical focus, public work evidence, and contact links.
 - https://wranngle.com/products/gtm-ops - Lead-to-proposal runtime using enrichment, run logs, branded PDFs, and review steps.
-- https://wranngle.com/products/websites - Service-business websites with lead capture, SEO foundations, performance, and owned source code.
+- https://wranngle.com/products/websites - Business websites with lead capture, SEO foundations, performance, and owned source code.
 
 ## Do Not Infer
 

@@ -47,7 +47,7 @@ function validateLead(
   const b = body as Record<string, unknown>;
   const isSaas = SAAS_PACKAGES.has(b.package as string);
 
-  // SaaS leads have a tighter form (no industry/owner/phone). Trade leads keep
+  // SaaS leads have a tighter form (no business type/owner/phone). Full intake leads keep
   // the original required-set so the n8n flow that fans out to voice setup
   // still gets everything it expects.
   const required = isSaas
@@ -65,7 +65,7 @@ function validateLead(
     return {valid: false, error: 'Invalid email format'};
   }
 
-  // Validate phone format (trade only — SaaS form does not collect phone)
+  // Validate phone format (full intake only — SaaS form does not collect phone)
   if (!isSaas) {
     const phoneString = b.phone as string;
     if (!/^[\d\s\-+()]+$/.test(phoneString)) {
@@ -103,7 +103,7 @@ function validateLead(
     }
   }
 
-  // Sanitize all string inputs. SaaS leads omit trade-only fields; fill them
+  // Sanitize all string inputs. SaaS leads omit full-intake fields; fill them
   // with stable placeholders so downstream consumers (n8n) can still treat the
   // payload uniformly without needing per-package conditionals.
   return {
@@ -246,7 +246,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
 
     // Forward to n8n webhook for processing. SaaS leads are best-effort:
-    // the n8n flow is shaped around trade intakes, so we swallow webhook
+    // the n8n flow is shaped around full intakes, so we swallow webhook
     // rejection for SaaS submissions rather than surfacing a confusing
     // 500 to a user who just typed their email. The lead still lands in
     // Cloudflare logs; a human follows up per the in-form copy.

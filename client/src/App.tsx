@@ -35,11 +35,11 @@ import {
 const INITIAL_DIM = {w: 0, h: 0};
 const CONSOLE_LINES = [
   {text: '[LIVE] After-hours forwarding enabled', color: 'text-gray-400'},
-  {text: '> New caller: emergency plumbing request', color: 'text-gray-300'},
-  {text: '[CHECK] Service area confirmed', color: 'text-green-400'},
+  {text: '> New caller: urgent after-hours request', color: 'text-gray-300'},
+  {text: '[CHECK] Account context confirmed', color: 'text-green-400'},
   {text: '> Collected name, phone, address, and issue', color: 'text-cyan-400'},
   {text: '> Booking window matched to calendar', color: 'text-cyan-400'},
-  {text: '> Sent transcript and summary to dispatch', color: 'text-green-400'},
+  {text: '> Sent transcript and summary to team', color: 'text-green-400'},
   {text: '\n[READY] Next call can be answered.', color: 'text-white'},
 ];
 
@@ -57,8 +57,8 @@ const VOICE_OPS_SIGNALS = [
   },
   {
     Icon: MessageSquareText,
-    label: 'Gets the job details',
-    body: 'Name, contact info, address, urgency, job type, and transcript land in one handoff.',
+    label: 'Gets the request details',
+    body: 'Name, contact info, request type, urgency, context, and transcript land in one handoff.',
   },
   {
     Icon: CalendarCheck,
@@ -179,13 +179,13 @@ const WranngleLanding = () => {
                     AI voice agents that answer before voicemail.
                   </h1>
                   <p className="text-xl md:text-2xl font-semibold leading-snug mb-4 max-w-xl">
-                    24/7 call answering, qualification, booking, and handoff for
-                    trades teams that lose work when nobody picks up.
+                    24/7 call answering, qualification, scheduling, and handoff
+                    for teams that lose work when nobody picks up.
                   </p>
                   <p className="text-base md:text-lg opacity-75 leading-relaxed mb-7 max-w-xl">
                     Sarah is the live demo. Send missed and after-hours calls to
-                    the agent, collect the job details, and route the summary to
-                    the tools your team already checks.
+                    the agent, collect the request details, and route the
+                    summary to the tools your team already checks.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Dialog>
@@ -297,7 +297,7 @@ const WranngleLanding = () => {
                   </h3>
                   <p className="text-sm opacity-60 leading-relaxed">
                     Missed, overflow, and after-hours calls get answered while
-                    your team is driving, working, or off the clock.
+                    your team is busy, unavailable, or off the clock.
                   </p>
                 </div>
               </TerminalCard>
@@ -332,8 +332,9 @@ const WranngleLanding = () => {
                     Send the handoff
                   </h3>
                   <p className="text-sm opacity-60 leading-relaxed">
-                    Name, address, job type, urgency, and transcript arrive
-                    together so dispatch can act without replaying the call.
+                    Name, contact details, request type, urgency, and transcript
+                    arrive together so your team can act without replaying the
+                    call.
                   </p>
                 </div>
               </TerminalCard>
@@ -765,8 +766,9 @@ function TalkToSarahSection({isDark}: {isDark: boolean}) {
             <span className="text-[var(--s500)]">Talk to Sarah.</span>
           </h2>
           <p className="text-base md:text-lg opacity-75 leading-relaxed max-w-xl mb-7">
-            Pretend you need a plumber at 11 PM. Sarah will answer, ask for the
-            job details, and show the kind of handoff your team would receive.
+            Pretend you need help at 11 PM. Sarah will answer, ask for the
+            request details, and show the kind of handoff your team would
+            receive.
           </p>
           <div className="flex flex-wrap gap-3">
             <button
@@ -1139,9 +1141,9 @@ const SpectralAnalyzer = () => {
         <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
         <TypewriterSequence
           sequence={[
-            '> SERVICE_AREA_CONFIRMED',
-            '> JOB_TYPE: WATER_HEATER',
-            '> DISPATCH_SUMMARY_READY',
+            '> ACCOUNT_CONTEXT_CONFIRMED',
+            '> REQUEST_TYPE: URGENT_SUPPORT',
+            '> TEAM_SUMMARY_READY',
           ]}
         />
       </div>

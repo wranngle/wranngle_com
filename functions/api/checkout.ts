@@ -22,7 +22,7 @@ const CHECKOUT_PACKAGES: Record<string, CheckoutPackage> = {
   basic: {
     id: 'basic',
     name: 'Core Agent',
-    description: 'Always-on voice receptionist for trades businesses.',
+    description: 'Always-on voice receptionist for busy teams.',
     unitAmount: 25_000,
     mode: 'subscription',
   },

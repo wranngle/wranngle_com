@@ -142,7 +142,7 @@ describe('Message Templates', () => {
 
     it('should validate lead-intake requires 4 variables', () => {
       const result = validateTemplateVariables('lead-intake', {
-        BUSINESS_NAME: 'ABC Plumbing',
+        BUSINESS_NAME: 'ABC Operations',
       });
 
       expect(result.valid).toBe(false);

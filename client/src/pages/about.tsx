@@ -45,7 +45,7 @@ const REPOS: RepoEntry[] = [
     fullName: 'wranngle/tradingbot',
     role: 'Testing discipline',
     blurb:
-      'Algorithmic trading research app with strategy harnesses, backtests, live-paper plumbing, deterministic fixtures, run logs, and latency budgets.',
+      'Algorithmic research app with strategy harnesses, simulations, deterministic fixtures, run logs, and latency budgets.',
   },
   {
     fullName: 'wranngle/career_architect',
@@ -108,7 +108,7 @@ const WORK_SHAPES = [
   },
   {
     label: 'Workflow automation',
-    title: 'Workflow plumbing around the agent',
+    title: 'Workflow infrastructure around the agent',
     body: 'n8n, CRM enrichment, lead routing, proposal inputs, Slack alerts, and review screens that keep the system inspectable.',
   },
   {
@@ -132,7 +132,7 @@ const PRINCIPLES = [
   {
     Icon: PhoneCall,
     title: 'Fix the missed handoff',
-    body: 'For service businesses, the leak is often a missed call, an after-hours voicemail, or the CRM note nobody wrote.',
+    body: 'For busy teams, the leak is often a missed call, an after-hours message, or the CRM note nobody wrote.',
   },
   {
     Icon: Gauge,
@@ -231,16 +231,17 @@ export default function About() {
                 <div className="mt-8 space-y-5 text-base md:text-xl leading-relaxed">
                   <p>
                     Wranngle builds AI voice agents and workflow automation for
-                    service businesses. The goal is straightforward: answer
-                    calls, capture the details, route work to the tools already
-                    in use, and make the activity easy to review.
+                    teams with real customer follow-up. The goal is
+                    straightforward: answer calls, capture the details, route
+                    work to the tools already in use, and make the activity easy
+                    to review.
                   </p>
                   <p className={mutedText}>
                     I started this work in IT operations, where automation had
                     to support live service work instead of sitting beside it.
                     That background still shapes the projects: voice agents,
-                    workflow plumbing, CRM updates, dispatch handoffs, and logs
-                    that make the result understandable later.
+                    workflow infrastructure, CRM updates, team handoffs, and
+                    logs that make the result understandable later.
                   </p>
                   <p className={mutedText}>
                     The work spans voice AI, workflow automation, and full-stack
@@ -281,8 +282,8 @@ export default function About() {
                       What Wranngle does
                     </p>
                     <p className="mt-1 text-sm leading-relaxed opacity-80">
-                      Voice and workflow automation for service businesses where
-                      downtime is not theoretical.
+                      Voice and workflow automation for teams where downtime is
+                      not theoretical.
                     </p>
                   </div>
                 </div>
@@ -434,9 +435,9 @@ export default function About() {
             >
               <p>
                 Many AI products require teams to change how they work before
-                the software creates value. Service businesses do not have that
-                luxury. Customers are calling, technicians are moving, and
-                dispatchers are switching context all day.
+                the software creates value. Busy teams do not have that luxury.
+                Customers are calling, work is moving, and staff are switching
+                context all day.
               </p>
               <p>
                 The better target is continuity. A missed call should become a

@@ -55,7 +55,7 @@ function generateTestLead(tier: 'core' | 'elite', index = 0): LeadPayload {
   const timestamp = Date.now();
   return {
     businessName: `Smoke Test ${tier.toUpperCase()} #${index} - ${timestamp}`,
-    industry: tier === 'core' ? 'Plumbing' : 'HVAC & Electrical',
+    industry: tier === 'core' ? 'Operations' : 'Customer Operations',
     ownerName: `Test User ${tier} ${index}`,
     phone: `+1-555-${String(timestamp).slice(-4)}-${String(index).padStart(4, '0')}`,
     email: 'sales@wranngle.com', // Use real email to verify delivery

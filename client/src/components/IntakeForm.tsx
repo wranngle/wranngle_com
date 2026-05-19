@@ -468,7 +468,7 @@ const IntakeForm = ({
             </div>
             <p className="text-[11px] opacity-80 leading-relaxed mb-2">
               Voice catches the after-hours phone call. <b>Web Chat</b> catches
-              the visitor who would rather type. Most trades lose leads in at
+              the visitor who would rather type. Most teams lose leads in at
               least one of those paths.
             </p>
             <button
@@ -609,16 +609,16 @@ const IntakeForm = ({
             id="businessName"
             className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
             {...register('businessName', {required: true})}
-            placeholder="Apex Plumbing"
+            placeholder="Acme Operations"
           />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="industry">Industry / Trade</Label>
+          <Label htmlFor="industry">Business Type / Use Case</Label>
           <Input
             id="industry"
             className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
             {...register('industry', {required: true})}
-            placeholder="HVAC / Plumbing / Electrical / etc."
+            placeholder="Customer support / sales / operations / etc."
           />
         </div>
         <div className="grid gap-2">

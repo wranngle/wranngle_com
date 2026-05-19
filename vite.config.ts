@@ -7,6 +7,7 @@ const spaHtmlRoutes = [
   'about',
   'built-by',
   'offerings',
+  'pricing',
   'privacy',
   'products/ai-voice-agents',
   'products/gtm-ops',
@@ -35,9 +36,15 @@ const routeMeta: Record<
   },
   offerings: {
     canonicalPath: '/',
-    title: 'AI Voice Agents for Trades - Wranngle Systems',
+    title: 'AI Voice Agents for Busy Teams - Wranngle Systems',
     description:
-      '24/7 AI voice agents for HVAC, plumbing, electrical, and trades businesses. Capture missed calls, qualify leads, and route handoffs.',
+      '24/7 AI voice agents that capture missed calls, qualify leads, answer common questions, and route clean handoffs to your team.',
+  },
+  pricing: {
+    canonicalPath: '/pricing',
+    title: 'Pricing - Wranngle Systems',
+    description:
+      'Three plans for AI voice agents that answer, qualify, and route calls for busy teams. No contracts, no setup fees.',
   },
   privacy: {
     canonicalPath: '/privacy',
@@ -47,9 +54,9 @@ const routeMeta: Record<
   },
   'products/ai-voice-agents': {
     canonicalPath: '/',
-    title: 'AI Voice Agents for Trades - Wranngle Systems',
+    title: 'AI Voice Agents for Busy Teams - Wranngle Systems',
     description:
-      '24/7 AI voice agents for HVAC, plumbing, electrical, and trades businesses. Capture missed calls, qualify leads, and route handoffs.',
+      '24/7 AI voice agents that capture missed calls, qualify leads, answer common questions, and route clean handoffs to your team.',
   },
   'products/gtm-ops': {
     canonicalPath: '/products/gtm-ops',

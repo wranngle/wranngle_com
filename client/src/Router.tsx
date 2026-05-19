@@ -8,8 +8,6 @@ import GtmOps from './pages/gtm-ops.tsx';
 import Websites from './pages/websites.tsx';
 import Pricing from './routes/pricing.tsx';
 import NotFound from './pages/not-found.tsx';
-import VerticalLanding from './pages/vertical-landing.tsx';
-import {VERTICALS} from './data/verticals.ts';
 
 const CANONICAL_ORIGIN = 'https://wranngle.com';
 
@@ -41,9 +39,9 @@ const HomeComponent = PRODUCT_COMPONENT[HOME_PRODUCT];
  */
 const ROUTE_META: Record<string, {title: string; description: string}> = {
   '/': {
-    title: 'Wranngle Systems | AI Voice Agents for HVAC, Plumbing & Electrical',
+    title: 'Wranngle Systems | AI Voice Agents for Busy Teams',
     description:
-      'Automate your after-hours calls with Wranngle Systems. 24/7 AI voice agents and lead capture for HVAC, plumbing, and electrical businesses.',
+      'Automate after-hours calls with Wranngle Systems. 24/7 AI voice agents, lead capture, qualification, and clean handoffs for busy teams.',
   },
   '/about': {
     title: 'Cody Arnold - About Wranngle',
@@ -61,9 +59,9 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
       'Landing pages and business websites built with fast performance, lead capture, SEO foundations, and owned source code.',
   },
   '/products/ai-voice-agents': {
-    title: 'AI Voice Agents for Trades — Wranngle Systems',
+    title: 'AI Voice Agents for Busy Teams — Wranngle Systems',
     description:
-      '24/7 AI voice agents for HVAC, plumbing, electrical, and trades businesses. Capture missed calls, qualify leads, and route handoffs.',
+      '24/7 AI voice agents that capture missed calls, qualify leads, answer common questions, and route clean handoffs to your team.',
   },
   '/privacy': {
     title: 'Privacy Policy — Wranngle Systems',
@@ -78,17 +76,8 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
   '/pricing': {
     title: 'Pricing — Wranngle Systems',
     description:
-      'Three plans (Starter, Professional, Enterprise) for AI voice agents at HVAC, plumbing, and electrical businesses. No contracts, no setup fees.',
+      'Three plans for AI voice agents that answer, qualify, and route calls for busy teams. No contracts, no setup fees.',
   },
-  ...Object.fromEntries(
-    VERTICALS.map((v) => [
-      `/${v.slug}`,
-      {
-        title: `${v.displayName} — ${v.headline}`,
-        description: v.subhead,
-      },
-    ]),
-  ),
 };
 
 /**
@@ -170,15 +159,6 @@ export default function Router() {
         <Route path="/terms" component={TermsOfService} />
         <Route path="/privacy" component={PrivacyPolicy} />
         <Route path="/pricing" component={Pricing} />
-        {/* Per-vertical landing pages — copy sourced from
-            content/verticals.yaml via client/src/data/verticals.ts.
-            Slugs match the round-1 schema.org/Service JSON-LD work
-            on Service.serviceArea (PR #75). */}
-        {VERTICALS.map((vertical) => (
-          <Route key={vertical.slug} path={`/${vertical.slug}`}>
-            <VerticalLanding vertical={vertical} />
-          </Route>
-        ))}
         <Route component={NotFound} />
       </Switch>
     </>

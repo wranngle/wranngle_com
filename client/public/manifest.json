@@ -1,7 +1,7 @@
 {
   "name": "Wranngle Systems",
   "short_name": "Wranngle",
-  "description": "AI voice agents for trades businesses (HVAC, plumbing, electrical). 24/7 call answering, lead capture, service-business websites, and gtm_ops proposal generation.",
+  "description": "AI voice agents for busy teams. 24/7 call answering, lead capture, business websites, and gtm_ops proposal generation.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
