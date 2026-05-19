@@ -75,22 +75,22 @@ const TEST_CASES: TestCase[] = [
     template: 'lead-intake',
     channel: 'auto',
     variables: {
-      BUSINESS_NAME: 'ABC Plumbing',
-      INDUSTRY: 'Plumbing',
+      BUSINESS_NAME: 'ABC Services',
+      INDUSTRY: 'Customer Operations',
       OWNER_NAME: 'John Smith',
       PHONE: '+15551234567',
     },
-    expectedContent: ['ABC Plumbing', 'John Smith', 'Plumbing'],
+    expectedContent: ['ABC Services', 'John Smith', 'Customer Operations'],
   },
   {
     template: 'sales-cold-outreach',
     channel: 'auto',
     variables: {
       FIRST_NAME: 'Sarah',
-      COMPANY: 'Smith HVAC',
+      COMPANY: 'Smith Services',
       REP_NAME: 'Tom from Wranngle',
     },
-    expectedContent: ['Sarah', 'Smith HVAC', 'Demo'],
+    expectedContent: ['Sarah', 'Smith Services', 'Demo'],
   },
   {
     template: 'sales-demo-followup',

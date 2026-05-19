@@ -132,7 +132,7 @@ If using external DNS:
 
 1. Fill out the contact form with test data:
    - Business Name: `Test Business`
-   - Industry: `HVAC`
+   - Industry: `Operations`
    - Owner Name: `John Doe`
    - Phone: `+1-555-0100`
    - Email: `test@example.com`
@@ -154,7 +154,7 @@ for i in {1..11}; do
     -H "Content-Type: application/json" \
     -d '{
       "businessName": "Test",
-      "industry": "HVAC",
+      "industry": "Operations",
       "ownerName": "Test",
       "phone": "555-0100",
       "email": "test@example.com",
