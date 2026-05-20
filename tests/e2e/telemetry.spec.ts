@@ -29,9 +29,9 @@ function postRequest(body: string): Request {
 }
 
 async function invoke(body: string): Promise<Response> {
-  // Partial EventContext; the Cloudflare Pages handler only reads .request.
-  const partial = {request: postRequest(body), env: {}};
-  return onRequestPost(partial as EventContext);
+  // The Cloudflare Pages handler only reads .request; supply the minimum shape.
+  // @ts-expect-error -- partial EventContext mock; full type requires params/data/next/waitUntil
+  return onRequestPost({request: postRequest(body), env: {}});
 }
 
 // TODO(#86): the three `telemetry client` cases below mutate
