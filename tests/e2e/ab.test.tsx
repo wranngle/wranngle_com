@@ -80,7 +80,7 @@ describe('A/B headline framework — cookie split', () => {
     document.cookie = `${AB_COOKIE_NAME}=Z; Path=/`;
     const fresh = getAbVariant();
     expect(AB_VARIANTS).toContain(fresh);
-    expect(fresh).not.toBe('Z' as never);
+    expect(fresh).not.toBe('Z');
   });
 });
 
