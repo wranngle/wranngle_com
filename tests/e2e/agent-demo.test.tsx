@@ -117,13 +117,11 @@ describe('AgentDemoButton — WebRTC + audio fully mocked', () => {
       configurable: true,
       value: {getUserMedia: getUserMediaSpy},
     });
-    (globalThis as Record<string, unknown>).RTCPeerConnection =
-      rtcPeerConnectionSpy as unknown as typeof RTCPeerConnection;
-    (globalThis as Record<string, unknown>).AudioContext =
-      audioContextSpy as unknown as typeof AudioContext;
+    (globalThis as Record<string, unknown>).RTCPeerConnection = rtcPeerConnectionSpy;
+    (globalThis as Record<string, unknown>).AudioContext = audioContextSpy;
 
     fetchSpy = vi.fn().mockResolvedValue(new Response('{}', {status: 202}));
-    globalThis.fetch = fetchSpy as unknown as typeof globalThis.fetch;
+    globalThis.fetch = fetchSpy;
 
     container = document.createElement('div');
     document.body.append(container);
