@@ -101,7 +101,7 @@ describe('RoiCalculator telemetry', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     fetchSpy = vi.fn().mockResolvedValue(new Response('{}', {status: 202}));
-    globalThis.fetch = fetchSpy as unknown as typeof globalThis.fetch;
+    globalThis.fetch = fetchSpy;
     container = document.createElement('div');
     document.body.append(container);
   });
