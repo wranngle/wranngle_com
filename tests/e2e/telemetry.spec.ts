@@ -29,10 +29,11 @@ function postRequest(body: string): Request {
 }
 
 async function invoke(body: string): Promise<Response> {
-  return onRequestPost({
+  const context: EventContext = {
     request: postRequest(body),
     env: {},
-  } as EventContext);
+  } as unknown as EventContext;
+  return onRequestPost(context);
 }
 
 describe('telemetry client', () => {
