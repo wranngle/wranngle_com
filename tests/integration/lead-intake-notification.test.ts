@@ -16,8 +16,9 @@ import {describe, it, expect} from 'vitest';
 
 const INTAKE_WEBHOOK = 'https://n8n.wranngle.com/webhook/wranngle-intake-form';
 const UMS_WEBHOOK = 'https://n8n.wranngle.com/webhook/universal-message-v1';
-const WEBHOOK_SECRET =
-  process.env.SMS_WEBHOOK_SECRET || 'test-secret-placeholder';
+const RUN_LIVE_INTEGRATION = ['1', 'true'].includes(
+  process.env.RUN_LIVE_INTEGRATION ?? '',
+);
 
 function loadEnvKey(key: string): string {
   if (process.env[key]) return process.env[key];
@@ -36,12 +37,17 @@ function loadEnvKey(key: string): string {
   return '';
 }
 
-const N8N_API_KEY = loadEnvKey('N8N_API_KEY');
+const N8N_API_KEY = RUN_LIVE_INTEGRATION ? loadEnvKey('N8N_API_KEY') : '';
+const WEBHOOK_SECRET = RUN_LIVE_INTEGRATION
+  ? loadEnvKey('SMS_WEBHOOK_SECRET') || loadEnvKey('N8N_WEBHOOK_SECRET')
+  : '';
 const N8N_API = 'https://n8n.wranngle.com/api/v1';
-// Skip when the n8n API key isn't available — the suite hits the
-// production n8n control-plane to read execution state, which 401s
-// without auth. CI without secrets falls into this path.
-const describeIfCreds = N8N_API_KEY ? describe : describe.skip;
+// Skip unless explicitly requested: this suite hits production n8n webhooks
+// and reads production execution state through the n8n API.
+const describeIfLive =
+  RUN_LIVE_INTEGRATION && N8N_API_KEY && WEBHOOK_SECRET
+    ? describe
+    : describe.skip;
 
 const LEAD_INTAKE_WORKFLOW_ID = 'SY5XCbzxX32eCIeO';
 const UMS_WORKFLOW_ID = 'CBoXlSNiDOHA5YmA';
@@ -77,7 +83,7 @@ async function getLatestExecution(workflowId: string) {
   return data.data?.[0];
 }
 
-describeIfCreds('Lead Intake Notification Flow', () => {
+describeIfLive('Lead Intake Notification Flow', () => {
   describe('RUNTIME: Workflow executes without errors', () => {
     it('should accept a lead submission and return success', async () => {
       const response = await fetch(INTAKE_WEBHOOK, {

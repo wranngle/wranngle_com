@@ -37,6 +37,7 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
+    "test:integration": "RUN_LIVE_INTEGRATION=1 vitest run tests/integration",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
