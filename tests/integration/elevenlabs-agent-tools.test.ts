@@ -1,12 +1,17 @@
 import {describe, it, expect} from 'vitest';
 
 const API_KEY = process.env.ELEVENLABS_API_KEY!;
-// Skip the suite when the live ElevenLabs key isn't configured (e.g. CI
-// without secrets). The tests hit the real Convai agents endpoint and
-// would 401 otherwise — pre-existing failure pattern, not a regression.
-const describeIfCreds = API_KEY ? describe : describe.skip;
-const SARAH_ID = 'agent_xxxx_demo';
-const TEST_AGENT_ID = 'agent_3801kdf7fkhcev8tkhpm92d65jws';
+const RUN_LIVE_INTEGRATION = ['1', 'true'].includes(
+  process.env.RUN_LIVE_INTEGRATION ?? '',
+);
+// Skip unless explicitly requested: these tests hit the live ElevenLabs
+// Convai API and depend on account-owned agent configuration.
+const describeIfLive =
+  RUN_LIVE_INTEGRATION && API_KEY ? describe : describe.skip;
+const SARAH_ID =
+  process.env.ELEVENLABS_SARAH_AGENT_ID || 'agent_7801kqqqhjmcfdsa1m2a8t9w6t5c';
+const TEST_AGENT_ID = process.env.ELEVENLABS_TEST_AGENT_ID || '';
+const describeIfTestAgent = TEST_AGENT_ID ? describe : describe.skip;
 const WEBHOOK_URL = 'https://n8n.wranngle.com/webhook/universal-message-v1';
 
 async function getAgentTools(agentId: string): Promise<any[]> {
@@ -22,7 +27,7 @@ async function getAgentTools(agentId: string): Promise<any[]> {
   return agent.conversation_config?.agent?.prompt?.tools || [];
 }
 
-describeIfCreds('ElevenLabs Agent Tools', () => {
+describeIfLive('ElevenLabs Agent Tools', () => {
   describe('Sarah - Lead Specialist', () => {
     it('should have send_message tool configured', async () => {
       const tools = await getAgentTools(SARAH_ID);
@@ -67,7 +72,7 @@ describeIfCreds('ElevenLabs Agent Tools', () => {
     });
   });
 
-  describe('Test Agent', () => {
+  describeIfTestAgent('Test Agent', () => {
     it('should have send_message tool configured', async () => {
       const tools = await getAgentTools(TEST_AGENT_ID);
       const sendMessage = tools.find((t: any) => t.name === 'send_message');

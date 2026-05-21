@@ -3,19 +3,24 @@
  * Tests authentication, validation, routing, and error handling
  */
 
-import {describe, it, expect, beforeAll} from 'vitest';
+import {describe, it, expect} from 'vitest';
 
 const WEBHOOK_URL =
   process.env.N8N_WEBHOOK_URL ||
   'https://n8n.wranngle.com/webhook/universal-message-v1';
 const WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET || '';
 const TEST_PHONE = process.env.TEST_PHONE_NUMBER || '';
-// Skip when we lack the live secret + test phone — the suite calls the
-// production n8n webhook and would 401 / fail validation. Run locally
-// (or in CI with secrets) by providing N8N_WEBHOOK_SECRET + TEST_PHONE_NUMBER.
-const describeIfCreds = WEBHOOK_SECRET && TEST_PHONE ? describe : describe.skip;
+const RUN_LIVE_INTEGRATION = ['1', 'true'].includes(
+  process.env.RUN_LIVE_INTEGRATION ?? '',
+);
+// Skip unless explicitly requested: this suite calls production n8n and can
+// fail due to CORS, rate limits, or workflow state unrelated to local code.
+const describeIfLive =
+  RUN_LIVE_INTEGRATION && WEBHOOK_SECRET && TEST_PHONE
+    ? describe
+    : describe.skip;
 
-describeIfCreds('n8n Webhook Integration', () => {
+describeIfLive('n8n Webhook Integration', () => {
   describe('Authentication', () => {
     it('should accept requests with valid secret header', async () => {
       const response = await fetch(WEBHOOK_URL, {
