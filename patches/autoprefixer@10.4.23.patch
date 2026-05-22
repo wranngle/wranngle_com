@@ -1,0 +1,13 @@
+diff --git a/lib/supports.js b/lib/supports.js
+index 3ed5133..d614585 100644
+--- a/lib/supports.js
++++ b/lib/supports.js
+@@ -293,7 +293,7 @@ class Supports {
+    */
+   virtual(str) {
+     let [prop, value] = this.parse(str)
+-    let rule = parse('a{}').first
++    let rule = parse('a{}', { from: 'autoprefixer-supports.css' }).first
+     rule.append({ prop, raws: { before: '' }, value })
+     return rule
+   }

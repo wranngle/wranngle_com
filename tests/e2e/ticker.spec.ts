@@ -154,7 +154,7 @@ describe('Ticker — structural snapshot', () => {
     };
 
     expect(structure).toEqual({
-      heading: 'LIVE BOOKINGS // ANONYMIZED',
+      heading: 'SAMPLE BOOKINGS // ANONYMIZED',
       list: 'OL',
       rowCount: 10,
       degraded: 'true',

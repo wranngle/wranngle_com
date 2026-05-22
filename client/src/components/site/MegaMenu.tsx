@@ -47,7 +47,7 @@ export function OfferingsMegaMenu({isDark}: OfferingsMegaMenuProps) {
       <DropdownMenuContent
         align="end"
         sideOffset={12}
-        className={`w-[820px] p-0 border ${surfaceClasses} rounded-lg shadow-2xl`}
+        className={`w-[760px] p-0 border ${surfaceClasses} rounded-lg shadow-2xl`}
       >
         <div className="grid grid-cols-3 gap-0">
           {OFFERING_CATEGORIES.map((cat, catIndex) => {
@@ -58,33 +58,11 @@ export function OfferingsMegaMenu({isDark}: OfferingsMegaMenuProps) {
                 : cat.id === 'websites'
                   ? '/products/websites'
                   : '/products/ai-voice-agents';
-            const navigate = () => {
-              // Close the dropdown first — Radix doesn't auto-close on
-              // non-Item clicks, so without this the menu visibly hangs
-              // around for the hashchange tick.
-              setOpen(false);
-              globalThis.location.href = headerHref;
-            };
-
-            const onKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                navigate();
-              }
-            };
 
             return (
-              // Column-as-link: hovering anywhere in the column primes the
-              // category destination; an inner tier link overrides via
-              // stopPropagation and jumps to that exact tier tile.
               <div
                 key={cat.id}
-                role="link"
-                tabIndex={0}
-                aria-label={`${cat.name} — view category`}
-                onClick={navigate}
-                onKeyDown={onKey}
-                className={`group/col p-5 cursor-pointer transition-colors hover:bg-[var(--s500)]/5 focus:outline-none focus:ring-2 focus:ring-[var(--s500)]/40 ${
+                className={`group/col p-4 transition-colors hover:bg-[var(--s500)]/5 ${
                   isLast ? '' : `border-r ${dividerClass}`
                 }`}
               >
@@ -98,9 +76,15 @@ export function OfferingsMegaMenu({isDark}: OfferingsMegaMenuProps) {
                   >
                     {cat.name}
                   </span>
-                  <span className="text-[9px] uppercase font-bold tracking-wider opacity-50 group-hover/col:opacity-100 group-hover/col:text-[var(--s500)] shrink-0 transition-opacity">
+                  <Link
+                    href={headerHref}
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                    className="text-[9px] uppercase font-bold tracking-wider opacity-50 group-hover/col:opacity-100 group-hover/col:text-[var(--s500)] shrink-0 transition-opacity"
+                  >
                     View page →
-                  </span>
+                  </Link>
                 </div>
                 <div className="text-[10px] opacity-50 mb-3 leading-snug">
                   {cat.description}
@@ -216,16 +200,13 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
                   setOpen(false);
                   onTalkToSarah();
                 }}
-                className="flex w-full items-center gap-2 text-left px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
+                className="flex w-full items-center gap-2 text-left px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-medium opacity-80 hover:opacity-100"
               >
                 <Sparkles
                   size={14}
                   className="text-[var(--s500)] sarah-glimmer"
                 />
                 Talk to Sarah
-                <span className="ml-auto text-[9px] font-bold uppercase tracking-wider text-[var(--s500)] opacity-70">
-                  Live demo
-                </span>
               </button>
               <Link
                 href="/products/ai-voice-agents"

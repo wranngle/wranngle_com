@@ -33,8 +33,8 @@ export default function PricingPage() {
                 Pick a plan that fits the call volume.
               </h1>
               <p className="text-xl md:text-2xl font-semibold leading-snug mb-3 max-w-3xl mx-auto">
-                Three packages for busy teams that need reliable call coverage.
-                No contracts, no setup fees.
+                The same Core and Elite Agent packages shown on the home page,
+                plus custom programs for multi-location teams.
               </p>
             </div>
           </section>
@@ -51,9 +51,9 @@ export default function PricingPage() {
             </div>
 
             <p className="mt-12 text-center text-sm opacity-70 max-w-2xl mx-auto">
-              All plans include after-hours coverage, lead-detail capture, and
-              source-of-truth handoffs. Voice minutes can be topped up
-              mid-cycle.
+              Core and Elite are monthly AI agent subscriptions. Websites and
+              gtm_ops stay priced separately in Offerings so each product keeps
+              a clean scope.
             </p>
           </section>
         </main>

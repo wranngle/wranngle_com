@@ -77,7 +77,7 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
   '/pricing': {
     title: 'Pricing — Wranngle Systems',
     description:
-      'Three plans for AI voice agents that answer, qualify, and route calls for busy teams. No contracts, no setup fees.',
+      'Core Agent and Elite Agent pricing for AI call coverage, plus custom programs for multi-location teams.',
   },
   '/pilot': {
     title: 'Pilot Agreement — Wranngle Systems',

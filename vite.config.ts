@@ -44,7 +44,7 @@ const routeMeta: Record<
     canonicalPath: '/pricing',
     title: 'Pricing - Wranngle Systems',
     description:
-      'Three plans for AI voice agents that answer, qualify, and route calls for busy teams. No contracts, no setup fees.',
+      'Core Agent and Elite Agent pricing for AI call coverage, plus custom programs for multi-location teams.',
   },
   privacy: {
     canonicalPath: '/privacy',
@@ -179,9 +179,11 @@ export default defineConfig({
             '@radix-ui/react-label',
             '@radix-ui/react-accordion',
           ],
+          'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
         },
       },
     },
+    chunkSizeWarningLimit: 900,
   },
   server: {
     fs: {

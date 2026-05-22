@@ -271,6 +271,12 @@ html {
   animation: sarah-glimmer 2.4s ease-in-out infinite;
   transform-origin: center;
 }
+
+html[data-sarah-suppressed='true'] elevenlabs-convai {
+  display: none !important;
+  pointer-events: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .sarah-glimmer {
     animation: none;
@@ -308,6 +314,72 @@ html {
 }
 
 @layer base {
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: hsl(var(--border));
+  }
+
+  html {
+    line-height: 1.5;
+    text-size-adjust: 100%;
+    tab-size: 4;
+    font-family: var(--font-sans);
+  }
+
+  body {
+    margin: 0;
+    line-height: inherit;
+  }
+
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }
+
+  button,
+  select {
+    text-transform: none;
+  }
+
+  button,
+  [role='button'] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [role='button'][aria-disabled='true'] {
+    cursor: default;
+  }
+
+  img,
+  video,
+  canvas,
+  audio,
+  iframe,
+  embed,
+  object,
+  svg {
+    display: block;
+    vertical-align: middle;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
   * {
     @apply border-border;
   }

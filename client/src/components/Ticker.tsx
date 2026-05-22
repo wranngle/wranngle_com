@@ -216,17 +216,23 @@ export default function Ticker({
     >
       <header className="flex items-center justify-between gap-3 px-5 pt-5 pb-3 border-b border-current/10">
         <div className="flex items-center gap-2.5">
-          <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+          <span
+            className={`h-2 w-2 rounded-full ${
+              degraded ? 'bg-[var(--s500)]' : 'bg-green-500 animate-pulse'
+            }`}
+          />
           <h2
             id="ticker-heading"
             className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--s500)]"
           >
-            LIVE BOOKINGS // ANONYMIZED
+            {degraded
+              ? 'SAMPLE BOOKINGS // ANONYMIZED'
+              : 'LIVE BOOKINGS // ANONYMIZED'}
           </h2>
         </div>
         <div className="flex items-center gap-1.5 text-[10px] mono-font opacity-60">
           <Activity size={11} aria-hidden />
-          <span>last {events.length}</span>
+          <span>{degraded ? 'sample activity' : `last ${events.length}`}</span>
         </div>
       </header>
 

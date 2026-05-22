@@ -39,7 +39,7 @@ describe('/pricing route', () => {
     expect(matches).toHaveLength(3);
   });
 
-  it('renders Starter, Professional, and Enterprise plan cards', () => {
+  it('renders Core Agent, Elite Agent, and Enterprise plan cards', () => {
     expect(html).toContain('data-testid="plan-card-starter"');
     expect(html).toContain('data-testid="plan-card-professional"');
     expect(html).toContain('data-testid="plan-card-enterprise"');

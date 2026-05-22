@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'wouter';
 import {motion, AnimatePresence} from 'framer-motion';
 import {Menu, X, ArrowRight, Sparkles} from 'lucide-react';
@@ -6,7 +6,7 @@ import DarkModeToggle from './DarkModeToggle.tsx';
 import {OfferingsMegaMenu, AboutMegaMenu} from './MegaMenu.tsx';
 import {Dialog, DialogContent} from '@/components/ui/dialog.tsx';
 import IntakeForm from '@/components/IntakeForm.tsx';
-import {goTalkToSarah} from '@/lib/sarah.ts';
+import {goTalkToSarah, suppressSarahWidget} from '@/lib/sarah.ts';
 
 const LOGO_URL = '/wordmark.png';
 type HomeAbVariant = 'control' | 'value-first';
@@ -15,12 +15,14 @@ type SiteHeaderProps = {
   isDark: boolean;
   toggleTheme: () => void;
   homeAbVariant?: HomeAbVariant;
+  showMarketingActions?: boolean;
 };
 
 export default function SiteHeader({
   isDark,
   toggleTheme,
   homeAbVariant = 'control',
+  showMarketingActions = true,
 }: SiteHeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [deployOpen, setDeployOpen] = useState(false);
@@ -28,6 +30,11 @@ export default function SiteHeader({
     homeAbVariant === 'value-first'
       ? 'Build my call flow'
       : 'Get call coverage';
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    return suppressSarahWidget();
+  }, [mobileOpen]);
 
   return (
     <>
@@ -56,7 +63,6 @@ export default function SiteHeader({
               className="h-14 w-auto"
               width="600"
               height="327"
-              fetchPriority="high"
             />
           </Link>
 
@@ -73,31 +79,35 @@ export default function SiteHeader({
               <DarkModeToggle isDark={isDark} toggle={toggleTheme} />
             </nav>
 
-            <div className="hidden md:block">
-              <button
-                type="button"
-                onClick={goTalkToSarah}
-                className="px-4 py-2.5 border border-current rounded-md text-[10px] font-bold uppercase tracking-wider hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all flex items-center gap-2"
-              >
-                <Sparkles
-                  size={12}
-                  className="text-[var(--s500)] sarah-glimmer"
-                />
-                Talk to Sarah
-              </button>
-            </div>
+            {showMarketingActions && (
+              <>
+                <div className="hidden md:block">
+                  <button
+                    type="button"
+                    onClick={goTalkToSarah}
+                    className="px-4 py-2.5 border border-current rounded-md text-[10px] font-bold uppercase tracking-wider hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all flex items-center gap-2"
+                  >
+                    <Sparkles
+                      size={12}
+                      className="text-[var(--s500)] sarah-glimmer"
+                    />
+                    Talk to Sarah
+                  </button>
+                </div>
 
-            <div className="hidden md:block">
-              <button
-                type="button"
-                onClick={() => {
-                  setDeployOpen(true);
-                }}
-                className="px-5 py-2.5 bg-[var(--s500)] text-white font-bold uppercase text-[10px] rounded-md shadow-lg hover:scale-105 transition-all flex items-center gap-2"
-              >
-                {deployCta} <ArrowRight size={12} />
-              </button>
-            </div>
+                <div className="hidden md:block">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDeployOpen(true);
+                    }}
+                    className="px-5 py-2.5 bg-[var(--s500)] text-white font-bold uppercase text-[10px] rounded-md shadow-lg hover:scale-105 transition-all flex items-center gap-2"
+                  >
+                    {deployCta} <ArrowRight size={12} />
+                  </button>
+                </div>
+              </>
+            )}
 
             <button
               type="button"
@@ -178,20 +188,22 @@ export default function SiteHeader({
               >
                 gtm_ops
               </Link>
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileOpen(false);
-                  goTalkToSarah();
-                }}
-                className="text-left flex items-center gap-2"
-              >
-                <Sparkles
-                  size={18}
-                  className="text-[var(--s500)] sarah-glimmer"
-                />
-                Talk to Sarah
-              </button>
+              {showMarketingActions && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileOpen(false);
+                    goTalkToSarah();
+                  }}
+                  className="text-left flex items-center gap-2"
+                >
+                  <Sparkles
+                    size={18}
+                    className="text-[var(--s500)] sarah-glimmer"
+                  />
+                  Talk to Sarah
+                </button>
+              )}
               <Link
                 href="/privacy"
                 onClick={() => {
@@ -220,16 +232,18 @@ export default function SiteHeader({
                 </span>
                 <DarkModeToggle isDark={isDark} toggle={toggleTheme} />
               </div>
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileOpen(false);
-                  setDeployOpen(true);
-                }}
-                className="w-full py-6 bg-[var(--s500)] text-white font-bold uppercase text-sm rounded-xl shadow-xl flex items-center justify-center gap-3"
-              >
-                {deployCta} <ArrowRight size={18} />
-              </button>
+              {showMarketingActions && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileOpen(false);
+                    setDeployOpen(true);
+                  }}
+                  className="w-full py-6 bg-[var(--s500)] text-white font-bold uppercase text-sm rounded-xl shadow-xl flex items-center justify-center gap-3"
+                >
+                  {deployCta} <ArrowRight size={18} />
+                </button>
+              )}
             </nav>
           </motion.div>
         )}

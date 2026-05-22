@@ -675,7 +675,7 @@ function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
                   <FileText size={14} /> View Spec Sheet
                 </button>
               </DialogTrigger>
-              <DialogContent className="bg-transparent border-none shadow-none p-0 max-w-fit outline-none">
+              <DialogContent className="bg-transparent border-none shadow-none p-0 max-w-fit outline-none [&>button]:bg-[#12111a] [&>button]:text-white [&>button]:opacity-100 [&>button]:shadow-lg">
                 <DialogTitle className="sr-only">
                   gtm_ops {item.name} spec sheet
                 </DialogTitle>
@@ -697,7 +697,12 @@ function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
                     ) {
                       // Stay on this page — scroll to pricing.
                       const target = document.querySelector('#pricing');
-                      target?.scrollIntoView({behavior: 'smooth'});
+                      if (target) {
+                        const top =
+                          target.getBoundingClientRect().top +
+                          globalThis.scrollY;
+                        globalThis.scrollTo({top, behavior: 'smooth'});
+                      }
                     } else {
                       // Cross-sell to ai-agents/websites lives on home page.
                       globalThis.location.href = `/#offerings-${targetId}`;

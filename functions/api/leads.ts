@@ -25,6 +25,24 @@ type LeadInput = {
 };
 
 const SAAS_PACKAGES = new Set(['gtm-ops-trial', 'gtm-ops-plus', 'gtm-ops-pro']);
+const VALID_PACKAGES = new Set([
+  'basic',
+  'premium',
+  'landing-page',
+  'business-site',
+  'gtm-ops-trial',
+  'gtm-ops-plus',
+  'gtm-ops-pro',
+]);
+const FULL_INTAKE_REQUIRED_FIELDS = [
+  'businessName',
+  'industry',
+  'ownerName',
+  'phone',
+  'email',
+  'package',
+];
+const SAAS_REQUIRED_FIELDS = ['businessName', 'email', 'package'];
 const LEAD_DEDUPE_WINDOW_MS = 15 * 60 * 1000;
 const leadDedupeStore = new Map<string, number>();
 
@@ -37,6 +55,82 @@ function sanitizeString(input: string, maxLength: number): string {
     .slice(0, maxLength);
 }
 
+function getMissingRequiredLeadField(
+  body: Record<string, unknown>,
+  isSaas: boolean,
+): string | undefined {
+  const requiredFields = isSaas
+    ? SAAS_REQUIRED_FIELDS
+    : FULL_INTAKE_REQUIRED_FIELDS;
+
+  return requiredFields.find(
+    (field) => typeof body[field] !== 'string' || !body[field],
+  );
+}
+
+function hasValidLeadEmail(body: Record<string, unknown>): boolean {
+  return (
+    typeof body.email === 'string' &&
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)
+  );
+}
+
+function hasValidLeadPhone(
+  body: Record<string, unknown>,
+  isSaas: boolean,
+): boolean {
+  return (
+    isSaas ||
+    (typeof body.phone === 'string' && /^[\d\s\-+()]+$/.test(body.phone))
+  );
+}
+
+function getAgentNameError(body: Record<string, unknown>): string | undefined {
+  if (!body.agentName || typeof body.agentName !== 'string') return undefined;
+  if (body.agentName.length > 50) {
+    return 'Agent name must be 50 characters or less';
+  }
+
+  if (!/^[a-zA-Z\d\s\-']+$/.test(body.agentName)) {
+    return 'Agent name can only contain letters, numbers, spaces, hyphens, and apostrophes';
+  }
+}
+
+function sanitizeOptionalString(
+  value: unknown,
+  maxLength: number,
+): string | undefined {
+  return value ? sanitizeString(value as string, maxLength) : undefined;
+}
+
+function sanitizeLeadInput(
+  body: Record<string, unknown>,
+  isSaas: boolean,
+): LeadInput {
+  return {
+    businessName: sanitizeString(body.businessName as string, 200),
+    industry: isSaas
+      ? 'saas-buyer'
+      : sanitizeString(body.industry as string, 100),
+    ownerName: isSaas
+      ? sanitizeString((body.ownerName as string) || 'n/a', 100)
+      : sanitizeString(body.ownerName as string, 100),
+    phone: isSaas
+      ? sanitizeString((body.phone as string) || 'n/a', 30)
+      : sanitizeString(body.phone as string, 30),
+    email: sanitizeString(body.email as string, 254), // RFC 5321 max email length
+    package: body.package as string,
+    agentName: sanitizeOptionalString(body.agentName, 50),
+    addWebChatAgent: body.addWebChatAgent === true ? true : undefined,
+    status: (body.status as string) || 'pending',
+    notes: sanitizeOptionalString(body.notes, 1000),
+    estimatedProposalsPerMonth: sanitizeOptionalString(
+      body.estimatedProposalsPerMonth,
+      50,
+    ),
+  };
+}
+
 function validateLead(
   body: unknown,
 ): {valid: true; data: LeadInput} | {valid: false; error: string} {
@@ -46,92 +140,30 @@ function validateLead(
 
   const b = body as Record<string, unknown>;
   const isSaas = SAAS_PACKAGES.has(b.package as string);
+  const missingField = getMissingRequiredLeadField(b, isSaas);
 
-  // SaaS leads have a tighter form (no business type/owner/phone). Full intake leads keep
-  // the original required-set so the n8n flow that fans out to voice setup
-  // still gets everything it expects.
-  const required = isSaas
-    ? ['businessName', 'email', 'package']
-    : ['businessName', 'industry', 'ownerName', 'phone', 'email', 'package'];
-
-  for (const field of required) {
-    if (typeof b[field] !== 'string' || !b[field]) {
-      return {valid: false, error: `Missing required field: ${field}`};
-    }
+  if (missingField) {
+    return {valid: false, error: `Missing required field: ${missingField}`};
   }
 
-  // Validate email format
-  if (!b.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(b.email as string)) {
+  if (!hasValidLeadEmail(b)) {
     return {valid: false, error: 'Invalid email format'};
   }
 
-  // Validate phone format (full intake only — SaaS form does not collect phone)
-  if (!isSaas) {
-    const phoneString = b.phone as string;
-    if (!/^[\d\s\-+()]+$/.test(phoneString)) {
-      return {valid: false, error: 'Invalid phone format'};
-    }
+  if (!hasValidLeadPhone(b, isSaas)) {
+    return {valid: false, error: 'Invalid phone format'};
   }
 
-  // Validate package value
-  const validPackages = [
-    'basic',
-    'premium',
-    'landing-page',
-    'business-site',
-    'gtm-ops-trial',
-    'gtm-ops-plus',
-    'gtm-ops-pro',
-  ];
-  if (!validPackages.includes(b.package as string)) {
+  if (!VALID_PACKAGES.has(b.package as string)) {
     return {valid: false, error: 'Invalid package selection'};
   }
 
-  // Validate agentName (optional) - alphanumeric, spaces, hyphens, apostrophes only
-  if (b.agentName && typeof b.agentName === 'string') {
-    const agentNameString = b.agentName;
-    if (agentNameString.length > 50) {
-      return {valid: false, error: 'Agent name must be 50 characters or less'};
-    }
-
-    if (!/^[a-zA-Z\d\s\-']+$/.test(agentNameString)) {
-      return {
-        valid: false,
-        error:
-          'Agent name can only contain letters, numbers, spaces, hyphens, and apostrophes',
-      };
-    }
+  const agentNameError = getAgentNameError(b);
+  if (agentNameError) {
+    return {valid: false, error: agentNameError};
   }
 
-  // Sanitize all string inputs. SaaS leads omit full-intake fields; fill them
-  // with stable placeholders so downstream consumers (n8n) can still treat the
-  // payload uniformly without needing per-package conditionals.
-  return {
-    valid: true,
-    data: {
-      businessName: sanitizeString(b.businessName as string, 200),
-      industry: isSaas
-        ? 'saas-buyer'
-        : sanitizeString(b.industry as string, 100),
-      ownerName: isSaas
-        ? sanitizeString((b.ownerName as string) || 'n/a', 100)
-        : sanitizeString(b.ownerName as string, 100),
-      phone: isSaas
-        ? sanitizeString((b.phone as string) || 'n/a', 30)
-        : sanitizeString(b.phone as string, 30),
-      email: sanitizeString(b.email as string, 254), // RFC 5321 max email length
-      package: b.package as string,
-      agentName: b.agentName
-        ? sanitizeString(b.agentName as string, 50)
-        : undefined,
-      addWebChatAgent: b.addWebChatAgent === true ? true : undefined,
-      status: (b.status as string) || 'pending',
-      notes: b.notes ? sanitizeString(b.notes as string, 1000) : undefined,
-      estimatedProposalsPerMonth: b.estimatedProposalsPerMonth
-        ? sanitizeString(b.estimatedProposalsPerMonth as string, 50)
-        : undefined,
-    },
-  };
+  return {valid: true, data: sanitizeLeadInput(b, isSaas)};
 }
 
 function normalizeDedupeValue(value: string | undefined): string {
