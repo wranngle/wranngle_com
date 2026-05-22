@@ -638,7 +638,7 @@ function WebsiteTierTile({
                   <FileText size={14} /> View Spec Sheet
                 </button>
               </DialogTrigger>
-              <DialogContent className="bg-transparent border-none shadow-none p-0 max-w-fit outline-none">
+              <DialogContent className="bg-transparent border-none shadow-none p-0 max-w-fit outline-none [&>button]:bg-[#12111a] [&>button]:text-white [&>button]:opacity-100 [&>button]:shadow-lg">
                 <DialogTitle className="sr-only">
                   {item.name} website spec sheet
                 </DialogTitle>

@@ -19,7 +19,11 @@ export default function TermsOfService() {
       <div
         className={`min-h-screen flex flex-col ${isDark ? 'bg-page-dark' : 'bg-page-light'}`}
       >
-        <SiteHeader isDark={isDark} toggleTheme={toggleTheme} />
+        <SiteHeader
+          isDark={isDark}
+          toggleTheme={toggleTheme}
+          showMarketingActions={false}
+        />
         <main id="main" className="flex-1 py-16 px-6">
           <style>{`
             .brand-font { font-family: 'Bricolage Grotesque', sans-serif; }

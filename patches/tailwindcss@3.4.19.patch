@@ -1,0 +1,81 @@
+diff --git a/lib/corePlugins.js b/lib/corePlugins.js
+index bf5d083..e26351b 100644
+--- a/lib/corePlugins.js
++++ b/lib/corePlugins.js
+@@ -552,7 +552,9 @@ let cssBackdropFilterValue = [
+ ].join(" ");
+ let corePlugins = {
+     preflight: ({ addBase  })=>{
+-        let preflightStyles = _postcss.default.parse(_fs.default.readFileSync(_path.join(__dirname, "./css/preflight.css"), "utf8"));
++        let preflightStyles = _postcss.default.parse(_fs.default.readFileSync(_path.join(__dirname, "./css/preflight.css"), "utf8"), {
++            from: _path.join(__dirname, "./css/preflight.css")
++        });
+         addBase([
+             _postcss.default.comment({
+                 text: `! tailwindcss v${_packagejson.version} | MIT License | https://tailwindcss.com`
+diff --git a/lib/lib/generateRules.js b/lib/lib/generateRules.js
+index 7b3d219..78c0ca4 100644
+--- a/lib/lib/generateRules.js
++++ b/lib/lib/generateRules.js
+@@ -495,7 +495,9 @@ function isParsableCssValue(property, value) {
+         return false;
+     }
+     try {
+-        _postcss.default.parse(`a{${property}:${value}}`).toResult();
++        _postcss.default.parse(`a{${property}:${value}}`, {
++            from: "tailwindcss-arbitrary-value.css"
++        }).toResult();
+         return true;
+     } catch (err) {
+         return false;
+diff --git a/peers/index.js b/peers/index.js
+index af0f0f7..9f67c15 100644
+--- a/peers/index.js
++++ b/peers/index.js
+@@ -1302,7 +1302,7 @@ var require_container = __commonJS({
+       }
+       normalize(nodes, sample) {
+         if (typeof nodes === "string") {
+-          nodes = cleanSource(parse(nodes).nodes);
++          nodes = cleanSource(parse(nodes, { from: "tailwindcss-peers.css" }).nodes);
+         } else if (typeof nodes === "undefined") {
+           nodes = [];
+         } else if (Array.isArray(nodes)) {
+@@ -13251,7 +13251,7 @@ var require_supports = __commonJS({
+        */
+       virtual(str) {
+         let [prop, value] = this.parse(str);
+-        let rule = parse("a{}").first;
++        let rule = parse("a{}", { from: "tailwindcss-peers.css" }).first;
+         rule.append({ prop, raws: { before: "" }, value });
+         return rule;
+       }
+diff --git a/src/corePlugins.js b/src/corePlugins.js
+index b73c672..af441d8 100644
+--- a/src/corePlugins.js
++++ b/src/corePlugins.js
+@@ -566,7 +566,8 @@ let cssBackdropFilterValue = [
+ export let corePlugins = {
+   preflight: ({ addBase }) => {
+     let preflightStyles = postcss.parse(
+-      fs.readFileSync(path.join(__dirname, './css/preflight.css'), 'utf8')
++      fs.readFileSync(path.join(__dirname, './css/preflight.css'), 'utf8'),
++      { from: path.join(__dirname, './css/preflight.css') }
+     )
+ 
+     addBase([
+diff --git a/src/lib/generateRules.js b/src/lib/generateRules.js
+index ba2e305..b55a696 100644
+--- a/src/lib/generateRules.js
++++ b/src/lib/generateRules.js
+@@ -491,7 +491,9 @@ function isParsableCssValue(property, value) {
+   }
+ 
+   try {
+-    postcss.parse(`a{${property}:${value}}`).toResult()
++    postcss
++      .parse(`a{${property}:${value}}`, { from: 'tailwindcss-arbitrary-value.css' })
++      .toResult()
+     return true
+   } catch (err) {
+     return false

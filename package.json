@@ -11,6 +11,11 @@
     "type": "git",
     "url": "https://github.com/wranngle/wranngle_com.git"
   },
+  "patchedDependencies": {
+    "autoprefixer@10.4.23": "patches/autoprefixer@10.4.23.patch",
+    "tailwindcss@3.4.19": "patches/tailwindcss@3.4.19.patch",
+    "vite@7.3.1": "patches/vite@7.3.1.patch"
+  },
   "scripts": {
     "dev": "vite --config vite.config.ts",
     "dev:functions": "wrangler pages dev dist --live-reload",

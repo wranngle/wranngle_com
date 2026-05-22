@@ -3,9 +3,11 @@ export const SARAH_AGENT_ID = 'agent_7801kqqqhjmcfdsa1m2a8t9w6t5c';
 let sarahTextPatchInstalled = false;
 let sarahTextObserver: MutationObserver | undefined;
 let sarahOutsideClickInstalled = false;
+let sarahSuppressionCount = 0;
 const SARAH_VENDOR_DEFAULT_CTA = ['Start', ['Wran', 'ngling'].join('')].join(
   ' ',
 );
+const releaseSarahNoop = () => undefined;
 
 export function ensureSarahWidgetScript() {
   if (typeof document === 'undefined') return;
@@ -62,6 +64,21 @@ export function openSarahWidget() {
   return true;
 }
 
+export function suppressSarahWidget() {
+  if (typeof document === 'undefined') return releaseSarahNoop;
+
+  sarahSuppressionCount += 1;
+  syncSarahSuppression();
+
+  let released = false;
+  return () => {
+    if (released) return;
+    released = true;
+    sarahSuppressionCount = Math.max(0, sarahSuppressionCount - 1);
+    syncSarahSuppression();
+  };
+}
+
 type SarahExpandAction = 'expand' | 'collapse' | 'toggle';
 
 function dispatchSarahExpandEvent(action: SarahExpandAction) {
@@ -70,6 +87,15 @@ function dispatchSarahExpandEvent(action: SarahExpandAction) {
       detail: {action},
     }),
   );
+}
+
+function syncSarahSuppression() {
+  if (typeof document === 'undefined') return;
+
+  const suppressed = sarahSuppressionCount > 0;
+  document.documentElement.toggleAttribute('data-sarah-suppressed', suppressed);
+
+  if (suppressed) dispatchSarahExpandEvent('collapse');
 }
 
 function installSarahTextPatch() {

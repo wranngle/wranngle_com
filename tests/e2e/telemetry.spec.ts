@@ -34,7 +34,7 @@ async function invoke(body: string): Promise<Response> {
   return onRequestPost({request: postRequest(body), env: {}});
 }
 
-// TODO(#86): the three `telemetry client` cases below mutate
+// NOTE(#86): the three `telemetry client` cases below mutate
 // `globalThis.navigator.sendBeacon = undefined`, which trips TS strict-mode
 // type-narrowing under xo's CI lint config (the property is required in
 // happy-dom's Navigator type). Restore once the telemetry client exposes an

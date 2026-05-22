@@ -143,6 +143,11 @@ function resolveOfferingsHash(rawHash: string) {
   return undefined;
 }
 
+function scrollToElementStart(target: HTMLElement) {
+  const top = target.getBoundingClientRect().top + globalThis.scrollY;
+  globalThis.scrollTo({top, behavior: 'smooth'});
+}
+
 const WranngleLanding = () => {
   const {isDark, toggle: toggleTheme} = useDarkMode();
   const [abVariant] = useState<HomeAbVariant>(() => resolveHomeAbVariant());
@@ -160,7 +165,7 @@ const WranngleLanding = () => {
     if (!hash) return;
     requestAnimationFrame(() => {
       const target = document.getElementById(hash);
-      if (target) target.scrollIntoView({behavior: 'smooth', block: 'start'});
+      if (target) scrollToElementStart(target);
     });
   }, []);
 
@@ -475,7 +480,7 @@ function OfferingsSection({
     requestAnimationFrame(() => {
       const target = document.getElementById(pendingScrollTarget);
       if (!target) return;
-      target.scrollIntoView({behavior: 'smooth', block: 'start'});
+      scrollToElementStart(target);
       setPendingScrollTarget(undefined);
     });
   }, [activeCategory, pendingScrollTarget]);
@@ -612,6 +617,129 @@ function OfferingsSection({
   );
 }
 
+type OfferingCardPricing = {
+  priceLabel: string;
+  priceSuffix: string;
+  ctaLabel: string;
+  addonCopy: string;
+  annualSavings: boolean;
+};
+
+function getOfferingCardPricing(
+  item: OfferingItem,
+  abVariant: HomeAbVariant,
+): OfferingCardPricing {
+  const annualSavings =
+    abVariant === 'value-first' && (item.facts?.discountPercent ?? 0) > 0;
+  const rawPrice = item.facts?.annualMonthly ?? Number(item.price);
+  const monthlyPrice = item.facts?.headlinePrice ?? Number(item.price);
+  const hasDiscount = annualSavings;
+  const isFree = item.price === '0';
+
+  return {
+    priceLabel: isFree
+      ? 'Free'
+      : `$${formatPrice(hasDiscount ? rawPrice : monthlyPrice)}`,
+    priceSuffix: getOfferingPriceSuffix(item, hasDiscount),
+    ctaLabel: hasDiscount ? item.cta.replace(/^Get /, 'Start') : item.cta,
+    addonCopy: getOfferingAddonCopy(item, hasDiscount, rawPrice),
+    annualSavings,
+  };
+}
+
+function getOfferingPriceSuffix(item: OfferingItem, hasDiscount: boolean) {
+  if (item.price === '0') return '';
+  if (hasDiscount) return '/mo annual';
+  return item.priceCadence === 'monthly' ? '/mo' : ' one-time';
+}
+
+function getOfferingAddonCopy(
+  item: OfferingItem,
+  hasDiscount: boolean,
+  rawPrice: number,
+) {
+  const isSaas = item.facts?.kind === 'saas';
+  if (!item.monthlyAddon) return '';
+  if (hasDiscount && isSaas) {
+    return `or $${formatPrice(rawPrice)} /mo annual equivalent`;
+  }
+
+  return item.monthlyAddon.label.startsWith('/')
+    ? `+ $${item.monthlyAddon.price}${item.monthlyAddon.label}`
+    : `+ $${item.monthlyAddon.price}/mo ${item.monthlyAddon.label}`;
+}
+
+function OfferingBadge({badge}: {badge?: string}) {
+  if (!badge) return null;
+
+  return (
+    <div className="absolute top-0 left-8 bg-[var(--v500)] text-[9px] font-bold px-4 py-1.5 rounded-b-lg uppercase tracking-wider shadow-md z-30 border-x border-b border-white/10">
+      {badge}
+    </div>
+  );
+}
+
+function OfferingPriceBlock({
+  item,
+  pricing,
+}: {
+  item: OfferingItem;
+  pricing: OfferingCardPricing;
+}) {
+  const isSaas = item.facts?.kind === 'saas';
+
+  return (
+    <div className="mb-6">
+      <div className="text-4xl font-bold">
+        {pricing.priceLabel}
+        {item.price !== '0' && (
+          <span className="text-sm font-normal opacity-50">
+            {pricing.priceSuffix}
+          </span>
+        )}
+      </div>
+      {pricing.addonCopy && (
+        <div className="text-sm opacity-60 mt-1">{pricing.addonCopy}</div>
+      )}
+      {isSaas && pricing.annualSavings && item.facts ? (
+        <div className="text-xs uppercase tracking-wide opacity-70 mt-1">
+          Save {item.facts.discountPercent}% with annual pricing
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function OfferingFeatureList({features}: {features: string[]}) {
+  return (
+    <ul className="space-y-3 mb-8 flex-1">
+      {features.map((feature) => (
+        <li
+          key={feature}
+          className="flex items-center gap-3 text-sm opacity-80"
+        >
+          <Check
+            size={16}
+            className="text-[var(--s500)] shrink-0"
+            aria-hidden
+          />{' '}
+          {feature}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function getOfferingButtonClass(item: OfferingItem, isDark: boolean) {
+  if (item.badge) {
+    return 'bg-[var(--v500)] hover:bg-[var(--v500)]/90 hover:scale-[1.02] transition-all';
+  }
+
+  return isDark
+    ? 'bg-white/10 text-white hover:bg-white/20'
+    : 'bg-black/10 text-black hover:bg-black/20';
+}
+
 function OfferingCard({
   item,
   isDark,
@@ -624,34 +752,7 @@ function OfferingCard({
   const [factsOpen, setFactsOpen] = useState(false);
   const [intakeOpen, setIntakeOpen] = useState(false);
   const isSaas = item.facts?.kind === 'saas';
-  const annualSavings =
-    abVariant === 'value-first' && (item.facts?.discountPercent ?? 0) > 0;
-  const rawPrice = item.facts?.annualMonthly ?? Number(item.price);
-  const monthlyPrice = item.facts?.headlinePrice ?? Number(item.price);
-  const hasDiscount = abVariant === 'value-first' && annualSavings;
-
-  const priceLabel =
-    item.price === '0'
-      ? 'Free'
-      : `$${formatPrice(hasDiscount ? rawPrice : monthlyPrice)}`;
-  const priceSuffix =
-    item.price === '0'
-      ? ''
-      : hasDiscount
-        ? '/mo annual'
-        : item.priceCadence === 'monthly'
-          ? '/mo'
-          : ' one-time';
-
-  const ctaLabel = hasDiscount ? item.cta.replace(/^Get /, 'Start') : item.cta;
-
-  const addonCopy = item.monthlyAddon
-    ? hasDiscount && isSaas
-      ? `or $${formatPrice(rawPrice)} /mo annual equivalent`
-      : item.monthlyAddon.label.startsWith('/')
-        ? `+ $${item.monthlyAddon.price}${item.monthlyAddon.label}`
-        : `+ $${item.monthlyAddon.price}/mo ${item.monthlyAddon.label}`
-    : '';
+  const pricing = getOfferingCardPricing(item, abVariant);
 
   return (
     <div
@@ -663,11 +764,7 @@ function OfferingCard({
           isDark ? 'border-white/10 bg-[#18181b]' : 'border-black/5 bg-white'
         } flex flex-col noise-overlay overflow-hidden`}
       >
-        {item.badge && (
-          <div className="absolute top-0 left-8 bg-[var(--v500)] text-[9px] font-bold px-4 py-1.5 rounded-b-lg uppercase tracking-wider shadow-md z-30 border-x border-b border-white/10">
-            {item.badge}
-          </div>
-        )}
+        <OfferingBadge badge={item.badge} />
 
         <div className="relative z-10 flex flex-col h-full">
           <div className="flex justify-between items-start mb-2 mt-6">
@@ -683,39 +780,8 @@ function OfferingCard({
           <p className="text-sm opacity-60 mb-6">{item.description}</p>
 
           <div className="flex-1 flex flex-col">
-            <div className="mb-6">
-              <div className="text-4xl font-bold">
-                {priceLabel}
-                {item.price !== '0' && (
-                  <span className="text-sm font-normal opacity-50">
-                    {priceSuffix}
-                  </span>
-                )}
-              </div>
-              {addonCopy && (
-                <div className="text-sm opacity-60 mt-1">{addonCopy}</div>
-              )}
-              {isSaas && annualSavings && item.facts ? (
-                <div className="text-xs uppercase tracking-wide opacity-70 mt-1">
-                  Save {item.facts.discountPercent}% with annual pricing
-                </div>
-              ) : null}
-            </div>
-            <ul className="space-y-3 mb-8 flex-1">
-              {item.features.map((f, i) => (
-                <li
-                  key={i}
-                  className="flex items-center gap-3 text-sm opacity-80"
-                >
-                  <Check
-                    size={16}
-                    className="text-[var(--s500)] shrink-0"
-                    aria-hidden
-                  />{' '}
-                  {f}
-                </li>
-              ))}
-            </ul>
+            <OfferingPriceBlock item={item} pricing={pricing} />
+            <OfferingFeatureList features={item.features} />
           </div>
 
           {item.facts && (
@@ -728,7 +794,7 @@ function OfferingCard({
                   <FileText size={14} /> View Spec Sheet
                 </button>
               </DialogTrigger>
-              <DialogContent className="bg-transparent border-none shadow-none p-0 max-w-fit outline-none">
+              <DialogContent className="bg-transparent border-none shadow-none p-0 max-w-fit outline-none [&>button]:bg-[#12111a] [&>button]:text-white [&>button]:opacity-100 [&>button]:shadow-lg">
                 <DialogTitle className="sr-only">
                   {item.name} spec sheet
                 </DialogTitle>
@@ -759,15 +825,9 @@ function OfferingCard({
           <Dialog open={intakeOpen} onOpenChange={setIntakeOpen}>
             <DialogTrigger asChild>
               <Button
-                className={`w-full ${
-                  item.badge
-                    ? 'bg-[var(--v500)] hover:bg-[var(--v500)]/90 hover:scale-[1.02] transition-all'
-                    : isDark
-                      ? 'bg-white/10 text-white hover:bg-white/20'
-                      : 'bg-black/10 text-black hover:bg-black/20'
-                }`}
+                className={`w-full ${getOfferingButtonClass(item, isDark)}`}
               >
-                {ctaLabel} <ArrowRight size={14} className="ml-2" />
+                {pricing.ctaLabel} <ArrowRight size={14} className="ml-2" />
               </Button>
             </DialogTrigger>
             <DialogContent

@@ -1,7 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, {
+  useState,
+  useEffect,
+  type Dispatch,
+  type SetStateAction,
+} from 'react';
 import {Link} from 'wouter';
-import {Check, ArrowRight, Zap, CreditCard} from 'lucide-react';
-import {useForm} from 'react-hook-form';
+import {Check, ArrowRight, Zap, CreditCard, Sparkles} from 'lucide-react';
+import {
+  useForm,
+  type UseFormHandleSubmit,
+  type UseFormRegister,
+} from 'react-hook-form';
 import {useMutation} from '@tanstack/react-query';
 import {
   DialogHeader,
@@ -38,6 +47,115 @@ type IntakeFormData = {
 const isAgentPackage = (id: string) => id === 'basic' || id === 'premium';
 const isSaasPackage = (id: string) =>
   id === 'gtm-ops-trial' || id === 'gtm-ops-plus' || id === 'gtm-ops-pro';
+const noopOnSuccess = () => undefined;
+
+type IntakeFormFieldsProps = {
+  currentPackage: string;
+  register: UseFormRegister<IntakeFormData>;
+  handleSubmit: UseFormHandleSubmit<IntakeFormData>;
+  onSubmit: (data: IntakeFormData) => void;
+  isPending: boolean;
+};
+
+function getAddonReceipt(addon?: {price: string; label: string}) {
+  if (!addon) return undefined;
+
+  const cadenceMatch = /^(\/\w+)\s*(.*)$/.exec(addon.label);
+  return {
+    price: addon.price,
+    label: cadenceMatch ? cadenceMatch[2] : addon.label,
+    cadence: cadenceMatch ? cadenceMatch[1] : '/MO',
+  };
+}
+
+function ReceiptMonthlyAddonLine({
+  addon,
+}: {
+  addon?: {price: string; label: string};
+}) {
+  const receipt = getAddonReceipt(addon);
+  if (!receipt) return null;
+
+  return (
+    <div className="flex justify-between opacity-70">
+      <span>+ {receipt.label}</span>
+      <span>
+        ${receipt.price}
+        {receipt.cadence}
+      </span>
+    </div>
+  );
+}
+
+function ReceiptWebChatLine({enabled}: {enabled?: boolean}) {
+  if (!enabled) return null;
+
+  return (
+    <div className="flex justify-between opacity-70">
+      <span>WEB CHAT AGENT</span>
+      <span>$250/MO</span>
+    </div>
+  );
+}
+
+function ReceiptTotalLine({
+  canCheckout,
+  cadence,
+  itemPriceString,
+  cadenceLabel,
+}: {
+  canCheckout: boolean;
+  cadence: 'monthly' | 'one-time';
+  itemPriceString: string;
+  cadenceLabel: string;
+}) {
+  if (!canCheckout) return null;
+
+  return (
+    <>
+      <div className="border-b border-dashed border-gray-400 my-2" />
+      <div className="flex justify-between font-bold text-lg">
+        <span>{cadence === 'monthly' ? 'DUE MONTHLY' : 'PROJECT TOTAL'}</span>
+        <span>
+          ${itemPriceString}
+          {cadenceLabel}
+        </span>
+      </div>
+    </>
+  );
+}
+
+function ReceiptCheckoutButton({
+  canCheckout,
+  isPending,
+  cadence,
+  onCheckout,
+}: {
+  canCheckout: boolean;
+  isPending: boolean;
+  cadence: 'monthly' | 'one-time';
+  onCheckout: () => void;
+}) {
+  if (!canCheckout) return null;
+
+  const label = isPending
+    ? 'OPENING STRIPE...'
+    : cadence === 'monthly'
+      ? 'SUBSCRIBE'
+      : 'PAY WITH STRIPE';
+
+  return (
+    <Button
+      type="button"
+      onClick={onCheckout}
+      className="w-full mt-6 bg-[var(--s500)] text-white hover:bg-[var(--s500)]/90 transition-colors"
+      disabled={isPending}
+    >
+      <CreditCard size={14} className="mr-2" aria-hidden />
+      {label}
+    </Button>
+  );
+}
 
 function OrderReceipt({successData}: {successData: IntakeFormData}) {
   const {toast} = useToast();
@@ -119,45 +237,14 @@ function OrderReceipt({successData}: {successData: IntakeFormData}) {
             {cadenceLabel}
           </span>
         </div>
-        {submittedOffering?.monthlyAddon &&
-          (() => {
-            const {price, label} = submittedOffering.monthlyAddon;
-            // Labels like '/yr annual plan' carry their own cadence; split it off
-            // so the receipt reads "+ annual plan / $200/yr" instead of the
-            // awkward "+ /yr annual plan / $200/MO".
-            const cadenceMatch = /^(\/\w+)\s*(.*)$/.exec(label);
-            const cleanLabel = cadenceMatch ? cadenceMatch[2] : label;
-            const cadence = cadenceMatch ? cadenceMatch[1] : '/MO';
-            return (
-              <div className="flex justify-between opacity-70">
-                <span>+ {cleanLabel}</span>
-                <span>
-                  ${price}
-                  {cadence}
-                </span>
-              </div>
-            );
-          })()}
-        {successData.addWebChatAgent && (
-          <div className="flex justify-between opacity-70">
-            <span>WEB CHAT AGENT</span>
-            <span>$250/MO</span>
-          </div>
-        )}
-        {canCheckout && (
-          <>
-            <div className="border-b border-dashed border-gray-400 my-2" />
-            <div className="flex justify-between font-bold text-lg">
-              <span>
-                {cadence === 'monthly' ? 'DUE MONTHLY' : 'PROJECT TOTAL'}
-              </span>
-              <span>
-                ${itemPriceString}
-                {cadenceLabel}
-              </span>
-            </div>
-          </>
-        )}
+        <ReceiptMonthlyAddonLine addon={submittedOffering?.monthlyAddon} />
+        <ReceiptWebChatLine enabled={successData.addWebChatAgent} />
+        <ReceiptTotalLine
+          canCheckout={Boolean(canCheckout)}
+          cadence={cadence}
+          itemPriceString={itemPriceString}
+          cadenceLabel={cadenceLabel}
+        />
       </div>
 
       <div className="text-center text-xs space-y-2 bg-white/50 p-3 rounded">
@@ -176,23 +263,14 @@ function OrderReceipt({successData}: {successData: IntakeFormData}) {
         THANKS FOR REACHING OUT
       </div>
 
-      {canCheckout && (
-        <Button
-          type="button"
-          onClick={() => {
-            checkoutMutation.mutate();
-          }}
-          className="w-full mt-6 bg-[var(--s500)] text-white hover:bg-[var(--s500)]/90 transition-colors"
-          disabled={checkoutMutation.isPending}
-        >
-          <CreditCard size={14} className="mr-2" aria-hidden />
-          {checkoutMutation.isPending
-            ? 'OPENING STRIPE...'
-            : cadence === 'monthly'
-              ? 'SUBSCRIBE'
-              : 'PAY WITH STRIPE'}
-        </Button>
-      )}
+      <ReceiptCheckoutButton
+        canCheckout={Boolean(canCheckout)}
+        isPending={checkoutMutation.isPending}
+        cadence={cadence}
+        onCheckout={() => {
+          checkoutMutation.mutate();
+        }}
+      />
 
       <DialogClose asChild>
         <Button
@@ -206,252 +284,265 @@ function OrderReceipt({successData}: {successData: IntakeFormData}) {
   );
 }
 
-type IntakeFormProps = {
-  selectedPackage: string;
-  onSuccess?: () => void;
-};
+function LegalNotice() {
+  return (
+    <p className="text-[10px] opacity-60 leading-relaxed mt-1">
+      By submitting, you agree to our{' '}
+      <Link href="/privacy" className="underline hover:text-[var(--s500)]">
+        Privacy Policy
+      </Link>{' '}
+      and{' '}
+      <Link href="/terms" className="underline hover:text-[var(--s500)]">
+        Terms of Service
+      </Link>
+      .
+    </p>
+  );
+}
 
-const IntakeForm = ({
-  selectedPackage,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function -- intentional noop default; callers without a close-action can omit onSuccess.
-  onSuccess = () => {},
-}: IntakeFormProps) => {
-  const [currentPackage, setCurrentPackage] = useState(selectedPackage);
+function AgentDemoSecondaryAction() {
+  return (
+    <DialogClose asChild>
+      <button
+        type="button"
+        onClick={() => {
+          globalThis.setTimeout(() => {
+            goTalkToSarah();
+          }, 150);
+        }}
+        className="mt-4 inline-flex w-fit items-center gap-2 rounded-md border border-current/15 px-3 py-2 text-[11px] font-bold uppercase tracking-wider opacity-80 transition-colors hover:border-[var(--s500)] hover:text-[var(--s500)]"
+      >
+        <Sparkles size={13} className="sarah-glimmer" aria-hidden />
+        Hear Sarah first
+      </button>
+    </DialogClose>
+  );
+}
+
+function SaasIntakeForm({
+  currentPackage,
+  register,
+  handleSubmit,
+  onSubmit,
+  isPending,
+}: IntakeFormFieldsProps) {
   const offering = getOfferingById(currentPackage);
-  const {register, handleSubmit, reset, setValue} = useForm<IntakeFormData>({
-    defaultValues: {package: currentPackage},
-    shouldUseNativeValidation: true,
-  });
-  const {toast} = useToast();
-  const [successData, setSuccessData] = useState<IntakeFormData | undefined>(
-    undefined,
-  );
-  // Only show the "Talk to Sarah vs form" mode-select for AI Agent packages
-  // (Core/Elite) where Sarah genuinely demos what the user is buying. Website
-  // and SaaS flows skip straight to the form — Sarah is irrelevant for them.
-  const [startMode, setStartMode] = useState(
-    isAgentPackage(selectedPackage) ? null : 'form',
-  );
+  const tierName = offering?.name ?? 'gtm_ops';
+  const isTrial = currentPackage === 'gtm-ops-trial';
 
-  useEffect(() => {
-    setValue('package', currentPackage);
-  }, [currentPackage, setValue]);
+  return (
+    <>
+      <DialogHeader>
+        <DialogTitle className="brand-font text-2xl">
+          {isTrial ? 'Start your trial' : 'Request workspace setup'}
+        </DialogTitle>
+        <DialogDescription>
+          {isTrial
+            ? 'Email + company is all we need. No card. 14 days, then upgrade or walk.'
+            : `Email + company is all we need. Cody handles ${tierName} workspace setup from there.`}
+        </DialogDescription>
+      </DialogHeader>
 
-  const mutation = useMutation<unknown, Error, IntakeFormData>({
-    async mutationFn(data) {
-      const res = await fetch('/api/leads', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error('Failed to submit');
-      return res.json();
-    },
-    onSuccess(_, variables) {
-      setSuccessData(variables);
-      toast({
-        title: 'Got it',
-        description: 'We will be in touch with the next step.',
-      });
-      reset();
-      onSuccess?.();
-    },
-    onError() {
-      toast({
-        title: 'Submission failed',
-        description: 'Could not reach our servers. Please try again.',
-        variant: 'destructive',
-        duration: 10_000,
-        action: (
-          <ToastAction altText="Email Cody directly" asChild>
-            <a href="mailto:cody@wranngle.com">Email Cody</a>
-          </ToastAction>
-        ),
-      });
-    },
-  });
-
-  if (successData) {
-    return (
-      <>
-        <DialogTitle className="sr-only">Submission received</DialogTitle>
-        <OrderReceipt successData={successData} />
-      </>
-    );
-  }
-
-  const isAgent = isAgentPackage(currentPackage);
-  const isSaas = isSaasPackage(currentPackage);
-  const itemName = isSaas
-    ? `gtm_ops ${offering?.name ?? ''}`.trim()
-    : (offering?.name ?? 'this');
-
-  if (!startMode) {
-    return (
-      <>
-        <DialogHeader>
-          <DialogTitle className="brand-font text-2xl">
-            How would you like to start?
-          </DialogTitle>
-          <DialogDescription>
-            Test the live Sarah demo first, or send the details now. Either way,
-            this starts with {itemName}.
-          </DialogDescription>
-        </DialogHeader>
-
-        <div className="grid gap-3 py-5">
-          <DialogClose asChild>
-            <button
-              type="button"
-              onClick={() => {
-                globalThis.setTimeout(() => {
-                  goTalkToSarah();
-                }, 150);
-              }}
-              className="text-left rounded-lg border border-[var(--s500)]/35 bg-[var(--s500)]/10 p-4 hover:border-[var(--s500)] transition-colors"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <span
-                  className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-[var(--s500)]/40 bg-[#101014] shadow-[0_0_24px_rgba(255,95,0,0.24)]"
-                  aria-hidden
-                >
-                  <span className="absolute inset-1 rounded-full bg-[radial-gradient(circle_at_35%_35%,rgba(255,255,255,0.75),rgba(255,95,0,0.45)_32%,rgba(207,60,105,0.5)_58%,transparent_76%)]" />
-                  <span className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,transparent_42%,rgba(255,95,0,0.38)_65%,transparent_72%)] animate-pulse" />
-                </span>
-                <div className="min-w-0">
-                  <div className="text-sm font-bold uppercase tracking-wider text-[var(--s500)]">
-                    Talk it out with Sarah
-                  </div>
-                  <p className="text-xs opacity-75 mt-1 leading-relaxed">
-                    Open the ElevenLabs voice demo and hear the customer
-                    experience before filling anything out.
-                  </p>
-                </div>
-                <ArrowRight size={16} className="shrink-0 text-[var(--s500)]" />
-              </div>
-            </button>
-          </DialogClose>
-
-          <button
-            type="button"
-            onClick={() => {
-              setStartMode('form');
-            }}
-            className="text-left rounded-lg border border-current/15 p-4 hover:border-[var(--s500)] transition-colors"
-          >
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <div className="text-sm font-bold uppercase tracking-wider">
-                  Fill out the form
-                </div>
-                <p className="text-xs opacity-70 mt-1 leading-relaxed">
-                  Send the business details and we will follow up with the next
-                  concrete step.
-                </p>
-              </div>
-              <ArrowRight size={16} className="shrink-0" />
-            </div>
-          </button>
-        </div>
-      </>
-    );
-  }
-
-  if (isSaas) {
-    const tierName = offering?.name ?? 'gtm_ops';
-    const isTrial = currentPackage === 'gtm-ops-trial';
-    return (
-      <>
-        <DialogHeader>
-          <DialogTitle className="brand-font text-2xl">
-            {isTrial ? 'Start your trial' : 'Request workspace setup'}
-          </DialogTitle>
-          <DialogDescription>
-            {isTrial
-              ? 'Email + company is all we need. No card. 14 days, then upgrade or walk.'
-              : `Email + company is all we need. Cody handles ${tierName} workspace setup from there.`}
-          </DialogDescription>
-        </DialogHeader>
-
-        <form
-          onSubmit={handleSubmit((data) => {
-            mutation.mutate(data);
-          })}
-          className="space-y-4 py-4"
-        >
-          <div className="grid gap-2">
-            <Label htmlFor="businessName">Company Name</Label>
-            <Input
-              id="businessName"
-              className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
-              {...register('businessName', {required: true})}
-              placeholder="Acme Co"
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="email">Work Email</Label>
-            <Input
-              id="email"
-              type="email"
-              className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
-              {...register('email', {required: true})}
-              placeholder="you@acme.co"
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="estimatedProposalsPerMonth">
-              Proposals you expect to generate per month (Optional)
-            </Label>
-            <Input
-              id="estimatedProposalsPerMonth"
-              className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
-              {...register('estimatedProposalsPerMonth')}
-              placeholder="10-50"
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="notes">Anything Cody should know? (Optional)</Label>
-            <Textarea
-              id="notes"
-              className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit min-h-[80px]"
-              {...register('notes')}
-              placeholder="Use case, integrations, compliance needs, timeline..."
-            />
-          </div>
-          <input
-            type="hidden"
-            {...register('package')}
-            value={currentPackage}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 py-4">
+        <div className="grid gap-2">
+          <Label htmlFor="businessName">Company Name</Label>
+          <Input
+            id="businessName"
+            className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
+            {...register('businessName', {required: true})}
+            placeholder="Acme Co"
           />
-          <p className="text-[10px] opacity-60 leading-relaxed mt-1">
-            By submitting, you agree to our{' '}
-            <Link
-              href="/privacy"
-              className="underline hover:text-[var(--s500)]"
-            >
-              Privacy Policy
-            </Link>{' '}
-            and{' '}
-            <Link href="/terms" className="underline hover:text-[var(--s500)]">
-              Terms of Service
-            </Link>
-            .
-          </p>
-          <Button
-            type="submit"
-            className="w-full bg-[var(--s500)] hover:bg-[var(--s500)]/90"
-            disabled={mutation.isPending}
-          >
-            {mutation.isPending
-              ? 'Submitting...'
-              : isTrial
-                ? 'Request trial access'
-                : `Request ${tierName} setup`}
-          </Button>
-        </form>
-      </>
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="email">Work Email</Label>
+          <Input
+            id="email"
+            type="email"
+            className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
+            {...register('email', {required: true})}
+            placeholder="you@acme.co"
+          />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="estimatedProposalsPerMonth">
+            Proposals you expect to generate per month (Optional)
+          </Label>
+          <Input
+            id="estimatedProposalsPerMonth"
+            className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit"
+            {...register('estimatedProposalsPerMonth')}
+            placeholder="10-50"
+          />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="notes">Anything Cody should know? (Optional)</Label>
+          <Textarea
+            id="notes"
+            className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit min-h-[80px]"
+            {...register('notes')}
+            placeholder="Use case, integrations, compliance needs, timeline..."
+          />
+        </div>
+        <input type="hidden" {...register('package')} value={currentPackage} />
+        <LegalNotice />
+        <Button
+          type="submit"
+          className="w-full bg-[var(--s500)] hover:bg-[var(--s500)]/90"
+          disabled={isPending}
+        >
+          {isPending
+            ? 'Submitting...'
+            : isTrial
+              ? 'Request trial access'
+              : `Request ${tierName} setup`}
+        </Button>
+      </form>
+    </>
+  );
+}
+
+function PackageFollowup({
+  currentPackage,
+  setCurrentPackage,
+}: {
+  currentPackage: string;
+  setCurrentPackage: Dispatch<SetStateAction<string>>;
+}) {
+  if (currentPackage === 'basic') {
+    return (
+      <UpgradeCard
+        title="Optional Upgrade"
+        body={
+          <>
+            Voice catches the after-hours phone call. <b>Web Chat</b> catches
+            the visitor who would rather type.
+          </>
+        }
+        buttonLabel="Upgrade to Elite Agent (+$250/mo)"
+        onClick={() => {
+          setCurrentPackage('premium');
+        }}
+      />
     );
   }
+
+  if (currentPackage === 'premium') {
+    return (
+      <SelectedPackageCard
+        title="Elite Agent Selected"
+        body="Priority 24/7 coverage, web chat, and two-way SMS are included."
+      />
+    );
+  }
+
+  if (currentPackage === 'landing-page') {
+    return (
+      <UpgradeCard
+        title="Optional Upgrade"
+        body="Need more than one page? The Business Site includes CMS, analytics, and automation."
+        buttonLabel="Upgrade to Business Site"
+        onClick={() => {
+          setCurrentPackage('business-site');
+        }}
+      />
+    );
+  }
+
+  if (currentPackage === 'business-site') {
+    return (
+      <SelectedPackageCard
+        title="Business Site Selected"
+        body="Multi-page site with CMS, analytics, and lead capture automation."
+      />
+    );
+  }
+
+  return null;
+}
+
+function UpgradeCard({
+  title,
+  body,
+  buttonLabel,
+  onClick,
+}: {
+  title: string;
+  body: React.ReactNode;
+  buttonLabel: string;
+  onClick: () => void;
+}) {
+  return (
+    <div className="p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-4 items-start">
+      <Zap className="text-[var(--s500)] shrink-0" size={20} aria-hidden />
+      <div>
+        <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider mb-1">
+          {title}
+        </div>
+        <p className="text-[11px] opacity-80 leading-relaxed mb-2">{body}</p>
+        <button
+          type="button"
+          onClick={onClick}
+          className="mt-2 flex items-center gap-2 text-[10px] font-bold text-[var(--s500)] border border-[var(--s500)] px-3 py-1.5 rounded hover:bg-[var(--s500)] hover:text-white transition-all uppercase tracking-wide"
+        >
+          {buttonLabel} <ArrowRight size={10} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function SelectedPackageCard({title, body}: {title: string; body: string}) {
+  return (
+    <div className="p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-4 items-center">
+      <div className="w-5 h-5 rounded-full bg-[var(--s500)] flex items-center justify-center text-white shrink-0">
+        <Check size={12} strokeWidth={4} aria-hidden />
+      </div>
+      <div>
+        <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider">
+          {title}
+        </div>
+        <p className="text-[11px] opacity-80 leading-relaxed">{body}</p>
+      </div>
+    </div>
+  );
+}
+
+function WebChatAddOn({register}: {register: UseFormRegister<IntakeFormData>}) {
+  return (
+    <div className="p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-4 items-start">
+      <Zap className="text-[var(--s500)] shrink-0" size={20} aria-hidden />
+      <div>
+        <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider mb-1">
+          Add-On: Web Chat Agent
+        </div>
+        <p className="text-[11px] opacity-80 leading-relaxed mb-2">
+          Capture leads 24/7 with an AI-powered web chat agent on your new site.
+        </p>
+        <label className="flex items-center gap-2 text-[11px] cursor-pointer">
+          <input
+            type="checkbox"
+            {...register('addWebChatAgent')}
+            className="accent-[var(--s500)]"
+          />
+          <span>Add Web Chat Agent (+$250/mo)</span>
+        </label>
+      </div>
+    </div>
+  );
+}
+
+function StandardIntakeForm({
+  currentPackage,
+  register,
+  handleSubmit,
+  onSubmit,
+  isPending,
+  setCurrentPackage,
+}: IntakeFormFieldsProps & {
+  setCurrentPackage: Dispatch<SetStateAction<string>>;
+}) {
+  const offering = getOfferingById(currentPackage);
+  const isAgent = isAgentPackage(currentPackage);
 
   return (
     <>
@@ -466,150 +557,9 @@ const IntakeForm = ({
         </DialogDescription>
       </DialogHeader>
 
-      {currentPackage === 'basic' && (
-        <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-4 items-start">
-          <Zap className="text-[var(--s500)] shrink-0" size={20} aria-hidden />
-          <div>
-            <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider mb-1">
-              Recommended Upgrade
-            </div>
-            <p className="text-[11px] opacity-80 leading-relaxed mb-2">
-              Voice catches the after-hours phone call. <b>Web Chat</b> catches
-              the visitor who would rather type. Most teams lose leads in at
-              least one of those paths.
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                setCurrentPackage('premium');
-              }}
-              className="mt-2 flex items-center gap-2 text-[10px] font-bold text-[var(--s500)] border border-[var(--s500)] px-3 py-1.5 rounded hover:bg-[var(--s500)] hover:text-white transition-all uppercase tracking-wide"
-            >
-              Upgrade to Elite Agent (+$250/mo) <ArrowRight size={10} />
-            </button>
-          </div>
-        </div>
-      )}
+      {isAgent && <AgentDemoSecondaryAction />}
 
-      {currentPackage === 'premium' && (
-        <>
-          <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/10 rounded-lg flex gap-4 items-center">
-            <div className="w-5 h-5 rounded-full bg-[var(--s500)] flex items-center justify-center text-white shrink-0">
-              <Check size={12} strokeWidth={4} aria-hidden />
-            </div>
-            <div>
-              <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider">
-                Elite Agent Selected
-              </div>
-              <p className="text-[11px] opacity-80 leading-relaxed">
-                Priority 24/7 Coverage + Web Chat Integration included.
-              </p>
-            </div>
-          </div>
-          <div className="mt-3 p-4 border border-[var(--v500)]/30 bg-[var(--v500)]/5 rounded-lg flex gap-4 items-start">
-            <Zap
-              className="text-[var(--v500)] shrink-0"
-              size={20}
-              aria-hidden
-            />
-            <div>
-              <div className="text-xs font-bold text-[var(--v500)] uppercase tracking-wider mb-1">
-                Worth Considering
-              </div>
-              <p className="text-[11px] opacity-80 leading-relaxed mb-2">
-                A Landing Page (7-day delivery) gives callers somewhere to
-                convert before they pick up the phone — common companion to an
-                Elite Agent setup.
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setCurrentPackage('landing-page');
-                }}
-                className="mt-1 flex items-center gap-2 text-[10px] font-bold text-[var(--v500)] border border-[var(--v500)] px-3 py-1.5 rounded hover:bg-[var(--v500)] hover:text-white transition-all uppercase tracking-wide"
-              >
-                Switch to Landing Page ($900) <ArrowRight size={10} />
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-
-      {currentPackage === 'landing-page' && (
-        <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-4 items-start">
-          <Zap className="text-[var(--s500)] shrink-0" size={20} aria-hidden />
-          <div>
-            <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider mb-1">
-              Recommended Upgrade
-            </div>
-            <p className="text-[11px] opacity-80 leading-relaxed mb-2">
-              Need more than one page? The Business Site includes CMS,
-              analytics, and automation.
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                setCurrentPackage('business-site');
-              }}
-              className="mt-2 flex items-center gap-2 text-[10px] font-bold text-[var(--s500)] border border-[var(--s500)] px-3 py-1.5 rounded hover:bg-[var(--s500)] hover:text-white transition-all uppercase tracking-wide"
-            >
-              Upgrade to Business Site <ArrowRight size={10} />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {currentPackage === 'business-site' && (
-        <>
-          <div className="mt-4 p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/10 rounded-lg flex gap-4 items-center">
-            <div className="w-5 h-5 rounded-full bg-[var(--s500)] flex items-center justify-center text-white shrink-0">
-              <Check size={12} strokeWidth={4} aria-hidden />
-            </div>
-            <div>
-              <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider">
-                Business Site Selected
-              </div>
-              <p className="text-[11px] opacity-80 leading-relaxed">
-                Multi-page site with CMS, analytics, and lead capture
-                automation.
-              </p>
-            </div>
-          </div>
-          <div className="mt-3 p-4 border border-[var(--v500)]/30 bg-[var(--v500)]/5 rounded-lg flex gap-4 items-start">
-            <Zap
-              className="text-[var(--v500)] shrink-0"
-              size={20}
-              aria-hidden
-            />
-            <div>
-              <div className="text-xs font-bold text-[var(--v500)] uppercase tracking-wider mb-1">
-                Worth Considering
-              </div>
-              <p className="text-[11px] opacity-80 leading-relaxed mb-2">
-                A Core Agent so the contact form is not your only after-hours
-                capture. The form catches who emails; the agent catches who
-                actually calls.
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setCurrentPackage('basic');
-                }}
-                className="mt-1 flex items-center gap-2 text-[10px] font-bold text-[var(--v500)] border border-[var(--v500)] px-3 py-1.5 rounded hover:bg-[var(--v500)] hover:text-white transition-all uppercase tracking-wide"
-              >
-                Switch to Core Agent ($250/mo) <ArrowRight size={10} />
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-
-      <form
-        onSubmit={handleSubmit((data) => {
-          mutation.mutate(data);
-        })}
-        className="space-y-4 py-4"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 py-4">
         <div className="grid gap-2">
           <Label htmlFor="businessName">Business Name</Label>
           <Input
@@ -687,55 +637,108 @@ const IntakeForm = ({
             }
           />
         </div>
-        {!isAgent && (
-          <div className="p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-4 items-start">
-            <Zap
-              className="text-[var(--s500)] shrink-0"
-              size={20}
-              aria-hidden
-            />
-            <div>
-              <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider mb-1">
-                Add-On: Web Chat Agent
-              </div>
-              <p className="text-[11px] opacity-80 leading-relaxed mb-2">
-                Capture leads 24/7 with an AI-powered web chat agent on your new
-                site.
-              </p>
-              <label className="flex items-center gap-2 text-[11px] cursor-pointer">
-                <input
-                  type="checkbox"
-                  {...register('addWebChatAgent')}
-                  className="accent-[var(--s500)]"
-                />
-                <span>Add Web Chat Agent (+$250/mo)</span>
-              </label>
-            </div>
-          </div>
-        )}
+        <PackageFollowup
+          currentPackage={currentPackage}
+          setCurrentPackage={setCurrentPackage}
+        />
+        {!isAgent && <WebChatAddOn register={register} />}
         <input type="hidden" {...register('package')} value={currentPackage} />
-        <p className="text-[10px] opacity-60 leading-relaxed mt-1">
-          By submitting, you agree to our{' '}
-          <Link href="/privacy" className="underline hover:text-[var(--s500)]">
-            Privacy Policy
-          </Link>{' '}
-          and{' '}
-          <Link href="/terms" className="underline hover:text-[var(--s500)]">
-            Terms of Service
-          </Link>
-          .
-        </p>
+        <LegalNotice />
         <Button
           type="submit"
           className="w-full bg-[var(--s500)] hover:bg-[var(--s500)]/90"
-          disabled={mutation.isPending}
+          disabled={isPending}
         >
-          {mutation.isPending
-            ? 'Submitting...'
-            : `Request ${offering?.name ?? 'setup'}`}
+          {isPending ? 'Submitting...' : `Request ${offering?.name ?? 'setup'}`}
         </Button>
       </form>
     </>
+  );
+}
+
+type IntakeFormProps = {
+  selectedPackage: string;
+  onSuccess?: () => void;
+};
+
+const IntakeForm = ({
+  selectedPackage,
+  onSuccess = noopOnSuccess,
+}: IntakeFormProps) => {
+  const [currentPackage, setCurrentPackage] = useState(selectedPackage);
+  const {register, handleSubmit, reset, setValue} = useForm<IntakeFormData>({
+    defaultValues: {package: currentPackage},
+    shouldUseNativeValidation: true,
+  });
+  const {toast} = useToast();
+  const [successData, setSuccessData] = useState<IntakeFormData | undefined>(
+    undefined,
+  );
+
+  useEffect(() => {
+    setValue('package', currentPackage);
+  }, [currentPackage, setValue]);
+
+  const mutation = useMutation<unknown, Error, IntakeFormData>({
+    async mutationFn(data) {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error('Failed to submit');
+      return res.json();
+    },
+    onSuccess(_, variables) {
+      setSuccessData(variables);
+      toast({
+        title: 'Got it',
+        description: 'We will be in touch with the next step.',
+      });
+      reset();
+      onSuccess?.();
+    },
+    onError() {
+      toast({
+        title: 'Submission failed',
+        description: 'Could not reach our servers. Please try again.',
+        variant: 'destructive',
+        duration: 10_000,
+        action: (
+          <ToastAction altText="Email Cody directly" asChild>
+            <a href="mailto:cody@wranngle.com">Email Cody</a>
+          </ToastAction>
+        ),
+      });
+    },
+  });
+
+  if (successData) {
+    return (
+      <>
+        <DialogTitle className="sr-only">Submission received</DialogTitle>
+        <OrderReceipt successData={successData} />
+      </>
+    );
+  }
+
+  const isSaas = isSaasPackage(currentPackage);
+  const formProps = {
+    currentPackage,
+    register,
+    handleSubmit,
+    isPending: mutation.isPending,
+    onSubmit(data: IntakeFormData) {
+      mutation.mutate(data);
+    },
+  };
+
+  if (isSaas) {
+    return <SaasIntakeForm {...formProps} />;
+  }
+
+  return (
+    <StandardIntakeForm {...formProps} setCurrentPackage={setCurrentPackage} />
   );
 };
 
