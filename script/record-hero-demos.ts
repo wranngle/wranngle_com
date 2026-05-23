@@ -16,7 +16,7 @@ import {spawn} from 'node:child_process';
 import {createServer} from 'node:http';
 import {readFile, mkdir, writeFile, copyFile, stat} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
-import {dirname, join, extname} from 'node:path';
+import {dirname, join, extname, resolve as resolvePath, sep} from 'node:path';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -66,7 +66,17 @@ async function serveStages() {
   const server = createServer(async (req, res) => {
     try {
       const rel = decodeURIComponent((req.url ?? '/').split('?')[0]);
-      const path = join(STAGES, rel.endsWith('/') ? `${rel}index.html` : rel);
+      const relPath = rel.endsWith('/') ? `${rel}index.html` : rel;
+      // Resolve under STAGES and reject any path that escapes it (the URL is
+      // attacker-controllable in principle even on a localhost recording
+      // server — CodeQL js/path-injection).
+      const path = resolvePath(STAGES, `.${relPath}`);
+      if (path !== STAGES && !path.startsWith(`${STAGES}${sep}`)) {
+        res.writeHead(403);
+        res.end('forbidden');
+        return;
+      }
+
       const body = await readFile(path);
       res.writeHead(200, {
         'content-type': MIME[extname(path)] ?? 'application/octet-stream',
