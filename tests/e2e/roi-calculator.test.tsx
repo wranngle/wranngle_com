@@ -29,7 +29,11 @@ import {computeRoi, ROI_ASSUMPTIONS} from '@/lib/roi.ts';
 
 describe('roi formula', () => {
   it('matches the documented assumptions on the canonical input', () => {
-    const r = computeRoi({company: 'ABC HVAC', calls: 80, ticket: 350});
+    const r = computeRoi({
+      company: 'River North Bistro',
+      calls: 80,
+      ticket: 350,
+    });
     // 80 * 0.35 * 0.95 * 0.40 = 10.64 jobs * $350 = $3,724
     expect(r.missedCallsMonthly).toBeCloseTo(28, 0);
     expect(r.additionalJobsBooked).toBeCloseTo(10.6, 1);
@@ -63,19 +67,19 @@ describe('RoiCalculator SSR markup', () => {
     const html = renderToStaticMarkup(
       <RoiCalculator
         isDark={false}
-        initialCompany="ABC HVAC"
+        initialCompany="River North Bistro"
         initialCalls={80}
         initialTicket={350}
       />,
     );
-    expect(html).toContain('ABC HVAC');
+    expect(html).toContain('River North Bistro');
   });
 
   it('renders the data-savings-monthly attribute on the output element', () => {
     const html = renderToStaticMarkup(
       <RoiCalculator
         isDark={false}
-        initialCompany="ABC HVAC"
+        initialCompany="River North Bistro"
         initialCalls={80}
         initialTicket={350}
       />,
@@ -124,7 +128,7 @@ describe('RoiCalculator telemetry', () => {
       root.render(
         <RoiCalculator
           isDark={false}
-          initialCompany="ABC HVAC"
+          initialCompany="River North Bistro"
           initialCalls={80}
           initialTicket={350}
         />,
@@ -142,7 +146,7 @@ describe('RoiCalculator telemetry', () => {
     const payload = JSON.parse(init?.body as string);
     expect(payload).toEqual({
       event: 'roi.calculated',
-      company: 'ABC HVAC',
+      company: 'River North Bistro',
       calls: 80,
       ticket: 350,
       savings_monthly: 3724,

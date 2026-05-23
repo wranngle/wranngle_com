@@ -66,29 +66,28 @@ export function OfferingsMegaMenu({isDark}: OfferingsMegaMenuProps) {
                   isLast ? '' : `border-r ${dividerClass}`
                 }`}
               >
-                <div className="flex items-baseline justify-between mb-1 gap-2">
-                  <span
-                    className={`text-[11px] font-bold text-[var(--s500)] group-hover/col:underline underline-offset-4 decoration-2 ${
-                      cat.id === 'gtm_ops'
-                        ? 'mono-font tracking-[0.08em]'
-                        : 'uppercase tracking-[0.18em]'
-                    }`}
-                  >
-                    {cat.name}
-                  </span>
-                  <Link
-                    href={headerHref}
-                    onClick={() => {
-                      setOpen(false);
-                    }}
-                    className="text-[9px] uppercase font-bold tracking-wider opacity-50 group-hover/col:opacity-100 group-hover/col:text-[var(--s500)] shrink-0 transition-opacity"
-                  >
-                    View page →
-                  </Link>
-                </div>
-                <div className="text-[10px] opacity-50 mb-3 leading-snug">
+                <Link
+                  href={headerHref}
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                  className={`block mb-1 text-[11px] font-bold text-[var(--s500)] hover:underline underline-offset-4 decoration-2 ${
+                    cat.id === 'gtm_ops'
+                      ? 'mono-font tracking-[0.08em]'
+                      : 'uppercase tracking-[0.18em]'
+                  }`}
+                >
+                  {cat.name}
+                </Link>
+                <Link
+                  href={headerHref}
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                  className="block text-[10px] opacity-50 hover:opacity-80 mb-3 leading-snug transition-opacity"
+                >
                   {cat.description}
-                </div>
+                </Link>
                 <div className="space-y-1">
                   {cat.items.map((item) => (
                     <a

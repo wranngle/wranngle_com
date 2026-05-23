@@ -323,6 +323,26 @@ html[data-sarah-suppressed='true'] elevenlabs-convai {
     border-color: hsl(var(--border));
   }
 
+  /* Inherit color into anchors — without this rule the browser default
+     :visited turns links purple, which surfaced as purple offering links
+     in the mega-menu, footer, and other dropdowns. */
+  a,
+  a:visited {
+    color: inherit;
+  }
+
+  /* Placeholder contrast — Tailwind defaults give ~30% opacity which
+     disappears against the sand/night surfaces. Bump to 55%/65% so the
+     hint stays readable in both modes without competing with the value. */
+  ::placeholder {
+    color: hsl(var(--muted-foreground));
+    opacity: 0.7;
+  }
+
+  .dark ::placeholder {
+    opacity: 0.6;
+  }
+
   html {
     line-height: 1.5;
     text-size-adjust: 100%;

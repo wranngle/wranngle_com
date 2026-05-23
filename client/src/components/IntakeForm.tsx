@@ -319,6 +319,78 @@ function AgentDemoSecondaryAction() {
   );
 }
 
+/**
+ * Pre-modal gate shown before the actual intake form. Recommends a quick
+ * voice demo with Sarah and offers two paths:
+ *   1. Hear Sarah first — opens the ElevenLabs voice widget (the user can
+ *      come back to fill the form afterwards via the same CTA).
+ *   2. Continue to form — dismisses the gate and renders the intake form.
+ *
+ * Used by all packages so the recommended-voice-demo step is consistent
+ * across AI agent and gtm_ops intake flows (round-2 feedback F006 + F027).
+ */
+function SarahPreModalGate({
+  tierName,
+  modeLabel,
+  onContinue,
+  isTrial,
+}: {
+  tierName: string;
+  modeLabel: 'sales-intake' | 'after-hours-demo';
+  onContinue: () => void;
+  isTrial: boolean;
+}) {
+  const blurb =
+    modeLabel === 'sales-intake'
+      ? `Sarah is our recommended sales-intake voice agent. She can answer questions about ${tierName} live, pre-qualify the request, and book a follow-up before you fill the form.`
+      : `Sarah is the after-hours AI demo. She'll show what your team's missed call would sound like before you fill the intake form.`;
+
+  return (
+    <div className="py-3" data-testid="sarah-pre-modal">
+      <DialogHeader>
+        <DialogTitle className="brand-font text-2xl flex items-center gap-2">
+          <Sparkles
+            size={18}
+            className="text-[var(--s500)] sarah-glimmer"
+            aria-hidden
+          />
+          Hear Sarah first?
+        </DialogTitle>
+        <DialogDescription>{blurb}</DialogDescription>
+      </DialogHeader>
+
+      <div className="mt-5 grid sm:grid-cols-2 gap-3">
+        <DialogClose asChild>
+          <button
+            type="button"
+            onClick={() => {
+              globalThis.setTimeout(() => {
+                goTalkToSarah();
+              }, 150);
+            }}
+            className="h-12 px-4 bg-[var(--s500)] text-white font-bold uppercase text-xs rounded-md shadow-lg hover:scale-[1.02] transition-all inline-flex items-center justify-center gap-2"
+          >
+            <Sparkles size={14} className="sarah-glimmer" aria-hidden />
+            Hear Sarah first
+          </button>
+        </DialogClose>
+        <button
+          type="button"
+          onClick={onContinue}
+          className="h-12 px-4 border border-current/25 font-bold uppercase text-xs rounded-md hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all inline-flex items-center justify-center gap-2"
+        >
+          {isTrial ? 'Continue to trial form' : 'Continue to form'}
+          <ArrowRight size={14} aria-hidden />
+        </button>
+      </div>
+      <p className="mt-3 text-[11px] opacity-55 leading-relaxed">
+        Sarah will announce that she&apos;s an AI agent at the start of the
+        call. Mic permissions required; no signup.
+      </p>
+    </div>
+  );
+}
+
 function SaasIntakeForm({
   currentPackage,
   register,
@@ -339,7 +411,7 @@ function SaasIntakeForm({
         <DialogDescription>
           {isTrial
             ? 'Email + company is all we need. No card. 14 days, then upgrade or walk.'
-            : `Email + company is all we need. Cody handles ${tierName} workspace setup from there.`}
+            : `Email + company is all we need. We handle ${tierName} workspace setup from there.`}
         </DialogDescription>
       </DialogHeader>
 
@@ -375,7 +447,7 @@ function SaasIntakeForm({
           />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="notes">Anything Cody should know? (Optional)</Label>
+          <Label htmlFor="notes">Additional notes (Optional)</Label>
           <Textarea
             id="notes"
             className="placeholder:opacity-40 border-l-4 border-l-[var(--s500)] bg-transparent text-inherit min-h-[80px]"
@@ -674,6 +746,10 @@ const IntakeForm = ({
   const [successData, setSuccessData] = useState<IntakeFormData | undefined>(
     undefined,
   );
+  // Sarah pre-modal gate: shown as the first step before the form so users
+  // can take a quick voice demo before committing intake time. Round-2
+  // feedback F006 and F027 — applies to AI agent and gtm_ops flows.
+  const [sarahGateOpen, setSarahGateOpen] = useState(true);
 
   useEffect(() => {
     setValue('package', currentPackage);
@@ -723,6 +799,24 @@ const IntakeForm = ({
   }
 
   const isSaas = isSaasPackage(currentPackage);
+  const isAgent = isAgentPackage(currentPackage);
+
+  if (sarahGateOpen) {
+    const offering = getOfferingById(currentPackage);
+    const tierName = offering?.name ?? 'this tier';
+    const modeLabel = isAgent ? 'after-hours-demo' : 'sales-intake';
+    return (
+      <SarahPreModalGate
+        tierName={tierName}
+        modeLabel={modeLabel}
+        isTrial={currentPackage === 'gtm-ops-trial'}
+        onContinue={() => {
+          setSarahGateOpen(false);
+        }}
+      />
+    );
+  }
+
   const formProps = {
     currentPackage,
     register,

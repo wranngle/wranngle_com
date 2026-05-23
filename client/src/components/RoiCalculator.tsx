@@ -30,7 +30,7 @@ const TELEMETRY_DEBOUNCE_MS = 600;
 export default function RoiCalculator({
   isDark,
   tickerEndpoint = DEFAULT_TICKER_ENDPOINT,
-  initialCompany = 'ABC HVAC',
+  initialCompany = 'River North Bistro',
   initialCalls = 80,
   initialTicket = 350,
 }: RoiCalculatorProps) {
@@ -113,10 +113,10 @@ export default function RoiCalculator({
           ?
         </h2>
         <p className="opacity-60 text-lg leading-relaxed">
-          Plug in your call volume and the average ticket. We assume 35% of
-          inbound calls are missed and that an AI agent picks up 95% of those.
-          About 40% of recovered after-hours calls book. Conservative numbers on
-          purpose.
+          Plug in your call volume and the average ticket (reservation, booking,
+          intake, or service value). We assume 35% of inbound calls are missed
+          and that an AI agent picks up 95% of those. About 40% of recovered
+          after-hours calls convert. Conservative numbers on purpose.
         </p>
       </div>
 
@@ -142,7 +142,7 @@ export default function RoiCalculator({
                 setCompany(event.target.value);
               }}
               className={`px-4 py-3 rounded-lg border ${inputBg} focus:outline-none focus:ring-2 focus:ring-[var(--s500)]`}
-              placeholder="ABC HVAC"
+              placeholder="River North Bistro"
               maxLength={80}
             />
           </label>

@@ -7,5 +7,6 @@ Sitemap: https://wranngle.com/sitemap.xml
 LLMs: https://wranngle.com/llms.txt
 LLMs-Full: https://wranngle.com/llms-full.txt
 Profile: https://wranngle.com/cody-arnold.md
+ProfileAlias: https://wranngle.com/profile.md
 Company: https://wranngle.com/wranngle-systems.md
 StructuredData: https://wranngle.com/profile.json

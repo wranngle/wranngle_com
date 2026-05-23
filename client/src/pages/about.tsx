@@ -66,37 +66,37 @@ const TRUST_MARKERS = [
     value: '10 years',
     label: 'IT operations experience',
     detail:
-      'Automation, escalation, documentation, and support work in live operating environments.',
+      'A decade running automation inside live support work — not beside it. Every script had to survive the next on-call shift.',
   },
   {
     value: '500+',
     label: 'Client environments',
     detail:
-      'A wide range of business environments, support tools, and edge cases.',
+      'Hundreds of distinct tenants, each with its own integrations and edge cases. The fragile ones taught most of the rules I still use.',
   },
   {
     value: '4,000+',
     label: 'Endpoints supported',
     detail:
-      'Automation for recurring support work, reporting, maintenance tasks, and internal handoffs.',
+      'Python and PowerShell tooling that cut manual oversight by roughly 40% across the fleet.',
   },
   {
     value: '700',
     label: 'SOP guides authored',
     detail:
-      'Runbooks, handoffs, and repeatable patterns for a 10-person team that had to keep moving without guesswork.',
+      'A team of ten had to move without guessing. The runbook library made the next engineer the same engineer.',
   },
   {
     value: '15',
     label: 'Client sites in voice deployment',
     detail:
-      'ATG ElevenLabs on-call agent work across 15 client sites: zero dropped calls, P95 latency under 500ms, 92% CRM enrichment.',
+      'ElevenLabs on-call voice agents in production. Zero dropped calls. P95 under 500 ms. CRM enrichment lands cleanly on 92% of calls.',
   },
   {
     value: '<500 ms',
     label: 'P95 latency target',
     detail:
-      'Latency, fallbacks, and transcript quality are measured because callers notice delays immediately.',
+      'Voice is unforgiving — callers hear every pause. Latency, fallbacks, and transcript quality get measured because the customer notices first.',
   },
 ];
 
@@ -104,22 +104,22 @@ const WORK_SHAPES = [
   {
     label: 'Voice AI',
     title: 'Voice agents that cover the phones',
-    body: 'ElevenLabs agents, Twilio handoffs, transcript fixtures, post-call webhooks, and latency budgets for calls that need a clean next step.',
+    body: 'ElevenLabs agents wired to Twilio (and Telnyx and Bandwidth when telephony gets weird). Each prompt change ships with synthetic-conversation regression tests so a 2 AM call gets the same script as a 2 PM call.',
   },
   {
     label: 'Workflow automation',
     title: 'Workflow infrastructure around the agent',
-    body: 'n8n, CRM enrichment, lead routing, proposal inputs, Slack alerts, and review screens that keep the system inspectable.',
+    body: 'A 13-node n8n orchestration enriches the lead during the call, writes back to the CRM in flight, and surfaces a clean handoff to Slack. Every boundary is schema-validated so the LLM cannot poison downstream systems.',
   },
   {
     label: 'Product systems',
     title: 'Interfaces for daily operations',
-    body: 'Dashboards, automations, evals, run logs, and review screens that connect intake, decisions, and handoffs.',
+    body: 'Dashboards that show the run log next to the proposal PDF. Evals that fail loud. Review screens that let an operator replay a call from the original payload and answer "why did it route this way?" without paging an engineer.',
   },
   {
     label: 'Operating discipline',
     title: 'Runbooks and failure paths',
-    body: 'The operations habits still matter: document the path, measure the failure-prone parts, make ownership clear, and catch regressions before customers feel them.',
+    body: 'The operations habits still matter. Document the path. Measure the part that breaks. Name an owner. Catch regressions before the customer does.',
   },
 ];
 
@@ -231,23 +231,24 @@ export default function About() {
                 <div className="mt-8 space-y-5 text-base md:text-xl leading-relaxed">
                   <p>
                     Wranngle builds AI voice agents and workflow automation for
-                    teams with real customer follow-up. The goal is
-                    straightforward: answer calls, capture the details, route
-                    work to the tools already in use, and make the activity easy
-                    to review.
+                    teams with real customer follow-up. The job is
+                    straightforward — answer the call, get the useful details,
+                    route the work into tools the team already checks, and make
+                    every step easy to review afterwards.
                   </p>
                   <p className={mutedText}>
-                    I started this work in IT operations, where automation had
-                    to support live service work instead of sitting beside it.
-                    That background still shapes the projects: voice agents,
-                    workflow infrastructure, CRM updates, team handoffs, and
-                    logs that make the result understandable later.
+                    This work started in IT operations. Automation had to
+                    support live service shifts, not run alongside them. That
+                    background still shapes everything that ships now: the voice
+                    agent has to fail visibly when it fails, the CRM write-back
+                    has to be reproducible, the handoff has to be readable by
+                    whoever picks up next.
                   </p>
                   <p className={mutedText}>
-                    I work as an AI automation engineer across voice agents,
-                    workflow systems, and the interfaces around them. The focus
-                    is the handoff: what the agent understood, where the work
-                    went next, and how the team can tell if something failed.
+                    Most of the day is spent on the handoff. What did the agent
+                    understand? Where did the work go after the call ended? If
+                    something broke, can the team see exactly which step broke
+                    and replay the inputs?
                   </p>
                 </div>
               </div>
@@ -282,8 +283,9 @@ export default function About() {
                       What Wranngle does
                     </p>
                     <p className="mt-1 text-sm leading-relaxed opacity-80">
-                      Voice agents, workflow automation, and practical systems
-                      for teams that need cleaner handoffs.
+                      Production voice agents and the workflow around them, so a
+                      missed call becomes a clean follow-up instead of a
+                      voicemail your team never hears.
                     </p>
                   </div>
                 </div>
@@ -294,8 +296,9 @@ export default function About() {
                       Current focus
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
-                      Voice agents, workflow automation, lead capture, proposal
-                      generation, and eval harnesses.
+                      Shipping the ElevenLabs voice runtime, the n8n
+                      orchestration behind it, and the proposal console that
+                      consumes the resulting lead.
                     </dd>
                   </div>
                   <div className="py-4">
@@ -303,8 +306,9 @@ export default function About() {
                       Work covered
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
-                      Voice AI, workflow automation, product interfaces, and
-                      internal operating tools.
+                      Voice AI on the inbound. Workflow plumbing in the middle.
+                      Operator-facing tooling on the outbound. The same engineer
+                      owns all three so the contract between them stays honest.
                     </dd>
                   </div>
                   <div className="py-4">
@@ -312,8 +316,9 @@ export default function About() {
                       How I build
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
-                      Clear logs, explicit fallbacks, named ownership, and
-                      enough documentation to operate the system later.
+                      Every boundary is schema-validated. Every fallback is
+                      named. Every run leaves a log a human can replay.
+                      Documentation is part of the pull request.
                     </dd>
                   </div>
                   <div className="py-4">
@@ -321,18 +326,9 @@ export default function About() {
                       Recent work
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
-                      ElevenLabs voice agent coverage across 15 client sites:
-                      P95 under 500ms, 92% CRM enrichment, regression-tested
-                      before release.
-                    </dd>
-                  </div>
-                  <div className="py-4">
-                    <dt className="mono-font text-[10px] font-bold uppercase tracking-widest opacity-55">
-                      External note
-                    </dt>
-                    <dd className="mt-2 text-sm leading-relaxed">
-                      ElevenLabs Startup Grant, 2025 — for the on-call voice
-                      work that became this practice.
+                      ElevenLabs on-call voice agents in production across 15
+                      client sites. Synthetic-conversation regression harness
+                      gates every prompt change. P95 under 500 ms.
                     </dd>
                   </div>
                 </dl>
@@ -440,13 +436,10 @@ export default function About() {
                 context all day.
               </p>
               <p>
-                The better target is continuity. A missed call should become a
-                qualified lead. The CRM should get the useful facts. A proposal
-                should start from captured details. The owner should be able to
-                review what happened afterward.
-              </p>
-              <p>
-                The system should meet the team where the work already happens.
+                The better target is continuity. A missed call becomes a
+                qualified lead. The CRM gets the useful facts. A proposal starts
+                from captured details. The owner can review what happened
+                afterward — and pick up exactly where the agent left off.
               </p>
             </div>
           </section>

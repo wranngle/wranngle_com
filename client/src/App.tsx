@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {motion} from 'framer-motion';
 import {
   ArrowRight,
@@ -13,9 +13,9 @@ import {Link} from 'wouter';
 import {OFFERING_CATEGORIES, type OfferingItem} from '@/data/offerings.ts';
 import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
-import Ticker from '@/components/Ticker.tsx';
 import RoiCalculator from '@/components/RoiCalculator.tsx';
 import AgentDemoButton from '@/components/AgentDemoButton.tsx';
+import StackedWidgetCarousel from '@/components/StackedWidgetCarousel.tsx';
 import {
   Dialog,
   DialogContent,
@@ -29,39 +29,16 @@ import SiteFooter from '@/components/site/SiteFooter.tsx';
 import {useDarkMode} from '@/components/site/DarkModeToggle.tsx';
 import {
   SARAH_AGENT_ID,
+  buildSarahDynamicVariables,
   ensureSarahWidgetScript,
   goTalkToSarah,
   openSarahWidget,
 } from '@/lib/sarah.ts';
 
-const INITIAL_DIM = {w: 0, h: 0};
-const CONSOLE_LINES = [
-  {text: '[LIVE] Call coverage active', color: 'text-gray-400'},
-  {text: '> Missed call: new request after hours', color: 'text-gray-300'},
-  {
-    text: '[ASK] Confirming name, callback, and request type',
-    color: 'text-cyan-400',
-  },
-  {
-    text: '> Caller asks about availability and next steps',
-    color: 'text-gray-300',
-  },
-  {
-    text: '[ROUTE] Urgent issue flagged for the on-call owner',
-    color: 'text-green-400',
-  },
-  {text: '> Follow-up summary sent to CRM and inbox', color: 'text-cyan-400'},
-  {
-    text: '[BRANCH] Non-urgent question queued for morning review',
-    color: 'text-violet-300',
-  },
-  {text: '\n[READY] Next caller gets the right path.', color: 'text-white'},
-];
-
 const VOICE_HERO_METRICS = [
   {value: '24/7', label: 'after-hours coverage'},
   {value: '2,500', label: 'included voice minutes'},
-  {value: '3', label: 'channels: voice, web, SMS'},
+  {value: '5', label: 'channels: phone, SMS, web chat, email, Slack'},
 ];
 
 const VOICE_OPS_SIGNALS = [
@@ -231,25 +208,6 @@ const WranngleLanding = () => {
                     </ButtonGhost>
                   </div>
 
-                  <figure
-                    className={`mt-8 overflow-hidden rounded-md border max-w-xl ${
-                      isDark
-                        ? 'border-white/10 bg-white/[0.03]'
-                        : 'border-black/10 bg-white/60'
-                    }`}
-                    aria-label="Wranngle case-study walkthrough"
-                    data-testid="demo-hero-video"
-                  >
-                    <video
-                      src="/demo-hero.mp4"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                      className="w-full h-auto block"
-                    />
-                  </figure>
                   <AgentDemoButton isDark={isDark} />
 
                   <div className="mt-8 grid grid-cols-3 gap-3 max-w-xl">
@@ -273,7 +231,11 @@ const WranngleLanding = () => {
                   </div>
                 </div>
 
-                <ConsoleVisual isDark={isDark} lines={CONSOLE_LINES} />
+                <StackedWidgetCarousel
+                  isDark={isDark}
+                  caption="Live across client sites"
+                  subcaption="Agents on real client pages, picking up the call and booking the next step."
+                />
               </motion.div>
 
               <div className="mt-10 grid md:grid-cols-3 gap-3">
@@ -297,13 +259,6 @@ const WranngleLanding = () => {
                 ))}
               </div>
             </div>
-          </section>
-
-          <section
-            aria-label="Live anonymized bookings"
-            className="px-6 max-w-7xl mx-auto w-full pt-10 md:pt-14"
-          >
-            <Ticker isDark={isDark} />
           </section>
 
           <section
@@ -411,6 +366,10 @@ const WranngleLanding = () => {
           listening-text="Sarah is listening"
           speaking-text="Sarah is speaking"
           placement="bottom-right"
+          dynamic-variables={buildSarahDynamicVariables(
+            'after-hours-demo',
+            'wranngle-com/home',
+          )}
         ></elevenlabs-convai>
       </div>
     </div>
@@ -629,8 +588,14 @@ function getOfferingCardPricing(
   item: OfferingItem,
   abVariant: HomeAbVariant,
 ): OfferingCardPricing {
+  // SaaS tiers with an annual discount always surface the slashed-monthly
+  // price next to the annual rate — that is the standard SaaS pricing
+  // pattern customers expect. AI agents stay on the monthly headline price
+  // unless the value-first AB variant is active.
+  const isSaas = item.facts?.kind === 'saas';
+  const hasPositiveDiscount = (item.facts?.discountPercent ?? 0) > 0;
   const annualSavings =
-    abVariant === 'value-first' && (item.facts?.discountPercent ?? 0) > 0;
+    hasPositiveDiscount && (isSaas || abVariant === 'value-first');
   const rawPrice = item.facts?.annualMonthly ?? Number(item.price);
   const monthlyPrice = item.facts?.headlinePrice ?? Number(item.price);
   const hasDiscount = annualSavings;
@@ -641,7 +606,7 @@ function getOfferingCardPricing(
       ? 'Free'
       : `$${formatPrice(hasDiscount ? rawPrice : monthlyPrice)}`,
     priceSuffix: getOfferingPriceSuffix(item, hasDiscount),
-    ctaLabel: hasDiscount ? item.cta.replace(/^Get /, 'Start') : item.cta,
+    ctaLabel: hasDiscount ? item.cta.replace(/^Get /, 'Start ') : item.cta,
     addonCopy: getOfferingAddonCopy(item, hasDiscount, rawPrice),
     annualSavings,
   };
@@ -687,23 +652,39 @@ function OfferingPriceBlock({
   pricing: OfferingCardPricing;
 }) {
   const isSaas = item.facts?.kind === 'saas';
+  const showStrikethrough =
+    pricing.annualSavings && item.facts && item.facts.headlinePrice > 0;
+  const fullMonthly =
+    showStrikethrough && item.facts
+      ? `$${formatPrice(item.facts.headlinePrice)}`
+      : undefined;
 
   return (
     <div className="mb-6">
-      <div className="text-4xl font-bold">
-        {pricing.priceLabel}
-        {item.price !== '0' && (
-          <span className="text-sm font-normal opacity-50">
-            {pricing.priceSuffix}
+      <div className="flex items-baseline gap-2 flex-wrap">
+        {fullMonthly ? (
+          <span
+            className="text-2xl font-bold opacity-40 line-through decoration-[var(--v500)]"
+            aria-label={`Regular monthly price ${fullMonthly}`}
+          >
+            {fullMonthly}
           </span>
-        )}
+        ) : null}
+        <span className="text-4xl font-bold">
+          {pricing.priceLabel}
+          {item.price !== '0' && (
+            <span className="text-sm font-normal opacity-50">
+              {pricing.priceSuffix}
+            </span>
+          )}
+        </span>
       </div>
       {pricing.addonCopy && (
         <div className="text-sm opacity-60 mt-1">{pricing.addonCopy}</div>
       )}
       {isSaas && pricing.annualSavings && item.facts ? (
-        <div className="text-xs uppercase tracking-wide opacity-70 mt-1">
-          Save {item.facts.discountPercent}% with annual pricing
+        <div className="text-xs font-bold uppercase tracking-wide text-[var(--v500)] mt-1">
+          Save {item.facts.discountPercent}% with annual billing
         </div>
       ) : null}
     </div>
@@ -883,11 +864,6 @@ function TalkToSarahSection({isDark}: {isDark: boolean}) {
               See Plans
             </a>
           </div>
-          <div className="mono-font mt-6 text-[11px] opacity-55 flex flex-wrap gap-4">
-            <span>2 min average</span>
-            <span>No signup</span>
-            <span>Mic permissions required</span>
-          </div>
         </div>
 
         <SarahOrbHero isDark={isDark} />
@@ -1031,131 +1007,6 @@ const ButtonGhost = ({
     {children}
   </button>
 );
-
-const ConsoleVisual = ({
-  isDark,
-  lines,
-}: {
-  isDark: boolean;
-  lines: Array<{text: string; color: string}>;
-}) => {
-  const [display, setDisplay] = useState<Array<{text: string; color: string}>>(
-    [],
-  );
-  const idx = useRef(0);
-  // eslint-disable-next-line @typescript-eslint/no-restricted-types -- React refs use null sentinel; converting to undefined breaks RefObject<HTMLDivElement> consumers.
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [dim, setDim] = useState(INITIAL_DIM);
-
-  useEffect(() => {
-    setDisplay([]);
-    idx.current = 0;
-    const interval = setInterval(() => {
-      if (idx.current < lines.length) {
-        const line = lines[idx.current];
-        if (line) setDisplay((previous) => [...previous, line]);
-        idx.current++;
-      } else clearInterval(interval);
-    }, 800);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [lines]);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const updateDim = () => {
-      if (!containerRef.current) return;
-      const {width, height} = containerRef.current.getBoundingClientRect();
-      setDim({w: width, h: height});
-    };
-
-    updateDim();
-    const observer = new ResizeObserver(updateDim);
-    observer.observe(containerRef.current);
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-  const {w} = dim;
-  const {h} = dim;
-  const pathD =
-    w > 0
-      ? `
-    M 24 1
-    L ${w - 4} 1
-    Q ${w - 1} 1 ${w - 1} 4
-    L ${w - 1} ${h - 24}
-    Q ${w - 1} ${h - 1} ${w - 24} ${h - 1}
-    L 4 ${h - 1}
-    Q 1 ${h - 1} 1 ${h - 4}
-    L 1 24
-    Q 1 1 24 1
-    Z
-  `
-      : '';
-
-  return (
-    <div
-      ref={containerRef}
-      className={`relative h-80 w-full rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] ${isDark ? 'border-white/10 bg-[#0f0f13] text-gray-400' : 'border-black/10 bg-[#1a1a1e] text-gray-400'} p-6 mono-font text-[11px] flex flex-col overflow-hidden noise-overlay`}
-      style={{boxShadow: 'var(--shadow-card)'}}
-    >
-      <div className="absolute inset-0 pointer-events-none z-20">
-        <svg className="absolute inset-0 w-full h-full overflow-visible">
-          <motion.path
-            d={pathD}
-            fill="none"
-            stroke="var(--s500)"
-            strokeWidth="2"
-            strokeDasharray="100 1500"
-            strokeLinecap="round"
-            initial={{strokeDashoffset: 0}}
-            animate={{strokeDashoffset: -1600}}
-            transition={{duration: 4, repeat: Infinity, ease: 'linear'}}
-          />
-        </svg>
-      </div>
-
-      <div className="flex justify-between border-b border-white/10 pb-2 mb-4 relative z-10">
-        <span className="text-white font-bold opacity-0">_</span>
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />{' '}
-          LIVE
-        </div>
-      </div>
-      <img
-        src="/assets/brand/wranngle-lasso-square.png"
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute right-4 top-1/2 z-10 hidden h-36 w-36 -translate-y-1/2 object-contain opacity-80 mix-blend-screen drop-shadow-[0_0_28px_rgba(255,95,0,0.38)] sm:block md:right-6 md:h-44 md:w-44"
-      />
-      <div className="flex-1 overflow-y-auto space-y-1 relative z-10 pr-0 sm:pr-40 md:pr-52">
-        {display.map(
-          (l, i) =>
-            l && (
-              <motion.div
-                key={i}
-                initial={{opacity: 0}}
-                animate={{opacity: 1}}
-                className={l.color || ''}
-              >
-                {l.text || ''}
-              </motion.div>
-            ),
-        )}
-        <motion.span
-          animate={{opacity: [0, 1, 0]}}
-          transition={{repeat: Infinity}}
-          className="text-[var(--s500)] font-bold"
-        >
-          _
-        </motion.span>
-      </div>
-    </div>
-  );
-};
 
 const RadarWatchdog = () => {
   return (

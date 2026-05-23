@@ -139,11 +139,13 @@ export default function PrivacyPolicy() {
                     details
                   </li>
                   <li>
-                    <strong>Cal.com:</strong> Calendar appointment data (Elite
-                    tier only)
+                    <strong>Cal.com:</strong> Calendar appointment data
                   </li>
                   <li>
-                    <strong>Clay:</strong> Lead-enrichment data (gtm_ops only)
+                    <strong>Clay:</strong> Lead-enrichment data
+                  </li>
+                  <li>
+                    <strong>Apollo:</strong> Contact and firmographic enrichment
                   </li>
                 </ul>
               </section>
@@ -188,7 +190,7 @@ export default function PrivacyPolicy() {
 
               <section>
                 <h2 className="brand-font text-2xl font-bold mb-4">
-                  4. Call Recording and Transcription
+                  4. Call Recording, AI Disclosure, and Transcription
                 </h2>
                 <p className="opacity-80 mb-4">
                   Our Service records and transcribes calls handled by AI
@@ -199,6 +201,24 @@ export default function PrivacyPolicy() {
                   <li>Quality assurance and training</li>
                   <li>Compliance and dispute resolution</li>
                   <li>Service improvement and analytics</li>
+                </ul>
+                <p className="opacity-80 mt-4 mb-4">
+                  <strong>Our commitments at call start:</strong>
+                </p>
+                <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
+                  <li>
+                    Our AI agents will announce monitoring or recording and
+                    disclose that the caller is speaking to an AI agent at the
+                    start of every call
+                  </li>
+                  <li>
+                    If a caller asks at any point whether they are speaking to
+                    an AI, the agent will confirm without hedging
+                  </li>
+                  <li>
+                    The agent will offer a human-handoff path on request and on
+                    detection of distress signals
+                  </li>
                 </ul>
                 <p className="opacity-80 mt-4 mb-4">
                   <strong>Your Responsibilities:</strong>
@@ -213,17 +233,21 @@ export default function PrivacyPolicy() {
                     recording
                   </li>
                   <li>
-                    Our AI agents can be configured to announce recording at the
-                    start of calls
-                  </li>
-                  <li>
                     You must obtain necessary consents from callers before using
                     the Service
+                  </li>
+                  <li>
+                    You will not configure the agent to misrepresent its
+                    identity, claim to be human, or evade the disclosures above
                   </li>
                 </ul>
                 <p className="opacity-80 mt-4">
                   Call recordings are retained for 90 days by default and may be
-                  stored longer for legal compliance or at your request.
+                  stored longer for legal compliance or at your request. Voice
+                  synthesis and conversational AI runtime are provided by
+                  ElevenLabs; use of voice cloning, impersonation, or
+                  illegal-use scenarios is prohibited under both our terms and
+                  the ElevenLabs Terms of Service.
                 </p>
               </section>
 
@@ -270,11 +294,14 @@ export default function PrivacyPolicy() {
                   </li>
                   <li>
                     <strong>Cal.com:</strong> Calendar booking integration
-                    (Elite tier)
                   </li>
                   <li>
                     <strong>Clay:</strong> Lead enrichment and deep-research
-                    passes (gtm_ops only)
+                    passes
+                  </li>
+                  <li>
+                    <strong>Apollo:</strong> Contact and firmographic enrichment
+                    for prospecting workflows
                   </li>
                 </ul>
 
@@ -552,8 +579,8 @@ export default function PrivacyPolicy() {
                   Email: hello@wranngle.com
                 </p>
                 <p className="opacity-80 text-sm">
-                  Privacy, GDPR, and data-deletion requests all reach the same
-                  inbox — Cody handles them directly.
+                  Privacy, GDPR, and data-deletion requests all reach the
+                  hello@wranngle.com inbox and are answered within 30 days.
                 </p>
               </section>
             </div>
