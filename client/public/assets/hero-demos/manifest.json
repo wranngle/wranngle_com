@@ -1,0 +1,29 @@
+[
+  {
+    "id": "trattoria",
+    "brand": "Bella Vista Trattoria",
+    "tagline": "Reservations · Patio season",
+    "caption": "Restaurant — books the table",
+    "video": "/assets/hero-demos/trattoria.webm",
+    "poster": "/assets/hero-demos/trattoria.poster.jpg",
+    "agentId": "agent_1201ksb6296reyc97dxn9ngfkx79"
+  },
+  {
+    "id": "dental",
+    "brand": "Tidewater Family Dental",
+    "tagline": "Same-day emergency booking",
+    "caption": "Dental — triages the emergency",
+    "video": "/assets/hero-demos/dental.webm",
+    "poster": "/assets/hero-demos/dental.poster.jpg",
+    "agentId": "agent_1401ksb62bc8fa189cnstym17dma"
+  },
+  {
+    "id": "salon",
+    "brand": "Atlas Hair Co.",
+    "tagline": "Color continuity · Reschedules",
+    "caption": "Salon — reschedules with the same formula",
+    "video": "/assets/hero-demos/salon.webm",
+    "poster": "/assets/hero-demos/salon.poster.jpg",
+    "agentId": "agent_1501ksb62c8xevxvswp451hj7ykz"
+  }
+]

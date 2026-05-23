@@ -1,0 +1,27 @@
+{
+  "name": "bella-vista-trattoria",
+  "startUrl": "trattoria/index.html",
+  "viewport": {"width": 1280, "height": 800},
+  "record": {"enabled": true, "size": {"width": 1280, "height": 800}},
+  "timing": {"speed": 1, "moveMs": 220, "clickPauseMs": 240, "fillPauseMs": 40},
+  "polish": {
+    "cursor": {"style": "modern", "accentColor": "#c8962f"},
+    "actionRail": {"enabled": false},
+    "captions": {"enabled": true, "position": "bottom"}
+  },
+  "metadata": {"vertical": "restaurant", "agentId": "agent_1201ksb6296reyc97dxn9ngfkx79"},
+  "steps": [
+    {"action": "waitForText", "text": "Coastal Italian", "label": "Landing page ready"},
+    {"action": "waitForSelector", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "timeoutMs": 20000, "label": "Widget mounted in text mode"},
+    {"action": "caption", "text": "A real ElevenLabs agent, live on the restaurant's own site.", "ms": 2400, "label": "Intro beat"},
+    {"action": "pause", "ms": 1400, "label": "Let the agent greeting render"},
+    {"action": "click", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "label": "Focus the chat"},
+    {"action": "fill", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "value": "Table for four this Saturday at 7 on the patio?", "label": "Caller asks for a table"},
+    {"action": "click", "selector": "elevenlabs-convai button[aria-label=\"Send\"]", "label": "Send the message"},
+    {"action": "caption", "text": "It books the reservation and offers a confirmation text.", "ms": 2600, "label": "Booking beat"},
+    {"action": "pause", "ms": 8000, "label": "Wait for the agent reply to stream"},
+    {"action": "caption", "text": "Every call answered, booked, and confirmed — no host on the phone.", "ms": 2800, "label": "Close beat"},
+    {"action": "pause", "ms": 1600, "label": "Hold final frame"},
+    {"action": "screenshot", "name": "trattoria", "label": "Poster frame"}
+  ]
+}
