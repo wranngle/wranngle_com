@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-deprecated -- lucide-react brand icon (Github) used intentionally for repo link; deprecation is upstream-future. */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import {motion} from 'framer-motion';
 import {
   Activity,
   ArrowLeft,
   ArrowRight,
-  Check,
   Clock3,
   DatabaseZap,
   ExternalLink,
@@ -24,26 +23,37 @@ import SiteHeader from '@/components/site/SiteHeader.tsx';
 import SiteFooter from '@/components/site/SiteFooter.tsx';
 import {useDarkMode} from '@/components/site/DarkModeToggle.tsx';
 import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog.tsx';
-import {Button} from '@/components/ui/button.tsx';
-import {
   type CarouselApi,
   Carousel,
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel.tsx';
-import IntakeForm from '@/components/IntakeForm.tsx';
-import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
-import {getCategoryById, type OfferingItem} from '@/data/offerings.ts';
+import TierCard from '@/components/TierCard.tsx';
+import {getCategoryById} from '@/data/offerings.ts';
 
 // Production demo URL. app.wranngle.com is the canonical console host
 // (Cloudflare Pages custom domain on the gtm-ops project).
 const GTM_OPS_DEMO_URL = 'https://app.wranngle.com';
 const GTM_OPS_REPO_URL = 'https://github.com/wranngle/gtm_ops';
+
+// gtm_ops tiers keep SaaS cross-sells on this page (scroll to #pricing);
+// agent/website cross-sells jump to the home offerings grid.
+function crossSellFromGtmOps(targetId: string) {
+  if (
+    targetId === 'gtm-ops-trial' ||
+    targetId === 'gtm-ops-plus' ||
+    targetId === 'gtm-ops-pro'
+  ) {
+    const target = document.querySelector('#pricing');
+    if (target) {
+      const top = target.getBoundingClientRect().top + globalThis.scrollY;
+      globalThis.scrollTo({top, behavior: 'smooth'});
+    }
+  } else {
+    globalThis.location.href = `/#offerings-${targetId}`;
+  }
+}
+
 // Real screenshots of the deployed console. Bundled into wranngle_com's
 // public dir (not hot-linked from app.wranngle.com) so the hero renders
 // even before DNS lands. Source: gtm_ops repo's
@@ -166,9 +176,6 @@ export default function GtmOpsPage() {
                 className="grid lg:grid-cols-[0.86fr_1.14fr] gap-10 xl:gap-14 items-center"
               >
                 <div className="max-w-2xl">
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
-                    PROPOSAL CONSOLE
-                  </div>
                   <h1 className="brand-font text-5xl sm:text-6xl md:text-7xl font-bold leading-[0.95] mb-5">
                     <span className="mono-font text-[0.82em]">gtm_ops</span>
                   </h1>
@@ -352,7 +359,12 @@ export default function GtmOpsPage() {
 
               <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 {tiers.map((item) => (
-                  <GtmOpsTile key={item.id} item={item} isDark={isDark} />
+                  <TierCard
+                    key={item.id}
+                    item={item}
+                    isDark={isDark}
+                    onCrossSell={crossSellFromGtmOps}
+                  />
                 ))}
               </div>
             </section>
@@ -638,150 +650,4 @@ function usePrefersReducedMotion() {
     };
   }, []);
   return prefersReduced;
-}
-
-function GtmOpsTile({item, isDark}: {item: OfferingItem; isDark: boolean}) {
-  const [factsOpen, setFactsOpen] = useState(false);
-  const [intakeOpen, setIntakeOpen] = useState(false);
-  const priceLabel = item.price === '0' ? 'Free' : `$${item.price}`;
-
-  return (
-    <div className="relative group h-full">
-      <div
-        className={`relative h-full p-8 rounded-md border-y border-r border-l-4 border-l-[var(--s500)] ${
-          isDark ? 'border-white/10 bg-[#18181b]' : 'border-black/5 bg-white'
-        } flex flex-col noise-overlay overflow-hidden`}
-      >
-        {item.badge && (
-          <div className="absolute top-0 left-8 bg-[var(--v500)] text-[9px] font-bold px-4 py-1.5 rounded-b-md uppercase tracking-wider shadow-md z-30 border-x border-b border-white/10">
-            {item.badge}
-          </div>
-        )}
-
-        <div className="relative z-10 flex flex-col h-full">
-          <div className="flex justify-between items-start mb-2 mt-6">
-            <div>
-              <div className="mono-font text-[10px] text-[var(--s500)] tracking-[0.08em] mb-1">
-                gtm_ops
-              </div>
-              <h3 className="brand-font text-2xl font-bold">{item.name}</h3>
-            </div>
-          </div>
-          <p className="text-sm opacity-60 mb-6">{item.description}</p>
-
-          <div className="flex-1 flex flex-col">
-            <div className="mb-6">
-              <div className="text-4xl font-bold">
-                {priceLabel}
-                {item.price !== '0' && (
-                  <span className="text-sm font-normal opacity-50">
-                    {item.priceCadence === 'monthly' ? '/mo' : ' one-time'}
-                  </span>
-                )}
-              </div>
-              {item.monthlyAddon && (
-                <div className="text-sm opacity-60 mt-1">
-                  or ${item.monthlyAddon.price}
-                  {item.monthlyAddon.label}
-                </div>
-              )}
-            </div>
-            <ul className="space-y-3 mb-8 flex-1">
-              {item.features.map((f, i) => (
-                <li
-                  key={i}
-                  className="flex items-center gap-3 text-sm opacity-80"
-                >
-                  <Check
-                    size={16}
-                    className="text-[var(--s500)] shrink-0"
-                    aria-hidden
-                  />{' '}
-                  {f}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {item.facts && (
-            <Dialog open={factsOpen} onOpenChange={setFactsOpen}>
-              <DialogTrigger asChild>
-                <button
-                  type="button"
-                  className="w-full mb-3 px-4 py-2 border border-current rounded-md text-xs font-bold uppercase tracking-wider opacity-80 hover:opacity-100 hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all flex items-center justify-center gap-2"
-                >
-                  <FileText size={14} /> View Spec Sheet
-                </button>
-              </DialogTrigger>
-              <DialogContent className="bg-transparent border-none shadow-none p-0 max-w-fit outline-none [&>button]:bg-[#12111a] [&>button]:text-white [&>button]:opacity-100 [&>button]:shadow-lg">
-                <DialogTitle className="sr-only">
-                  gtm_ops {item.name} spec sheet
-                </DialogTitle>
-                <AgentFactsPopout
-                  facts={item.facts}
-                  itemName={item.name}
-                  onGetStarted={() => {
-                    setFactsOpen(false);
-                    globalThis.setTimeout(() => {
-                      setIntakeOpen(true);
-                    }, 80);
-                  }}
-                  onCrossSell={(targetId) => {
-                    setFactsOpen(false);
-                    if (
-                      targetId === 'gtm-ops-trial' ||
-                      targetId === 'gtm-ops-plus' ||
-                      targetId === 'gtm-ops-pro'
-                    ) {
-                      // Stay on this page — scroll to pricing.
-                      const target = document.querySelector('#pricing');
-                      if (target) {
-                        const top =
-                          target.getBoundingClientRect().top +
-                          globalThis.scrollY;
-                        globalThis.scrollTo({top, behavior: 'smooth'});
-                      }
-                    } else {
-                      // Cross-sell to ai-agents/websites lives on home page.
-                      globalThis.location.href = `/#offerings-${targetId}`;
-                    }
-                  }}
-                />
-              </DialogContent>
-            </Dialog>
-          )}
-
-          <Dialog open={intakeOpen} onOpenChange={setIntakeOpen}>
-            <DialogTrigger asChild>
-              <Button
-                className={`w-full ${
-                  item.badge
-                    ? 'bg-[var(--v500)] hover:bg-[var(--v500)]/90 hover:scale-[1.02] transition-all'
-                    : isDark
-                      ? 'bg-white/10 text-white hover:bg-white/20'
-                      : 'bg-black/10 text-black hover:bg-black/20'
-                }`}
-              >
-                {item.cta} <ArrowRight size={14} className="ml-2" />
-              </Button>
-            </DialogTrigger>
-            <DialogContent
-              className={
-                isDark
-                  ? 'bg-[#12111a] text-[#fcfaf5] border-white/10'
-                  : 'bg-white text-[#12111a] border-black/10'
-              }
-            >
-              <IntakeForm
-                selectedPackage={item.id}
-                onSuccess={() => {
-                  setIntakeOpen(false);
-                }}
-              />
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
-    </div>
-  );
 }

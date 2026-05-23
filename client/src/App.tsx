@@ -3,26 +3,17 @@ import {motion} from 'framer-motion';
 import {
   ArrowRight,
   CalendarCheck,
-  Check,
-  FileText,
   MessageSquareText,
   PhoneCall,
   Zap,
 } from 'lucide-react';
 import {Link} from 'wouter';
-import {OFFERING_CATEGORIES, type OfferingItem} from '@/data/offerings.ts';
+import {OFFERING_CATEGORIES} from '@/data/offerings.ts';
 import IntakeForm from '@/components/IntakeForm.tsx';
-import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import RoiCalculator from '@/components/RoiCalculator.tsx';
-import AgentDemoButton from '@/components/AgentDemoButton.tsx';
 import StackedWidgetCarousel from '@/components/StackedWidgetCarousel.tsx';
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog.tsx';
-import {Button} from '@/components/ui/button.tsx';
+import TierCard from '@/components/TierCard.tsx';
+import {Dialog, DialogContent, DialogTrigger} from '@/components/ui/dialog.tsx';
 import type {AgentState} from '@/components/ui/orb.tsx';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
 import SiteFooter from '@/components/site/SiteFooter.tsx';
@@ -61,6 +52,26 @@ const VOICE_OPS_SIGNALS = [
 
 const OFFERINGS_CATEGORY_HASH_PREFIX = 'offerings-cat-';
 const OFFERINGS_ITEM_HASH_PREFIX = 'offerings-';
+
+// Every offering category is a first-class citizen: each gets the same
+// "product details" banner linking to its dedicated page (round-2 F014).
+const PRODUCT_DETAIL_LINKS: Record<string, {href: string; blurb: string}> = {
+  'ai-agents': {
+    href: '/products/ai-voice-agents',
+    blurb:
+      'Review the voice agent setup, channels, latency targets, and tier comparison before picking a plan.',
+  },
+  websites: {
+    href: '/products/websites',
+    blurb:
+      'Review the website build process, launch targets, and package comparison before picking a tier.',
+  },
+  gtm_ops: {
+    href: '/products/gtm-ops',
+    blurb:
+      'Review the proposal workflow, demo, and implementation notes before picking a tier.',
+  },
+};
 const SARAH_ORB_STATES: AgentState[] = ['thinking', 'listening', 'talking'];
 type HomeAbVariant = 'control' | 'value-first';
 
@@ -85,12 +96,6 @@ function resolveHomeAbVariant() {
     AB_VARIANTS[globalThis.Math.floor(Math.random() * AB_VARIANTS.length)];
   globalThis.localStorage.setItem(AB_STORAGE_KEY, pick);
   return pick;
-}
-
-function formatPrice(value: number) {
-  return Number.isInteger(value)
-    ? value.toString()
-    : value.toFixed(2).replace(/\\.0?0$/, '');
 }
 
 function findOfferingCategoryId(offeringId: string) {
@@ -169,9 +174,6 @@ const WranngleLanding = () => {
                 className="grid lg:grid-cols-[0.86fr_1.14fr] gap-10 xl:gap-14 items-start"
               >
                 <div className="max-w-2xl">
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
-                    AI CALL ANSWERING
-                  </div>
                   <h1 className="brand-font text-5xl sm:text-6xl md:text-7xl font-bold leading-[0.95] mb-5">
                     AI call coverage for busy teams.
                   </h1>
@@ -207,8 +209,6 @@ const WranngleLanding = () => {
                       Talk to Sarah
                     </ButtonGhost>
                   </div>
-
-                  <AgentDemoButton isDark={isDark} />
 
                   <div className="mt-8 grid grid-cols-3 gap-3 max-w-xl">
                     {VOICE_HERO_METRICS.map((metric) => (
@@ -367,7 +367,7 @@ const WranngleLanding = () => {
           speaking-text="Sarah is speaking"
           placement="bottom-right"
           dynamic-variables={buildSarahDynamicVariables(
-            'after-hours-demo',
+            'lead-intake',
             'wranngle-com/home',
           )}
         ></elevenlabs-convai>
@@ -499,10 +499,10 @@ function OfferingsSection({
               {category.description}
             </p>
 
-            {category.id === 'websites' && (
+            {PRODUCT_DETAIL_LINKS[category.id] && (
               <div className="max-w-3xl mx-auto mb-8">
                 <Link
-                  href="/products/websites"
+                  href={PRODUCT_DETAIL_LINKS[category.id].href}
                   className={`group flex items-center justify-between gap-4 px-5 py-4 rounded-[12px_4px_12px_4px] border-y border-r border-l-4 border-l-[var(--v500)] transition-colors hover:border-l-[var(--s500)] ${
                     isDark
                       ? 'border-white/10 bg-[#18181b] hover:bg-[#1f1f24]'
@@ -514,35 +514,7 @@ function OfferingsSection({
                       PRODUCT DETAILS
                     </div>
                     <p className="text-sm font-bold leading-tight">
-                      Review the website build process, launch targets, and
-                      package comparison before picking a tier.
-                    </p>
-                  </div>
-                  <ArrowRight
-                    size={18}
-                    className="text-[var(--s500)] shrink-0 group-hover:translate-x-1 transition-transform"
-                  />
-                </Link>
-              </div>
-            )}
-
-            {category.id === 'gtm_ops' && (
-              <div className="max-w-3xl mx-auto mb-8">
-                <Link
-                  href="/products/gtm-ops"
-                  className={`group flex items-center justify-between gap-4 px-5 py-4 rounded-[12px_4px_12px_4px] border-y border-r border-l-4 border-l-[var(--v500)] transition-colors hover:border-l-[var(--s500)] ${
-                    isDark
-                      ? 'border-white/10 bg-[#18181b] hover:bg-[#1f1f24]'
-                      : 'border-black/5 bg-white hover:bg-[#faf6ed]'
-                  }`}
-                >
-                  <div className="min-w-0">
-                    <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-1">
-                      PRODUCT DETAILS
-                    </div>
-                    <p className="text-sm font-bold leading-tight">
-                      Review the proposal workflow, demo, and implementation
-                      notes before picking a tier.
+                      {PRODUCT_DETAIL_LINKS[category.id].blurb}
                     </p>
                   </div>
                   <ArrowRight
@@ -561,11 +533,16 @@ function OfferingsSection({
               }`}
             >
               {category.items.map((item) => (
-                <OfferingCard
+                <TierCard
                   key={item.id}
                   item={item}
                   isDark={isDark}
-                  abVariant={abVariant}
+                  anchored
+                  ctaLabel={
+                    abVariant === 'value-first'
+                      ? item.cta.replace(/^Get /, 'Start ')
+                      : item.cta
+                  }
                 />
               ))}
             </div>
@@ -573,257 +550,6 @@ function OfferingsSection({
         ),
       )}
     </section>
-  );
-}
-
-type OfferingCardPricing = {
-  priceLabel: string;
-  priceSuffix: string;
-  ctaLabel: string;
-  addonCopy: string;
-  annualSavings: boolean;
-};
-
-function getOfferingCardPricing(
-  item: OfferingItem,
-  abVariant: HomeAbVariant,
-): OfferingCardPricing {
-  // SaaS tiers with an annual discount always surface the slashed-monthly
-  // price next to the annual rate — that is the standard SaaS pricing
-  // pattern customers expect. AI agents stay on the monthly headline price
-  // unless the value-first AB variant is active.
-  const isSaas = item.facts?.kind === 'saas';
-  const hasPositiveDiscount = (item.facts?.discountPercent ?? 0) > 0;
-  const annualSavings =
-    hasPositiveDiscount && (isSaas || abVariant === 'value-first');
-  const rawPrice = item.facts?.annualMonthly ?? Number(item.price);
-  const monthlyPrice = item.facts?.headlinePrice ?? Number(item.price);
-  const hasDiscount = annualSavings;
-  const isFree = item.price === '0';
-
-  return {
-    priceLabel: isFree
-      ? 'Free'
-      : `$${formatPrice(hasDiscount ? rawPrice : monthlyPrice)}`,
-    priceSuffix: getOfferingPriceSuffix(item, hasDiscount),
-    ctaLabel: hasDiscount ? item.cta.replace(/^Get /, 'Start ') : item.cta,
-    addonCopy: getOfferingAddonCopy(item, hasDiscount, rawPrice),
-    annualSavings,
-  };
-}
-
-function getOfferingPriceSuffix(item: OfferingItem, hasDiscount: boolean) {
-  if (item.price === '0') return '';
-  if (hasDiscount) return '/mo annual';
-  return item.priceCadence === 'monthly' ? '/mo' : ' one-time';
-}
-
-function getOfferingAddonCopy(
-  item: OfferingItem,
-  hasDiscount: boolean,
-  rawPrice: number,
-) {
-  const isSaas = item.facts?.kind === 'saas';
-  if (!item.monthlyAddon) return '';
-  if (hasDiscount && isSaas) {
-    return `or $${formatPrice(rawPrice)} /mo annual equivalent`;
-  }
-
-  return item.monthlyAddon.label.startsWith('/')
-    ? `+ $${item.monthlyAddon.price}${item.monthlyAddon.label}`
-    : `+ $${item.monthlyAddon.price}/mo ${item.monthlyAddon.label}`;
-}
-
-function OfferingBadge({badge}: {badge?: string}) {
-  if (!badge) return null;
-
-  return (
-    <div className="absolute top-0 left-8 bg-[var(--v500)] text-[9px] font-bold px-4 py-1.5 rounded-b-lg uppercase tracking-wider shadow-md z-30 border-x border-b border-white/10">
-      {badge}
-    </div>
-  );
-}
-
-function OfferingPriceBlock({
-  item,
-  pricing,
-}: {
-  item: OfferingItem;
-  pricing: OfferingCardPricing;
-}) {
-  const isSaas = item.facts?.kind === 'saas';
-  const showStrikethrough =
-    pricing.annualSavings && item.facts && item.facts.headlinePrice > 0;
-  const fullMonthly =
-    showStrikethrough && item.facts
-      ? `$${formatPrice(item.facts.headlinePrice)}`
-      : undefined;
-
-  return (
-    <div className="mb-6">
-      <div className="flex items-baseline gap-2 flex-wrap">
-        {fullMonthly ? (
-          <span
-            className="text-2xl font-bold opacity-40 line-through decoration-[var(--v500)]"
-            aria-label={`Regular monthly price ${fullMonthly}`}
-          >
-            {fullMonthly}
-          </span>
-        ) : null}
-        <span className="text-4xl font-bold">
-          {pricing.priceLabel}
-          {item.price !== '0' && (
-            <span className="text-sm font-normal opacity-50">
-              {pricing.priceSuffix}
-            </span>
-          )}
-        </span>
-      </div>
-      {pricing.addonCopy && (
-        <div className="text-sm opacity-60 mt-1">{pricing.addonCopy}</div>
-      )}
-      {isSaas && pricing.annualSavings && item.facts ? (
-        <div className="text-xs font-bold uppercase tracking-wide text-[var(--v500)] mt-1">
-          Save {item.facts.discountPercent}% with annual billing
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
-function OfferingFeatureList({features}: {features: string[]}) {
-  return (
-    <ul className="space-y-3 mb-8 flex-1">
-      {features.map((feature) => (
-        <li
-          key={feature}
-          className="flex items-center gap-3 text-sm opacity-80"
-        >
-          <Check
-            size={16}
-            className="text-[var(--s500)] shrink-0"
-            aria-hidden
-          />{' '}
-          {feature}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function getOfferingButtonClass(item: OfferingItem, isDark: boolean) {
-  if (item.badge) {
-    return 'bg-[var(--v500)] hover:bg-[var(--v500)]/90 hover:scale-[1.02] transition-all';
-  }
-
-  return isDark
-    ? 'bg-white/10 text-white hover:bg-white/20'
-    : 'bg-black/10 text-black hover:bg-black/20';
-}
-
-function OfferingCard({
-  item,
-  isDark,
-  abVariant,
-}: {
-  item: OfferingItem;
-  isDark: boolean;
-  abVariant: HomeAbVariant;
-}) {
-  const [factsOpen, setFactsOpen] = useState(false);
-  const [intakeOpen, setIntakeOpen] = useState(false);
-  const isSaas = item.facts?.kind === 'saas';
-  const pricing = getOfferingCardPricing(item, abVariant);
-
-  return (
-    <div
-      id={`offerings-${item.id}`}
-      className="relative group h-full scroll-mt-24"
-    >
-      <div
-        className={`relative h-full p-8 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] ${
-          isDark ? 'border-white/10 bg-[#18181b]' : 'border-black/5 bg-white'
-        } flex flex-col noise-overlay overflow-hidden`}
-      >
-        <OfferingBadge badge={item.badge} />
-
-        <div className="relative z-10 flex flex-col h-full">
-          <div className="flex justify-between items-start mb-2 mt-6">
-            <div>
-              {isSaas && (
-                <div className="mono-font text-[10px] text-[var(--s500)] tracking-[0.08em] mb-1">
-                  gtm_ops // SAAS
-                </div>
-              )}
-              <h3 className="brand-font text-2xl font-bold">{item.name}</h3>
-            </div>
-          </div>
-          <p className="text-sm opacity-60 mb-6">{item.description}</p>
-
-          <div className="flex-1 flex flex-col">
-            <OfferingPriceBlock item={item} pricing={pricing} />
-            <OfferingFeatureList features={item.features} />
-          </div>
-
-          {item.facts && (
-            <Dialog open={factsOpen} onOpenChange={setFactsOpen}>
-              <DialogTrigger asChild>
-                <button
-                  type="button"
-                  className="w-full mb-3 px-4 py-2 border border-current rounded-md text-xs font-bold uppercase tracking-wider opacity-80 hover:opacity-100 hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all flex items-center justify-center gap-2"
-                >
-                  <FileText size={14} /> View Spec Sheet
-                </button>
-              </DialogTrigger>
-              <DialogContent className="bg-transparent border-none shadow-none p-0 max-w-fit outline-none [&>button]:bg-[#12111a] [&>button]:text-white [&>button]:opacity-100 [&>button]:shadow-lg">
-                <DialogTitle className="sr-only">
-                  {item.name} spec sheet
-                </DialogTitle>
-                <AgentFactsPopout
-                  facts={item.facts}
-                  itemName={item.name}
-                  onGetStarted={() => {
-                    // Close popout, then open intake on the next tick — Radix
-                    // Dialog focus-trap cleanup races if both happen in the
-                    // same render commit, which manifested as the spec sheet
-                    // closing without the intake ever opening.
-                    setFactsOpen(false);
-                    globalThis.setTimeout(() => {
-                      setIntakeOpen(true);
-                    }, 80);
-                  }}
-                  onCrossSell={(targetId) => {
-                    setFactsOpen(false);
-                    // Hash-jump to the cross-sell card so the user lands on the
-                    // right offering tile and can read it in context.
-                    globalThis.location.hash = `offerings-${targetId}`;
-                  }}
-                />
-              </DialogContent>
-            </Dialog>
-          )}
-
-          <Dialog open={intakeOpen} onOpenChange={setIntakeOpen}>
-            <DialogTrigger asChild>
-              <Button
-                className={`w-full ${getOfferingButtonClass(item, isDark)}`}
-              >
-                {pricing.ctaLabel} <ArrowRight size={14} className="ml-2" />
-              </Button>
-            </DialogTrigger>
-            <DialogContent
-              className={
-                isDark
-                  ? 'bg-[#12111a] text-[#fcfaf5] border-white/10'
-                  : 'bg-white text-[#12111a] border-black/10'
-              }
-            >
-              <IntakeForm selectedPackage={item.id} />
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
-    </div>
   );
 }
 

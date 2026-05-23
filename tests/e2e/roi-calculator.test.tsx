@@ -70,6 +70,7 @@ describe('RoiCalculator SSR markup', () => {
         initialCompany="River North Bistro"
         initialCalls={80}
         initialTicket={350}
+        autoRotate={false}
       />,
     );
     expect(html).toContain('River North Bistro');
@@ -82,6 +83,7 @@ describe('RoiCalculator SSR markup', () => {
         initialCompany="River North Bistro"
         initialCalls={80}
         initialTicket={350}
+        autoRotate={false}
       />,
     );
     // 80 * 0.35 * 0.95 * 0.40 = 10.64 jobs * $350 = $3,724 (rounded)
@@ -131,6 +133,7 @@ describe('RoiCalculator telemetry', () => {
           initialCompany="River North Bistro"
           initialCalls={80}
           initialTicket={350}
+          autoRotate={false}
         />,
       );
     });

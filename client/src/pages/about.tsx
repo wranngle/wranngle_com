@@ -66,37 +66,37 @@ const TRUST_MARKERS = [
     value: '10 years',
     label: 'IT operations experience',
     detail:
-      'A decade running automation inside live support work — not beside it. Every script had to survive the next on-call shift.',
+      'I spent a decade running automation inside live support work rather than beside it, so every script had to keep working through the next on-call shift.',
   },
   {
     value: '500+',
     label: 'Client environments',
     detail:
-      'Hundreds of distinct tenants, each with its own integrations and edge cases. The fragile ones taught most of the rules I still use.',
+      'I supported hundreds of distinct client tenants, each with its own integrations and edge cases, and the fragile ones taught me most of the rules I still follow.',
   },
   {
     value: '4,000+',
     label: 'Endpoints supported',
     detail:
-      'Python and PowerShell tooling that cut manual oversight by roughly 40% across the fleet.',
+      'Python automation, n8n workflows, and TypeScript tooling cut manual oversight by roughly 40% across the fleet.',
   },
   {
     value: '700',
     label: 'SOP guides authored',
     detail:
-      'A team of ten had to move without guessing. The runbook library made the next engineer the same engineer.',
+      'I wrote the runbook library so a team of ten could move without guessing. Any engineer could pick up an unfamiliar task and run it the same way every time.',
   },
   {
     value: '15',
     label: 'Client sites in voice deployment',
     detail:
-      'ElevenLabs on-call voice agents in production. Zero dropped calls. P95 under 500 ms. CRM enrichment lands cleanly on 92% of calls.',
+      'ElevenLabs on-call voice agents run in production across fifteen client sites, with zero dropped calls, P95 latency under 500 ms, and CRM enrichment that succeeds on 92% of calls.',
   },
   {
     value: '<500 ms',
     label: 'P95 latency target',
     detail:
-      'Voice is unforgiving — callers hear every pause. Latency, fallbacks, and transcript quality get measured because the customer notices first.',
+      'Voice is unforgiving because callers hear every pause, so I measure latency, fallbacks, and transcript quality on every release rather than waiting for a customer to notice.',
   },
 ];
 

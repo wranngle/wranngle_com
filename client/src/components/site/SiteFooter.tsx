@@ -144,7 +144,7 @@ export default function SiteFooter({isDark, showCta = true}: SiteFooterProps) {
             <a href="/llms.txt" className={linkBase}>
               LLM Context
             </a>
-            <a href="/cody-arnold.md" className={linkBase}>
+            <a href="/profile.md" className={linkBase}>
               Profile.md
             </a>
           </div>

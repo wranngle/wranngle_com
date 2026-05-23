@@ -323,12 +323,16 @@ html[data-sarah-suppressed='true'] elevenlabs-convai {
     border-color: hsl(var(--border));
   }
 
-  /* Inherit color into anchors — without this rule the browser default
-     :visited turns links purple, which surfaced as purple offering links
-     in the mega-menu, footer, and other dropdowns. */
+  /* Anchor reset. Tailwind preflight is disabled (tailwind.config.ts
+     corePlugins.preflight=false), so the browser defaults apply unless we
+     reset them here: without `color: inherit` the :visited default turns
+     links purple, and without `text-decoration: none` every <a> renders
+     underlined. Links that want an underline opt in with the Tailwind
+     `underline`/`hover:underline` utilities (later cascade layer wins). */
   a,
   a:visited {
     color: inherit;
+    text-decoration: none;
   }
 
   /* Placeholder contrast — Tailwind defaults give ~30% opacity which
