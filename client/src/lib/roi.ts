@@ -9,10 +9,12 @@
  * "How we calculated this" disclosure):
  *
  *   MISSED_CALL_RATE         0.35  Industry baseline for SMB phone capture in
- *                                  HVAC / plumbing / electrical. After-hours
- *                                  and overflow blend lands ~30-40% of dialed
- *                                  attempts going to voicemail (Service Titan
- *                                  + Housecall Pro 2024 benchmarks).
+ *                                  restaurant reservations, salons, dental
+ *                                  intake, and similar high-volume callback
+ *                                  desks. After-hours and overflow blend lands
+ *                                  ~30-40% of dialed attempts going to
+ *                                  voicemail (OpenTable + Square 2024
+ *                                  benchmarks).
  *   AGENT_ANSWER_RATE        0.95  Fraction of formerly-missed calls the AI
  *                                  agent actually answers (handles cold-start,
  *                                  telephony fallback, hard-failure cases).

@@ -4,19 +4,14 @@ import {
   ArrowRight,
   BarChart3,
   Check,
-  Cloud,
   Code2,
   FileText,
   FormInput,
-  Gauge,
-  Globe2,
-  Layers3,
   MousePointerClick,
   Palette,
   SearchCheck,
   ShieldCheck,
   Workflow,
-  type LucideIcon,
 } from 'lucide-react';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
 import SiteFooter from '@/components/site/SiteFooter.tsx';
@@ -30,6 +25,7 @@ import {
 import {Button} from '@/components/ui/button.tsx';
 import IntakeForm from '@/components/IntakeForm.tsx';
 import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
+import StackedWidgetCarousel from '@/components/StackedWidgetCarousel.tsx';
 import {getCategoryById, type OfferingItem} from '@/data/offerings.ts';
 
 const HERO_METRICS = [
@@ -183,7 +179,11 @@ export default function WebsitesPage() {
                   </div>
                 </div>
 
-                <WebsitePreview isDark={isDark} />
+                <StackedWidgetCarousel
+                  isDark={isDark}
+                  caption="Live across client sites"
+                  subcaption="Forms, content, and the voice widget all wired to the same lead inbox before launch."
+                />
               </motion.div>
 
               <div className="mt-10 grid md:grid-cols-3 gap-3">
@@ -348,214 +348,6 @@ export default function WebsitesPage() {
 
         <SiteFooter isDark={isDark} />
       </div>
-    </div>
-  );
-}
-
-function WebsitePreview({isDark}: {isDark: boolean}) {
-  return (
-    <div className="relative">
-      <div
-        className={`relative overflow-hidden rounded-lg border shadow-2xl ${
-          isDark
-            ? 'border-white/10 bg-[#0f0e16] shadow-black/40'
-            : 'border-black/10 bg-white shadow-[#12111a]/10'
-        }`}
-      >
-        <div
-          className={`h-10 px-4 flex items-center justify-between gap-3 border-b ${
-            isDark
-              ? 'border-white/10 bg-white/[0.03]'
-              : 'border-black/10 bg-black/[0.03]'
-          }`}
-        >
-          <div className="flex items-center gap-2">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-          </div>
-          <div className="min-w-0 flex items-center gap-2 text-[10px] uppercase tracking-widest mono-font opacity-60">
-            <Globe2 size={13} className="text-[var(--s500)] shrink-0" />
-            <span className="truncate">wranngle.com / website build</span>
-          </div>
-          <div className="hidden sm:flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400">
-            <span className="h-2 w-2 rounded-full bg-current" />
-            Live
-          </div>
-        </div>
-
-        <div className="relative p-3 sm:p-4">
-          <div
-            className={`absolute inset-0 ${
-              isDark
-                ? 'bg-[linear-gradient(135deg,rgba(255,95,0,0.10),rgba(93,140,97,0.10),rgba(207,60,105,0.08))]'
-                : 'bg-[linear-gradient(135deg,rgba(255,95,0,0.08),rgba(93,140,97,0.08),rgba(207,60,105,0.05))]'
-            }`}
-          />
-          <div className="relative grid sm:grid-cols-[0.78fr_1.22fr] gap-3 min-h-[370px]">
-            <aside
-              className={`hidden sm:flex flex-col rounded-md border p-3 ${
-                isDark
-                  ? 'border-white/10 bg-[#12111a]/90'
-                  : 'border-black/10 bg-white/90'
-              }`}
-            >
-              <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--s500)] mb-4">
-                Launch stack
-              </div>
-              <PreviewRow Icon={Gauge} label="Performance" value="95+" />
-              <PreviewRow Icon={SearchCheck} label="SEO basics" value="Ready" />
-              <PreviewRow Icon={Cloud} label="Hosting" value="Cloudflare" />
-              <div className="mt-auto rounded-md border border-emerald-500/30 bg-emerald-500/10 p-3">
-                <div className="flex items-center gap-2 text-emerald-400">
-                  <FormInput size={15} />
-                  <span className="mono-font text-[10px] uppercase tracking-widest">
-                    Lead path
-                  </span>
-                </div>
-                <div className="mt-2 brand-font text-2xl font-bold">
-                  Form {'->'} n8n
-                </div>
-                <div className="text-[10px] uppercase tracking-wider opacity-60">
-                  email + workflow handoff
-                </div>
-              </div>
-            </aside>
-
-            <div className="min-w-0 flex flex-col gap-3">
-              <div
-                className={`relative overflow-hidden rounded-md border min-h-[148px] ${
-                  isDark ? 'border-white/10' : 'border-black/10'
-                }`}
-              >
-                <img
-                  src="/assets/rcs/hero-welcome.png"
-                  alt="Website hero and welcome screen preview"
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#12111a]/95 via-[#12111a]/60 to-[#12111a]/15" />
-                <div className="relative z-10 p-4 text-white">
-                  <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--s500)] mb-3">
-                    Lead page
-                  </div>
-                  <h2 className="brand-font text-2xl font-bold leading-tight mb-2">
-                    Offer, trust, CTA, form
-                  </h2>
-                  <p className="text-sm text-white/70 max-w-sm leading-relaxed">
-                    The first screen says what you do, who it is for, why to
-                    contact you, and what happens next.
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-[0.94fr_1.06fr] gap-3 flex-1">
-                <div
-                  className={`rounded-md border p-4 ${
-                    isDark
-                      ? 'border-white/10 bg-[#12111a]/90'
-                      : 'border-black/10 bg-white/95'
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-3 mb-4">
-                    <div>
-                      <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--s500)]">
-                        Build checklist
-                      </div>
-                      <h3 className="brand-font text-xl font-bold">
-                        Launch-ready
-                      </h3>
-                    </div>
-                    <Layers3 size={18} className="text-[var(--s500)]" />
-                  </div>
-                  <div className="space-y-3">
-                    {[
-                      'Responsive layout',
-                      'OG social cards',
-                      'Webhook forms',
-                    ].map((label) => (
-                      <div
-                        key={label}
-                        className={`rounded-md border px-3 py-2 flex items-center justify-between gap-3 ${
-                          isDark
-                            ? 'border-white/10 bg-white/[0.03]'
-                            : 'border-black/10 bg-black/[0.03]'
-                        }`}
-                      >
-                        <span className="text-sm font-semibold">{label}</span>
-                        <Check
-                          size={15}
-                          className="text-emerald-400 shrink-0"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div
-                  className={`rounded-md border p-4 flex flex-col ${
-                    isDark
-                      ? 'border-white/10 bg-[#12111a]/90'
-                      : 'border-black/10 bg-white/95'
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-3 mb-3">
-                    <div>
-                      <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--v500)]">
-                        Analytics
-                      </div>
-                      <h3 className="brand-font text-xl font-bold">
-                        Lead activity
-                      </h3>
-                    </div>
-                    <BarChart3 size={18} className="text-[var(--v500)]" />
-                  </div>
-                  <div
-                    className={`relative rounded-md overflow-hidden border flex-1 min-h-[132px] ${
-                      isDark ? 'border-white/10' : 'border-black/10'
-                    }`}
-                  >
-                    <img
-                      src="/assets/rcs/analytics-dashboard.png"
-                      alt="Website analytics and lead dashboard preview"
-                      loading="lazy"
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                    <div className="absolute inset-x-0 bottom-0 p-3 bg-[#12111a]/80 text-white">
-                      <div className="text-sm font-bold">Follow-up visible</div>
-                      <div className="text-[10px] uppercase tracking-wider text-white/60">
-                        visitors, forms, and follow-up
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PreviewRow({
-  Icon,
-  label,
-  value,
-}: {
-  Icon: LucideIcon;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="mb-2 rounded-md border border-current/10 bg-current/[0.03] p-3">
-      <div className="flex items-center gap-2 text-[var(--s500)]">
-        <Icon size={15} />
-        <span className="mono-font text-[10px] uppercase tracking-widest">
-          {label}
-        </span>
-      </div>
-      <div className="mt-1 text-sm font-bold">{value}</div>
     </div>
   );
 }

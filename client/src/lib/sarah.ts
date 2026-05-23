@@ -1,5 +1,16 @@
 export const SARAH_AGENT_ID = 'agent_7801kqqqhjmcfdsa1m2a8t9w6t5c';
 
+/**
+ * Sarah operating modes. The ElevenLabs agent reads `mode` and
+ * `surface_context` from the widget's `dynamic-variables` attribute and
+ * branches on them inside the agent's system prompt. Keep in sync with
+ * the agent's prompt template in the ElevenLabs dashboard.
+ */
+export type SarahMode =
+  | 'after-hours-demo' // homepage hero demo + AI agent intake flows
+  | 'sales-intake' // gtm_ops trial + workspace setup flows
+  | 'general'; // default, no specific surface
+
 let sarahTextPatchInstalled = false;
 let sarahTextObserver: MutationObserver | undefined;
 let sarahOutsideClickInstalled = false;
@@ -8,6 +19,22 @@ const SARAH_VENDOR_DEFAULT_CTA = ['Start', ['Wran', 'ngling'].join('')].join(
   ' ',
 );
 const releaseSarahNoop = () => undefined;
+
+/**
+ * Encode `mode` + optional `surface_context` for the widget's
+ * `dynamic-variables` attribute. ElevenLabs requires JSON-encoded values
+ * and lowercase keys per
+ * https://elevenlabs.io/docs/conversational-ai/customization/personalization/dynamic-variables.
+ */
+export function buildSarahDynamicVariables(
+  mode: SarahMode,
+  surfaceContext?: string,
+) {
+  return JSON.stringify({
+    mode,
+    surface_context: surfaceContext ?? 'wranngle-com',
+  });
+}
 
 export function ensureSarahWidgetScript() {
   if (typeof document === 'undefined') return;

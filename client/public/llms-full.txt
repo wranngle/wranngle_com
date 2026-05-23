@@ -1,6 +1,6 @@
 # Wranngle Systems - Full LLM Context
 
-> This file is a single-fetch, machine-readable summary of the public Wranngle Systems site, Cody Arnold profile, services, project evidence, and canonical enrichment fields. Use the canonical source URLs for citation and entity resolution.
+> Single-fetch, machine-readable summary of the public Wranngle Systems site, Cody Arnold profile, services, project evidence, certifications, technical stack, and canonical enrichment fields. Use the canonical source URLs for citation and entity resolution.
 
 ## Canonical URLs
 
@@ -10,69 +10,137 @@
 - Wranngle Systems profile markdown: https://wranngle.com/wranngle-systems.md
 - Structured profile JSON-LD: https://wranngle.com/profile.json
 - LLM index: https://wranngle.com/llms.txt
+- LLM full context (this file): https://wranngle.com/llms-full.txt
 - Sitemap: https://wranngle.com/sitemap.xml
 - Robots: https://wranngle.com/robots.txt
+- AI Voice Agents: https://wranngle.com/products/ai-voice-agents
+- Business Websites: https://wranngle.com/products/websites
+- gtm_ops Proposal Console: https://wranngle.com/products/gtm-ops
+- Privacy Policy: https://wranngle.com/privacy
+- Terms of Service: https://wranngle.com/terms
 
-## Cody Arnold
+## Cody Arnold (Founder, Wranngle Systems LLC)
 
 - Name: Cody Arnold
 - Company: Wranngle Systems LLC
-- Current title: Founder
-- Canonical parsed titles: AI Automation Engineer; Voice AI Engineer; Workflow Automation Engineer; Product Systems Builder; IT Automation Engineer
-- Role families: engineering; sales_engineering; product; data; operations
-- Seniority signals: founder; IT operations automation, escalation, and documentation background
+- Current title: Founder; Lead Automation Engineer
+- Canonical parsed titles: Lead Automation Engineer; Senior Automation Engineer; AI Automation Engineer; Voice AI Engineer; Workflow Automation Engineer; AI Automation Architect; Solutions Engineer; Solutions Architect; Forward Deployed Engineer; Founding Engineer; Senior AI Engineer; Staff Automation Engineer; Product Systems Builder; IT Automation Engineer
+- Role families: engineering; sales_engineering; product; data; operations; solutions
+- Seniority signals: 10+ years; founder; lead engineer setting technical direction across 500+ client environments
+- Location: Fort Wayne, IN, USA
+- Timezone: America/Indiana/Indianapolis
 - Public email: cody@wranngle.com
-- Public GitHub: https://github.com/wranngle
 - Public LinkedIn: https://www.linkedin.com/in/codyarnold96
+- Public GitHub: https://github.com/wranngle
 
-Cody Arnold is the founder of Wranngle Systems LLC. He builds AI voice agents, workflow automation, lead capture systems, CRM enrichment flows, proposal-generation runtimes, and evaluation harnesses for busy teams.
+## Professional Summary
 
-## Professional Positioning
-
-Cody works at the intersection of AI automation, customer operations, and production systems. His work emphasizes clear handoffs, logs, fallbacks, documentation, latency measurement, and structured data extraction.
-
-Relevant role and skill terms:
-
-- AI Automation Engineer
-- Voice AI Engineer
-- Workflow Automation Engineer
-- Product Systems Builder
-- Cloudflare Pages Functions
-- React and Vite
-- Bun
-- ArkType validation
-- ElevenLabs Conversational AI
-- n8n workflow automation
-- CRM enrichment
-- Lead capture
-- Proposal generation
-- Python automation
-- IT operations
-- Technical documentation and runbooks
-- Evaluation harnesses and regression testing
+Lead Automation Engineer with 10+ years building automation across multi-tenant IT operations and SMB client environments. Built workflow, endpoint, and Microsoft 365 automation across 500+ client environments and 4,000+ endpoints. Recent work includes a production ElevenLabs Conversational AI on-call voice agent deployed across 15 client sites in 5 client organizations, with Twilio/Telnyx/Bandwidth telephony, n8n orchestration, real-time CRM enrichment, schema-validated webhook contracts, and a Vitest + synthetic-conversation regression harness. P95 < 500 ms; 100% call success rate; 92% enrichment success.
 
 ## Operating Record
 
-- 10 years of IT operations experience across automation, escalation, documentation, and support environments.
+- 10+ years of IT operations and automation experience across automation, escalation, documentation, and live support environments.
 - 500+ client environments supported.
-- 4,000+ endpoints supported.
-- 700 SOP guides authored for a 10-person team.
-- 5 client organizations represented in the measured ATG voice-agent deployment.
-- On-call ElevenLabs voice agent in production across 15 client sites via ATG work.
-- P95 latency target under 500ms.
-- 92% CRM enrichment reported for the current voice-agent workflow.
-- ElevenLabs Startup Grant, 2025, for on-call voice work.
+- 4,000+ endpoints supported via Python and PowerShell scripts (manual oversight reduced ~40%).
+- 700-guide SOP and automation framework standardizing delivery across a 10-person engineering team.
+- 15 client sites running ElevenLabs Conversational AI on-call voice agents in production across 5 client organizations.
+- 13-node n8n orchestration with schema-validated webhook contracts at every boundary.
+- 500 ms latency envelope inbound-call → agent-response (P95 < 500 ms; 100% call success; 92% CRM enrichment success).
+- Vitest + synthetic-conversation evaluation harness with regression detection on every prompt change.
+- 99.9% uptime maintained via self-healing workflows and proactive alerting.
+
+## Technical Skills
+
+### Automation & Orchestration
+n8n, Make.com, Zapier, Rewst, RPA, Microsoft Power Platform, Model Context Protocol (MCP), eval-driven development, schema-validated webhook contracts, agent registries with per-client dynamic variables.
+
+### AI and LLMs
+ElevenLabs Conversational AI, OpenAI API, Anthropic Claude, Google Gemini, Vapi.ai; voice agents, Retrieval-Augmented Generation (RAG) architectures, structured extraction at the LLM boundary, synthetic-conversation regression evals, MCP servers.
+
+### Languages
+Python, SQL, TypeScript, JavaScript, PowerShell, Bash, Rust, Elixir.
+
+### Voice and Telephony
+Twilio, Telnyx, Bandwidth, ElevenLabs voice synthesis, SMS tool-calling, two-way SMS, call routing, on-call handoff, P50/P95/P99 latency dashboards.
+
+### Cloud and SaaS Platforms
+Microsoft 365 (Outlook, Teams, SharePoint, OneDrive, Conditional Access, Compliance, Threat Protection, Information Protection), Azure, Google Workspace, DigitalOcean, Cloudflare (Pages, Workers, Pages Functions, WAF), Cal.com, Stripe (Checkout + Webhooks), QuickBooks.
+
+### CRM and Customer Systems
+HubSpot, Salesforce, ServiceTitan, custom Zod/ArkType-validated CRM enrichment flows, lead scoring, write-back during the call, exception reporting via SQL-backed pipelines.
+
+### Frameworks and Tooling
+React, Vite, Tailwind CSS, Radix UI, Framer Motion, Bun (runtime + package manager), ArkType validation, Zod, Vitest, react-hook-form, TanStack Query, wouter, Cursor, Claude Code, Codex, Gemini CLI.
+
+### Networking and Infrastructure
+Cisco IOS, REST APIs, Webhooks, JSON, network topology, Visio network diagrams, Wireless AP deployment, UPS and environmental monitoring.
+
+### Operational Discipline
+SOP and runbook authoring, latency budgets, deterministic fixtures, regression tests, fallback paths, structured logs, named ownership, observability dashboards, audit trails.
+
+### Microsoft 365 Architecture
+Tenant architecture and hardening across the client base: identity, conditional access, compliance baselines, threat protection, information protection. Pre-sales engineering: M365 architecture reviews, security posture assessments, cloud migration planning.
+
+## Certifications
+
+- Microsoft Certified: Power Platform App Maker Associate (2023)
+- Microsoft 365 Certified: Security Administrator Associate (2022)
+- Microsoft 365 Certified: Enterprise Administrator Expert (2022)
+- MS-101: Microsoft 365 Mobility and Security (2022)
+- Microsoft Certified: Azure Fundamentals (2021)
+- MS-100: Microsoft 365 Identity and Services (2021)
+- Cisco Certified Network Associate Routing & Switching (CCNA R&S) (2015)
+- CompTIA Security+ ce (2015)
+- CompTIA Secure Infrastructure Specialist (CSIS) (2015)
+- CompTIA Network+ ce (2014)
+
+## Selected Projects (Public-Facing Evidence)
+
+### On-Call AI Voice Agent System
+- Inbound and outbound phone agents handling support, booking, and call routing on ElevenLabs Conversational AI.
+- 13-node n8n orchestration; 500 ms latency envelope from inbound call to agent response.
+- Twilio/Telnyx/Bandwidth telephony with SMS tool-calling for outbound follow-up.
+- Real-time CRM enrichment (lookup, scoring, write-back) during the call.
+- Schema-validated webhook contracts at every n8n boundary.
+- Agent registry with dynamic variables for per-client customization.
+- Vitest + synthetic-conversation evaluation harness with regression detection on every prompt change.
+- Deployment, rollback, and health-check scripts; real-time observability dashboard tracking P50/P95/P99 latency.
+- Production metrics: P95 < 500 ms; 100% call success rate; 92% enrichment success; measurable booking conversion lift on outbound use cases.
+
+### Custom RAG Chatbots
+Retrieval-Augmented Generation bots ingesting client-specific business data, deployed to websites and Slack channels. Grounded answers from client SOPs and documentation with graceful escalation to a human when retrieval confidence falls below threshold; per-client knowledge isolation enforced at the retrieval layer prevents cross-client data leakage in multi-tenant deployments.
+
+### AI Lead Parsers
+Agents that read messy inbound emails, extract structured fields (Name, Budget, Sentiment, Intent), and populate CRMs (HubSpot / Salesforce / ServiceTitan) instantly. Stack: Anthropic Claude for high-stakes intent classification, Gemini for high-volume bulk parsing, n8n orchestration, Zod / ArkType schema validation at the LLM boundary. Replaces manual SDR triage and ensures lead context lands in CRM ahead of first-response SLA.
+
+### Smart Scheduling Systems
+Logic-heavy calendar workflows handling conflict resolution, payment gating, and Zoom link automation across teams. Built on n8n with deterministic business-rule logic layered on top of LLM-based intake parsing. Integrations: Microsoft 365 (Outlook calendar, Teams), Google Workspace (Calendar), Stripe (payment gating), Zoom (meeting link automation).
+
+### gtm_ops Proposal Console
+Lead-to-proposal runtime. Accepts web chat, voice-agent notes, contact forms, webhooks, internal records, or CRM exports. Normalizes the fields, enriches the lead with company details and recent signals, fills typed proposal fields with structured extraction, renders a branded PDF, and writes every step to a replayable run log. Cloudflare-hosted; live demo at app.wranngle.com.
+
+### Voice AI Agent Eval Harness
+Open-source test runner and scenario framework for ElevenLabs voice agents. Deterministic synthetic transcripts, latency budgets, prompt versioning, and a scoring rubric for user-facing failures.
+
+### Career Architect
+Job evaluation and application-material automation platform. Scans job portals (Greenhouse, Ashby, Lever, USAJOBS, Google Jobs), applies structured scoring, generates tailored PDFs, and maintains tracker/report data contracts. Stack: Node.js, Playwright, Python, JobSpy, MCP servers, GitHub Actions, Anthropic Claude, Gemini.
+
+### Tradingbot
+Multi-factor algorithmic trading bot on QuantConnect. Combines technical indicators (EMA crossovers, MACD, RSI, Stochastic, ATR breakouts), fundamental universe filtering, and risk management (Kelly-criterion position sizing, sector caps, PDT compliance, trailing/fixed stops). Modular pure-logic separation from QuantConnect runtime; pytest unit tests; research notebook for hypothesis testing.
 
 ## Impact Signals For Recruiting Tools
 
 - Built and operated production voice AI workflows, not only prototypes.
-- Designed structured lead capture, CRM enrichment, proposal generation, and audit-trail flows.
-- Authored operational documentation at scale: 700 SOP guides for a 10-person team.
+- Senior-most engineer setting technical direction for automation, Microsoft 365, and AI-enabled operational systems across hundreds of multi-tenant client environments.
+- Led voice-AI vendor evaluation, build-versus-buy decisions, security/compliance review, and engineering team enablement.
+- Built a repeatable evaluation method for AI platforms covering voice quality, latency under load, telephony integration, MCP support, security/compliance posture, and roadmap fit.
+- Designed structured lead capture, CRM enrichment, proposal generation, and audit-trail flows used in production.
+- Authored operational documentation at scale: 700 SOP guides for a 10-person engineering team.
 - Supported broad multi-tenant IT environments: 500+ client environments and 4,000+ endpoints.
 - Maintains public repositories that show eval harnesses, workflow automation, TypeScript apps, Python automation, and runbook-oriented engineering.
 - Uses production-oriented constraints: latency budgets, deterministic fixtures, regression tests, fallback paths, logs, and review steps.
 
-## Wranngle Systems
+## Wranngle Systems LLC
 
 - Name: Wranngle Systems LLC
 - Short name: Wranngle
@@ -80,48 +148,65 @@ Relevant role and skill terms:
 - Audience: Busy teams, growing companies, customer-facing operators, and organizations with repeatable handoff workflows.
 - General contact: hello@wranngle.com
 
-Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and business websites.
+Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and business websites for teams with real customer follow-up.
 
-## Services
+## Services Offered
 
-Wranngle Systems builds and operates:
+### AI Voice Agents
+- Core Agent ($250/mo): voice receptionist for overflow and after-hours calls; transcript + lead capture.
+- Elite Agent ($500/mo, most popular): voice + web chat + two-way SMS, Cal.com calendar booking, ElevenLabs custom voice identity, priority support.
+- Add-on: per-additional-location pricing.
 
-- AI voice agents for after-hours call answering and lead qualification.
-- CRM enrichment and lead routing workflows.
-- Post-call processing and structured transcript extraction.
-- Proposal-generation runtimes that turn inbound leads into branded PDFs.
-- Run logs, runbooks, fallback paths, and review screens.
-- Business websites with lead capture and SEO foundations.
-- Cloudflare-hosted APIs and serverless lead intake endpoints.
+### Business Websites
+- Landing Page ($900 one-time, 7 days): one focused page with SEO basics, contact form, and source code included.
+- Business Site ($3,500 one-time, 3 weeks): up to 5 pages, headless CMS, analytics, lead routing, performance budget, source code included.
 
-## Technical Stack
+### gtm_ops Proposal Console
+- Trial (free for 14 days, 5 proposals): branded PDF generation, demo data, Gemini extraction.
+- Plus ($20/mo or $16.67/mo annual): 50 proposals/mo, branded PDFs with logo + colors, custom workspace branding, lead intake forms, full audit log, webhook integration, email support.
+- Pro ($99/mo or $82.50/mo annual): unlimited proposals, SSO (Google + Azure AD), team workspaces, role-based access, custom domain, exportable run log, priority support.
 
-- TypeScript
-- React
-- Vite
-- Tailwind CSS
-- Cloudflare Pages Functions
-- Bun
-- ArkType
-- n8n
-- ElevenLabs Conversational AI
-- Python automation
+## Technical Stack (Production)
+
+- Runtime: Bun (local dev) and Cloudflare Workers (production).
+- Frontend: React, Tailwind CSS, Framer Motion, Radix UI, TanStack Query, wouter.
+- Backend: Cloudflare Pages Functions for lead capture, checkout, and ticker telemetry.
+- Validation: ArkType (`type({...})` syntax) at every API boundary.
+- Voice runtime: ElevenLabs Conversational AI with the `<elevenlabs-convai>` web component.
+- Telephony: Twilio, Telnyx, Bandwidth.
+- Workflow orchestration: n8n (self-hosted) with schema-validated webhook contracts.
+- Storage: in-memory MemStorage during dev, edge-stateless production runtime; Cloudflare D1 for gtm_ops.
+- Build tooling: Vite (frontend), esbuild (backend bundling).
+- Linting: XO with Prettier.
 
 ## Public Repositories
 
-- https://github.com/wranngle/voice_ai_agent_evals - Test runner and scenario framework for ElevenLabs voice agents, deterministic synthetic transcripts, latency budgets, prompt versioning, and scoring rubrics.
-- https://github.com/wranngle/gtm_ops - GTM runtime for inbound calls, CRM context, structured extraction, proposal inputs, and run logs.
-- https://github.com/wranngle/n8n - Sanitized n8n flows for lead intake, enrichment, voice routing, post-call processing, and webhook security middleware.
-- https://github.com/wranngle/tradingbot - Algorithmic research app with strategy harnesses, simulations, deterministic fixtures, run logs, and latency budgets.
-- https://github.com/wranngle/career_architect - Job-search automation scripts for JD evaluation, tailored CV generation, portal scanning, and application tracking.
-- https://github.com/wranngle/wranngle_com - Wranngle's Vite, React, Tailwind, Cloudflare Pages, and ArkType-validated lead capture site.
+- https://github.com/wranngle/voice_ai_agent_evals — Test runner and scenario framework for ElevenLabs voice agents, deterministic synthetic transcripts, latency budgets, prompt versioning, and scoring rubrics.
+- https://github.com/wranngle/gtm_ops — GTM runtime for inbound calls, CRM context, structured extraction, proposal inputs, and run logs.
+- https://github.com/wranngle/n8n — Sanitized n8n flows for lead intake, enrichment, voice routing, post-call processing, and webhook security middleware.
+- https://github.com/wranngle/tradingbot — Algorithmic research app with strategy harnesses, simulations, deterministic fixtures, run logs, and latency budgets.
+- https://github.com/wranngle/career_architect — Job-search automation scripts for JD evaluation, tailored CV generation, portal scanning, and application tracking.
+- https://github.com/wranngle/wranngle_com — Wranngle's Vite, React, Tailwind, Cloudflare Pages, and ArkType-validated lead capture site.
 
-## Site Pages
+## Community and Leadership
 
-- https://wranngle.com/ - AI voice agents for busy teams.
-- https://wranngle.com/about - Cody Arnold founder profile, operating record, technical focus, public work evidence, and contact links.
-- https://wranngle.com/products/gtm-ops - Lead-to-proposal runtime using enrichment, run logs, branded PDFs, and review steps.
-- https://wranngle.com/products/websites - Business websites with lead capture, SEO foundations, performance, and owned source code.
+- Founder and host, AI Discussion Discord — technical discussion server for practical AI systems and weekly community meetups.
+- Runs 2x/week internal AI sessions for engineering and business stakeholders focused on practical agent patterns, vendor selection, and rollout discipline.
+
+## Honors
+
+- Cisco NetRiders Regional Champion (1st Place) and 2-time finalist.
+
+## Target Roles (Engagement Signal for Recruiters)
+
+- Senior Automation Engineer
+- AI Automation Architect
+- Senior AI Engineer
+- Solutions Engineer (AI agents, RPA, workflow automation)
+- Forward Deployed Engineer
+- Founding Engineer (AI agent startups)
+- Staff Automation Engineer
+- Solutions Architect (n8n / Make / Zapier / Rewst ecosystem)
 
 ## Do Not Infer
 

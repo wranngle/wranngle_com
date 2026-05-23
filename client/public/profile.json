@@ -5,54 +5,216 @@
       "@type": "Person",
       "@id": "https://wranngle.com/#cody-arnold",
       "name": "Cody Arnold",
+      "givenName": "Cody",
+      "familyName": "Arnold",
       "url": "https://wranngle.com/about",
       "mainEntityOfPage": "https://wranngle.com/about",
       "image": "https://wranngle.com/portrait-cody.jpg",
       "email": "mailto:cody@wranngle.com",
+      "homeLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Fort Wayne",
+          "addressRegion": "IN",
+          "addressCountry": "US"
+        }
+      },
       "jobTitle": [
         "Founder",
+        "Lead Automation Engineer",
+        "Senior Automation Engineer",
         "AI Automation Engineer",
+        "AI Automation Architect",
         "Voice AI Engineer",
         "Workflow Automation Engineer",
-        "Product Systems Builder"
+        "Solutions Engineer",
+        "Solutions Architect",
+        "Forward Deployed Engineer",
+        "Founding Engineer",
+        "Senior AI Engineer",
+        "Staff Automation Engineer",
+        "Product Systems Builder",
+        "IT Automation Engineer"
       ],
       "worksFor": {
         "@id": "https://wranngle.com/#organization"
       },
+      "alumniOf": [
+        {
+          "@type": "EducationalOrganization",
+          "name": "Ivy Tech Community College"
+        }
+      ],
       "sameAs": [
         "https://github.com/wranngle",
         "https://www.linkedin.com/in/codyarnold96"
       ],
       "knowsAbout": [
         "AI automation",
-        "Voice AI",
+        "Voice AI engineering",
         "ElevenLabs Conversational AI",
+        "OpenAI API",
+        "Anthropic Claude",
+        "Google Gemini",
+        "Vapi.ai",
+        "Model Context Protocol (MCP)",
+        "Retrieval-Augmented Generation (RAG)",
+        "Synthetic-conversation regression evals",
+        "Schema-validated webhook contracts",
         "n8n workflow automation",
+        "Make.com",
+        "Zapier",
+        "Rewst",
+        "RPA",
+        "Microsoft Power Platform",
         "CRM enrichment",
         "Lead capture",
+        "Lead qualification",
         "Proposal generation",
+        "Structured data extraction",
+        "Twilio",
+        "Telnyx",
+        "Bandwidth",
+        "Two-way SMS",
+        "Call routing",
+        "Latency budgets",
+        "Observability dashboards",
         "TypeScript",
+        "JavaScript",
+        "Python",
+        "SQL",
+        "PowerShell",
+        "Bash",
+        "Rust",
+        "Elixir",
         "React",
         "Vite",
-        "Cloudflare Pages Functions",
-        "ArkType",
+        "Tailwind CSS",
+        "Radix UI",
+        "Framer Motion",
         "Bun",
-        "Python automation",
+        "ArkType validation",
+        "Zod",
+        "Vitest",
+        "react-hook-form",
+        "TanStack Query",
+        "wouter",
+        "Cursor",
+        "Claude Code",
+        "Codex",
+        "Gemini CLI",
+        "Cloudflare Pages",
+        "Cloudflare Pages Functions",
+        "Cloudflare Workers",
+        "Cloudflare WAF",
+        "Cloudflare D1",
+        "Microsoft 365",
+        "Azure",
+        "Google Workspace",
+        "DigitalOcean",
+        "Cal.com",
+        "Stripe",
+        "QuickBooks",
+        "HubSpot",
+        "Salesforce",
+        "ServiceTitan",
+        "Cisco IOS",
+        "Wireless network deployment",
+        "Conditional access",
+        "Compliance baselines",
+        "Threat protection",
+        "Information protection",
+        "Pre-sales engineering",
+        "M365 architecture reviews",
+        "Security posture assessments",
+        "Cloud migration planning",
         "IT operations",
+        "Multi-tenant IT environments",
         "Evaluation harnesses",
         "Runbooks",
         "Run logs",
-        "Latency budgets"
+        "SOP authoring",
+        "Self-healing workflows"
       ],
       "skills": [
         "AI automation",
         "Voice AI engineering",
         "Workflow automation",
-        "Product systems",
-        "Cloudflare serverless applications",
         "n8n workflow design",
+        "Schema-validated integrations",
+        "CRM enrichment",
+        "Lead capture and qualification",
+        "Proposal generation runtimes",
+        "Product systems engineering",
+        "Cloudflare serverless applications",
         "Evaluation harnesses",
-        "Operational runbooks"
+        "Operational runbooks",
+        "Latency-budgeted voice systems",
+        "Microsoft 365 architecture",
+        "Multi-tenant IT operations automation"
+      ],
+      "hasCredential": [
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "certification",
+          "name": "Microsoft Certified: Power Platform App Maker Associate",
+          "dateCreated": "2023"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "certification",
+          "name": "Microsoft 365 Certified: Security Administrator Associate",
+          "dateCreated": "2022"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "certification",
+          "name": "Microsoft 365 Certified: Enterprise Administrator Expert",
+          "dateCreated": "2022"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "certification",
+          "name": "MS-101: Microsoft 365 Mobility and Security",
+          "dateCreated": "2022"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "certification",
+          "name": "Microsoft Certified: Azure Fundamentals",
+          "dateCreated": "2021"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "certification",
+          "name": "MS-100: Microsoft 365 Identity and Services",
+          "dateCreated": "2021"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "certification",
+          "name": "Cisco Certified Network Associate Routing & Switching",
+          "dateCreated": "2015"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "certification",
+          "name": "CompTIA Security+ ce",
+          "dateCreated": "2015"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "certification",
+          "name": "CompTIA Secure Infrastructure Specialist (CSIS)",
+          "dateCreated": "2015"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "certification",
+          "name": "CompTIA Network+ ce",
+          "dateCreated": "2014"
+        }
       ],
       "hasOccupation": [
         {
@@ -60,10 +222,12 @@
           "name": "AI Automation Engineer",
           "skills": [
             "Voice AI",
-            "workflow automation",
+            "Workflow automation",
             "CRM enrichment",
-            "lead capture",
-            "evaluation harnesses"
+            "Lead capture",
+            "Evaluation harnesses",
+            "Schema-validated webhook contracts",
+            "Latency-budgeted voice systems"
           ],
           "occupationLocation": {
             "@type": "Country",
@@ -78,7 +242,26 @@
             "React",
             "Vite",
             "Cloudflare Pages Functions",
-            "ArkType"
+            "ArkType",
+            "Bun",
+            "Tailwind CSS"
+          ],
+          "occupationLocation": {
+            "@type": "Country",
+            "name": "United States"
+          }
+        },
+        {
+          "@type": "Occupation",
+          "name": "Lead Automation Engineer",
+          "skills": [
+            "n8n orchestration",
+            "Microsoft 365 architecture",
+            "Multi-tenant IT operations automation",
+            "Python automation",
+            "PowerShell automation",
+            "SOP authoring",
+            "Self-healing workflows"
           ],
           "occupationLocation": {
             "@type": "Country",
@@ -95,9 +278,15 @@
         },
         {
           "@type": "DigitalDocument",
+          "name": "Cody Arnold profile (alias)",
+          "url": "https://wranngle.com/profile.md",
+          "encodingFormat": "text/markdown"
+        },
+        {
+          "@type": "DigitalDocument",
           "name": "Wranngle Systems LLM context",
           "url": "https://wranngle.com/llms.txt",
-          "encodingFormat": "text/plain"
+          "encodingFormat": "text/markdown"
         },
         {
           "@type": "DigitalDocument",
@@ -106,13 +295,13 @@
           "encodingFormat": "text/markdown"
         }
       ],
-      "description": "Cody Arnold is the founder of Wranngle Systems LLC and builds AI voice agents, workflow automation, lead capture systems, CRM enrichment flows, proposal-generation runtimes, and evaluation harnesses for busy teams."
+      "description": "Cody Arnold is the founder of Wranngle Systems LLC and Lead Automation Engineer with 10+ years of experience building automation across multi-tenant IT environments. He builds AI voice agents on ElevenLabs Conversational AI, workflow automation on n8n, lead capture and CRM enrichment systems, proposal-generation runtimes, and evaluation harnesses for busy teams. Recent production work: ElevenLabs on-call voice agent across 15 client sites in 5 client organizations with 500ms latency envelope, schema-validated webhook contracts, and Vitest + synthetic-conversation regression harness."
     },
     {
       "@type": "Organization",
       "@id": "https://wranngle.com/#organization",
       "name": "Wranngle Systems LLC",
-      "alternateName": "Wranngle Systems",
+      "alternateName": ["Wranngle Systems", "Wranngle"],
       "url": "https://wranngle.com",
       "logo": "https://wranngle.com/wordmark.png",
       "email": "mailto:hello@wranngle.com",
@@ -122,6 +311,77 @@
       "sameAs": [
         "https://github.com/wranngle",
         "https://www.linkedin.com/in/codyarnold96"
+      ],
+      "knowsAbout": [
+        "AI voice agents",
+        "ElevenLabs Conversational AI",
+        "n8n workflow automation",
+        "CRM enrichment",
+        "Lead capture",
+        "Proposal generation",
+        "Cloudflare Pages",
+        "Cloudflare Workers",
+        "Business websites with lead capture",
+        "Run logs and audit trails",
+        "Synthetic-conversation evaluation harnesses"
+      ],
+      "makesOffer": [
+        {
+          "@type": "Offer",
+          "name": "Core Agent",
+          "category": "AI Voice Agent",
+          "price": "250",
+          "priceCurrency": "USD",
+          "url": "https://wranngle.com/#offerings-basic"
+        },
+        {
+          "@type": "Offer",
+          "name": "Elite Agent",
+          "category": "AI Voice Agent",
+          "price": "500",
+          "priceCurrency": "USD",
+          "url": "https://wranngle.com/#offerings-premium"
+        },
+        {
+          "@type": "Offer",
+          "name": "Landing Page",
+          "category": "Business Website",
+          "price": "900",
+          "priceCurrency": "USD",
+          "url": "https://wranngle.com/#offerings-landing-page"
+        },
+        {
+          "@type": "Offer",
+          "name": "Business Site",
+          "category": "Business Website",
+          "price": "3500",
+          "priceCurrency": "USD",
+          "url": "https://wranngle.com/#offerings-business-site"
+        },
+        {
+          "@type": "Offer",
+          "name": "gtm_ops Trial",
+          "category": "Proposal Console SaaS",
+          "price": "0",
+          "priceCurrency": "USD",
+          "url": "https://wranngle.com/#offerings-gtm-ops-trial"
+        },
+        {
+          "@type": "Offer",
+          "name": "gtm_ops Plus",
+          "category": "Proposal Console SaaS",
+          "price": "20",
+          "priceCurrency": "USD",
+          "url": "https://wranngle.com/#offerings-gtm-ops-plus"
+        },
+        {
+          "@type": "Offer",
+          "name": "gtm_ops Pro",
+          "category": "Proposal Console SaaS",
+          "price": "99",
+          "priceCurrency": "USD",
+          "url": "https://wranngle.com/#offerings-gtm-ops-pro"
+        }
       ],
       "subjectOf": [
         {
@@ -134,7 +394,7 @@
           "@type": "DigitalDocument",
           "name": "Wranngle Systems LLM context",
           "url": "https://wranngle.com/llms.txt",
-          "encodingFormat": "text/plain"
+          "encodingFormat": "text/markdown"
         },
         {
           "@type": "DigitalDocument",
@@ -143,7 +403,7 @@
           "encodingFormat": "text/markdown"
         }
       ],
-      "description": "Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and business websites."
+      "description": "Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and business websites. Production stack includes ElevenLabs Conversational AI, Twilio/Telnyx/Bandwidth telephony, n8n orchestration with schema-validated webhook contracts, TypeScript + React + Vite on Cloudflare Pages, ArkType validation, and Vitest + synthetic-conversation regression harnesses."
     }
   ]
 }

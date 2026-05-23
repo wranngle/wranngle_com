@@ -198,14 +198,13 @@ export default function GtmOpsPage() {
                       href="/sample-proposal.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
-                      download="wranngle-gtm-ops-sample-proposal.pdf"
                       className="h-12 px-5 border border-current/25 font-bold uppercase text-xs rounded-md hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all inline-flex items-center justify-center gap-2"
                     >
                       <FileText size={15} aria-hidden /> Sample proposal
                       <span className="opacity-60 normal-case font-normal">
                         · 3 MB PDF
                       </span>
-                      <span className="sr-only">(downloads)</span>
+                      <span className="sr-only">(opens in a new tab)</span>
                     </a>
                   </div>
 
@@ -355,6 +354,45 @@ export default function GtmOpsPage() {
                 {tiers.map((item) => (
                   <GtmOpsTile key={item.id} item={item} isDark={isDark} />
                 ))}
+              </div>
+            </section>
+
+            {/* Upsell: Business Site + Agent Pack */}
+            <section
+              className={`mb-14 rounded-md border p-6 md:p-8 grid md:grid-cols-[1.1fr_0.9fr] gap-6 md:gap-10 items-center ${
+                isDark
+                  ? 'border-white/10 bg-[#18181b]'
+                  : 'border-black/10 bg-white'
+              }`}
+            >
+              <div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-3 mono-font">
+                  PAIR WITH AGENT + SITE
+                </div>
+                <h3 className="brand-font text-2xl md:text-3xl font-bold mb-3">
+                  Business Site + Agent Pack
+                </h3>
+                <p className="text-sm md:text-base opacity-70 leading-relaxed">
+                  When the proposal flow has to start from inbound traffic and
+                  phone calls instead of an import, pair gtm_ops with a Business
+                  Site (lead forms, CMS, analytics) and an Elite Agent (voice,
+                  web chat, two-way SMS). Same intake schema feeds every channel
+                  into the same enrichment + proposal run.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row md:flex-col gap-3">
+                <a
+                  href="/products/websites#offerings-business-site"
+                  className="h-12 px-5 bg-[var(--s500)] text-white font-bold uppercase text-xs rounded-md shadow-lg hover:scale-[1.02] transition-all inline-flex items-center justify-center gap-2"
+                >
+                  Business Site <ArrowRight size={15} aria-hidden />
+                </a>
+                <a
+                  href="/#offerings-premium"
+                  className="h-12 px-5 border border-current/25 font-bold uppercase text-xs rounded-md hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all inline-flex items-center justify-center gap-2"
+                >
+                  Elite Voice Agent
+                </a>
               </div>
             </section>
 

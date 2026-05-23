@@ -73,14 +73,18 @@ export default function TermsOfService() {
                 <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
                   <li>24/7 AI voice agent for call answering</li>
                   <li>Lead qualification and capture</li>
-                  <li>Two-way SMS communication (Elite tier)</li>
-                  <li>Web chat integration (Elite tier)</li>
-                  <li>Calendar integration (Elite tier)</li>
+                  <li>Two-way SMS communication</li>
+                  <li>Web chat integration</li>
+                  <li>Calendar integration via Cal.com</li>
                   <li>
-                    gtm_ops: lead intake, Clay-powered enrichment, and
-                    branded-proposal generation (separate SaaS plans)
+                    gtm_ops: lead intake, Clay and Apollo enrichment, and
+                    branded-proposal generation
                   </li>
                   <li>Usage analytics, audit logs, and reporting</li>
+                  <li>
+                    AI disclosure and call-recording announcement at the start
+                    of every call
+                  </li>
                 </ul>
               </section>
 
@@ -186,10 +190,33 @@ export default function TermsOfService() {
                     networks
                   </li>
                   <li>Use the Service for telemarketing or spam</li>
+                  <li>
+                    Configure the agent to misrepresent itself as a human, deny
+                    being an AI when asked, or evade the call-start AI and
+                    recording disclosures described in our Privacy Policy
+                  </li>
+                  <li>
+                    Clone, mimic, or impersonate a third party&apos;s voice
+                    without verifiable, documented consent from that person
+                  </li>
+                  <li>
+                    Use the Service for prohibited content categories under the
+                    ElevenLabs Terms of Service (e.g., misleading political
+                    speech, fraud, harassment campaigns, non-consensual
+                    impersonation, or unlawful surveillance)
+                  </li>
+                  <li>
+                    Route the Service into geographies or call types where AI
+                    voice agents are prohibited by local law
+                  </li>
                 </ul>
                 <p className="opacity-80 mt-4">
                   Violation of this policy may result in immediate termination
-                  of your account without refund.
+                  of your account without refund. We pass through upstream
+                  enforcement actions: if ElevenLabs, Twilio, Telnyx, Bandwidth,
+                  or any other infrastructure provider suspends or terminates
+                  our access on your behalf, your access may be paused or
+                  revoked accordingly.
                 </p>
               </section>
 
