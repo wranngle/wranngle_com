@@ -86,7 +86,7 @@ describe('Hero demo carousel', () => {
       right: 480,
       bottom: 480,
       toJSON: () => ({}),
-    } as DOMRect);
+    });
   });
 
   afterEach(() => {
