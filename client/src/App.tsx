@@ -734,91 +734,137 @@ const ButtonGhost = ({
   </button>
 );
 
+// Polar → cartesian for placing incoming-call blips on the radar ring.
+function radarPoint(angleDeg: number) {
+  const r = 64;
+  const rad = (angleDeg * Math.PI) / 180;
+  return {x: Math.cos(rad) * r, y: Math.sin(rad) * r};
+}
+
 const RadarWatchdog = () => {
+  // Fixed clock angles where incoming calls land; each blip flashes white as
+  // the sweep passes, then settles green ("answered").
+  const calls = [38, 105, 172, 246, 312];
   return (
-    <div className="h-48 w-full flex items-center justify-center relative overflow-hidden bg-black/20 rounded-lg border border-white/5">
+    <div className="h-48 w-full flex items-center justify-center relative overflow-hidden bg-black/30 rounded-lg border border-white/5">
       <div
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 opacity-15"
         style={{
           backgroundImage:
             'radial-gradient(circle, #fff 1px, transparent 1px), radial-gradient(circle, #fff 1px, transparent 1px)',
-          backgroundSize: '20px 20px',
-          backgroundPosition: '0 0, 10px 10px',
+          backgroundSize: '22px 22px',
+          backgroundPosition: '0 0, 11px 11px',
         }}
       />
 
-      {[60, 120, 180].map((size, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full border border-[var(--s500)] opacity-20"
+      {[64, 122, 180].map((size) => (
+        <motion.div
+          key={size}
+          className="absolute rounded-full border border-[var(--s500)]"
           style={{width: size, height: size}}
+          animate={{opacity: [0.08, 0.24, 0.08]}}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: size / 240,
+          }}
         />
       ))}
 
+      {/* Conic sweep with a trailing fade. */}
       <motion.div
-        className="absolute w-1/2 h-1/2 origin-bottom-right bg-gradient-to-tl from-[var(--s500)]/0 to-[var(--s500)]/50"
-        style={{top: 0, left: 0, borderRight: '1px solid var(--s500)'}}
+        className="absolute h-44 w-44 rounded-full"
+        style={{
+          background:
+            'conic-gradient(from 0deg, transparent 0deg, transparent 300deg, rgba(255,95,0,0.45) 358deg, rgba(255,95,0,0.7) 360deg)',
+        }}
         animate={{rotate: 360}}
-        transition={{duration: 4, repeat: Infinity, ease: 'linear'}}
+        transition={{duration: 3.4, repeat: Infinity, ease: 'linear'}}
       />
 
-      <motion.div
-        className="absolute w-2 h-2 bg-white rounded-full shadow-[0_0_10px_white]"
-        initial={{opacity: 0, scale: 0, top: '30%', left: '40%'}}
-        animate={{opacity: [0, 1, 0], scale: [0, 1.5, 0]}}
-        transition={{duration: 2, repeat: Infinity, repeatDelay: 1}}
-      />
-      <motion.div
-        className="absolute w-1.5 h-1.5 bg-[var(--v500)] rounded-full shadow-[0_0_10px_var(--v500)]"
-        initial={{opacity: 0, scale: 0, top: '60%', left: '70%'}}
-        animate={{opacity: [0, 1, 0], scale: [0, 1.5, 0]}}
-        transition={{duration: 3, repeat: Infinity, repeatDelay: 0.5}}
-      />
+      {/* Incoming calls: flash white, then settle to "answered" green. */}
+      {calls.map((angle) => {
+        const {x, y} = radarPoint(angle);
+        return (
+          <motion.div
+            key={angle}
+            className="absolute h-2 w-2 rounded-full"
+            style={{transform: `translate(${x}px, ${y}px)`}}
+            animate={{
+              backgroundColor: ['#ffffff', '#ffffff', '#5d8c61', '#5d8c61'],
+              boxShadow: [
+                '0 0 10px #fff',
+                '0 0 10px #fff',
+                '0 0 8px #5d8c61',
+                '0 0 8px #5d8c61',
+              ],
+              scale: [0.6, 1.6, 1, 1],
+            }}
+            transition={{
+              duration: 3.4,
+              repeat: Infinity,
+              times: [0, 0.04, 0.12, 1],
+              delay: (angle / 360) * 3.4,
+              ease: 'easeOut',
+            }}
+          />
+        );
+      })}
 
-      <div className="absolute z-10 text-[8px] font-mono text-[var(--s500)] flex flex-col items-center">
-        <span>CALLS</span>
-        <span className="tabular-nums">14 OPEN</span>
+      <div className="absolute z-10 flex flex-col items-center gap-0.5">
+        <PhoneCall size={14} className="text-[var(--s500)]" aria-hidden />
+        <span className="font-mono text-[8px] tracking-widest text-[var(--s500)]">
+          ANSWERING
+        </span>
+        <span className="font-mono text-[8px] tabular-nums text-[#5d8c61]">
+          0 MISSED
+        </span>
       </div>
     </div>
   );
 };
 
+// Deterministic per-bar speech envelope — no Math.random in render so the
+// waveform is stable across re-renders and SSR.
+const SPECTRAL_BARS = Array.from({length: 22}, (_, i) => {
+  const envelope = Math.sin((i / 21) * Math.PI); // louder in the middle
+  const peak = 28 + envelope * 60;
+  return {peak: `${Math.round(peak)}%`, delay: (i % 6) * 0.07};
+});
+
 const SpectralAnalyzer = () => {
   return (
-    <div className="h-48 w-full flex flex-col justify-between p-4 bg-black/20 rounded-lg border border-white/5 relative overflow-hidden">
+    <div className="h-48 w-full flex flex-col justify-between p-4 bg-black/30 rounded-lg border border-white/5 relative overflow-hidden">
       <div className="flex justify-between text-[10px] font-mono opacity-50 mb-2">
-        <span>FREQ: 44.1kHz</span>
-        <span>GAIN: +12dB</span>
+        <span>VOICE IN</span>
+        <span>QUALIFYING</span>
       </div>
 
-      <div className="flex items-end justify-between h-24 gap-1">
-        {Array.from({length: 20}).map((_, i) => (
+      <div className="flex items-end justify-between h-24 gap-[3px]">
+        {SPECTRAL_BARS.map((bar, i) => (
           <motion.div
             key={i}
-            className="w-full bg-[var(--s500)] rounded-t-sm opacity-80"
-            animate={{
-              height: ['10%', `${Math.random() * 80 + 20}%`, '10%'],
-              backgroundColor:
-                i > 12 ? ['#cf3c69', '#cf3c69'] : ['#ff5f00', '#ff5f00'],
-            }}
+            className="w-full rounded-t-sm bg-gradient-to-t from-[var(--s500)] to-[var(--v500)]"
+            animate={{height: ['14%', bar.peak, '22%', '14%']}}
             transition={{
-              duration: 0.5,
+              duration: 1.1,
               repeat: Infinity,
               repeatType: 'mirror',
-              delay: i * 0.05,
+              delay: bar.delay,
               ease: 'easeInOut',
             }}
           />
         ))}
       </div>
 
-      <div className="mt-2 h-6 w-full bg-black/40 rounded flex items-center px-2 font-mono text-[9px] text-green-400 gap-2">
-        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+      <div className="mt-2 h-6 w-full bg-black/40 rounded flex items-center px-2 font-mono text-[9px] text-[#5d8c61] gap-2">
+        <span className="h-1.5 w-1.5 rounded-full bg-[#5d8c61] animate-pulse" />
         <TypewriterSequence
           sequence={[
-            '> ACCOUNT_CONTEXT_CONFIRMED',
-            '> REQUEST_TYPE: URGENT_SUPPORT',
-            '> TEAM_SUMMARY_READY',
+            '> caller intent: new booking',
+            '> urgency: high · routed',
+            '> qualified — summary ready',
           ]}
         />
       </div>
@@ -828,57 +874,104 @@ const SpectralAnalyzer = () => {
 
 const SynapseLink = () => {
   return (
-    <div className="h-48 w-full flex items-center justify-center relative bg-black/20 rounded-lg border border-white/5">
-      <div className="absolute left-8 w-12 h-12 rounded-full border-2 border-[var(--s500)] flex items-center justify-center bg-[var(--s500)]/10 z-10">
-        <div className="w-4 h-4 bg-[var(--s500)] rounded-full animate-ping opacity-50" />
+    <div className="h-48 w-full flex items-center justify-center relative bg-black/30 rounded-lg border border-white/5">
+      {/* Agent node (source) */}
+      <div className="absolute left-7 flex flex-col items-center gap-1.5 z-10">
+        <div className="w-12 h-12 rounded-full border-2 border-[var(--s500)] flex items-center justify-center bg-[var(--s500)]/10">
+          <motion.div
+            className="w-3.5 h-3.5 bg-[var(--s500)] rounded-full"
+            animate={{scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6]}}
+            transition={{duration: 1.6, repeat: Infinity, ease: 'easeInOut'}}
+          />
+        </div>
+        <span className="font-mono text-[8px] tracking-widest text-white/55">
+          AGENT
+        </span>
       </div>
-      <div className="absolute right-8 w-12 h-12 rounded-lg border-2 border-white/20 flex items-center justify-center bg-white/5 z-10">
-        <Zap size={18} />
-      </div>
+
+      {/* CRM node (destination) — flashes on packet arrival */}
+      <motion.div
+        className="absolute right-7 flex flex-col items-center gap-1.5 z-10"
+        animate={{scale: [1, 1, 1.12, 1]}}
+        transition={{
+          duration: 2.4,
+          repeat: Infinity,
+          times: [0, 0.78, 0.86, 1],
+          ease: 'easeOut',
+        }}
+      >
+        <motion.div
+          className="w-12 h-12 rounded-lg border-2 flex items-center justify-center"
+          animate={{
+            borderColor: [
+              'rgba(255,255,255,0.2)',
+              'rgba(255,255,255,0.2)',
+              '#5d8c61',
+              'rgba(255,255,255,0.2)',
+            ],
+            backgroundColor: [
+              'rgba(255,255,255,0.05)',
+              'rgba(255,255,255,0.05)',
+              'rgba(93,140,97,0.25)',
+              'rgba(255,255,255,0.05)',
+            ],
+          }}
+          transition={{
+            duration: 2.4,
+            repeat: Infinity,
+            times: [0, 0.78, 0.86, 1],
+          }}
+        >
+          <Zap size={18} className="text-white/80" />
+        </motion.div>
+        <span className="font-mono text-[8px] tracking-widest text-white/55">
+          CRM + INBOX
+        </span>
+      </motion.div>
 
       <svg className="absolute inset-0 w-full h-full pointer-events-none">
         <path
-          d="M 60 96 C 150 96, 250 96, 300 96"
+          d="M 56 96 C 150 96, 250 96, 300 96"
           stroke="rgba(255,255,255,0.1)"
           strokeWidth="2"
           fill="none"
         />
-        <path
-          d="M 60 96 C 150 96, 250 96, 300 96"
-          stroke="url(#gradient)"
+        <motion.path
+          d="M 56 96 C 150 96, 250 96, 300 96"
+          stroke="var(--s500)"
           strokeWidth="2"
           fill="none"
-          strokeDasharray="5 5"
+          strokeDasharray="6 8"
+          animate={{strokeDashoffset: [0, -28]}}
+          transition={{duration: 1, repeat: Infinity, ease: 'linear'}}
         />
-        <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="transparent" />
-            <stop offset="50%" stopColor="var(--s500)" />
-            <stop offset="100%" stopColor="transparent" />
-          </linearGradient>
-        </defs>
       </svg>
 
+      {/* Handoff packets travel agent → CRM, then the badge lands. */}
       {[0, 1, 2].map((i) => (
         <motion.div
           key={i}
-          className="absolute top-1/2 w-3 h-1.5 bg-white rounded-full shadow-[0_0_10px_var(--s500)]"
-          initial={{left: '15%', opacity: 0}}
+          className="absolute top-1/2 h-2 w-3.5 rounded-full bg-white shadow-[0_0_10px_var(--s500)]"
+          initial={{left: '16%', opacity: 0}}
           animate={{left: '80%', opacity: [0, 1, 1, 0]}}
           transition={{
-            duration: 2,
+            duration: 2.4,
             repeat: Infinity,
             delay: i * 0.8,
-            ease: 'linear',
+            ease: 'easeInOut',
           }}
-          style={{marginTop: -3}}
+          style={{marginTop: -4}}
         />
       ))}
 
       <motion.div
-        className="absolute right-0 top-6 bg-white text-black text-[9px] font-bold px-2 py-1 rounded shadow-lg font-mono"
-        animate={{y: [0, -5, 0], opacity: [0.5, 1, 0.5]}}
-        transition={{duration: 2, repeat: Infinity}}
+        className="absolute right-4 top-5 bg-[#5d8c61] text-white text-[9px] font-bold px-2 py-1 rounded shadow-lg font-mono"
+        animate={{y: [4, 4, -2, 4], opacity: [0, 0, 1, 0]}}
+        transition={{
+          duration: 2.4,
+          repeat: Infinity,
+          times: [0, 0.78, 0.88, 1],
+        }}
       >
         +1 LEAD
       </motion.div>
