@@ -19,6 +19,7 @@ import {
   Sparkles,
   Workflow,
 } from 'lucide-react';
+import gtmOpsDemos from './gtm-ops-demos.manifest.json';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
 import SiteFooter from '@/components/site/SiteFooter.tsx';
 import {useDarkMode} from '@/components/site/DarkModeToggle.tsx';
@@ -54,32 +55,19 @@ function crossSellFromGtmOps(targetId: string) {
   }
 }
 
-// Real screenshots of the deployed console. Bundled into wranngle_com's
-// public dir (not hot-linked from app.wranngle.com) so the hero renders
-// even before DNS lands. Source: gtm_ops repo's
-// apps/ops-console/assets/screenshots/. Refresh by running
-//   cp ~/projects/gtm_ops/apps/ops-console/assets/screenshots/console-*.png \
-//      client/public/assets/gtm-ops/
-const DEMO_SCREENSHOTS = [
-  {
-    src: '/assets/gtm-ops/console-evals.png',
-    label: 'Evals',
-    sub: 'harness runs · ElevenLabs lab',
-    href: `${GTM_OPS_DEMO_URL}/console/?route=evals`,
-  },
-  {
-    src: '/assets/gtm-ops/console-generate.png',
-    label: 'Generate',
-    sub: 'buyer brief · live trace',
-    href: `${GTM_OPS_DEMO_URL}/console/?route=generate&artifact=pdf`,
-  },
-  {
-    src: '/assets/gtm-ops/console-settings.png',
-    label: 'Settings',
-    sub: 'alert consent · parity',
-    href: `${GTM_OPS_DEMO_URL}/console/?route=settings`,
-  },
-];
+// Recorded prospect-POV console walkthroughs (auto_demo). Each slide is a
+// looping muted clip of the live console being driven — bind buyer proof and
+// generate a draft, run the eval harness, audit settings. Regenerate with
+// `bun run script/record-gtm-ops-demos.ts`; this typed copy mirrors the public
+// asset manifest at client/public/assets/gtm-ops-demos/manifest.json.
+const DEMO_FLOWS = gtmOpsDemos as Array<{
+  id: string;
+  label: string;
+  sub: string;
+  video: string;
+  poster: string;
+  href: string;
+}>;
 
 const HERO_METRICS = [
   {value: '5 min', label: 'synthetic demo run'},
@@ -529,32 +517,34 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
           className="relative"
         >
           <CarouselContent>
-            {DEMO_SCREENSHOTS.map((shot, index) => (
-              <CarouselItem key={shot.src}>
+            {DEMO_FLOWS.map((flow, index) => (
+              <CarouselItem key={flow.id}>
                 <a
-                  href={shot.href}
+                  href={flow.href}
                   target="_blank"
                   rel="noreferrer"
                   className="block relative group"
-                  aria-label={`Open ${shot.label} in the live demo (slide ${
+                  aria-label={`Open ${flow.label} in the live demo (slide ${
                     index + 1
-                  } of ${DEMO_SCREENSHOTS.length})`}
+                  } of ${DEMO_FLOWS.length})`}
                 >
-                  <img
-                    src={shot.src}
-                    alt={`gtm_ops console — ${shot.label}: ${shot.sub}`}
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    className={`block w-full aspect-[16/10] object-cover object-top ${
-                      isDark ? 'bg-[#12111a]' : 'bg-white'
-                    }`}
+                  <DemoFlowVideo
+                    flow={flow}
+                    active={current === index}
+                    reducedMotion={reducedMotion}
+                    isDark={isDark}
                   />
                   <div className="absolute inset-x-0 bottom-0 px-4 py-3 bg-gradient-to-t from-[#12111a]/90 via-[#12111a]/55 to-transparent text-white pointer-events-none">
                     <div className="mono-font text-[10px] uppercase tracking-widest text-[var(--s500)]">
-                      {shot.label}
+                      {flow.label}
                     </div>
                     <div className="text-sm font-semibold leading-tight">
-                      {shot.sub}
+                      {flow.sub}
                     </div>
+                  </div>
+                  <div className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/55 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white opacity-0 transition-opacity group-hover:opacity-100">
+                    <Play size={11} aria-hidden />
+                    Open live
                   </div>
                 </a>
               </CarouselItem>
@@ -576,13 +566,13 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
             isDark={isDark}
           />
           <div className="flex items-center justify-center gap-2">
-            {DEMO_SCREENSHOTS.map((shot, index) => (
+            {DEMO_FLOWS.map((flow, index) => (
               <button
-                key={shot.src}
+                key={flow.id}
                 type="button"
                 onClick={() => api?.scrollTo(index)}
-                aria-label={`Go to ${shot.label} (slide ${index + 1} of ${
-                  DEMO_SCREENSHOTS.length
+                aria-label={`Go to ${flow.label} (slide ${index + 1} of ${
+                  DEMO_FLOWS.length
                 })`}
                 aria-current={current === index ? 'true' : undefined}
                 className={`h-1.5 rounded-full transition-all ${
@@ -602,6 +592,50 @@ function ProductScreenshot({isDark}: {isDark: boolean}) {
         </div>
       </div>
     </div>
+  );
+}
+
+function DemoFlowVideo({
+  flow,
+  active,
+  reducedMotion,
+  isDark,
+}: {
+  flow: {video: string; poster: string; label: string; sub: string};
+  active: boolean;
+  reducedMotion: boolean;
+  isDark: boolean;
+}) {
+  // eslint-disable-next-line @typescript-eslint/no-restricted-types -- video ref uses React's null sentinel.
+  const videoRef = React.useRef<HTMLVideoElement | null>(null);
+
+  // Only the active slide plays; the rest hold their poster frame. Reduced-
+  // motion users see the poster, never autoplay.
+  React.useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (active && !reducedMotion) {
+      v.currentTime = 0;
+      void v.play().catch(() => undefined);
+    } else {
+      v.pause();
+    }
+  }, [active, reducedMotion]);
+
+  return (
+    <video
+      ref={videoRef}
+      className={`block w-full aspect-[16/10] object-cover object-top ${
+        isDark ? 'bg-[#12111a]' : 'bg-white'
+      }`}
+      src={flow.video}
+      poster={flow.poster}
+      muted
+      loop
+      playsInline
+      preload={active ? 'auto' : 'metadata'}
+      aria-label={`gtm_ops console — ${flow.label}: ${flow.sub}`}
+    />
   );
 }
 

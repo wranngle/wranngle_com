@@ -1,0 +1,28 @@
+{
+  "name": "gtm-ops-evals",
+  "startUrl": "console/?route=evals",
+  "viewport": {"width": 1600, "height": 900},
+  "record": {"enabled": true, "size": {"width": 1600, "height": 900}},
+  "timing": {"speed": 1, "moveMs": 240, "clickPauseMs": 300, "scrollPauseMs": 260, "zoomMs": 420},
+  "polish": {
+    "cursor": {"style": "modern", "accentColor": "#ff5f00"},
+    "actionRail": {"enabled": false},
+    "captions": {"enabled": true, "position": "bottom"},
+    "zoom": {"defaultScale": 1.05, "durationMs": 420, "resetMs": 300}
+  },
+  "metadata": {"route": "evals", "pov": "prospect"},
+  "steps": [
+    {"action": "waitForSelector", "selector": "[aria-label^=\"Evals\"]", "timeoutMs": 20000, "label": "Console ready"},
+    {"action": "caption", "text": "Evals keep prompt changes measurable — the harness runs against real transcripts.", "ms": 2800, "label": "Intro"},
+    {"action": "pause", "ms": 1000, "label": "Settle"},
+    {"action": "focus", "selector": "[aria-label^=\"Evals\"]", "label": "Move to Evals"},
+    {"action": "click", "selector": "[aria-label^=\"Evals\"]", "label": "Open Evals"},
+    {"action": "resetZoom", "label": "Back to full frame"},
+    {"action": "pause", "ms": 1600, "label": "Let the eval grid render"},
+    {"action": "caption", "text": "Each scenario carries a score, evidence, and the ElevenLabs lab it ran in.", "ms": 2800, "label": "Detail beat"},
+    {"action": "scroll", "y": 200, "label": "Scroll the eval results"},
+    {"action": "caption", "text": "Eval evidence sits next to GTM work, not in a separate tool.", "ms": 2600, "label": "Close beat"},
+    {"action": "pause", "ms": 1600, "label": "Hold final frame"},
+    {"action": "screenshot", "name": "evals", "label": "Poster frame"}
+  ]
+}
