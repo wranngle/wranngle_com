@@ -16,7 +16,7 @@ import SiteFooter from '@/components/site/SiteFooter.tsx';
 import {useDarkMode} from '@/components/site/DarkModeToggle.tsx';
 import {Dialog, DialogContent, DialogTrigger} from '@/components/ui/dialog.tsx';
 import IntakeForm from '@/components/IntakeForm.tsx';
-import StackedWidgetCarousel from '@/components/StackedWidgetCarousel.tsx';
+import PolygonTileHero from '@/components/PolygonTileHero.tsx';
 import TierCard from '@/components/TierCard.tsx';
 import {getCategoryById} from '@/data/offerings.ts';
 
@@ -168,11 +168,7 @@ export default function WebsitesPage() {
                   </div>
                 </div>
 
-                <StackedWidgetCarousel
-                  isDark={isDark}
-                  caption="Live across client sites"
-                  subcaption="Forms, content, and the voice widget all wired to the same lead inbox before launch."
-                />
+                <PolygonTileHero isDark={isDark} />
               </motion.div>
 
               <div className="mt-10 grid md:grid-cols-3 gap-3">

@@ -10,7 +10,7 @@ import {Link} from 'wouter';
 import {OFFERING_CATEGORIES} from '@/data/offerings.ts';
 import IntakeForm from '@/components/IntakeForm.tsx';
 import RoiCalculator from '@/components/RoiCalculator.tsx';
-import StackedWidgetCarousel from '@/components/StackedWidgetCarousel.tsx';
+import PolygonTileHero from '@/components/PolygonTileHero.tsx';
 import TierCard from '@/components/TierCard.tsx';
 import {
   RadarWatchdog,
@@ -235,11 +235,7 @@ const WranngleLanding = () => {
                   </div>
                 </div>
 
-                <StackedWidgetCarousel
-                  isDark={isDark}
-                  caption="Live across client sites"
-                  subcaption="Agents on real client pages, picking up the call and booking the next step."
-                />
+                <PolygonTileHero isDark={isDark} />
               </motion.div>
 
               <div className="mt-10 grid md:grid-cols-3 gap-3">
