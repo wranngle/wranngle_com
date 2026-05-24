@@ -167,7 +167,7 @@ const WranngleLanding = () => {
         <main id="main" className="flex-1">
           <section className="relative overflow-hidden border-b border-current/10">
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--s500)]/70 to-transparent" />
-            <div className="max-w-7xl mx-auto w-full px-6 pt-10 pb-12 md:pt-14 md:pb-16">
+            <div className="max-w-7xl mx-auto w-full px-6 pt-5 pb-12 md:pt-7 md:pb-16">
               <motion.div
                 initial={{opacity: 0, y: 20}}
                 animate={{opacity: 1, y: 0}}
@@ -263,7 +263,7 @@ const WranngleLanding = () => {
 
           <section
             id="features"
-            className="py-32 px-6 max-w-7xl mx-auto w-full relative"
+            className="pt-14 pb-28 px-6 max-w-7xl mx-auto w-full relative"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,95,0,0.03),transparent_70%)] pointer-events-none" />
             <div className="mb-24 relative z-10">
@@ -447,7 +447,7 @@ function OfferingsSection({
   return (
     <section
       id="offerings"
-      className="py-24 px-6 max-w-7xl mx-auto w-full scroll-mt-24"
+      className="pt-10 pb-24 px-6 max-w-7xl mx-auto w-full scroll-mt-24"
     >
       <div className="text-center mb-12">
         <h2 className="brand-font text-4xl md:text-5xl font-bold mb-4">
@@ -659,7 +659,7 @@ function SarahOrbHero({isDark}: {isDark: boolean}) {
 
 function FounderNote({isDark}: {isDark: boolean}) {
   return (
-    <section id="about" className="py-12 px-6 max-w-3xl mx-auto w-full">
+    <section id="about" className="pt-2 pb-12 px-6 max-w-3xl mx-auto w-full">
       <Link
         href="/about"
         className={`group block rounded-[16px_4px_16px_4px] border-y border-r border-l-4 border-l-[var(--v500)] p-5 md:p-6 noise-overlay transition-all hover:scale-[1.005] ${

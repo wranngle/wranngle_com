@@ -224,7 +224,7 @@ export default function RoiCalculator({
       id="roi"
       aria-labelledby="roi-heading"
       data-testid="roi-calculator"
-      className="py-24 px-6 max-w-7xl mx-auto w-full"
+      className="pt-10 pb-24 px-6 max-w-7xl mx-auto w-full"
     >
       <div className="mb-12 max-w-3xl">
         <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-3 flex items-center gap-2">

@@ -39,7 +39,7 @@ describe('getTierPricing', () => {
     expect(p.priceSuffix).toBe(' one-time');
     expect(p.annualLine).toBeUndefined(); // websites carry no monthly discount
     expect(p.addonLine).toContain('+ $100/mo maintenance');
-    expect(p.addonLine).toContain('/yr (save 17%)');
+    expect(p.addonLine).toContain('/yr · save 17%');
   });
 
   it('SaaS tier: shows annual discount line and suppresses the /yr addon line', () => {

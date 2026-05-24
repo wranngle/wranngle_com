@@ -339,9 +339,6 @@ export default function About() {
           <section className={`border-b ${borderClass}`}>
             <div className="max-w-7xl mx-auto w-full px-6 py-12 md:py-16 grid lg:grid-cols-[0.72fr_1.28fr] gap-10 lg:gap-16">
               <div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-4 mono-font">
-                  WORK AREAS
-                </div>
                 <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
                   What I build
                 </h2>
@@ -380,9 +377,6 @@ export default function About() {
           <section className={`border-b ${borderClass}`}>
             <div className="max-w-7xl mx-auto w-full px-6 py-12 md:py-16 grid lg:grid-cols-[0.7fr_1.3fr] gap-10 lg:gap-16">
               <div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
-                  RESULTS
-                </div>
                 <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
                   Results from supported systems
                 </h2>
@@ -414,33 +408,6 @@ export default function About() {
                   </div>
                 ))}
               </dl>
-            </div>
-          </section>
-
-          <section className="max-w-7xl mx-auto w-full px-6 py-16 md:py-20 grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16">
-            <div>
-              <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-4 mono-font">
-                APPROACH
-              </div>
-              <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
-                Fit the existing workflow
-              </h2>
-            </div>
-            <div
-              className={`space-y-5 text-base md:text-lg leading-relaxed ${mutedText}`}
-            >
-              <p>
-                Many AI products require teams to change how they work before
-                the software creates value. Busy teams do not have that luxury.
-                Customers are calling, work is moving, and staff are switching
-                context all day.
-              </p>
-              <p>
-                The better target is continuity. A missed call becomes a
-                qualified lead. The CRM gets the useful facts. A proposal starts
-                from captured details. The owner can review what happened
-                afterward — and pick up exactly where the agent left off.
-              </p>
             </div>
           </section>
 
@@ -498,13 +465,26 @@ export default function About() {
                 HOW I WORK
               </div>
               <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
-                Ship the smallest reliable loop
+                Fit the workflow, ship the smallest reliable loop
               </h2>
-              <p className={`mt-4 text-base leading-relaxed ${mutedText}`}>
-                Map the current process, build the first reliable version,
-                measure the failure modes, and hand it off with enough context
-                for someone else to maintain it.
-              </p>
+              <div
+                className={`mt-4 space-y-4 text-base leading-relaxed ${mutedText}`}
+              >
+                <p>
+                  Most AI products make a team change how they work before the
+                  software pays off. Busy teams can&apos;t — customers are
+                  calling and staff are switching context all day. So the target
+                  is continuity: a missed call becomes a qualified lead, the CRM
+                  gets the useful facts, the owner can pick up exactly where the
+                  agent left off.
+                </p>
+                <p>
+                  In practice that means mapping the current process, building
+                  the first reliable version, measuring the failure modes, and
+                  handing it off with enough context for someone else to
+                  maintain it.
+                </p>
+              </div>
             </div>
 
             <div className={`divide-y ${borderClass}`}>

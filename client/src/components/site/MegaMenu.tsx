@@ -110,14 +110,6 @@ export function OfferingsMegaMenu({isDark}: OfferingsMegaMenuProps) {
                             </span>
                           )}
                         </div>
-                        <div className="text-[10px] font-mono opacity-60 mt-0.5">
-                          {item.price === '0' ? 'Free' : `$${item.price}`}
-                          {item.priceCadence === 'monthly' && item.price !== '0'
-                            ? '/mo'
-                            : item.price === '0'
-                              ? ''
-                              : ' one-time'}
-                        </div>
                       </div>
                       <ArrowRight
                         size={14}
