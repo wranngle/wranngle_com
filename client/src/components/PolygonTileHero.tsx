@@ -29,16 +29,21 @@ type Props = {
 };
 
 // === Layout + motion configuration ====================================
-// Direct port of CFG from polygon-tile-hero.html with two changes:
+// Direct port of CFG from polygon-tile-hero.html with three changes:
 // - rings reduced from 8 → 5 (we don't need that big a buffer here)
-// - tileSize/spacing tuned for the hero band height (480px) instead of 700+
+// - tileSize/spacing tuned for the hero band height (560px) instead of 700+
+// - heroExtraWidth added so the zoomed hero unfurls from a square ring
+//   tile into a 16:10 widescreen — necessary so the ElevenLabs demo
+//   recordings (960×600) and the 1600×1000 mock landing-page captures
+//   fit without cropping when a tile is in the center spotlight.
 const CFG = {
   sides: 6, // hexagon ring layout
   rings: 5, // 1 center + 5 rings → 1 + 6 + 12 + 18 + 24 + 30 = 91 tiles
   spacing: 84, // px between concentric rings
   tileSize: 86, // base tile edge, px
   cornerRadius: 9, // base corner radius
-  heroZoom: 3.5, // center-stage scale multiplier
+  heroZoom: 3.4, // center-stage scale multiplier (vertical)
+  heroExtraWidth: 1.6, // hero unfurls to 16:10 (width = height * 1.6)
   heroHold: 3000, // ms hero stays zoomed
   transIn: 1300, // ms zoom-in
   transOut: 1100, // ms zoom-out
@@ -53,7 +58,10 @@ const CFG = {
  *  See the prototype for the ring construction. */
 type TileContent =
   | {kind: 'demo'; id: string; poster: string; video: string; label: string}
-  | {kind: 'image'; src: string; alt: string}
+  // image tiles can carry a `wide` widescreen source — shown when the tile
+  // is hero-zoomed so the 1600×1000 landing-page screenshot unfurls fully;
+  // `src` (smaller thumb crop) is shown in the ring.
+  | {kind: 'image'; src: string; wide?: string; alt: string}
   | {kind: 'primitive'};
 
 const ASSET_BASE = '/assets/hero-demos';
@@ -81,28 +89,39 @@ const DEMO_TILES: TileContent[] = [
   },
 ];
 
+// Twenty mock business landing pages — generated under demo-stages/biz/
+// and screenshotted to client/public/assets/hero-tiles/<slug>.{jpg,thumb.jpg}
+// by script/generators/{biz-landing-pages,capture-biz-tiles}.mjs. Order
+// drives the ring spotlight rotation; we interleave layout variants so
+// adjacent ring slots feel visually distinct.
 const STOCK_TILES: TileContent[] = [
-  'trattoria-dining-room',
-  'trattoria-dish-pasta',
-  'trattoria-dish-pizza',
-  'trattoria-hero',
-  'trattoria-wine',
-  'dental-care',
-  'dental-clinic',
-  'dental-dentist',
-  'dental-hero',
-  'dental-patient',
-  'dental-smile',
-  'dental-team',
-  'salon-blowout',
-  'salon-color',
-  'salon-hero',
-  'salon-interior',
-  'salon-portrait',
-].map((slug) => ({
+  // Inner ring (k=1) — 6 tiles. Mix all five layout families.
+  {slug: 'bakery', name: 'Aviary Bakehouse'},
+  {slug: 'climbing-gym', name: 'North Face Climbing Co-op'},
+  {slug: 'cocktail-bar', name: 'Lantern & Owl'},
+  {slug: 'nail-studio', name: 'Cosmos Nail Studio'},
+  {slug: 'coffee-roaster', name: 'Stalk & Tin Coffee'},
+  {slug: 'plumber', name: 'Crestline Plumbing'},
+  // Outer-populated ring (k=2) — 12 tiles. Remaining 12 mocks.
+  {slug: 'ramen-bar', name: 'Kōri Ramen'},
+  {slug: 'florist', name: 'Bramble & Stem'},
+  {slug: 'tattoo-parlor', name: 'Iron Heron Tattoo'},
+  {slug: 'dermatology', name: 'Field Avenue Skin Clinic'},
+  {slug: 'bbq-joint', name: 'Hickory Hall'},
+  {slug: 'yoga-studio', name: 'Sage & Cedar Yoga'},
+  {slug: 'crossfit-gym', name: 'Iron Bell Strength'},
+  {slug: 'vegan-cafe', name: 'Greenhouse 14'},
+  {slug: 'electrician', name: 'Holloway Electric'},
+  {slug: 'family-law', name: 'Wren & Hadley LLP'},
+  {slug: 'physical-therapy', name: 'Cedar Bend PT'},
+  {slug: 'hvac', name: 'Northstar HVAC'},
+  {slug: 'vet', name: 'Northside Veterinary'},
+  {slug: 'barbershop', name: 'Pinion & Crow Barber Co.'},
+].map(({slug, name}) => ({
   kind: 'image' as const,
-  src: `${ASSET_BASE}/tiles/${slug}.jpg`,
-  alt: slug.replaceAll('-', ' '),
+  src: `/assets/hero-tiles/${slug}.thumb.jpg`,
+  wide: `/assets/hero-tiles/${slug}.jpg`,
+  alt: name,
 }));
 
 const PRIMITIVE: TileContent = {kind: 'primitive'};
@@ -300,8 +319,14 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
         const fx = px + (cx - px) * h;
         const fy = py + (cy - py) * h;
         const bsize = CFG.tileSize * pulse;
-        const fsize = Math.max(2, bsize * (1 + (CFG.heroZoom - 1) * h));
-        const ratio = fsize / CFG.tileSize;
+        // Vertical zoom is the canonical scale; width additionally
+        // unfurls toward heroExtraWidth so the hero tile reaches
+        // 16:10 widescreen at full zoom. In the ring (h=0) the tile
+        // stays square as the prototype demands.
+        const fheight = Math.max(2, bsize * (1 + (CFG.heroZoom - 1) * h));
+        const widthMult = 1 + (CFG.heroExtraWidth - 1) * h;
+        const fwidth = fheight * widthMult;
+        const ratio = fheight / CFG.tileSize;
         const rot = sway * (1 - 0.72 * h);
         const op = isHero ? 1 : 1 - CFG.spotlightDim * hAmt;
         const z =
@@ -310,8 +335,8 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
             : Math.round((CFG.rings - tl.ring) * 1000 + (3200 - fy));
 
         const s = el.style;
-        s.width = `${fsize.toFixed(2)}px`;
-        s.height = `${fsize.toFixed(2)}px`;
+        s.width = `${fwidth.toFixed(2)}px`;
+        s.height = `${fheight.toFixed(2)}px`;
         s.left = `${fx.toFixed(2)}px`;
         s.top = `${fy.toFixed(2)}px`;
         s.transform = `translate(-50%,-50%) rotate(${rot.toFixed(2)}deg)`;
@@ -352,7 +377,7 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[420px] md:h-[520px] overflow-hidden"
+      className="relative w-full h-[460px] md:h-[600px] overflow-hidden"
       data-testid="polygon-tile-hero"
       aria-label="Animated demo tile showcase"
     >
@@ -360,12 +385,13 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
         ref={fieldRef}
         className="absolute inset-0"
         style={{
-          // Radial dissolve — opaque core for the hero tile, edges fade
-          // into the page background so the field reads as endless.
+          // Radial dissolve — opaque core for the hero tile (now widescreen
+          // 16:10 at full zoom, so the ellipse is wider than tall), edges
+          // fade into the page background so the field reads as endless.
           WebkitMaskImage:
-            'radial-gradient(ellipse closest-side at 50% 50%, #000 0 72%, transparent 100%)',
+            'radial-gradient(ellipse 78% 70% at 50% 50%, #000 0 76%, transparent 100%)',
           maskImage:
-            'radial-gradient(ellipse closest-side at 50% 50%, #000 0 72%, transparent 100%)',
+            'radial-gradient(ellipse 78% 70% at 50% 50%, #000 0 76%, transparent 100%)',
         }}
       >
         {tilesRef.current.map((tile, idx) => (
@@ -437,9 +463,13 @@ function TileContentNode({
 
   if (content.kind === 'primitive') return null;
   if (content.kind === 'image') {
+    // Use the widescreen source when the tile is hero (the 1600×1000
+    // landing-page screenshot); fall back to the square thumb for the
+    // ring view. Browsers cache both, so the swap is paint-cost only.
+    const src = isHero && content.wide ? content.wide : content.src;
     return (
       <img
-        src={content.src}
+        src={src}
         alt={content.alt}
         className="block h-full w-full object-cover"
         loading="lazy"

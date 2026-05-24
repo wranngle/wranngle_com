@@ -1,0 +1,262 @@
+[
+  {
+    "slug": "bakery",
+    "name": "Aviary Bakehouse",
+    "vertical": "Artisan bakery — Brooklyn, NY",
+    "layout": "warm",
+    "palette": {
+      "bg": "#f7f1e6",
+      "ink": "#1b1610",
+      "accent": "#b85e2a",
+      "muted": "#8f7a5f",
+      "card": "#fffaf0"
+    }
+  },
+  {
+    "slug": "barbershop",
+    "name": "Pinion & Crow Barber Co.",
+    "vertical": "Barbershop — Portland, OR",
+    "layout": "editorial",
+    "palette": {
+      "bg": "#1c1815",
+      "ink": "#f3ece0",
+      "accent": "#c8a26b",
+      "muted": "#8d7e6c",
+      "card": "#231e1a"
+    }
+  },
+  {
+    "slug": "bbq-joint",
+    "name": "Hickory Hall",
+    "vertical": "Barbecue restaurant — Asheville, NC",
+    "layout": "bold",
+    "palette": {
+      "bg": "#181210",
+      "ink": "#fff6e8",
+      "accent": "#e8521a",
+      "muted": "#a08573",
+      "card": "#241a16"
+    }
+  },
+  {
+    "slug": "climbing-gym",
+    "name": "North Face Climbing Co-op",
+    "vertical": "Climbing gym — Boulder, CO",
+    "layout": "architectural",
+    "palette": {
+      "bg": "#0e1418",
+      "ink": "#e6edf3",
+      "accent": "#5dd5c4",
+      "muted": "#7a8a96",
+      "card": "#161e24"
+    }
+  },
+  {
+    "slug": "cocktail-bar",
+    "name": "Lantern & Owl",
+    "vertical": "Cocktail bar — New Orleans, LA",
+    "layout": "editorial",
+    "palette": {
+      "bg": "#0f0e14",
+      "ink": "#ece6d7",
+      "accent": "#d9a566",
+      "muted": "#897e6c",
+      "card": "#181620"
+    }
+  },
+  {
+    "slug": "coffee-roaster",
+    "name": "Stalk & Tin Coffee",
+    "vertical": "Specialty coffee roaster — Madison, WI",
+    "layout": "clinical",
+    "palette": {
+      "bg": "#fbfaf6",
+      "ink": "#1a1814",
+      "accent": "#3a6b4e",
+      "muted": "#75716a",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "crossfit-gym",
+    "name": "Iron Bell Strength",
+    "vertical": "Strength + conditioning gym — Salt Lake City, UT",
+    "layout": "bold",
+    "palette": {
+      "bg": "#10141a",
+      "ink": "#f5f5f4",
+      "accent": "#f9c81a",
+      "muted": "#8a8d92",
+      "card": "#1a1f27"
+    }
+  },
+  {
+    "slug": "dermatology",
+    "name": "Field Avenue Skin Clinic",
+    "vertical": "Dermatology practice — Minneapolis, MN",
+    "layout": "clinical",
+    "palette": {
+      "bg": "#f4f1ec",
+      "ink": "#1e2024",
+      "accent": "#b56e6c",
+      "muted": "#6e7177",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "electrician",
+    "name": "Holloway Electric",
+    "vertical": "Residential + light commercial electrician — Charleston, SC",
+    "layout": "architectural",
+    "palette": {
+      "bg": "#13171d",
+      "ink": "#eaecef",
+      "accent": "#f0b81b",
+      "muted": "#7d828a",
+      "card": "#1c2129"
+    }
+  },
+  {
+    "slug": "family-law",
+    "name": "Wren & Hadley LLP",
+    "vertical": "Family law firm — Raleigh, NC",
+    "layout": "editorial",
+    "palette": {
+      "bg": "#f6f3ee",
+      "ink": "#1b1c20",
+      "accent": "#5b6e4f",
+      "muted": "#6f6c66",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "florist",
+    "name": "Bramble & Stem",
+    "vertical": "Florist + event design — Nashville, TN",
+    "layout": "warm",
+    "palette": {
+      "bg": "#faf3ec",
+      "ink": "#23201d",
+      "accent": "#9b6b89",
+      "muted": "#888178",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "hvac",
+    "name": "Northstar HVAC",
+    "vertical": "HVAC installer + service — Saint Paul, MN",
+    "layout": "architectural",
+    "palette": {
+      "bg": "#f4f6f9",
+      "ink": "#161a22",
+      "accent": "#1f7ed8",
+      "muted": "#5f6675",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "nail-studio",
+    "name": "Cosmos Nail Studio",
+    "vertical": "Nail studio — Austin, TX",
+    "layout": "bold",
+    "palette": {
+      "bg": "#f3eef7",
+      "ink": "#231d2c",
+      "accent": "#7b3df5",
+      "muted": "#8a809a",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "physical-therapy",
+    "name": "Cedar Bend PT",
+    "vertical": "Physical therapy — Bend, OR",
+    "layout": "clinical",
+    "palette": {
+      "bg": "#f1f4f1",
+      "ink": "#1a201a",
+      "accent": "#5f8a4f",
+      "muted": "#6b7269",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "plumber",
+    "name": "Crestline Plumbing",
+    "vertical": "Residential plumbing — Spokane, WA",
+    "layout": "architectural",
+    "palette": {
+      "bg": "#fbfbfa",
+      "ink": "#181a20",
+      "accent": "#2e5fab",
+      "muted": "#5a6068",
+      "card": "#f1f3f8"
+    }
+  },
+  {
+    "slug": "ramen-bar",
+    "name": "Kōri Ramen",
+    "vertical": "Ramen bar — Seattle, WA",
+    "layout": "editorial",
+    "palette": {
+      "bg": "#16110d",
+      "ink": "#f1e9db",
+      "accent": "#dc4c3e",
+      "muted": "#8b7e6e",
+      "card": "#1f1814"
+    }
+  },
+  {
+    "slug": "tattoo-parlor",
+    "name": "Iron Heron Tattoo",
+    "vertical": "Tattoo studio — Philadelphia, PA",
+    "layout": "bold",
+    "palette": {
+      "bg": "#0d0d0e",
+      "ink": "#f4f1ec",
+      "accent": "#cd2b3c",
+      "muted": "#777472",
+      "card": "#161618"
+    }
+  },
+  {
+    "slug": "vegan-cafe",
+    "name": "Greenhouse 14",
+    "vertical": "Vegan café — Burlington, VT",
+    "layout": "warm",
+    "palette": {
+      "bg": "#f1f4ec",
+      "ink": "#1b1e16",
+      "accent": "#4f7a3a",
+      "muted": "#7b8071",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "vet",
+    "name": "Northside Veterinary",
+    "vertical": "Veterinary clinic — Madison, WI",
+    "layout": "clinical",
+    "palette": {
+      "bg": "#f4f1ec",
+      "ink": "#1d1f24",
+      "accent": "#6c8d8e",
+      "muted": "#727680",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "yoga-studio",
+    "name": "Sage & Cedar Yoga",
+    "vertical": "Yoga studio — Boise, ID",
+    "layout": "warm",
+    "palette": {
+      "bg": "#f1ece2",
+      "ink": "#1f1c16",
+      "accent": "#a47a4a",
+      "muted": "#7e776a",
+      "card": "#ffffff"
+    }
+  }
+]

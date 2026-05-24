@@ -1,0 +1,94 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Iron Heron Tattoo</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0e;
+    --ink: #f4f1ec;
+    --accent: #cd2b3c;
+    --muted: #777472;
+    --card: #161618;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display { font-family: 'Anton', Georgia, serif; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 32px; max-width: 1280px; margin: 0 auto;
+  }
+  .wordmark { font-family: 'Anton'; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .nav-links { display: flex; gap: 26px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; }
+  .btn {
+    display: inline-block; padding: 14px 22px; border-radius: 999px;
+    background: var(--accent); color: white; font-size: 14px;
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+  }
+  .kicker { font-size: 12px; text-transform: uppercase; letter-spacing: 0.16em; opacity: 0.6; margin-bottom: 14px; }
+  .muted { color: var(--muted); }
+  .pill { display: inline-block; padding: 4px 12px; border-radius: 999px; background: var(--accent); color: white; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+.hero { padding: 30px 0 0; position: relative; overflow: hidden; }
+.hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 0; align-items: stretch; min-height: 70vh; }
+.hero-text { padding: 40px 0; display: flex; flex-direction: column; justify-content: center; }
+.hero h1 { font-size: clamp(56px, 9vw, 130px); line-height: 0.95; letter-spacing: -0.02em; margin: 0 0 28px; font-weight: 700; text-transform: uppercase; }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero p.lead { font-size: 19px; line-height: 1.55; max-width: 460px; margin: 0 0 32px; opacity: 0.78; }
+.hero-img { background: url('img/hero.jpg') center / cover; min-height: 60vh; margin-left: 40px; }
+.marquee { background: var(--accent); color: white; padding: 16px 0; font-family: 'Anton'; font-size: 24px; text-transform: uppercase; letter-spacing: 0.08em; overflow: hidden; }
+.marquee-inner { display: flex; gap: 80px; white-space: nowrap; }
+.marquee span { font-weight: 700; }
+.section { padding: 100px 0; }
+.section h2 { font-size: clamp(40px, 6vw, 80px); margin: 0 0 60px; text-transform: uppercase; letter-spacing: -0.01em; font-weight: 700; line-height: 0.95; }
+.menu-list { display: grid; grid-template-columns: 1fr 1fr; gap: 32px 80px; }
+.menu-row { padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.16); }
+.menu-row h3 { font-family: 'Anton'; font-size: 26px; margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.01em; }
+.menu-row p { margin: 0; opacity: 0.65; font-size: 14px; line-height: 1.6; }
+.image-band { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px; height: 280px; }
+.image-band img { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.08); }
+.footer { padding: 70px 0 80px; text-align: center; border-top: 1px solid rgba(255,255,255,0.12); }
+.footer h3 { font-family: 'Anton'; font-size: 36px; margin: 0 0 14px; text-transform: uppercase; }
+</style></head><body>
+<nav class="nav">
+    <div class="wordmark">Iron Heron Tattoo</div>
+    <div class="nav-links"><a>Artists</a><a>Portfolio</a><a>Booking</a><a>Studio</a></div>
+    <a class="btn">Apply for a booking slot</a>
+  </nav>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <div class="kicker">Six artists · by appointment</div>
+      <h1>Iron<br>Heron<br><em>Tattoo</em></h1>
+      <p class="lead">Custom, single-needle, fine-line. Booked six months out.</p>
+      <a class="btn">Apply for a booking slot</a>
+    </div>
+    <div class="hero-img"></div>
+  </div>
+</section>
+<div class="marquee"><div class="marquee-inner">
+  <span>★ Iron Heron Tattoo ★</span><span>★ Iron Heron Tattoo ★</span><span>★ Iron Heron Tattoo ★</span><span>★ Iron Heron Tattoo ★</span><span>★ Iron Heron Tattoo ★</span>
+</div></div>
+<section class="section wrap">
+  <h2>Artists</h2>
+  <div class="menu-list">
+    <div class="menu-row"><h3>Eva Linder</h3><p>Fine-line, single-needle botanicals. Three-year book; quarterly drop on the 1st.</p></div><div class="menu-row"><h3>Dom Castile</h3><p>Black & gray realism. Portraits + memorial work. Two-year book.</p></div><div class="menu-row"><h3>River Okonkwo</h3><p>American traditional. Walk-ins on Fridays + Saturdays.</p></div><div class="menu-row"><h3>Pi Akhmatova</h3><p>Geometric + dotwork. Sleeve specialist. Custom-only.</p></div>
+  </div>
+</section>
+<div class="image-band"><img src="img/a.jpg"><img src="img/b.jpg"><img src="img/c.jpg"><img src="img/d.jpg"></div>
+<section class="section wrap">
+  <h2 style="font-size:clamp(28px,4vw,52px)">Booking.</h2>
+  <div class="menu-list">
+    <div class="menu-row"><h3>Application</h3><p>Fill our form with reference, placement, size, and a budget range.</p></div><div class="menu-row"><h3>Deposit</h3><p>$200 non-refundable, applied to your final session.</p></div>
+  </div>
+</section>
+<footer class="footer wrap">
+  <h3>Apply for a booking slot</h3>
+  <p class="muted">Iron Heron Tattoo · Tattoo studio — Philadelphia, PA</p>
+</footer>
+</body></html>
