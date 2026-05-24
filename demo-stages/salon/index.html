@@ -3,53 +3,95 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Atlas Hair Co. — Book & Reschedule</title>
+    <title>Atlas Hair Co. — Color, Cut, Bridal · Garden Row</title>
+    <meta
+      name="description"
+      content="Balayage, precision cuts, and bridal — with your formula on file. A boutique color studio on Garden Row. Book, reschedule, or text us your inspo."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
-      /* Atlas Hair Co. — boutique fashion: Syne display, Space Grotesk body,
-         hot magenta on near-black, editorial portrait split, asymmetric. */
+      /* Atlas Hair Co. — boutique fashion editorial. Extended Syne display +
+         Space Grotesk body. Hot magenta + sodium-orange on near-black. Off-
+         grid, asymmetric, editorial portrait with hard color contrasts. */
       * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
       :root {
-        --ink: #120810;
+        --ink: #0d070b;
+        --ink-2: #1a1018;
         --paper: #f7eef4;
+        --paper-2: #e8d8e0;
         --magenta: #e6157a;
         --magenta-deep: #8a0f4d;
-        --line: rgba(247, 238, 244, 0.16);
+        --teal: #24c0c8;
+        --amber: #ffa552;
+        --line: rgba(247, 238, 244, 0.14);
+        --line-strong: rgba(247, 238, 244, 0.28);
       }
-      html,
-      body {
-        height: 100%;
+      html {
+        scroll-behavior: smooth;
       }
       body {
         font-family: 'Space Grotesk', system-ui, sans-serif;
         color: var(--paper);
         background: var(--ink);
         -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        line-height: 1.5;
+      }
+      .display {
+        font-family: 'Syne', sans-serif;
+      }
+      .wrap {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 0 38px;
+      }
+      a {
+        color: inherit;
       }
 
+      /* Decorative noise + grain across whole page */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: radial-gradient(rgba(247, 238, 244, 0.04) 1px, transparent 1px);
+        background-size: 4px 4px;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.5;
+      }
+
+      /* ---- Header ---- */
       header.nav {
+        position: sticky;
+        top: 0;
+        z-index: 40;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 22px 38px;
+        background: rgba(13, 7, 11, 0.84);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
       }
-      /* Bespoke wordmark: extended Syne with a magenta-underscored "Co."
-         lockup — a boutique fashion logotype. */
+      /* Hand-set wordmark: extended Syne, magenta-underscored "Co." lockup. */
       .brand {
         font-family: 'Syne', sans-serif;
         font-weight: 800;
-        font-size: 21px;
-        letter-spacing: 0.06em;
+        font-size: 22px;
+        letter-spacing: 0.08em;
         text-transform: uppercase;
+        text-decoration: none;
+        color: inherit;
       }
       .brand b {
         color: var(--magenta);
@@ -67,143 +109,704 @@
       }
       nav.links {
         display: flex;
-        gap: 26px;
+        gap: 32px;
         font-size: 13px;
-        letter-spacing: 0.02em;
-        color: rgba(247, 238, 244, 0.66);
+        letter-spacing: 0.04em;
+        color: rgba(247, 238, 244, 0.72);
+        text-transform: lowercase;
       }
       nav.links a {
-        color: inherit;
         text-decoration: none;
+        transition: color 0.2s;
+      }
+      nav.links a:hover {
+        color: var(--magenta);
+      }
+      .nav-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
       }
       .book {
         border: 1.5px solid var(--magenta);
         color: var(--magenta);
         text-decoration: none;
-        padding: 10px 18px;
+        padding: 10px 20px;
         border-radius: 999px;
         font-size: 13px;
         font-weight: 600;
+        letter-spacing: 0.02em;
+        transition: background 0.2s, color 0.2s;
+      }
+      .book:hover {
+        background: var(--magenta);
+        color: #fff;
+      }
+      .book.solid {
+        background: var(--magenta);
+        color: #fff;
+      }
+      .book.solid:hover {
+        background: var(--magenta-deep);
+        border-color: var(--magenta-deep);
+      }
+      @media (max-width: 860px) {
+        nav.links {
+          display: none;
+        }
       }
 
+      /* ---- Hero ---- */
       section.hero {
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        min-height: 70vh;
-        align-items: stretch;
+        position: relative;
+        padding: 70px 0 90px;
+        overflow: hidden;
       }
-      .hero .copy {
-        padding: 56px 38px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 60px;
+        align-items: center;
+        position: relative;
+      }
+      .hero-grid::before {
+        content: 'EST. 2014';
+        position: absolute;
+        top: -12px;
+        right: 0;
+        font-family: 'Space Grotesk', monospace;
+        font-size: 11px;
+        letter-spacing: 0.32em;
+        color: var(--paper);
+        opacity: 0.4;
       }
       .eyebrow {
+        font-family: 'Space Grotesk', monospace;
         font-size: 12px;
-        letter-spacing: 0.3em;
+        letter-spacing: 0.32em;
         text-transform: uppercase;
         color: var(--magenta);
-        margin-bottom: 20px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .eyebrow::before {
+        content: '';
+        width: 28px;
+        height: 1px;
+        background: var(--magenta);
       }
       h1 {
         font-family: 'Syne', sans-serif;
         font-weight: 800;
-        font-size: clamp(46px, 6.6vw, 104px);
-        line-height: 0.9;
-        letter-spacing: -0.02em;
+        font-size: clamp(58px, 8.4vw, 132px);
+        line-height: 0.86;
+        letter-spacing: -0.025em;
+        text-transform: lowercase;
       }
       h1 .stroke {
         -webkit-text-stroke: 1.4px var(--magenta);
         color: transparent;
+        font-style: italic;
+        font-weight: 500;
+      }
+      h1 .amp {
+        color: var(--amber);
+        font-weight: 500;
+        font-style: italic;
       }
       .lede {
-        margin-top: 24px;
-        font-size: 18px;
+        margin-top: 30px;
+        font-size: 19px;
         line-height: 1.55;
-        max-width: 40ch;
+        max-width: 42ch;
         color: rgba(247, 238, 244, 0.78);
       }
       .actions {
-        margin-top: 32px;
+        margin-top: 36px;
         display: flex;
         gap: 14px;
         align-items: center;
+        flex-wrap: wrap;
       }
       .primary {
         background: var(--magenta);
         color: #fff;
         text-decoration: none;
-        padding: 14px 26px;
+        padding: 16px 30px;
         border-radius: 999px;
         font-weight: 600;
-        font-size: 14px;
+        font-size: 15px;
+        transition: background 0.2s, transform 0.2s;
+      }
+      .primary:hover {
+        background: var(--magenta-deep);
+        transform: translateY(-2px);
       }
       .ghost {
         color: var(--paper);
         text-decoration: underline;
-        text-underline-offset: 5px;
-        font-size: 14px;
+        text-underline-offset: 6px;
+        text-decoration-color: var(--magenta);
+        text-decoration-thickness: 1.4px;
+        font-size: 15px;
+        opacity: 0.86;
       }
-      .hero .shot {
-        background-image:
-          linear-gradient(
-            200deg,
-            rgba(230, 21, 122, 0.16),
-            rgba(18, 8, 16, 0.35)
-          ),
-          url('../img/salon-hero.jpg');
+      .hero-portrait {
+        position: relative;
+        aspect-ratio: 4 / 5;
+        border-radius: 4px;
+        background-image: url('img/portrait.jpg');
         background-size: cover;
         background-position: 60% center;
+        overflow: hidden;
+        transform: rotate(-1.5deg);
+        box-shadow: 0 40px 80px -32px rgba(230, 21, 122, 0.6),
+          0 30px 60px -30px rgba(0, 0, 0, 0.8);
+      }
+      .hero-portrait::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          200deg,
+          rgba(230, 21, 122, 0.18),
+          transparent 40%,
+          rgba(36, 192, 200, 0.14)
+        );
+        mix-blend-mode: screen;
+        pointer-events: none;
+      }
+      /* Floating tag on the portrait */
+      .price-tag {
+        position: absolute;
+        top: 20px;
+        left: -16px;
+        background: var(--ink-2);
+        border: 1px solid var(--magenta);
+        color: var(--paper);
+        padding: 14px 18px;
+        font-family: 'Space Grotesk', monospace;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        z-index: 3;
+        transform: rotate(-3deg);
+      }
+      .price-tag b {
+        color: var(--magenta);
+        display: block;
+        font-family: 'Syne', sans-serif;
+        font-size: 20px;
+        letter-spacing: 0;
+        margin-top: 4px;
+        text-transform: none;
+      }
+      @media (max-width: 900px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .hero-portrait {
+          transform: none;
+          max-width: 460px;
+          margin: 0 auto;
+        }
       }
 
-      section.menu {
-        padding: 40px 38px 72px;
+      /* ---- Ticker strip ---- */
+      .ticker {
+        background: var(--magenta);
+        color: #fff;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 14px 0;
+        font-family: 'Space Grotesk', monospace;
+        font-size: 12.5px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        font-weight: 600;
+        border-top: 1px solid var(--magenta-deep);
+        border-bottom: 1px solid var(--magenta-deep);
+      }
+      .ticker .track {
+        display: inline-block;
+        animation: tick 26s linear infinite;
+      }
+      .ticker span {
+        padding: 0 32px;
+      }
+      .ticker span::before {
+        content: '◆';
+        color: var(--ink);
+        margin-right: 32px;
+      }
+      @keyframes tick {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* ---- Services ---- */
+      section.services {
+        padding: 110px 0;
+      }
+      .svc-head {
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: 60px;
+        align-items: end;
+        margin-bottom: 56px;
+      }
+      .svc-head h2 {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: clamp(40px, 5vw, 76px);
+        line-height: 0.96;
+        letter-spacing: -0.02em;
+        text-transform: lowercase;
+      }
+      .svc-head .section-label {
+        font-family: 'Space Grotesk', monospace;
+        font-size: 11px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--magenta);
+        margin-bottom: 14px;
+      }
+      .svc-head p {
+        color: rgba(247, 238, 244, 0.7);
+        font-size: 17px;
+        line-height: 1.6;
+        max-width: 50ch;
+      }
+      .svc-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 1px;
-        background: var(--line);
-        border-top: 1px solid var(--line);
+        background: var(--line-strong);
+        border-top: 1px solid var(--line-strong);
+        border-bottom: 1px solid var(--line-strong);
       }
       .svc {
         background: var(--ink);
-        padding: 30px 26px;
+        padding: 40px 32px;
+        transition: background 0.25s ease;
+        position: relative;
+        cursor: default;
+      }
+      .svc:hover {
+        background: var(--ink-2);
       }
       .svc .n {
         font-family: 'Space Grotesk', monospace;
         font-size: 12px;
         color: var(--magenta);
-        letter-spacing: 0.18em;
+        letter-spacing: 0.22em;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .svc .n .duration {
+        color: rgba(247, 238, 244, 0.4);
       }
       .svc h3 {
         font-family: 'Syne', sans-serif;
-        font-size: 22px;
+        font-size: 28px;
         font-weight: 700;
-        margin: 12px 0 6px;
+        margin: 18px 0 12px;
+        letter-spacing: -0.015em;
+        text-transform: lowercase;
       }
       .svc p {
-        font-size: 14px;
-        line-height: 1.5;
-        color: rgba(247, 238, 244, 0.6);
+        font-size: 14.5px;
+        line-height: 1.6;
+        color: rgba(247, 238, 244, 0.66);
+        margin-bottom: 26px;
+        min-height: 5em;
       }
+      .svc .price-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        font-family: 'Space Grotesk', monospace;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(247, 238, 244, 0.55);
+      }
+      .svc .price-line b {
+        font-family: 'Syne', sans-serif;
+        color: var(--paper);
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0;
+        text-transform: none;
+      }
+      @media (max-width: 880px) {
+        .svc-grid {
+          grid-template-columns: 1fr;
+        }
+        .svc-head {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+      }
+
+      /* ---- Stylists ---- */
+      section.stylists {
+        padding: 100px 0;
+        background: var(--ink-2);
+      }
+      .stylist-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 24px;
+        margin-top: 50px;
+      }
+      .stylist {
+        position: relative;
+      }
+      .stylist .face {
+        aspect-ratio: 3 / 4;
+        background-size: cover;
+        background-position: center;
+        border-radius: 2px;
+        filter: grayscale(0.18) contrast(1.05);
+        transition: filter 0.4s ease;
+      }
+      .stylist:hover .face {
+        filter: none;
+      }
+      .stylist h4 {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: 20px;
+        margin-top: 16px;
+        letter-spacing: -0.01em;
+        text-transform: lowercase;
+      }
+      .stylist .spec {
+        font-family: 'Space Grotesk', monospace;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--magenta);
+        margin-top: 4px;
+      }
+      .stylist .yrs {
+        font-size: 13px;
+        color: rgba(247, 238, 244, 0.55);
+        margin-top: 6px;
+      }
+      @media (max-width: 980px) {
+        .stylist-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      /* ---- Editorial split (work) ---- */
+      section.work {
+        padding: 110px 0;
+        position: relative;
+      }
+      .work-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+      .work-img {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .work-img figure {
+        aspect-ratio: 3 / 4;
+        background-size: cover;
+        background-position: center;
+        border-radius: 2px;
+      }
+      .work-img figure:first-child {
+        margin-top: 60px;
+      }
+      .work .copy h2 {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: clamp(34px, 4vw, 60px);
+        line-height: 1;
+        letter-spacing: -0.02em;
+        margin-bottom: 22px;
+        text-transform: lowercase;
+      }
+      .work .copy h2 .accent {
+        color: var(--magenta);
+        font-style: italic;
+        font-weight: 500;
+      }
+      .work .copy p {
+        color: rgba(247, 238, 244, 0.74);
+        font-size: 17px;
+        line-height: 1.65;
+        margin-bottom: 18px;
+        max-width: 48ch;
+      }
+      .work .stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 24px;
+        margin-top: 36px;
+        padding-top: 30px;
+        border-top: 1px solid var(--line-strong);
+      }
+      .work .stats .n {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: 36px;
+        color: var(--magenta);
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+      .work .stats .l {
+        font-size: 12px;
+        color: rgba(247, 238, 244, 0.6);
+        margin-top: 8px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      @media (max-width: 880px) {
+        .work-grid {
+          grid-template-columns: 1fr;
+        }
+        .work-img figure:first-child {
+          margin-top: 0;
+        }
+      }
+
+      /* ---- Reviews ---- */
+      section.reviews {
+        padding: 100px 0;
+        background: linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+      }
+      .review-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 50px;
+      }
+      .review {
+        border: 1px solid var(--line-strong);
+        padding: 32px 28px;
+        border-radius: 2px;
+        position: relative;
+      }
+      .review::before {
+        content: '“';
+        position: absolute;
+        top: -2px;
+        left: 20px;
+        font-family: 'Syne', sans-serif;
+        font-size: 80px;
+        color: var(--magenta);
+        opacity: 0.42;
+        line-height: 1;
+      }
+      .review blockquote {
+        font-size: 17px;
+        line-height: 1.55;
+        font-style: italic;
+        margin-top: 36px;
+        color: rgba(247, 238, 244, 0.88);
+      }
+      .review cite {
+        display: block;
+        margin-top: 22px;
+        font-family: 'Space Grotesk', monospace;
+        font-style: normal;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(247, 238, 244, 0.5);
+      }
+      @media (max-width: 880px) {
+        .review-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ---- Visit / book ---- */
+      section.visit {
+        padding: 110px 0 80px;
+      }
+      .visit-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 60px;
+        align-items: start;
+      }
+      .visit h2 {
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        font-size: clamp(48px, 6.2vw, 100px);
+        line-height: 0.9;
+        letter-spacing: -0.025em;
+        margin-bottom: 24px;
+        text-transform: lowercase;
+      }
+      .visit h2 .stroke {
+        -webkit-text-stroke: 1.4px var(--magenta);
+        color: transparent;
+        font-style: italic;
+        font-weight: 500;
+      }
+      .visit .lede {
+        margin-top: 0;
+        margin-bottom: 36px;
+      }
+      .ways {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .way {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        padding: 18px 22px;
+        background: var(--ink-2);
+        border: 1px solid var(--line);
+        border-radius: 2px;
+        transition: border-color 0.2s;
+      }
+      .way:hover {
+        border-color: var(--magenta);
+      }
+      .way .pic {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--magenta);
+        flex: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+      }
+      .way .pic.alt {
+        background: transparent;
+        border: 1px solid var(--magenta);
+        color: var(--magenta);
+      }
+      .way .t {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: 16px;
+        text-transform: lowercase;
+        letter-spacing: -0.005em;
+      }
+      .way .sub {
+        font-size: 13px;
+        color: rgba(247, 238, 244, 0.6);
+        margin-top: 2px;
+      }
+      .info-card {
+        border: 1px solid var(--line-strong);
+        padding: 36px 32px;
+        border-radius: 2px;
+        background: var(--ink-2);
+      }
+      .info-card h3 {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: -0.01em;
+        margin-bottom: 22px;
+        text-transform: lowercase;
+      }
+      .info-card .row4 {
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        color: rgba(247, 238, 244, 0.86);
+      }
+      .info-card .row4 span:last-child {
+        color: rgba(247, 238, 244, 0.55);
+        font-family: 'Space Grotesk', monospace;
+        font-size: 12.5px;
+      }
+      .info-card .row4:last-child {
+        border-bottom: none;
+      }
+      .info-card .addr {
+        margin-top: 22px;
+        font-size: 14px;
+        color: rgba(247, 238, 244, 0.7);
+        line-height: 1.55;
+      }
+      .info-card .addr b {
+        display: block;
+        font-family: 'Syne', sans-serif;
+        font-size: 18px;
+        color: var(--paper);
+        margin-bottom: 4px;
+      }
+      @media (max-width: 880px) {
+        .visit-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+      }
+
+      /* ---- Footer ---- */
       footer.foot {
-        padding: 22px 38px;
+        padding: 40px 0 56px;
         font-family: 'Space Grotesk', monospace;
         font-size: 12px;
         letter-spacing: 0.06em;
-        color: rgba(247, 238, 244, 0.5);
+        color: rgba(247, 238, 244, 0.55);
+        border-top: 1px solid var(--line);
+        margin-top: 40px;
+      }
+      .foot-grid {
         display: flex;
         justify-content: space-between;
+        gap: 24px;
+        flex-wrap: wrap;
       }
-      @media (max-width: 860px) {
-        section.hero {
-          grid-template-columns: 1fr;
+      .foot a {
+        color: var(--magenta);
+        text-decoration: none;
+        margin-left: 22px;
+      }
+
+      /* ---- Reveal ---- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
         }
-        .hero .shot {
-          min-height: 300px;
-          order: -1;
+        .ticker .track {
+          animation: none;
         }
-        section.menu {
-          grid-template-columns: 1fr;
+      }
+      @media (max-width: 700px) {
+        .wrap {
+          padding: 0 22px;
         }
       }
     </style>
@@ -214,57 +817,275 @@
     data-orb-2="#8a0f4d"
   >
     <header class="nav">
-      <div class="brand">Atlas Hair <b>Co.</b></div>
+      <a class="brand" href="#top">Atlas Hair <b>Co.</b></a>
       <nav class="links">
-        <a href="#">Services</a><a href="#">Stylists</a><a href="#">Bridal</a
-        ><a href="#">Shop</a>
+        <a href="#services">services</a>
+        <a href="#stylists">stylists</a>
+        <a href="#work">our work</a>
+        <a href="#visit">visit</a>
       </nav>
-      <a class="book" href="#">Book now</a>
+      <div class="nav-actions">
+        <a class="book solid" href="#visit">book now</a>
+      </div>
     </header>
 
-    <section class="hero">
-      <div class="copy">
-        <div class="eyebrow">Color studio · Walk-in friendly</div>
-        <h1>Your color,<br /><span class="stroke">remembered.</span></h1>
-        <p class="lede">
-          Balayage, precision cuts, and bridal — with your formula on file so
-          every visit picks up where the last left off.
-        </p>
-        <div class="actions">
-          <a class="primary" href="#">Book now</a>
-          <a class="ghost" href="#">Reschedule a visit</a>
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">Color studio · Garden Row · est. 2014</div>
+          <h1>your color,<br /><span class="stroke">remembered.</span></h1>
+          <p class="lede">
+            Balayage, precision cuts, <span style="color:var(--amber)">&amp;</span>
+            bridal — with your formula on file so every visit picks up where the
+            last left off. Walk-ins welcome when chairs are open.
+          </p>
+          <div class="actions">
+            <a class="primary" href="#visit">book now</a>
+            <a class="ghost" href="#visit">or reschedule a visit →</a>
+          </div>
+        </div>
+        <div class="hero-portrait reveal" role="img" aria-label="Editorial portrait of a model in magenta and teal gel lighting with a sleek ponytail">
+          <div class="price-tag">color, from<b>$185</b></div>
         </div>
       </div>
-      <div
-        class="shot"
-        role="img"
-        aria-label="Portrait in warm afternoon light"
-      ></div>
     </section>
 
-    <section class="menu">
-      <div class="svc">
-        <div class="n">01 · COLOR</div>
-        <h3>Balayage &amp; gloss</h3>
-        <p>Lived-in color with formula continuity across every appointment.</p>
+    <div class="ticker" aria-hidden="true">
+      <div class="track">
+        <span>formulas on file</span><span>walk-ins welcome</span><span>bridal parties booked together</span><span>Tue–Sat</span><span>23 Garden Row</span><span>est. 2014</span>
+        <span>formulas on file</span><span>walk-ins welcome</span><span>bridal parties booked together</span><span>Tue–Sat</span><span>23 Garden Row</span><span>est. 2014</span>
       </div>
-      <div class="svc">
-        <div class="n">02 · CUT</div>
-        <h3>Cuts &amp; styling</h3>
-        <p>Precision cuts and blowouts; walk-ins when chairs are open.</p>
+    </div>
+
+    <section class="services" id="services">
+      <div class="wrap">
+        <div class="svc-head">
+          <div>
+            <div class="section-label reveal">the menu</div>
+            <h2 class="reveal">services <span style="color:var(--magenta);font-style:italic;font-weight:500">&amp;</span> pricing.</h2>
+          </div>
+          <p class="reveal">
+            Pricing depends on your hair length, density, and how far we're going.
+            What's listed is the starting point; we'll quote the rest in person
+            before we mix anything.
+          </p>
+        </div>
+        <div class="svc-grid">
+          <div class="svc reveal">
+            <div class="n"><span>01 · COLOR</span><span class="duration">3.5 hr</span></div>
+            <h3>balayage &amp; gloss</h3>
+            <p>Lived-in, hand-painted color with a custom gloss tone. Formula stays on file so the next visit picks up exactly where we left off.</p>
+            <div class="price-line"><span>from</span><b>$185</b></div>
+          </div>
+          <div class="svc reveal">
+            <div class="n"><span>02 · COLOR</span><span class="duration">2.5 hr</span></div>
+            <h3>single-process</h3>
+            <p>Root touch-up or all-over color. Includes a hydrating mask and a precision dust-cut to clean up the ends.</p>
+            <div class="price-line"><span>from</span><b>$110</b></div>
+          </div>
+          <div class="svc reveal">
+            <div class="n"><span>03 · CUT</span><span class="duration">75 min</span></div>
+            <h3>precision cut</h3>
+            <p>Consultation, wash, and a dry-cut finish so the shape lives the way it actually moves. Includes a take-home styling card.</p>
+            <div class="price-line"><span>from</span><b>$95</b></div>
+          </div>
+          <div class="svc reveal">
+            <div class="n"><span>04 · STYLE</span><span class="duration">45 min</span></div>
+            <h3>blowout &amp; styling</h3>
+            <p>Wash, smooth, and a finish for the night out, the photo shoot, or the Wednesday before a big meeting.</p>
+            <div class="price-line"><span>from</span><b>$65</b></div>
+          </div>
+          <div class="svc reveal">
+            <div class="n"><span>05 · BRIDAL</span><span class="duration">all-day</span></div>
+            <h3>bridal party</h3>
+            <p>Trials and day-of styling for the whole party, booked together. We bring travel kits if your venue's outside the studio.</p>
+            <div class="price-line"><span>from</span><b>$220 / head</b></div>
+          </div>
+          <div class="svc reveal">
+            <div class="n"><span>06 · TREAT</span><span class="duration">60 min</span></div>
+            <h3>Olaplex treatment</h3>
+            <p>Bond-repair treatment for color-treated, heat-styled, or just-tired hair. Add to any service or come for the treatment alone.</p>
+            <div class="price-line"><span>add-on</span><b>$45</b></div>
+          </div>
+        </div>
       </div>
-      <div class="svc">
-        <div class="n">03 · BRIDAL</div>
-        <h3>Bridal party</h3>
-        <p>Trials and day-of styling for the whole party, booked together.</p>
+    </section>
+
+    <section class="stylists" id="stylists">
+      <div class="wrap">
+        <div class="section-label reveal" style="color:var(--magenta);font-family:'Space Grotesk',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;">behind the chair</div>
+        <h2 class="reveal" style="font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(34px,4vw,60px);line-height:1;letter-spacing:-0.02em;text-transform:lowercase;max-width:18ch;margin-top:14px;">the people who'll <span style="color:var(--magenta);font-style:italic;font-weight:500">remember</span> your formula.</h2>
+        <div class="stylist-grid">
+          <div class="stylist reveal">
+            <div class="face" style="background-image:url('img/color.jpg')"></div>
+            <h4>nina ortega</h4>
+            <div class="spec">color · balayage</div>
+            <div class="yrs">12 yrs · founder</div>
+          </div>
+          <div class="stylist reveal">
+            <div class="face" style="background-image:url('img/blowout.jpg')"></div>
+            <h4>juno reyes</h4>
+            <div class="spec">cut · bridal</div>
+            <div class="yrs">9 yrs · senior</div>
+          </div>
+          <div class="stylist reveal">
+            <div class="face" style="background-image:url('img/portrait.jpg'); background-position: 40% 25%;"></div>
+            <h4>mae linnaeus</h4>
+            <div class="spec">editorial · color</div>
+            <div class="yrs">7 yrs · senior</div>
+          </div>
+          <div class="stylist reveal">
+            <div class="face" style="background-image:url('img/interior.jpg'); background-position: center;"></div>
+            <h4>book any chair</h4>
+            <div class="spec">walk-ins · tue–sat</div>
+            <div class="yrs">first-come at the bar</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="work" id="work">
+      <div class="wrap work-grid">
+        <div class="work-img reveal">
+          <figure style="background-image:url('img/color.jpg')" role="img" aria-label="Stylist blow-drying a client's hair"></figure>
+          <figure style="background-image:url('img/blowout.jpg')" role="img" aria-label="Stylist washing a client's hair at the basin"></figure>
+        </div>
+        <div class="copy">
+          <div class="section-label reveal" style="color:var(--magenta);font-family:'Space Grotesk',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:14px;">the studio</div>
+          <h2 class="reveal">a chair, <span class="accent">a coffee,</span> and a real plan for your hair.</h2>
+          <p class="reveal">
+            We're a four-chair studio on Garden Row, half a block from the park.
+            Every appointment starts with a consultation — your hair, your week,
+            your inspo, our notes from last time. The mix happens after we agree
+            on the plan.
+          </p>
+          <p class="reveal">
+            We keep formulas on file with photos at every visit, so if your stylist
+            is out or you move across town, the next person who picks up the brush
+            knows exactly where to start.
+          </p>
+          <div class="stats reveal">
+            <div><div class="n">4</div><div class="l">chairs · zero rush</div></div>
+            <div><div class="n">2,400</div><div class="l">formulas on file</div></div>
+            <div><div class="n">11yrs</div><div class="l">on Garden Row</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="reviews">
+      <div class="wrap">
+        <div class="section-label reveal" style="color:var(--magenta);font-family:'Space Grotesk',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;">the talk</div>
+        <h2 class="reveal" style="font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(34px,4vw,60px);line-height:1;letter-spacing:-0.02em;text-transform:lowercase;margin-top:14px;">what clients say <span style="color:var(--magenta);font-style:italic;font-weight:500">about us.</span></h2>
+        <div class="review-grid">
+          <div class="review reveal">
+            <blockquote>
+              Nina has been my colorist for six years. I moved out of state and
+              still fly back for my balayage. That's how good the formula notes are.
+            </blockquote>
+            <cite>— Priya M. · client since 2019</cite>
+          </div>
+          <div class="review reveal">
+            <blockquote>
+              Booked Juno for my whole bridal party. She drove an hour to the
+              venue, set up in the suite, and we were all photo-ready early.
+              Photos still get compliments.
+            </blockquote>
+            <cite>— Hannah K. · bridal · The Knot ★★★★★</cite>
+          </div>
+          <div class="review reveal">
+            <blockquote>
+              I texted them a Pinterest pic at 11 pm and Mae replied with three
+              honest "here's-what-I-can-do" options before noon the next day. I
+              don't think I'll ever go anywhere else.
+            </blockquote>
+            <cite>— Devon T. · Google ★★★★★</cite>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="visit" id="visit">
+      <div class="wrap visit-grid">
+        <div>
+          <div class="section-label reveal" style="color:var(--magenta);font-family:'Space Grotesk',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:14px;">book a chair</div>
+          <h2 class="reveal">come see <span class="stroke">us.</span></h2>
+          <p class="lede reveal">
+            Three ways in: book online, text us a photo of your inspo, or just
+            tap the assistant in the corner — it takes a real booking, reads
+            back your last formula, and gets a stylist on the line if you need.
+          </p>
+          <div class="ways reveal">
+            <a class="way" href="#">
+              <span class="pic" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+              </span>
+              <div>
+                <div class="t">book online</div>
+                <div class="sub">live calendar, real-time openings</div>
+              </div>
+            </a>
+            <a class="way" href="sms:+15555550144">
+              <span class="pic alt" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-9 8.5 8.5 8.5 0 01-3.8-.9L3 21l1.9-5.2A8.5 8.5 0 1121 11.5z"/></svg>
+              </span>
+              <div>
+                <div class="t">text your inspo</div>
+                <div class="sub">(555) 555‑0144 — answered same day</div>
+              </div>
+            </a>
+            <a class="way" href="tel:+15555550144">
+              <span class="pic alt" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.72 2.8a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.35 1.84.59 2.8.72A2 2 0 0122 16.92z"/></svg>
+              </span>
+              <div>
+                <div class="t">call us</div>
+                <div class="sub">tue–sat · 10am – 7pm</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="info-card reveal">
+          <h3>hours &amp; location</h3>
+          <div class="row4"><span>Tuesday</span><span>10a – 7p</span></div>
+          <div class="row4"><span>Wednesday</span><span>10a – 7p</span></div>
+          <div class="row4"><span>Thursday</span><span>10a – 9p</span></div>
+          <div class="row4"><span>Friday</span><span>10a – 9p</span></div>
+          <div class="row4"><span>Saturday</span><span>9a – 6p</span></div>
+          <div class="row4"><span>Sun · Mon</span><span>Closed</span></div>
+          <div class="addr"><b>23 Garden Row</b>half a block from the park · street parking out front</div>
+        </div>
       </div>
     </section>
 
     <footer class="foot">
-      <span>ATLAS HAIR CO. · 23 GARDEN ROW</span>
-      <span>TUE–SAT</span>
+      <div class="wrap foot-grid">
+        <span>ATLAS HAIR CO. · 23 GARDEN ROW · EST. 2014</span>
+        <span>
+          <a href="#">instagram</a>
+          <a href="#">pinterest</a>
+          <a href="#">tiktok</a>
+        </span>
+      </div>
     </footer>
 
+    <script>
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+      );
+      document.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = `${(i % 4) * 70}ms`;
+        io.observe(el);
+      });
+    </script>
     <script src="../widget.js"></script>
   </body>
 </html>

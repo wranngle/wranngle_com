@@ -3,16 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bella Vista Trattoria — Coastal Italian</title>
+    <title>Bella Vista Trattoria — Coastal Italian, North End</title>
+    <meta
+      name="description"
+      content="Hand-rolled pasta, wood-fired secondi, and a cellar worth lingering over. Coastal Italian dining on Harbor Street since 1998. Reserve a table."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Spline+Sans+Mono:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,600&family=Spline+Sans+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <style>
-      /* Bella Vista — editorial Italian: oversized Fraunces serif, warm
-         oxblood + olive on bone, full-bleed produce photography, mono labels. */
+      /* Bella Vista — editorial Italian. Oversized Fraunces serif with italic
+         accents, warm oxblood + olive + gold on a bone-paper field, mono
+         labels, full-bleed plated photography. Generous, unhurried, hand-set. */
       * {
         box-sizing: border-box;
         margin: 0;
@@ -21,47 +26,67 @@
       :root {
         --ink: #2a1410;
         --paper: #f4ece0;
+        --paper-2: #efe4d3;
         --oxblood: #7c1d1d;
+        --oxblood-deep: #5e1414;
         --olive: #5c6b3b;
-        --gold: #c08a2e;
+        --gold: #b9892f;
         --line: rgba(42, 20, 16, 0.14);
       }
-      html,
-      body {
-        height: 100%;
+      html {
+        scroll-behavior: smooth;
       }
       body {
         font-family: 'Fraunces', Georgia, serif;
         color: var(--ink);
         background: var(--paper);
         -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      .mono {
+        font-family: 'Spline Sans Mono', monospace;
+      }
+      .wrap {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 40px;
+      }
+      a {
+        color: inherit;
       }
 
+      /* ---- Header ---- */
       header.bar {
+        position: sticky;
+        top: 0;
+        z-index: 40;
         display: flex;
         align-items: baseline;
         justify-content: space-between;
-        padding: 26px 40px;
+        padding: 20px 40px;
+        background: rgba(244, 236, 224, 0.86);
+        backdrop-filter: blur(10px);
         border-bottom: 1px solid var(--line);
       }
-      /* Bespoke wordmark: display-grade Fraunces, the second word in a
-         contrasting italic behind a hairline rule — a hand-set logotype. */
+      /* Hand-set wordmark: display-grade Fraunces, second word in a contrasting
+         oxblood italic behind a hairline rule. */
       .word {
         font-weight: 900;
         font-variation-settings: 'opsz' 140;
-        font-size: 25px;
+        font-size: 26px;
         letter-spacing: -0.03em;
         line-height: 1;
         display: inline-flex;
         align-items: baseline;
-        gap: 7px;
+        gap: 8px;
+        text-decoration: none;
       }
       .word em {
         color: var(--oxblood);
         font-style: italic;
         font-weight: 600;
         position: relative;
-        padding-left: 9px;
+        padding-left: 10px;
       }
       .word em::before {
         content: '';
@@ -71,7 +96,7 @@
         bottom: 6%;
         width: 1px;
         background: var(--oxblood);
-        opacity: 0.5;
+        opacity: 0.55;
       }
       nav.links {
         display: flex;
@@ -79,24 +104,40 @@
         font-size: 11px;
         letter-spacing: 0.22em;
         text-transform: uppercase;
-        font-family: 'Spline Sans Mono', monospace;
       }
       nav.links a {
-        color: var(--ink);
         text-decoration: none;
-        opacity: 0.7;
+        opacity: 0.72;
+        transition: opacity 0.2s;
+      }
+      nav.links a:hover {
+        opacity: 1;
+      }
+      nav.links .reserve {
+        color: var(--oxblood);
+        opacity: 1;
+        font-weight: 600;
+      }
+      @media (max-width: 760px) {
+        nav.links {
+          display: none;
+        }
       }
 
+      /* ---- Hero ---- */
       section.hero {
         display: grid;
-        grid-template-columns: 1.05fr 0.95fr;
-        min-height: 72vh;
+        grid-template-columns: 1.02fr 0.98fr;
+        min-height: 84vh;
+        align-items: stretch;
       }
       .hero .copy {
-        padding: 64px 40px 48px;
+        padding: 70px 40px 60px 56px;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        max-width: 660px;
+        margin-left: auto;
       }
       .kicker {
         font-family: 'Spline Sans Mono', monospace;
@@ -104,119 +145,526 @@
         letter-spacing: 0.32em;
         text-transform: uppercase;
         color: var(--olive);
-        margin-bottom: 22px;
+        margin-bottom: 24px;
       }
       h1 {
-        font-size: clamp(48px, 6vw, 92px);
-        line-height: 0.92;
-        letter-spacing: -0.03em;
+        font-size: clamp(50px, 6.4vw, 104px);
+        line-height: 0.9;
+        letter-spacing: -0.035em;
         font-weight: 900;
+        font-variation-settings: 'opsz' 144;
       }
       h1 em {
         font-style: italic;
+        font-weight: 400;
         color: var(--oxblood);
       }
       .lede {
-        margin-top: 26px;
-        font-size: 19px;
+        margin-top: 28px;
+        font-size: 20px;
         line-height: 1.5;
-        max-width: 42ch;
-        opacity: 0.82;
+        max-width: 44ch;
+        opacity: 0.84;
       }
       .actions {
-        margin-top: 34px;
+        margin-top: 38px;
         display: flex;
-        gap: 16px;
+        gap: 18px;
         align-items: center;
+        flex-wrap: wrap;
       }
       .book {
         background: var(--oxblood);
         color: var(--paper);
         text-decoration: none;
-        padding: 15px 28px;
+        padding: 16px 30px;
         border-radius: 2px;
         font-weight: 600;
-        font-size: 14px;
-        letter-spacing: 0.04em;
+        font-size: 15px;
+        letter-spacing: 0.02em;
+        transition: background 0.2s, transform 0.2s;
+      }
+      .book:hover {
+        background: var(--oxblood-deep);
+        transform: translateY(-2px);
       }
       .ghost {
         text-decoration: underline;
-        text-underline-offset: 5px;
-        font-size: 14px;
+        text-underline-offset: 6px;
+        text-decoration-thickness: 1px;
+        font-size: 15px;
+        font-style: italic;
         color: var(--ink);
       }
       .hero .shot {
-        background-image: url('../img/trattoria-hero.jpg');
+        background-image: linear-gradient(
+            90deg,
+            rgba(42, 20, 16, 0.16),
+            transparent 26%
+          ),
+          url('img/hero.jpg');
         background-size: cover;
         background-position: center;
         position: relative;
       }
       .hero .shot::after {
-        content: 'NORTH END · SINCE 1998';
+        content: 'HARBOR STREET · SINCE 1998';
         position: absolute;
-        left: 24px;
-        bottom: 22px;
+        left: 26px;
+        bottom: 24px;
         font-family: 'Spline Sans Mono', monospace;
         font-size: 10px;
         letter-spacing: 0.2em;
         color: #fff;
-        background: rgba(42, 20, 16, 0.55);
-        padding: 6px 12px;
+        background: rgba(42, 20, 16, 0.6);
+        padding: 7px 13px;
         border-radius: 2px;
       }
 
-      section.menu {
-        padding: 56px 40px 96px;
-      }
-      .menu h2 {
+      /* ---- Marquee strip ---- */
+      .strip {
+        background: var(--oxblood);
+        color: var(--paper);
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 13px 0;
         font-family: 'Spline Sans Mono', monospace;
         font-size: 12px;
         letter-spacing: 0.28em;
         text-transform: uppercase;
+      }
+      .strip .track {
+        display: inline-block;
+        animation: scroll 32s linear infinite;
+      }
+      .strip span {
+        padding: 0 28px;
+        opacity: 0.86;
+      }
+      .strip span::before {
+        content: '✦';
+        color: var(--gold);
+        margin-right: 28px;
+      }
+      @keyframes scroll {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* ---- Story ---- */
+      section.story {
+        padding: 110px 0;
+      }
+      .story-grid {
+        display: grid;
+        grid-template-columns: 0.92fr 1.08fr;
+        gap: 64px;
+        align-items: center;
+      }
+      .story-img {
+        aspect-ratio: 4 / 5;
+        border-radius: 2px;
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 30px 60px -28px rgba(42, 20, 16, 0.45);
+      }
+      .section-label {
+        font-family: 'Spline Sans Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
         color: var(--olive);
+        margin-bottom: 22px;
+      }
+      .story h2 {
+        font-size: clamp(34px, 3.6vw, 54px);
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+        font-weight: 600;
         margin-bottom: 26px;
+      }
+      .story h2 em {
+        font-style: italic;
+        color: var(--oxblood);
+      }
+      .story p {
+        font-size: 18px;
+        line-height: 1.62;
+        opacity: 0.84;
+        max-width: 50ch;
+        margin-bottom: 18px;
+      }
+      .signature {
+        margin-top: 30px;
+        font-style: italic;
+        font-size: 26px;
+        color: var(--oxblood);
+      }
+      .signature small {
+        display: block;
+        font-family: 'Spline Sans Mono', monospace;
+        font-style: normal;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        opacity: 0.6;
+        margin-top: 6px;
+      }
+
+      /* ---- Menu ---- */
+      section.menu {
+        background: var(--paper-2);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        padding: 100px 0;
+      }
+      .menu-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 50px;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+      .menu-head h2 {
+        font-size: clamp(36px, 4vw, 60px);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+      .menu-head h2 em {
+        font-style: italic;
+        color: var(--oxblood);
+      }
+      .menu-head .note {
+        font-family: 'Spline Sans Mono', monospace;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        opacity: 0.66;
+        max-width: 34ch;
+        text-align: right;
+      }
+      .courses {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px 64px;
+      }
+      .course-col h3 {
+        font-family: 'Spline Sans Mono', monospace;
+        font-size: 12px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: var(--gold);
+        padding-bottom: 14px;
+        margin: 26px 0 6px;
+        border-bottom: 1px solid var(--line);
+      }
+      .course-col h3:first-of-type {
+        margin-top: 0;
       }
       .row {
         display: grid;
         grid-template-columns: 1fr auto;
         align-items: baseline;
-        gap: 20px;
-        padding: 20px 0;
+        gap: 18px;
+        padding: 15px 0;
         border-bottom: 1px solid var(--line);
       }
       .row .name {
-        font-size: 26px;
-        font-weight: 600;
+        font-size: 21px;
+        font-weight: 500;
+      }
+      .row .name .v {
+        color: var(--olive);
+        font-family: 'Spline Sans Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        vertical-align: middle;
+        margin-left: 8px;
       }
       .row .desc {
         font-size: 13px;
-        opacity: 0.6;
+        opacity: 0.62;
         margin-top: 4px;
         font-family: 'Spline Sans Mono', monospace;
+        line-height: 1.5;
       }
       .row .meta {
         font-family: 'Spline Sans Mono', monospace;
-        font-size: 12px;
-        color: var(--gold);
+        font-size: 14px;
+        color: var(--oxblood);
         white-space: nowrap;
+        font-weight: 500;
       }
-      footer.foot {
-        padding: 26px 40px;
-        border-top: 1px solid var(--line);
+
+      /* ---- Gallery ---- */
+      section.gallery {
+        padding: 100px 0 90px;
+      }
+      .gallery .section-label {
+        text-align: center;
+      }
+      .gallery h2 {
+        text-align: center;
+        font-size: clamp(32px, 3.4vw, 50px);
+        font-weight: 600;
+        font-style: italic;
+        color: var(--oxblood);
+        margin-bottom: 46px;
+      }
+      .grid-shots {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr;
+        grid-template-rows: 220px 220px;
+        gap: 14px;
+      }
+      .grid-shots figure {
+        background-size: cover;
+        background-position: center;
+        border-radius: 2px;
+        overflow: hidden;
+        transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .grid-shots figure:hover {
+        transform: scale(1.015);
+      }
+      .grid-shots .a {
+        grid-row: span 2;
+      }
+      .grid-shots .d {
+        grid-column: span 2;
+      }
+
+      /* ---- Reviews ---- */
+      section.reviews {
+        background: var(--ink);
+        color: var(--paper);
+        padding: 100px 0;
+      }
+      .reviews .section-label {
+        color: var(--gold);
+      }
+      .review-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        margin-top: 40px;
+      }
+      .quote {
+        font-size: 21px;
+        line-height: 1.5;
+        font-style: italic;
+        position: relative;
+        padding-top: 30px;
+      }
+      .quote::before {
+        content: '“';
+        position: absolute;
+        top: -18px;
+        left: -6px;
+        font-size: 84px;
+        color: var(--gold);
+        opacity: 0.5;
+        line-height: 1;
+      }
+      .quote cite {
+        display: block;
+        margin-top: 20px;
         font-family: 'Spline Sans Mono', monospace;
+        font-style: normal;
         font-size: 11px;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        opacity: 0.62;
+      }
+      .stars {
+        color: var(--gold);
+        letter-spacing: 4px;
+        font-size: 14px;
+        margin-bottom: 4px;
+      }
+
+      /* ---- Visit ---- */
+      section.visit {
+        padding: 100px 0 110px;
+      }
+      .visit-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: start;
+      }
+      .visit h2 {
+        font-size: clamp(40px, 5vw, 72px);
+        font-weight: 900;
+        font-variation-settings: 'opsz' 144;
+        letter-spacing: -0.03em;
+        line-height: 0.94;
+        margin-bottom: 20px;
+      }
+      .visit h2 em {
+        font-style: italic;
+        font-weight: 400;
+        color: var(--oxblood);
+      }
+      .visit .lede {
+        margin-top: 0;
+        margin-bottom: 32px;
+      }
+      .hours {
+        border-top: 1px solid var(--line);
+      }
+      .hours .hrow {
         display: flex;
         justify-content: space-between;
-        opacity: 0.6;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+        font-family: 'Spline Sans Mono', monospace;
+        font-size: 14px;
       }
-      @media (max-width: 860px) {
+      .hours .hrow span:last-child {
+        opacity: 0.66;
+      }
+      .infocard {
+        background: var(--paper-2);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 36px;
+      }
+      .infocard .row2 {
+        margin-bottom: 26px;
+      }
+      .infocard .label {
+        font-family: 'Spline Sans Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--olive);
+        margin-bottom: 8px;
+      }
+      .infocard .val {
+        font-size: 20px;
+      }
+      .infocard a.val {
+        color: var(--oxblood);
+        text-decoration: none;
+      }
+      .infocard .book {
+        display: inline-block;
+        margin-top: 8px;
+      }
+      .map {
+        margin-top: 26px;
+        height: 150px;
+        border-radius: 4px;
+        background:
+          radial-gradient(circle at 64% 42%, rgba(124, 29, 29, 0.5) 0 7px, transparent 8px),
+          repeating-linear-gradient(0deg, rgba(42, 20, 16, 0.07) 0 1px, transparent 1px 26px),
+          repeating-linear-gradient(90deg, rgba(42, 20, 16, 0.07) 0 1px, transparent 1px 26px),
+          var(--paper);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .map::after {
+        content: 'HARBOR ST × DOCK LN';
+        position: absolute;
+        left: 12px;
+        bottom: 10px;
+        font-family: 'Spline Sans Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        opacity: 0.55;
+      }
+
+      /* ---- Footer ---- */
+      footer.foot {
+        background: var(--ink);
+        color: var(--paper);
+        padding: 54px 0 60px;
+      }
+      .foot-grid {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+      .foot .word {
+        color: var(--paper);
+      }
+      .foot .word em {
+        color: var(--gold);
+      }
+      .foot .word em::before {
+        background: var(--gold);
+      }
+      .foot .meta {
+        font-family: 'Spline Sans Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        line-height: 1.9;
+        opacity: 0.6;
+        text-align: right;
+      }
+
+      /* ---- Reveal animation ---- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .strip .track {
+          animation: none;
+        }
+      }
+
+      /* ---- Responsive ---- */
+      @media (max-width: 900px) {
+        .wrap {
+          padding: 0 24px;
+        }
         section.hero {
           grid-template-columns: 1fr;
         }
+        .hero .copy {
+          padding: 56px 24px 48px;
+          margin: 0;
+          max-width: none;
+        }
         .hero .shot {
-          min-height: 280px;
+          min-height: 320px;
           order: -1;
+        }
+        .story-grid,
+        .courses,
+        .review-grid,
+        .visit-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .grid-shots {
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 180px 180px 180px;
+        }
+        .grid-shots .a {
+          grid-row: span 1;
+          grid-column: span 2;
+        }
+        .grid-shots .d {
+          grid-column: span 2;
+        }
+        header.bar {
+          padding: 16px 24px;
         }
       }
     </style>
@@ -227,63 +675,282 @@
     data-orb-2="#7c1d1d"
   >
     <header class="bar">
-      <div class="word">Bella <em>Vista</em></div>
+      <a class="word" href="#top">Bella <em>Vista</em></a>
       <nav class="links">
-        <a href="#">Menu</a><a href="#">Cellar</a><a href="#">Private Dining</a
-        ><a href="#">Visit</a>
+        <a href="#story">Our Story</a>
+        <a href="#menu">Menu</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#visit">Visit</a>
+        <a class="reserve" href="#visit">Reserve</a>
       </nav>
     </header>
 
-    <section class="hero">
+    <section class="hero" id="top">
       <div class="copy">
-        <div class="kicker">Coastal Italian · Wood-fired</div>
+        <div class="kicker">Coastal Italian · Wood-fired · North End</div>
         <h1>Sit down to<br /><em>the season.</em></h1>
         <p class="lede">
-          Hand-rolled pasta, a cellar worth lingering over, and a patio that
-          fills the moment the weather turns. Reserve in a tap — or just ask.
+          Hand-rolled pasta cut each morning, a cellar worth lingering over, and
+          a harbor-side patio that fills the moment the weather turns. Twenty-six
+          years on Harbor Street — pull up a chair.
         </p>
         <div class="actions">
-          <a class="book" href="#">Reserve a table</a>
-          <a class="ghost" href="#">Tonight's menu</a>
+          <a class="book" href="#visit">Reserve a table</a>
+          <a class="ghost" href="#menu">See tonight's menu →</a>
         </div>
       </div>
-      <div
-        class="shot"
-        role="img"
-        aria-label="Fresh produce on a cutting board"
-      ></div>
+      <div class="shot" role="img" aria-label="Wide pan of fresh tagliatelle with seared beef, tomatoes, and herbs"></div>
     </section>
 
-    <section class="menu">
-      <h2>Cucina · this week</h2>
-      <div class="row">
-        <div>
-          <div class="name">Tagliatelle al ragù</div>
-          <div class="desc">slow beef &amp; pork, parmigiano, parsley</div>
-        </div>
-        <div class="meta">28</div>
+    <div class="strip" aria-hidden="true">
+      <div class="track">
+        <span>Pasta cut daily</span><span>Wood-fired hearth</span><span>Coastal Italian</span><span>Patio dining</span><span>Cellar of 200+</span><span>Walk-ins welcome at the bar</span>
+        <span>Pasta cut daily</span><span>Wood-fired hearth</span><span>Coastal Italian</span><span>Patio dining</span><span>Cellar of 200+</span><span>Walk-ins welcome at the bar</span>
       </div>
-      <div class="row">
+    </div>
+
+    <section class="story" id="story">
+      <div class="wrap story-grid">
+        <div class="story-img reveal" style="background-image: url('img/dining-room.jpg')" role="img" aria-label="A finished plate set down at a candlelit table"></div>
         <div>
-          <div class="name">Branzino al sale</div>
-          <div class="desc">whole salt-baked sea bass, lemon, olio nuovo</div>
+          <div class="section-label reveal">Our Story</div>
+          <h2 class="reveal">A neighborhood table, <em>set by hand</em> since 1998.</h2>
+          <p class="reveal">
+            Nonna Vita opened Bella Vista with eight tables and one rule: nothing
+            leaves the kitchen she wouldn't serve her own family. Three decades on,
+            her grandson Marco still rolls the tagliatelle before the first
+            espresso, and the salt-baked branzino still arrives whole, cracked
+            open at the table.
+          </p>
+          <p class="reveal">
+            The menu follows the dock and the garden, not the calendar — what's
+            best this week is what you'll eat. The cellar runs deep on coastal
+            Italian whites; the patio runs late on Friday and Saturday.
+          </p>
+          <div class="signature reveal">
+            Marco Vitale
+            <small>Chef &amp; Proprietor</small>
+          </div>
         </div>
-        <div class="meta">42 · for two</div>
       </div>
-      <div class="row">
-        <div>
-          <div class="name">Patio tasting</div>
-          <div class="desc">five courses, paired, season's best</div>
+    </section>
+
+    <section class="menu" id="menu">
+      <div class="wrap">
+        <div class="menu-head">
+          <h2 class="reveal">La cucina, <em>questa settimana</em></h2>
+          <div class="note reveal">Menu changes weekly with the market. Ask your server about tonight's off-menu fish.</div>
         </div>
-        <div class="meta">85 · Fri–Sun</div>
+        <div class="courses reveal">
+          <div class="course-col">
+            <h3>Antipasti</h3>
+            <div class="row">
+              <div>
+                <div class="name">Burrata &amp; peach <span class="v">V</span></div>
+                <div class="desc">stracciatella, grilled peach, basil oil, sea salt</div>
+              </div>
+              <div class="meta">16</div>
+            </div>
+            <div class="row">
+              <div>
+                <div class="name">Polpo alla griglia</div>
+                <div class="desc">charred octopus, white beans, salsa verde</div>
+              </div>
+              <div class="meta">21</div>
+            </div>
+            <div class="row">
+              <div>
+                <div class="name">Tagliere della casa</div>
+                <div class="desc">cured meats, three cheeses, mostarda, focaccia</div>
+              </div>
+              <div class="meta">26</div>
+            </div>
+
+            <h3>Primi · Pasta</h3>
+            <div class="row">
+              <div>
+                <div class="name">Tagliatelle al ragù</div>
+                <div class="desc">slow beef &amp; pork, parmigiano, parsley</div>
+              </div>
+              <div class="meta">28</div>
+            </div>
+            <div class="row">
+              <div>
+                <div class="name">Spaghetti alle vongole</div>
+                <div class="desc">littleneck clams, white wine, chili, breadcrumb</div>
+              </div>
+              <div class="meta">30</div>
+            </div>
+            <div class="row">
+              <div>
+                <div class="name">Cacio e pepe <span class="v">V</span></div>
+                <div class="desc">tonnarelli, pecorino, cracked black pepper</div>
+              </div>
+              <div class="meta">24</div>
+            </div>
+          </div>
+
+          <div class="course-col">
+            <h3>Secondi · From the hearth</h3>
+            <div class="row">
+              <div>
+                <div class="name">Branzino al sale</div>
+                <div class="desc">whole salt-baked sea bass, lemon, olio nuovo</div>
+              </div>
+              <div class="meta">42 · for two</div>
+            </div>
+            <div class="row">
+              <div>
+                <div class="name">Pollo al mattone</div>
+                <div class="desc">brick-pressed half chicken, rosemary, charred lemon</div>
+              </div>
+              <div class="meta">29</div>
+            </div>
+            <div class="row">
+              <div>
+                <div class="name">Pizza margherita DOP <span class="v">V</span></div>
+                <div class="desc">San Marzano, fior di latte, basil — wood-fired</div>
+              </div>
+              <div class="meta">19</div>
+            </div>
+
+            <h3>Il finale</h3>
+            <div class="row">
+              <div>
+                <div class="name">Tiramisù della nonna</div>
+                <div class="desc">espresso-soaked savoiardi, mascarpone, cocoa</div>
+              </div>
+              <div class="meta">12</div>
+            </div>
+            <div class="row">
+              <div>
+                <div class="name">Patio tasting</div>
+                <div class="desc">five courses, wine-paired, the season's best</div>
+              </div>
+              <div class="meta">85 · Fri–Sun</div>
+            </div>
+            <div class="row">
+              <div>
+                <div class="name">Affogato</div>
+                <div class="desc">vanilla gelato drowned in hot espresso</div>
+              </div>
+              <div class="meta">9</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery" id="gallery">
+      <div class="wrap">
+        <div class="section-label reveal">From the pass</div>
+        <h2 class="reveal">A few plates we're proud of.</h2>
+        <div class="grid-shots reveal">
+          <figure class="a" style="background-image: url('img/dish-pasta.jpg')" role="img" aria-label="Three plates of spaghetti with burrata and red wine"></figure>
+          <figure class="b" style="background-image: url('img/dish-pizza.jpg')" role="img" aria-label="Wood-fired pizza with cherry tomatoes and rosemary"></figure>
+          <figure class="c" style="background-image: url('img/wine.jpg')" role="img" aria-label="A toast of red wine on the patio"></figure>
+          <figure class="d" style="background-image: url('img/hero.jpg')" role="img" aria-label="A wide pan of fresh tagliatelle"></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="reviews">
+      <div class="wrap">
+        <div class="section-label reveal">What guests say</div>
+        <div class="review-grid">
+          <div class="reveal">
+            <div class="stars" aria-label="five stars">★★★★★</div>
+            <blockquote class="quote">
+              The branzino was cracked open at our table and the whole patio
+              turned to watch. Best meal we've had on the coast.
+              <cite>— Daniela R., Yelp</cite>
+            </blockquote>
+          </div>
+          <div class="reveal">
+            <div class="stars" aria-label="five stars">★★★★★</div>
+            <blockquote class="quote">
+              Marco came out to ask how the ragù was. It was perfect, and so was
+              he. This is how a neighborhood restaurant should feel.
+              <cite>— Anthony P., Google</cite>
+            </blockquote>
+          </div>
+          <div class="reveal">
+            <div class="stars" aria-label="five stars">★★★★★</div>
+            <blockquote class="quote">
+              We reserved for six on a Friday and they sat us early on the patio.
+              The clam pasta alone is worth the trip.
+              <cite>— The Harbor Gazette</cite>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="visit" id="visit">
+      <div class="wrap visit-grid">
+        <div>
+          <div class="section-label reveal">Visit us</div>
+          <h2 class="reveal">Come <em>hungry.</em></h2>
+          <p class="lede reveal">
+            Reservations open thirty days out and the patio goes fast when it's
+            warm. Prefer to just talk to someone? Tap the assistant in the corner
+            — it books, reschedules, and answers menu questions any hour.
+          </p>
+          <div class="hours reveal">
+            <div class="hrow"><span>Tuesday – Thursday</span><span>5:00 – 10:00 pm</span></div>
+            <div class="hrow"><span>Friday – Saturday</span><span>5:00 – 11:00 pm</span></div>
+            <div class="hrow"><span>Sunday</span><span>4:00 – 9:00 pm</span></div>
+            <div class="hrow"><span>Monday</span><span>Closed</span></div>
+          </div>
+        </div>
+        <div class="infocard reveal">
+          <div class="row2">
+            <div class="label">Find us</div>
+            <div class="val">412 Harbor Street<br />North End</div>
+          </div>
+          <div class="row2">
+            <div class="label">Reservations</div>
+            <a class="val" href="tel:+15555550123">(555) 555‑0123</a>
+          </div>
+          <div class="row2">
+            <div class="label">Book a table</div>
+            <a class="book" href="#top">Reserve online</a>
+          </div>
+          <div class="map" role="img" aria-label="Map showing the restaurant at Harbor Street and Dock Lane"></div>
+        </div>
       </div>
     </section>
 
     <footer class="foot">
-      <span>BELLA VISTA TRATTORIA · 412 HARBOR ST</span>
-      <span>TUE–SUN · 5–10</span>
+      <div class="wrap foot-grid">
+        <div>
+          <span class="word">Bella <em>Vista</em></span>
+        </div>
+        <div class="meta">
+          412 HARBOR ST · NORTH END<br />
+          (555) 555‑0123 · CIAO@BELLAVISTA.COM<br />
+          TUE–SUN · © 1998–2026 BELLA VISTA TRATTORIA
+        </div>
+      </div>
     </footer>
 
+    <script>
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+      );
+      document.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = `${(i % 4) * 70}ms`;
+        io.observe(el);
+      });
+    </script>
     <script src="../widget.js"></script>
   </body>
 </html>
