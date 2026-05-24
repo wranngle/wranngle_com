@@ -1,0 +1,162 @@
+[
+  {
+    "slug": "bakery",
+    "name": "Aviary Bakehouse",
+    "vertical": "Artisan bakery — Brooklyn, NY",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/bakery.jpg",
+    "thumb": "/assets/hero-tiles/bakery.thumb.jpg"
+  },
+  {
+    "slug": "barbershop",
+    "name": "Pinion & Crow Barber Co.",
+    "vertical": "Barbershop — Portland, OR",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/barbershop.jpg",
+    "thumb": "/assets/hero-tiles/barbershop.thumb.jpg"
+  },
+  {
+    "slug": "bbq-joint",
+    "name": "Hickory Hall",
+    "vertical": "Barbecue restaurant — Asheville, NC",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/bbq-joint.jpg",
+    "thumb": "/assets/hero-tiles/bbq-joint.thumb.jpg"
+  },
+  {
+    "slug": "climbing-gym",
+    "name": "North Face Climbing Co-op",
+    "vertical": "Climbing gym — Boulder, CO",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/climbing-gym.jpg",
+    "thumb": "/assets/hero-tiles/climbing-gym.thumb.jpg"
+  },
+  {
+    "slug": "cocktail-bar",
+    "name": "Lantern & Owl",
+    "vertical": "Cocktail bar — New Orleans, LA",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/cocktail-bar.jpg",
+    "thumb": "/assets/hero-tiles/cocktail-bar.thumb.jpg"
+  },
+  {
+    "slug": "coffee-roaster",
+    "name": "Stalk & Tin Coffee",
+    "vertical": "Specialty coffee roaster — Madison, WI",
+    "layout": "clinical",
+    "full": "/assets/hero-tiles/coffee-roaster.jpg",
+    "thumb": "/assets/hero-tiles/coffee-roaster.thumb.jpg"
+  },
+  {
+    "slug": "crossfit-gym",
+    "name": "Iron Bell Strength",
+    "vertical": "Strength + conditioning gym — Salt Lake City, UT",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/crossfit-gym.jpg",
+    "thumb": "/assets/hero-tiles/crossfit-gym.thumb.jpg"
+  },
+  {
+    "slug": "dermatology",
+    "name": "Field Avenue Skin Clinic",
+    "vertical": "Dermatology practice — Minneapolis, MN",
+    "layout": "clinical",
+    "full": "/assets/hero-tiles/dermatology.jpg",
+    "thumb": "/assets/hero-tiles/dermatology.thumb.jpg"
+  },
+  {
+    "slug": "electrician",
+    "name": "Holloway Electric",
+    "vertical": "Residential + light commercial electrician — Charleston, SC",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/electrician.jpg",
+    "thumb": "/assets/hero-tiles/electrician.thumb.jpg"
+  },
+  {
+    "slug": "family-law",
+    "name": "Wren & Hadley LLP",
+    "vertical": "Family law firm — Raleigh, NC",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/family-law.jpg",
+    "thumb": "/assets/hero-tiles/family-law.thumb.jpg"
+  },
+  {
+    "slug": "florist",
+    "name": "Bramble & Stem",
+    "vertical": "Florist + event design — Nashville, TN",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/florist.jpg",
+    "thumb": "/assets/hero-tiles/florist.thumb.jpg"
+  },
+  {
+    "slug": "hvac",
+    "name": "Northstar HVAC",
+    "vertical": "HVAC installer + service — Saint Paul, MN",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/hvac.jpg",
+    "thumb": "/assets/hero-tiles/hvac.thumb.jpg"
+  },
+  {
+    "slug": "nail-studio",
+    "name": "Cosmos Nail Studio",
+    "vertical": "Nail studio — Austin, TX",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/nail-studio.jpg",
+    "thumb": "/assets/hero-tiles/nail-studio.thumb.jpg"
+  },
+  {
+    "slug": "physical-therapy",
+    "name": "Cedar Bend PT",
+    "vertical": "Physical therapy — Bend, OR",
+    "layout": "clinical",
+    "full": "/assets/hero-tiles/physical-therapy.jpg",
+    "thumb": "/assets/hero-tiles/physical-therapy.thumb.jpg"
+  },
+  {
+    "slug": "plumber",
+    "name": "Crestline Plumbing",
+    "vertical": "Residential plumbing — Spokane, WA",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/plumber.jpg",
+    "thumb": "/assets/hero-tiles/plumber.thumb.jpg"
+  },
+  {
+    "slug": "ramen-bar",
+    "name": "Kōri Ramen",
+    "vertical": "Ramen bar — Seattle, WA",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/ramen-bar.jpg",
+    "thumb": "/assets/hero-tiles/ramen-bar.thumb.jpg"
+  },
+  {
+    "slug": "tattoo-parlor",
+    "name": "Iron Heron Tattoo",
+    "vertical": "Tattoo studio — Philadelphia, PA",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/tattoo-parlor.jpg",
+    "thumb": "/assets/hero-tiles/tattoo-parlor.thumb.jpg"
+  },
+  {
+    "slug": "vegan-cafe",
+    "name": "Greenhouse 14",
+    "vertical": "Vegan café — Burlington, VT",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/vegan-cafe.jpg",
+    "thumb": "/assets/hero-tiles/vegan-cafe.thumb.jpg"
+  },
+  {
+    "slug": "vet",
+    "name": "Northside Veterinary",
+    "vertical": "Veterinary clinic — Madison, WI",
+    "layout": "clinical",
+    "full": "/assets/hero-tiles/vet.jpg",
+    "thumb": "/assets/hero-tiles/vet.thumb.jpg"
+  },
+  {
+    "slug": "yoga-studio",
+    "name": "Sage & Cedar Yoga",
+    "vertical": "Yoga studio — Boise, ID",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/yoga-studio.jpg",
+    "thumb": "/assets/hero-tiles/yoga-studio.thumb.jpg"
+  }
+]
