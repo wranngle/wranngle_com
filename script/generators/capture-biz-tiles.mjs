@@ -7,7 +7,7 @@
  * heroExtraWidth aspect strategy). Writes:
  *
  *   client/public/assets/hero-tiles/<slug>.jpg       — 1600x1000 (high-res)
- *   client/public/assets/hero-tiles/<slug>.thumb.jpg — 480x480 cropped (ring view)
+ *   client/public/assets/hero-tiles/<slug>.thumb.jpg — 640×400 downsample (ring view)
  *   client/public/assets/hero-tiles/manifest.json    — slug → name + vertical + layout
  *
  * The manifest is consumed by PolygonTileHero so it can show the page
@@ -18,6 +18,7 @@ import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import sharp from 'sharp';
 import {chromium} from '../../../../../../auto_demo/node_modules/playwright/index.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -95,21 +96,21 @@ for (const b of businesses) {
   await page.waitForTimeout(900);
   const full = path.join(outDir, `${b.slug}.jpg`);
   const thumb = path.join(outDir, `${b.slug}.thumb.jpg`);
-  await page.screenshot({
-    path: full,
+  const fullBuf = await page.screenshot({
     clip: {x: 0, y: 0, width: 1600, height: 1000},
     type: 'jpeg',
     quality: 82,
   });
-  // Thumb: clip the right-side hero photo region (square) — most templates
-  // place the hero image starting around x=720, so this captures the
-  // visual element rather than the headline (which dominates the left).
-  await page.screenshot({
-    path: thumb,
-    clip: {x: 720, y: 60, width: 720, height: 720},
-    type: 'jpeg',
-    quality: 80,
-  });
+  await fs.promises.writeFile(full, fullBuf);
+  // Thumb: full-page downsample to 640×400 (16:10). The previous right-side
+  // 720×720 clip lost the wordmark on layouts where the hero image column
+  // doesn't land at x≈720 (clinical, architectural variants). Downsampling
+  // keeps wordmark + headline + hero image legible across every template;
+  // the consumer's object-fit:cover finishes the polygon shape-mask.
+  await sharp(fullBuf)
+    .resize(640, 400, {fit: 'cover', position: 'top'})
+    .jpeg({quality: 78})
+    .toFile(thumb);
   await page.close();
   manifest.push({
     slug: b.slug,
