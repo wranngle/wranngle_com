@@ -157,7 +157,7 @@ export default function GtmOpsPage() {
           {/* Hero */}
           <section className="relative overflow-hidden border-b border-current/10">
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--s500)]/70 to-transparent" />
-            <div className="max-w-7xl mx-auto w-full px-6 pt-10 pb-12 md:pt-14 md:pb-16">
+            <div className="max-w-7xl mx-auto w-full px-6 pt-5 pb-12 md:pt-7 md:pb-16">
               <motion.div
                 initial={{opacity: 0, y: 20}}
                 animate={{opacity: 1, y: 0}}

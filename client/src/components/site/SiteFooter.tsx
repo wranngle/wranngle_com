@@ -46,13 +46,13 @@ export default function SiteFooter({isDark, showCta = true}: SiteFooterProps) {
             <div className="flex flex-wrap gap-3">
               <a
                 href="/#talk-to-sarah"
-                className="inline-flex items-center gap-2 px-5 py-3 border border-current/25 rounded-lg text-xs font-bold uppercase tracking-wider hover:border-[var(--s500)] hover:text-[var(--s500)] transition-colors"
+                className="inline-flex min-w-[160px] items-center justify-center gap-2 px-5 py-3 border border-current/25 rounded-lg text-xs font-bold uppercase tracking-wider hover:border-[var(--s500)] hover:text-[var(--s500)] transition-colors"
               >
                 Talk to Sarah
               </a>
               <a
                 href="/#offerings"
-                className="inline-flex items-center gap-2 px-5 py-3 bg-[var(--s500)] text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[var(--s500)]/90 transition-colors"
+                className="inline-flex min-w-[160px] items-center justify-center gap-2 px-5 py-3 bg-[var(--s500)] text-white rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[var(--s500)]/90 transition-colors"
               >
                 See Plans <ArrowRight size={14} />
               </a>
@@ -186,7 +186,10 @@ export default function SiteFooter({isDark, showCta = true}: SiteFooterProps) {
           className={`pt-6 border-t ${borderClass} flex flex-col md:flex-row justify-between items-center gap-4 text-xs mono-font opacity-60`}
         >
           <div>© 2026 Wranngle Systems LLC</div>
-          <div>AI voice agents and lead automation for busy teams</div>
+          <div>
+            AI voice agents and lead automation for busy teams · Stay
+            Wrannglin&apos;
+          </div>
         </div>
       </div>
     </footer>

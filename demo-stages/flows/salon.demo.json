@@ -11,7 +11,7 @@
   },
   "metadata": {"vertical": "salon", "agentId": "agent_1501ksb62c8xevxvswp451hj7ykz"},
   "steps": [
-    {"action": "waitForText", "text": "Your color, remembered", "label": "Landing page ready"},
+    {"action": "waitForText", "text": "Color studio", "label": "Landing page ready"},
     {"action": "waitForSelector", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "timeoutMs": 20000, "label": "Widget mounted in text mode"},
     {"action": "caption", "text": "And again for a salon — reschedules with color continuity.", "ms": 2400, "label": "Intro beat"},
     {"action": "pause", "ms": 1400, "label": "Let the agent greeting render"},

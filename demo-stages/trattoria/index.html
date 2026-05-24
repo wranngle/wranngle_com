@@ -3,81 +3,285 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bella Vista Trattoria — Reservations</title>
+    <title>Bella Vista Trattoria — Coastal Italian</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Spline+Sans+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../shared.css" />
     <style>
-      :root {
-        --brand: #7a1f2b;
-        --brand-2: #c8962f;
-        --ink: #221513;
-        --paper: #faf6ef;
+      /* Bella Vista — editorial Italian: oversized Fraunces serif, warm
+         oxblood + olive on bone, full-bleed produce photography, mono labels. */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
-      h1.headline,
-      .brandmark {
-        font-family: 'Playfair Display', Georgia, serif;
+      :root {
+        --ink: #2a1410;
+        --paper: #f4ece0;
+        --oxblood: #7c1d1d;
+        --olive: #5c6b3b;
+        --gold: #c08a2e;
+        --line: rgba(42, 20, 16, 0.14);
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        font-family: 'Fraunces', Georgia, serif;
+        color: var(--ink);
+        background: var(--paper);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      header.bar {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        padding: 26px 40px;
+        border-bottom: 1px solid var(--line);
+      }
+      /* Bespoke wordmark: display-grade Fraunces, the second word in a
+         contrasting italic behind a hairline rule — a hand-set logotype. */
+      .word {
+        font-weight: 900;
+        font-variation-settings: 'opsz' 140;
+        font-size: 25px;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        display: inline-flex;
+        align-items: baseline;
+        gap: 7px;
+      }
+      .word em {
+        color: var(--oxblood);
+        font-style: italic;
+        font-weight: 600;
+        position: relative;
+        padding-left: 9px;
+      }
+      .word em::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 6%;
+        bottom: 6%;
+        width: 1px;
+        background: var(--oxblood);
+        opacity: 0.5;
+      }
+      nav.links {
+        display: flex;
+        gap: 30px;
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-family: 'Spline Sans Mono', monospace;
+      }
+      nav.links a {
+        color: var(--ink);
+        text-decoration: none;
+        opacity: 0.7;
+      }
+
+      section.hero {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        min-height: 72vh;
+      }
+      .hero .copy {
+        padding: 64px 40px 48px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .kicker {
+        font-family: 'Spline Sans Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--olive);
+        margin-bottom: 22px;
+      }
+      h1 {
+        font-size: clamp(48px, 6vw, 92px);
+        line-height: 0.92;
+        letter-spacing: -0.03em;
+        font-weight: 900;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--oxblood);
+      }
+      .lede {
+        margin-top: 26px;
+        font-size: 19px;
+        line-height: 1.5;
+        max-width: 42ch;
+        opacity: 0.82;
+      }
+      .actions {
+        margin-top: 34px;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+      .book {
+        background: var(--oxblood);
+        color: var(--paper);
+        text-decoration: none;
+        padding: 15px 28px;
+        border-radius: 2px;
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.04em;
+      }
+      .ghost {
+        text-decoration: underline;
+        text-underline-offset: 5px;
+        font-size: 14px;
+        color: var(--ink);
+      }
+      .hero .shot {
+        background-image: url('../img/trattoria-hero.jpg');
+        background-size: cover;
+        background-position: center;
+        position: relative;
+      }
+      .hero .shot::after {
+        content: 'NORTH END · SINCE 1998';
+        position: absolute;
+        left: 24px;
+        bottom: 22px;
+        font-family: 'Spline Sans Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: #fff;
+        background: rgba(42, 20, 16, 0.55);
+        padding: 6px 12px;
+        border-radius: 2px;
+      }
+
+      section.menu {
+        padding: 56px 40px 96px;
+      }
+      .menu h2 {
+        font-family: 'Spline Sans Mono', monospace;
+        font-size: 12px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--olive);
+        margin-bottom: 26px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: baseline;
+        gap: 20px;
+        padding: 20px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .row .name {
+        font-size: 26px;
+        font-weight: 600;
+      }
+      .row .desc {
+        font-size: 13px;
+        opacity: 0.6;
+        margin-top: 4px;
+        font-family: 'Spline Sans Mono', monospace;
+      }
+      .row .meta {
+        font-family: 'Spline Sans Mono', monospace;
+        font-size: 12px;
+        color: var(--gold);
+        white-space: nowrap;
+      }
+      footer.foot {
+        padding: 26px 40px;
+        border-top: 1px solid var(--line);
+        font-family: 'Spline Sans Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        display: flex;
+        justify-content: space-between;
+        opacity: 0.6;
+      }
+      @media (max-width: 860px) {
+        section.hero {
+          grid-template-columns: 1fr;
+        }
+        .hero .shot {
+          min-height: 280px;
+          order: -1;
+        }
       }
     </style>
   </head>
   <body
     data-agent-id="agent_1201ksb6296reyc97dxn9ngfkx79"
-    data-orb-1="#c8962f"
-    data-orb-2="#7a1f2b"
+    data-orb-1="#c08a2e"
+    data-orb-2="#7c1d1d"
   >
-    <header class="nav">
-      <div class="brandmark"><span class="dot"></span> Bella Vista</div>
+    <header class="bar">
+      <div class="word">Bella <em>Vista</em></div>
       <nav class="links">
-        <a href="#">Menu</a><a href="#">Private Dining</a><a href="#">Wine</a
+        <a href="#">Menu</a><a href="#">Cellar</a><a href="#">Private Dining</a
         ><a href="#">Visit</a>
       </nav>
-      <a class="cta" href="#">Reserve a table</a>
     </header>
 
     <section class="hero">
-      <div class="wrap">
-        <div class="eyebrow">North End · Est. 1998</div>
-        <h1 class="headline">Coastal Italian, made for the table.</h1>
-        <p class="sub">
+      <div class="copy">
+        <div class="kicker">Coastal Italian · Wood-fired</div>
+        <h1>Sit down to<br /><em>the season.</em></h1>
+        <p class="lede">
           Hand-rolled pasta, a cellar worth lingering over, and a patio that
-          fills fast when the season turns. Reserve in a tap — or just ask.
+          fills the moment the weather turns. Reserve in a tap — or just ask.
         </p>
-        <div class="hero-cta">
-          <a class="cta" href="#">Reserve a table</a>
-          <a class="ghost" href="#">See the menu</a>
+        <div class="actions">
+          <a class="book" href="#">Reserve a table</a>
+          <a class="ghost" href="#">Tonight's menu</a>
         </div>
       </div>
+      <div
+        class="shot"
+        role="img"
+        aria-label="Fresh produce on a cutting board"
+      ></div>
     </section>
 
-    <section class="services">
-      <div class="wrap">
-        <h2>What we host</h2>
-        <div class="grid">
-          <div class="card">
-            <div class="ic">🍝</div>
-            <h3>Dinner service</h3>
-            <p>Nightly from 5, patio and dining room, last seating at 9:30.</p>
-          </div>
-          <div class="card">
-            <div class="ic">🥂</div>
-            <h3>Private events</h3>
-            <p>Rehearsal dinners and parties up to 40 in the wine room.</p>
-          </div>
-          <div class="card">
-            <div class="ic">🌿</div>
-            <h3>Patio season</h3>
-            <p>Open-air tables May through October, first-come on weekends.</p>
-          </div>
+    <section class="menu">
+      <h2>Cucina · this week</h2>
+      <div class="row">
+        <div>
+          <div class="name">Tagliatelle al ragù</div>
+          <div class="desc">slow beef &amp; pork, parmigiano, parsley</div>
         </div>
+        <div class="meta">28</div>
+      </div>
+      <div class="row">
+        <div>
+          <div class="name">Branzino al sale</div>
+          <div class="desc">whole salt-baked sea bass, lemon, olio nuovo</div>
+        </div>
+        <div class="meta">42 · for two</div>
+      </div>
+      <div class="row">
+        <div>
+          <div class="name">Patio tasting</div>
+          <div class="desc">five courses, paired, season's best</div>
+        </div>
+        <div class="meta">85 · Fri–Sun</div>
       </div>
     </section>
 
     <footer class="foot">
-      <span>© Bella Vista Trattoria · 412 Harbor St.</span>
-      <span>Open Tue–Sun</span>
+      <span>BELLA VISTA TRATTORIA · 412 HARBOR ST</span>
+      <span>TUE–SUN · 5–10</span>
     </footer>
 
     <script src="../widget.js"></script>

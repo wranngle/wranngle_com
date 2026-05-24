@@ -171,7 +171,7 @@ export default function FAQ({isDark = true}: FAQProps) {
   return (
     <section
       id="faq"
-      className="py-24 px-6 max-w-7xl mx-auto w-full scroll-mt-24"
+      className="pt-10 pb-24 px-6 max-w-7xl mx-auto w-full scroll-mt-24"
     >
       <div className="grid lg:grid-cols-[1fr_1.6fr] gap-10 lg:gap-16 items-start">
         <div className="lg:sticky lg:top-24">

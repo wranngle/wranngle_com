@@ -48,8 +48,8 @@ function TierPriceBlock({item}: {item: OfferingItem}) {
   const pricing = getTierPricing(item);
 
   return (
-    <div className="mb-6">
-      <div className="text-4xl font-bold">
+    <div className="mb-6 min-h-[5.5rem]">
+      <div className="text-4xl font-bold leading-none">
         {pricing.priceLabel}
         {!pricing.isFree && (
           <span className="text-sm font-normal opacity-50">
@@ -58,12 +58,10 @@ function TierPriceBlock({item}: {item: OfferingItem}) {
         )}
       </div>
       {pricing.annualLine && (
-        <div className="mt-1 text-xs font-bold uppercase tracking-wide text-[var(--v500)]">
-          {pricing.annualLine}
-        </div>
+        <div className="mt-2 text-sm opacity-70">{pricing.annualLine}</div>
       )}
       {pricing.addonLine && (
-        <div className="mt-1 text-sm opacity-60">{pricing.addonLine}</div>
+        <div className="mt-1 text-sm opacity-70">{pricing.addonLine}</div>
       )}
     </div>
   );

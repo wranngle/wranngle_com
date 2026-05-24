@@ -111,8 +111,9 @@ export function getTierPricing(item: OfferingItem): TierPricing {
       : `+ $${price}/mo ${label}`;
     if (facts?.kind === 'website') {
       // Websites get an annual maintenance option too (two months free).
+      // Match the annual-discount line's "· save N%" phrasing exactly.
       const yearly = Number(price) * 10;
-      addonLine += ` · or $${formatTierPrice(yearly)}/yr (save 17%)`;
+      addonLine += ` · or $${formatTierPrice(yearly)}/yr · save 17%`;
     }
   }
 
