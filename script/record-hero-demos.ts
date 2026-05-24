@@ -107,8 +107,15 @@ async function run(cmd: string, args: string[], env?: Record<string, string>) {
   });
 }
 
+// `--rich` (or RICH=1) selects the multi-turn flows under flows/rich/ that
+// showcase scheduling/refunds/tools per business. They need live agent replies
+// (ElevenLabs quota); the default flows are single-turn and quota-light.
+const USE_RICH = process.argv.includes('--rich') || process.env.RICH === '1';
+
 async function recordFlow(v: Vertical) {
-  const flow = join(STAGES, 'flows', `${v.id}.demo.json`);
+  const flow = USE_RICH
+    ? join(STAGES, 'flows', 'rich', `${v.id}.demo.json`)
+    : join(STAGES, 'flows', `${v.id}.demo.json`);
   const out = join(WORK, v.id);
   await run('node', [
     CLI,

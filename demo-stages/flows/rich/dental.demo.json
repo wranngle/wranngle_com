@@ -1,0 +1,38 @@
+{
+  "name": "tidewater-family-dental-rich",
+  "startUrl": "dental/index.html",
+  "viewport": {"width": 1280, "height": 800},
+  "record": {"enabled": true, "size": {"width": 1280, "height": 800}},
+  "timing": {"speed": 1, "moveMs": 220, "clickPauseMs": 240, "fillPauseMs": 40},
+  "polish": {
+    "cursor": {"style": "modern", "accentColor": "#22d3ee"},
+    "actionRail": {"enabled": false},
+    "captions": {"enabled": true, "position": "bottom"}
+  },
+  "metadata": {
+    "vertical": "dental",
+    "agentId": "agent_1401ksb62bc8fa189cnstym17dma",
+    "capability": "emergency triage + insurance lookup + same-day scheduling",
+    "richMultiStep": true
+  },
+  "steps": [
+    {"action": "waitForText", "text": "Dental care that fits", "label": "Landing page ready"},
+    {"action": "waitForSelector", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "timeoutMs": 20000, "label": "Widget mounted"},
+    {"action": "caption", "text": "Triage: urgency first, then insurance, then a same-day slot.", "ms": 2600, "label": "Intro"},
+    {"action": "pause", "ms": 1200, "label": "Greeting renders"},
+    {"action": "click", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "label": "Focus chat"},
+    {"action": "fill", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "value": "My filling cracked over the weekend and it really hurts.", "label": "Turn 1: emergency"},
+    {"action": "click", "selector": "elevenlabs-convai button[aria-label=\"Send\"]", "label": "Send turn 1"},
+    {"action": "pause", "ms": 7000, "label": "Reply: triage to same-day + asks insurance"},
+    {"action": "caption", "text": "It checks coverage before it books.", "ms": 2400, "label": "Insurance beat"},
+    {"action": "fill", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "value": "I have Delta Dental, same as last visit.", "label": "Turn 2: insurance"},
+    {"action": "click", "selector": "elevenlabs-convai button[aria-label=\"Send\"]", "label": "Send turn 2"},
+    {"action": "pause", "ms": 7500, "label": "Reply: coverage confirmed, offers a time"},
+    {"action": "fill", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "value": "This afternoon works — book the earliest.", "label": "Turn 3: schedule"},
+    {"action": "click", "selector": "elevenlabs-convai button[aria-label=\"Send\"]", "label": "Send turn 3"},
+    {"action": "pause", "ms": 6500, "label": "Reply: same-day slot booked"},
+    {"action": "caption", "text": "Urgent caller triaged, verified, and booked before voicemail.", "ms": 2800, "label": "Close"},
+    {"action": "pause", "ms": 1600, "label": "Hold final frame"},
+    {"action": "screenshot", "name": "dental", "label": "Poster frame"}
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "name": "bella-vista-trattoria-rich",
+  "startUrl": "trattoria/index.html",
+  "viewport": {"width": 1280, "height": 800},
+  "record": {"enabled": true, "size": {"width": 1280, "height": 800}},
+  "timing": {"speed": 1, "moveMs": 220, "clickPauseMs": 240, "fillPauseMs": 40},
+  "polish": {
+    "cursor": {"style": "modern", "accentColor": "#c08a2e"},
+    "actionRail": {"enabled": false},
+    "captions": {"enabled": true, "position": "bottom"}
+  },
+  "metadata": {
+    "vertical": "restaurant",
+    "agentId": "agent_1201ksb6296reyc97dxn9ngfkx79",
+    "capability": "scheduling + booking modification + dietary note",
+    "richMultiStep": true
+  },
+  "steps": [
+    {"action": "waitForText", "text": "Coastal Italian", "label": "Landing page ready"},
+    {"action": "waitForSelector", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "timeoutMs": 20000, "label": "Widget mounted"},
+    {"action": "caption", "text": "Scheduling: book, then change the plan mid-conversation.", "ms": 2600, "label": "Intro"},
+    {"action": "pause", "ms": 1200, "label": "Greeting renders"},
+    {"action": "click", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "label": "Focus chat"},
+    {"action": "fill", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "value": "Table for four this Saturday at 7 on the patio?", "label": "Turn 1: book"},
+    {"action": "click", "selector": "elevenlabs-convai button[aria-label=\"Send\"]", "label": "Send turn 1"},
+    {"action": "pause", "ms": 7000, "label": "Reply: booking + confirmation offer"},
+    {"action": "caption", "text": "Now move it — the agent re-checks availability live.", "ms": 2400, "label": "Modify beat"},
+    {"action": "fill", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "value": "Actually make it six people, and one is gluten-free.", "label": "Turn 2: modify + dietary"},
+    {"action": "click", "selector": "elevenlabs-convai button[aria-label=\"Send\"]", "label": "Send turn 2"},
+    {"action": "pause", "ms": 7500, "label": "Reply: updated party + GF note logged"},
+    {"action": "fill", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "value": "Perfect, send the confirmation text.", "label": "Turn 3: confirm"},
+    {"action": "click", "selector": "elevenlabs-convai button[aria-label=\"Send\"]", "label": "Send turn 3"},
+    {"action": "pause", "ms": 6500, "label": "Reply: confirmation sent"},
+    {"action": "caption", "text": "Booked, resized, dietary flagged, confirmed — one conversation.", "ms": 2800, "label": "Close"},
+    {"action": "pause", "ms": 1600, "label": "Hold final frame"},
+    {"action": "screenshot", "name": "trattoria", "label": "Poster frame"}
+  ]
+}
