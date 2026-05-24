@@ -18,7 +18,7 @@ import {spawn} from 'node:child_process';
 import {createServer} from 'node:http';
 import {readFile, mkdir, writeFile, stat} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
-import {dirname, join, extname} from 'node:path';
+import {dirname, join, extname, normalize} from 'node:path';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -92,10 +92,17 @@ async function serveConsole() {
   const server = createServer(async (req, res) => {
     try {
       const rel = decodeURIComponent((req.url ?? '/').split('?')[0]);
-      const path = join(
-        CONSOLE_ROOT,
-        rel.endsWith('/') ? `${rel}index.html` : rel,
-      );
+      // Normalize then reject traversal before touching the FS — the `..`
+      // rejection on the normalized path is the sanitizer barrier CodeQL
+      // recognizes (js/path-injection), even on this localhost-only server.
+      const relPath = normalize(rel.endsWith('/') ? `${rel}index.html` : rel);
+      if (relPath.includes('..')) {
+        res.writeHead(403);
+        res.end('forbidden');
+        return;
+      }
+
+      const path = join(CONSOLE_ROOT, relPath);
       const body = await readFile(path);
       res.writeHead(200, {
         'content-type': MIME[extname(path)] ?? 'application/octet-stream',
