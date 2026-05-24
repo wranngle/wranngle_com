@@ -30,7 +30,7 @@ import {computeRoi, ROI_ASSUMPTIONS} from '@/lib/roi.ts';
 describe('roi formula', () => {
   it('matches the documented assumptions on the canonical input', () => {
     const r = computeRoi({
-      company: 'River North Bistro',
+      company: 'Bella Vista Trattoria',
       calls: 80,
       ticket: 350,
     });
@@ -67,20 +67,20 @@ describe('RoiCalculator SSR markup', () => {
     const html = renderToStaticMarkup(
       <RoiCalculator
         isDark={false}
-        initialCompany="River North Bistro"
+        initialCompany="Bella Vista Trattoria"
         initialCalls={80}
         initialTicket={350}
         autoRotate={false}
       />,
     );
-    expect(html).toContain('River North Bistro');
+    expect(html).toContain('Bella Vista Trattoria');
   });
 
   it('renders the data-savings-monthly attribute on the output element', () => {
     const html = renderToStaticMarkup(
       <RoiCalculator
         isDark={false}
-        initialCompany="River North Bistro"
+        initialCompany="Bella Vista Trattoria"
         initialCalls={80}
         initialTicket={350}
         autoRotate={false}
@@ -130,7 +130,7 @@ describe('RoiCalculator telemetry', () => {
       root.render(
         <RoiCalculator
           isDark={false}
-          initialCompany="River North Bistro"
+          initialCompany="Bella Vista Trattoria"
           initialCalls={80}
           initialTicket={350}
           autoRotate={false}
@@ -149,7 +149,7 @@ describe('RoiCalculator telemetry', () => {
     const payload = JSON.parse(init?.body as string);
     expect(payload).toEqual({
       event: 'roi.calculated',
-      company: 'River North Bistro',
+      company: 'Bella Vista Trattoria',
       calls: 80,
       ticket: 350,
       savings_monthly: 3724,
@@ -193,8 +193,9 @@ describe('RoiCalculator scenario rotation (F005)', () => {
     vi.restoreAllMocks();
   });
 
-  const headingText = () =>
-    document.querySelector('#roi-heading')?.textContent ?? '';
+  const activeWordmarkId = () =>
+    document.querySelector<HTMLElement>('[data-testid="roi-wordmark"]')?.dataset
+      .wordmarkId ?? '';
   const companyInput = () =>
     document.querySelector<HTMLInputElement>(
       '[data-testid="roi-input-company"]',
@@ -206,37 +207,38 @@ describe('RoiCalculator scenario rotation (F005)', () => {
       root = createRoot(container!);
       root.render(<RoiCalculator isDark={false} />);
     });
-    // First scenario seeds the heading.
-    expect(headingText()).toContain('River North Bistro');
+    // First scenario shows the trattoria lockup.
+    expect(activeWordmarkId()).toBe('trattoria');
 
-    // Fire the dwell interval — advances to scenario 2 and commits, which
-    // (re)starts the typewriter for the new company name.
+    // Fire the dwell interval — advances to scenario 2 and re-renders the
+    // wordmark with the dental id.
     act(() => {
       vi.advanceTimersByTime(5100);
     });
-    // Run the typewriter to completion in a second step so the committed
-    // scenario effect's interval actually ticks out the new name.
     act(() => {
       vi.advanceTimersByTime(60 * 60);
     });
-    expect(headingText()).not.toContain('River North Bistro');
-    // Scenario 2 in ROI_SCENARIOS is the dental practice.
-    expect(headingText()).toContain('Tide Family Dental');
-
-    // Each rotating business carries its own bespoke wordmark lockup —
-    // its own font AND its own brand color (no shared site gradient).
-    // The dental practice is Archivo in the tide-teal #0d6e7a; the bistro
-    // was Fraunces in the wine #7a1f2b. Asserting both proves the wordmark
-    // is a real logo treatment, not just a font swap.
+    expect(activeWordmarkId()).toBe('dental');
+    // The dental tier renders as a real inline-SVG logo lockup (its own
+    // letterforms + monogram tile + gradient + accent stripe — not a font
+    // swap on a span). The wordmark wrapper carries data-wordmark-id, and
+    // an actual <svg> child must be present.
     const wordmark = document.querySelector<HTMLElement>(
       '[data-testid="roi-wordmark"]',
     );
-    expect(wordmark, 'roi-wordmark span').not.toBeNull();
-    expect(wordmark!.style.fontFamily).toContain('Archivo');
-    expect(wordmark!.style.color.toLowerCase()).toBe('#0d6e7a');
-    // Dental tier carries no ornament; salon/bistro/fitness/plumbing do.
-    // The ornament span only renders once typing finishes (which it has
-    // by this point in the test).
+    expect(wordmark, 'roi-wordmark wrapper').not.toBeNull();
+    expect(wordmark!.dataset.wordmarkId).toBe('dental');
+    const svg = wordmark!.querySelector('svg');
+    expect(svg, 'lockup SVG').not.toBeNull();
+    // Sanity: the lockup contains its own letterforms rendered as <text>
+    // inside the SVG, and a non-trivial number of shapes (the monogram
+    // tile, tooth glyph, accent drop, wordmark text, sub-label, stripe).
+    const textNodes = svg!.querySelectorAll('text');
+    expect(textNodes.length).toBeGreaterThanOrEqual(2);
+    const shapeCount = svg!.querySelectorAll(
+      'rect, path, circle, ellipse, line, polygon',
+    ).length;
+    expect(shapeCount).toBeGreaterThanOrEqual(4);
   });
 
   it('stops rotating for good once the visitor focuses a field', () => {
@@ -247,16 +249,20 @@ describe('RoiCalculator scenario rotation (F005)', () => {
     });
 
     act(() => {
-      companyInput()?.dispatchEvent(new Event('focus', {bubbles: true}));
+      // React 18+ delegates focus through `focusin` on the root, not the
+      // legacy non-bubbling `focus` event. Dispatch focusin so onFocus fires.
+      companyInput()?.dispatchEvent(new Event('focusin', {bubbles: true}));
+      vi.advanceTimersByTime(0);
     });
-    const afterFocus = headingText();
-
     // Plenty of time for several would-be rotations.
     act(() => {
       vi.advanceTimersByTime(5000 * 3);
     });
-    // Heading must be unchanged — rotation is paused.
-    expect(headingText()).toBe(afterFocus);
-    expect(afterFocus).toContain('River North Bistro');
+    // Rotation surrendered: the per-business SVG lockup is gone (the
+    // heading is back to the brand-gradient fallback text). No wordmark id
+    // reappears no matter how long we wait.
+    expect(activeWordmarkId()).toBe('');
+    // The visitor-typed input still reflects the seeded scenario-0 company.
+    expect(companyInput()!.value).toContain('Bella Vista');
   });
 });
