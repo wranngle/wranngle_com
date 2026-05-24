@@ -222,6 +222,15 @@ describe('RoiCalculator scenario rotation (F005)', () => {
     expect(headingText()).not.toContain('River North Bistro');
     // Scenario 2 in ROI_SCENARIOS is the dental practice.
     expect(headingText()).toContain('Tide Family Dental');
+
+    // Each rotating business carries its own bespoke wordmark font on the
+    // company span (round-3 F003, scoped to the ROI heading). The bistro
+    // renders Fraunces; the dental practice renders Archivo — proving the
+    // wordmark swaps per scenario rather than sharing one font.
+    const companySpan = document
+      .querySelector('#roi-heading')
+      ?.querySelector<HTMLElement>('span[style*="font-family"]');
+    expect(companySpan?.style.fontFamily).toContain('Archivo');
   });
 
   it('stops rotating for good once the visitor focuses a field', () => {

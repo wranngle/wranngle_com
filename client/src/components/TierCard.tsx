@@ -21,12 +21,6 @@ import {getTierPricing, type OfferingItem} from '@/data/offerings.ts';
  * `item.includesPrevious` so higher tiers never restate lower-tier features.
  */
 
-const KICKER_BY_KIND: Record<string, string | undefined> = {
-  'ai-agent': undefined,
-  website: 'WEBSITE BUILD',
-  saas: 'gtm_ops // SAAS',
-};
-
 function defaultCrossSell(targetId: string) {
   // Absolute home URL, not a bare hash mutation: the #offerings-<id> anchors
   // only exist on the home page, so setting the hash while on a product page
@@ -114,7 +108,6 @@ export default function TierCard({
 }: TierCardProps) {
   const [factsOpen, setFactsOpen] = useState(false);
   const [intakeOpen, setIntakeOpen] = useState(false);
-  const kicker = KICKER_BY_KIND[item.facts?.kind ?? 'ai-agent'];
 
   return (
     <div
@@ -135,11 +128,6 @@ export default function TierCard({
         <div className="relative z-10 flex flex-col h-full">
           <div className="flex justify-between items-start mb-2 mt-6">
             <div>
-              {kicker && (
-                <div className="mono-font text-[10px] text-[var(--s500)] tracking-[0.08em] mb-1">
-                  {kicker}
-                </div>
-              )}
               <h3 className="brand-font text-2xl font-bold">{item.name}</h3>
             </div>
           </div>

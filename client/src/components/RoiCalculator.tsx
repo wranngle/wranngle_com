@@ -38,14 +38,31 @@ const TYPE_TICK_MS = 55;
  * inputs, the computed savings, and the blurb below — so a drive-by reader
  * sees several concrete examples without touching anything. Average-ticket
  * values are deliberately varied across verticals.
+ *
+ * `wordmark` gives each business a bespoke, on-brand display treatment so the
+ * rotating company name in the heading reads as a distinct lockup per
+ * vertical — not one shared font (round-3 F003, scoped to the ROI heading).
+ * Faces are loaded in client/index.html.
  */
-const ROI_SCENARIOS = [
+const ROI_SCENARIOS: Array<{
+  company: string;
+  calls: number;
+  ticket: number;
+  blurb: string;
+  wordmark: React.CSSProperties;
+}> = [
   {
     company: 'River North Bistro',
     calls: 90,
     ticket: 120,
     blurb:
       'Reservations, private events, and patio overflow — every missed call is a table that books somewhere else.',
+    // Editorial serif — white-tablecloth dining.
+    wordmark: {
+      fontFamily: "'Fraunces', serif",
+      fontStyle: 'italic',
+      fontWeight: 600,
+    },
   },
   {
     company: 'Tide Family Dental',
@@ -53,6 +70,12 @@ const ROI_SCENARIOS = [
     ticket: 320,
     blurb:
       'New-patient calls and same-day emergencies convert at a premium when someone actually answers after hours.',
+    // Clean clinical sans, tight tracking.
+    wordmark: {
+      fontFamily: "'Archivo', sans-serif",
+      fontWeight: 700,
+      letterSpacing: '-0.02em',
+    },
   },
   {
     company: 'Atlas Hair Studio',
@@ -60,6 +83,13 @@ const ROI_SCENARIOS = [
     ticket: 95,
     blurb:
       'Color and cut bookings reschedule constantly; a 24/7 agent keeps the chair full instead of the voicemail.',
+    // Boutique geometric display.
+    wordmark: {
+      fontFamily: "'Syne', sans-serif",
+      fontWeight: 800,
+      textTransform: 'uppercase',
+      letterSpacing: '0.02em',
+    },
   },
   {
     company: 'Northside Fitness Co.',
@@ -67,6 +97,13 @@ const ROI_SCENARIOS = [
     ticket: 180,
     blurb:
       'On-ramp and drop-in inquiries spike at odd hours — capture the trial before the lead cools off.',
+    // Tall athletic condensed.
+    wordmark: {
+      fontFamily: "'Bebas Neue', sans-serif",
+      fontWeight: 400,
+      textTransform: 'uppercase',
+      letterSpacing: '0.04em',
+    },
   },
   {
     company: 'Cedar & Co Plumbing',
@@ -74,8 +111,10 @@ const ROI_SCENARIOS = [
     ticket: 480,
     blurb:
       'A burst pipe at 2 AM is an emergency job; voicemail just sends it to the next contractor on the list.',
+    // Sturdy industrial slab.
+    wordmark: {fontFamily: "'Zilla Slab', serif", fontWeight: 700},
   },
-] as const;
+];
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -158,6 +197,10 @@ export default function RoiCalculator({
 
   const activeBlurb =
     paused || !autoRotate ? undefined : ROI_SCENARIOS[scenarioIndex].blurb;
+  // Bespoke per-business wordmark while rotating; once the visitor types their
+  // own company the heading falls back to the default brand font.
+  const activeWordmark =
+    paused || !autoRotate ? undefined : ROI_SCENARIOS[scenarioIndex].wordmark;
   const isTyping =
     autoRotate && !paused && !reducedMotion && typedLen < company.length;
 
@@ -236,7 +279,10 @@ export default function RoiCalculator({
           className="brand-font text-5xl md:text-6xl font-bold mb-6 leading-tight"
         >
           What does this look like for{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--s500)] to-[var(--v500)]">
+          <span
+            className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--s500)] to-[var(--v500)]"
+            style={activeWordmark}
+          >
             {result.company || 'your business'}
           </span>
           {isTyping && (
