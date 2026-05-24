@@ -53,16 +53,28 @@ export default function RoiBusinessWordmark({id, progress, label}: Props) {
   }
 }
 
-const HEIGHT_EM = 0.95;
+// Display height of each lockup, in em of the surrounding heading font.
+// Sized as a presented brand mark, not a glyph: the lockup sits on its
+// own cream "business card" plate that pushes it above the heading
+// baseline so the logo reads at proper scale.
+const HEIGHT_EM = 1.7;
 
+/** Plate backdrop: every lockup sits on a soft cream "brand card" so the
+ *  hand-designed dark inks (oxblood, tide-teal, jet, cedar) and bright
+ *  accents (sodium yellow, mint) all read with consistent contrast in
+ *  BOTH light- and dark-mode pages. A thin 1px outline + soft drop
+ *  shadow separates the plate from either page surface. */
 function shellStyle(): React.CSSProperties {
-  // Inline-flex with em-relative sizing keeps the SVG locked to the
-  // heading's line-height regardless of viewport text-size.
   return {
     display: 'inline-block',
     height: `${HEIGHT_EM}em`,
-    verticalAlign: '-0.08em',
+    verticalAlign: '-0.45em',
     lineHeight: 0,
+    background: '#fcfaf5',
+    borderRadius: '0.35em',
+    padding: '0.1em 0.28em',
+    boxShadow:
+      '0 0 0 1px rgba(18,17,26,0.10), 0 4px 14px -4px rgba(18,17,26,0.22)',
   };
 }
 
