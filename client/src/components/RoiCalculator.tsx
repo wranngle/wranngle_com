@@ -1,6 +1,9 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Calculator} from 'lucide-react';
 import {computeRoi, formatCurrency, type RoiResult} from '@/lib/roi.ts';
+import RoiBusinessWordmark, {
+  type RoiBusinessId,
+} from '@/components/RoiBusinessWordmark.tsx';
 
 /**
  * Interactive ROI calculator surfaced on the homepage. Three inputs
@@ -38,124 +41,41 @@ const TYPE_TICK_MS = 55;
  * inputs, the computed savings, and the blurb below — so a drive-by reader
  * sees several concrete examples without touching anything.
  *
- * `wordmark` is a real per-business wordmark lockup: its own font, its own
- * brand color (no shared site gradient), distinct tracking + weight + casing,
- * and an optional bespoke ornament (italic ampersand, monogram tile,
- * underline rule, outline stroke). The goal is what you'd get from a
- * wordmark-logo generator — five different logos, not five fonts in one
- * color (round-3 F003, re-scoped to the ROI heading).
- *
- * Faces are loaded in client/index.html.
+ * `wordmarkId` keys into RoiBusinessWordmark, which renders a real custom
+ * inline-SVG logo lockup for that business (icon glyph + wordmark + gradients
+ * / strokes / layered accents). Visitor-typed company names fall back to the
+ * default brand-gradient text — no SVG.
  */
-export type RoiWordmark = {
-  /** Style applied to the whole company-name span. */
-  base: React.CSSProperties;
-  /** Optional override style for the visible text node (e.g. WebKit text
-   *  stroke for an outline wordmark). Falls back to {} when unset. */
-  textStyle?: React.CSSProperties;
-  /** Optional ornament rendered after the typed letters — only shown once
-   *  the typewriter has finished writing the full company name (so the
-   *  letterforms aren't competing with a flourish mid-type). */
-  ornament?: {
-    /** Element rendered inline-flex with the wordmark text. */
-    node: React.ReactNode;
-    /** Left margin (CSS length) before the ornament. */
-    gap?: string;
-  };
-};
-
 const ROI_SCENARIOS: Array<{
   company: string;
   calls: number;
   ticket: number;
   blurb: string;
-  wordmark: RoiWordmark;
+  wordmarkId: RoiBusinessId;
 }> = [
   {
-    company: 'River North Bistro',
+    company: 'Bella Vista Trattoria',
     calls: 90,
     ticket: 120,
     blurb:
       'Reservations, private events, and patio overflow — every missed call is a table that books somewhere else.',
-    // Editorial trattoria — Fraunces italic in deep wine, hairline underline
-    // anchored under the wordmark.
-    wordmark: {
-      base: {
-        fontFamily: "'Fraunces', serif",
-        fontStyle: 'italic',
-        fontWeight: 600,
-        color: '#7a1f2b',
-        letterSpacing: '-0.005em',
-      },
-      ornament: {
-        node: (
-          <span
-            aria-hidden
-            style={{
-              display: 'inline-block',
-              width: '0.9em',
-              height: '0.06em',
-              borderRadius: 999,
-              background: '#c89b32', // brass rule
-              verticalAlign: 'middle',
-            }}
-          />
-        ),
-        gap: '0.35em',
-      },
-    },
+    wordmarkId: 'trattoria',
   },
   {
-    company: 'Tide Family Dental',
+    company: 'Tidewater Family Dental',
     calls: 140,
     ticket: 320,
     blurb:
       'New-patient calls and same-day emergencies convert at a premium when someone actually answers after hours.',
-    // Clinical practice — Archivo Black in tide-teal, tight tracking, plus
-    // a rounded "+" monogram tile in front for the medical-cross cue.
-    wordmark: {
-      base: {
-        fontFamily: "'Archivo', sans-serif",
-        fontWeight: 700,
-        color: '#0d6e7a',
-        letterSpacing: '-0.02em',
-      },
-      ornament: undefined,
-    },
+    wordmarkId: 'dental',
   },
   {
-    company: 'Atlas Hair Studio',
+    company: 'Atlas Hair Co.',
     calls: 110,
     ticket: 95,
     blurb:
       'Color and cut bookings reschedule constantly; a 24/7 agent keeps the chair full instead of the voicemail.',
-    // Boutique salon — Syne, all caps, hot-magenta, slim slash glyph after
-    // the wordmark in a contrasting punch color.
-    wordmark: {
-      base: {
-        fontFamily: "'Syne', sans-serif",
-        fontWeight: 800,
-        textTransform: 'uppercase',
-        letterSpacing: '0.03em',
-        color: '#d6128a',
-      },
-      ornament: {
-        node: (
-          <span
-            aria-hidden
-            style={{
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 800,
-              color: '#101014',
-              letterSpacing: '0',
-            }}
-          >
-            /
-          </span>
-        ),
-        gap: '0.25em',
-      },
-    },
+    wordmarkId: 'salon',
   },
   {
     company: 'Northside Fitness Co.',
@@ -163,34 +83,7 @@ const ROI_SCENARIOS: Array<{
     ticket: 180,
     blurb:
       'On-ramp and drop-in inquiries spike at odd hours — capture the trial before the lead cools off.',
-    // Athletic — Bebas Neue stretched all caps in jet black with a single
-    // outline letter accent (rendered through textStyle) and a hi-vis
-    // yellow vertical bar afterward like a gym ID stripe.
-    wordmark: {
-      base: {
-        fontFamily: "'Bebas Neue', sans-serif",
-        fontWeight: 400,
-        textTransform: 'uppercase',
-        letterSpacing: '0.06em',
-        color: '#0d0d0f',
-      },
-      ornament: {
-        node: (
-          <span
-            aria-hidden
-            style={{
-              display: 'inline-block',
-              width: '0.18em',
-              height: '0.95em',
-              background: '#f2ec3a',
-              verticalAlign: 'middle',
-              transform: 'skewX(-12deg)',
-            }}
-          />
-        ),
-        gap: '0.3em',
-      },
-    },
+    wordmarkId: 'fitness',
   },
   {
     company: 'Cedar & Co Plumbing',
@@ -198,33 +91,7 @@ const ROI_SCENARIOS: Array<{
     ticket: 480,
     blurb:
       'A burst pipe at 2 AM is an emergency job; voicemail just sends it to the next contractor on the list.',
-    // Trades — Zilla Slab in deep cedar brown with a contrasting wrench-blue
-    // italic "&" lockup glyph (rendered through the typed span via CSS).
-    wordmark: {
-      base: {
-        fontFamily: "'Zilla Slab', serif",
-        fontWeight: 700,
-        color: '#4a2c14',
-        letterSpacing: '-0.01em',
-      },
-      ornament: {
-        node: (
-          <span
-            aria-hidden
-            style={{
-              display: 'inline-block',
-              width: '0.55em',
-              height: '0.18em',
-              background: '#1d4f7a',
-              transform: 'rotate(-18deg)',
-              borderRadius: 2,
-              verticalAlign: 'middle',
-            }}
-          />
-        ),
-        gap: '0.3em',
-      },
-    },
+    wordmarkId: 'plumbing',
   },
 ];
 
@@ -309,12 +176,15 @@ export default function RoiCalculator({
 
   const activeBlurb =
     paused || !autoRotate ? undefined : ROI_SCENARIOS[scenarioIndex].blurb;
-  // Bespoke per-business wordmark while rotating; once the visitor types their
-  // own company the heading falls back to the default brand font.
-  const activeWordmark =
-    paused || !autoRotate ? undefined : ROI_SCENARIOS[scenarioIndex].wordmark;
+  // Custom inline-SVG logo lockup while rotating; once the visitor types their
+  // own company the heading falls back to the default brand-gradient text.
+  const activeScenario =
+    paused || !autoRotate ? undefined : ROI_SCENARIOS[scenarioIndex];
   const isTyping =
     autoRotate && !paused && !reducedMotion && typedLen < company.length;
+  const wordmarkProgress = activeScenario
+    ? Math.min(1, typedLen / activeScenario.company.length)
+    : 0;
 
   const result: RoiResult = useMemo(
     () => computeRoi({company, calls, ticket}),
@@ -391,31 +261,20 @@ export default function RoiCalculator({
           className="brand-font text-5xl md:text-6xl font-bold mb-6 leading-tight"
         >
           What does this look like for{' '}
-          {activeWordmark ? (
-            // Real per-business wordmark lockup: own font + own brand color
-            // (no shared site gradient), plus an ornament after the typed
-            // name finishes. Visitor-typed company falls back below.
+          {activeScenario ? (
+            // Real custom inline-SVG logo lockup per business. The SVG
+            // carries its own letterforms, color, gradients, and icon
+            // glyph; typing progress drives its accent reveal. Visitor-
+            // typed names fall back to the brand-gradient text below.
             <span
               data-testid="roi-wordmark"
-              style={{
-                ...activeWordmark.base,
-                ...activeWordmark.textStyle,
-                display: 'inline-flex',
-                alignItems: 'center',
-              }}
+              data-wordmark-id={activeScenario.wordmarkId}
             >
-              <span>{result.company || 'your business'}</span>
-              {!isTyping && activeWordmark.ornament && (
-                <span
-                  style={{
-                    marginLeft: activeWordmark.ornament.gap ?? '0.3em',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  {activeWordmark.ornament.node}
-                </span>
-              )}
+              <RoiBusinessWordmark
+                id={activeScenario.wordmarkId}
+                progress={wordmarkProgress}
+                label={activeScenario.company}
+              />
             </span>
           ) : (
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--s500)] to-[var(--v500)]">
