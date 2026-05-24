@@ -156,3 +156,92 @@ describe('RoiCalculator telemetry', () => {
     });
   });
 });
+
+describe('RoiCalculator scenario rotation (F005)', () => {
+  let container: HTMLDivElement | undefined;
+  let root: Root | undefined;
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(new Response('{}', {status: 202}));
+    // happy-dom reports prefers-reduced-motion: reduce, which would disable
+    // the rotation entirely. Force it off so these tests exercise the real
+    // auto-advance + pause behavior rather than the reduced-motion still.
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn().mockReturnValue({
+        matches: false,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      }),
+    );
+    container = document.createElement('div');
+    document.body.append(container);
+  });
+
+  afterEach(() => {
+    act(() => {
+      root?.unmount();
+    });
+    container?.remove();
+    container = undefined;
+    root = undefined;
+    vi.useRealTimers();
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
+  const headingText = () =>
+    document.querySelector('#roi-heading')?.textContent ?? '';
+  const companyInput = () =>
+    document.querySelector<HTMLInputElement>(
+      '[data-testid="roi-input-company"]',
+    );
+
+  it('auto-advances to the next mock scenario when left alone', () => {
+    if (!container) throw new Error('container missing');
+    act(() => {
+      root = createRoot(container!);
+      root.render(<RoiCalculator isDark={false} />);
+    });
+    // First scenario seeds the heading.
+    expect(headingText()).toContain('River North Bistro');
+
+    // Fire the dwell interval — advances to scenario 2 and commits, which
+    // (re)starts the typewriter for the new company name.
+    act(() => {
+      vi.advanceTimersByTime(5100);
+    });
+    // Run the typewriter to completion in a second step so the committed
+    // scenario effect's interval actually ticks out the new name.
+    act(() => {
+      vi.advanceTimersByTime(60 * 60);
+    });
+    expect(headingText()).not.toContain('River North Bistro');
+    // Scenario 2 in ROI_SCENARIOS is the dental practice.
+    expect(headingText()).toContain('Tide Family Dental');
+  });
+
+  it('stops rotating for good once the visitor focuses a field', () => {
+    if (!container) throw new Error('container missing');
+    act(() => {
+      root = createRoot(container!);
+      root.render(<RoiCalculator isDark={false} />);
+    });
+
+    act(() => {
+      companyInput()?.dispatchEvent(new Event('focus', {bubbles: true}));
+    });
+    const afterFocus = headingText();
+
+    // Plenty of time for several would-be rotations.
+    act(() => {
+      vi.advanceTimersByTime(5000 * 3);
+    });
+    // Heading must be unchanged — rotation is paused.
+    expect(headingText()).toBe(afterFocus);
+    expect(afterFocus).toContain('River North Bistro');
+  });
+});
