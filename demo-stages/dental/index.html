@@ -46,20 +46,36 @@
         justify-content: space-between;
         padding: 18px 36px;
       }
+      /* Bespoke wordmark: tight all-caps Archivo Black with a notched, rounded
+         monogram tile — a crisp clinical identity mark. */
       .brand {
         font-family: 'Archivo', sans-serif;
         font-weight: 900;
-        font-size: 19px;
-        letter-spacing: -0.02em;
+        font-size: 18px;
+        letter-spacing: -0.04em;
+        text-transform: uppercase;
         display: flex;
         align-items: center;
-        gap: 9px;
+        gap: 10px;
       }
       .brand .mk {
-        width: 26px;
-        height: 26px;
-        border-radius: 8px;
+        width: 30px;
+        height: 30px;
+        border-radius: 9px 9px 9px 3px;
         background: linear-gradient(150deg, var(--teal), var(--teal-deep));
+        position: relative;
+        box-shadow: 0 4px 14px rgba(14, 143, 158, 0.35);
+      }
+      .brand .mk::after {
+        content: 'T';
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 17px;
+        font-weight: 900;
       }
       nav.links {
         display: flex;

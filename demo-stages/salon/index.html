@@ -42,14 +42,28 @@
         justify-content: space-between;
         padding: 22px 38px;
       }
+      /* Bespoke wordmark: extended Syne with a magenta-underscored "Co."
+         lockup — a boutique fashion logotype. */
       .brand {
         font-family: 'Syne', sans-serif;
         font-weight: 800;
-        font-size: 20px;
-        letter-spacing: 0.01em;
+        font-size: 21px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
       }
       .brand b {
         color: var(--magenta);
+        position: relative;
+        font-weight: 800;
+      }
+      .brand b::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -3px;
+        height: 2px;
+        background: var(--magenta);
       }
       nav.links {
         display: flex;

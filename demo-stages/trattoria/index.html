@@ -44,14 +44,34 @@
         padding: 26px 40px;
         border-bottom: 1px solid var(--line);
       }
+      /* Bespoke wordmark: display-grade Fraunces, the second word in a
+         contrasting italic behind a hairline rule — a hand-set logotype. */
       .word {
         font-weight: 900;
-        font-size: 22px;
-        letter-spacing: -0.02em;
+        font-variation-settings: 'opsz' 140;
+        font-size: 25px;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        display: inline-flex;
+        align-items: baseline;
+        gap: 7px;
       }
       .word em {
         color: var(--oxblood);
         font-style: italic;
+        font-weight: 600;
+        position: relative;
+        padding-left: 9px;
+      }
+      .word em::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 6%;
+        bottom: 6%;
+        width: 1px;
+        background: var(--oxblood);
+        opacity: 0.5;
       }
       nav.links {
         display: flex;
