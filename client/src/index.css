@@ -272,6 +272,27 @@ html {
   transform-origin: center;
 }
 
+/* HexDemoGrid (R3-F001): focus-tile circuit border rotates slowly; the
+   center→edge tracer dash fans outward once per rotation cycle. */
+@keyframes hex-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes tracer-fan {
+  0% {
+    stroke-dashoffset: 46;
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
 html[data-sarah-suppressed='true'] elevenlabs-convai {
   display: none !important;
   pointer-events: none !important;

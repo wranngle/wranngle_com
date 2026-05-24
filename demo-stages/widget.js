@@ -1,6 +1,7 @@
-/* Mounts the real ElevenLabs convai widget on a demo landing page in
-   text-only + text-input + default-expanded mode so the auto_demo recorder
-   can type a real conversation against the agent. Reads config from the
+/* Mounts the real ElevenLabs convai widget on a demo landing page with the
+   call (voice) button LIVE — `text-input` stays on so the auto_demo recorder
+   can still type + record a conversation, but `override-text-only` is removed
+   so a real prospect can click to start a voice call. Reads config from the
    <body data-agent-id data-orb-1 data-orb-2> attributes. */
 (function () {
   const {body} = document;
@@ -15,7 +16,7 @@
   widget.setAttribute('variant', 'expanded');
   widget.setAttribute('default-expanded', 'true');
   widget.setAttribute('text-input', 'true');
-  widget.setAttribute('override-text-only', 'true');
+  // No override-text-only: the call/mic button is live for real visitors.
   widget.setAttribute('placement', 'bottom-right');
   const {orb1, orb2} = body.dataset;
   if (orb1) widget.setAttribute('avatar-orb-color-1', orb1);
