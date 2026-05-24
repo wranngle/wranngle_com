@@ -1,0 +1,38 @@
+{
+  "name": "atlas-hair-co-rich",
+  "startUrl": "salon/index.html",
+  "viewport": {"width": 1280, "height": 800},
+  "record": {"enabled": true, "size": {"width": 1280, "height": 800}},
+  "timing": {"speed": 1, "moveMs": 220, "clickPauseMs": 240, "fillPauseMs": 40},
+  "polish": {
+    "cursor": {"style": "modern", "accentColor": "#ec4899"},
+    "actionRail": {"enabled": false},
+    "captions": {"enabled": true, "position": "bottom"}
+  },
+  "metadata": {
+    "vertical": "salon",
+    "agentId": "agent_1501ksb62c8xevxvswp451hj7ykz",
+    "capability": "refund/credit handling + formula-on-file lookup + rebooking",
+    "richMultiStep": true
+  },
+  "steps": [
+    {"action": "waitForText", "text": "Color studio", "label": "Landing page ready"},
+    {"action": "waitForSelector", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "timeoutMs": 20000, "label": "Widget mounted"},
+    {"action": "caption", "text": "Service recovery: a credit, the formula on file, and a rebook.", "ms": 2600, "label": "Intro"},
+    {"action": "pause", "ms": 1200, "label": "Greeting renders"},
+    {"action": "click", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "label": "Focus chat"},
+    {"action": "fill", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "value": "My balayage faded in two weeks — can I get a redo or a refund?", "label": "Turn 1: refund/credit"},
+    {"action": "click", "selector": "elevenlabs-convai button[aria-label=\"Send\"]", "label": "Send turn 1"},
+    {"action": "pause", "ms": 7000, "label": "Reply: offers complimentary correction / credit"},
+    {"action": "caption", "text": "It pulls your color formula so the redo matches.", "ms": 2400, "label": "Tool lookup beat"},
+    {"action": "fill", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "value": "Yes, a redo — same formula as last time, please.", "label": "Turn 2: formula on file"},
+    {"action": "click", "selector": "elevenlabs-convai button[aria-label=\"Send\"]", "label": "Send turn 2"},
+    {"action": "pause", "ms": 7500, "label": "Reply: confirms formula + offers stylist/time"},
+    {"action": "fill", "selector": "elevenlabs-convai textarea[aria-label=\"Text message input\"]", "value": "Thursday with Sarah works.", "label": "Turn 3: rebook"},
+    {"action": "click", "selector": "elevenlabs-convai button[aria-label=\"Send\"]", "label": "Send turn 3"},
+    {"action": "pause", "ms": 6500, "label": "Reply: correction booked, no charge"},
+    {"action": "caption", "text": "Recovered, matched, and rebooked — front desk never paged.", "ms": 2800, "label": "Close"},
+    {"action": "pause", "ms": 1600, "label": "Hold final frame"},
+    {"action": "screenshot", "name": "salon", "label": "Poster frame"}
+  ]
+}
