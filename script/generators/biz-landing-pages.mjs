@@ -25,419 +25,1033 @@ const bizRoot = path.join(repoRoot, 'demo-stages/biz');
 // Layout variants: editorial | clinical | bold | warm | architectural
 const BUSINESSES = [
   {
-    slug: 'bakery', name: 'Aviary Bakehouse', tagline: 'Slow ferment. Stone hearth. Six-day sourdough.',
+    slug: 'bakery',
+    name: 'Aviary Bakehouse',
+    tagline: 'Slow ferment. Stone hearth. Six-day sourdough.',
     vertical: 'Artisan bakery — Brooklyn, NY',
     layout: 'warm',
     fonts: {h: 'Fraunces', b: 'Inter'},
-    palette: {bg: '#f7f1e6', ink: '#1b1610', accent: '#b85e2a', muted: '#8f7a5f', card: '#fffaf0'},
+    palette: {
+      bg: '#f7f1e6',
+      ink: '#1b1610',
+      accent: '#b85e2a',
+      muted: '#8f7a5f',
+      card: '#fffaf0',
+    },
     nav: ['Loaves', 'Pastries', 'Subscriptions', 'Visit'],
     hero: {kicker: 'Est. 2019', cta: 'Order the weekly loaf'},
     sections: [
-      {title: 'This week at the bench', items: [
-        ['Country sourdough', 'Six-day cold ferment. Heritage hard winter wheat from Pennsylvania. $9'],
-        ['Olive & herb fougasse', 'Castelvetrano + rosemary. Friday + Saturday only. $11'],
-        ['Brown butter laminated brioche', 'Eight folds. Polish flour. Pull-apart loaf. $14'],
-        ['Miso chocolate babka', 'White miso + 70% Valrhona. Sliced + boxed. $16'],
-      ]},
-      {title: 'Standing orders', items: [
-        ['Weekly bread CSA', '$32/mo · pickup Saturdays · two loaves rotated by the bench team'],
-        ['Café wholesale', 'A.M. drops by 5:30 — Park Slope, Cobble Hill, Crown Heights'],
-      ]},
+      {
+        title: 'This week at the bench',
+        items: [
+          [
+            'Country sourdough',
+            'Six-day cold ferment. Heritage hard winter wheat from Pennsylvania. $9',
+          ],
+          [
+            'Olive & herb fougasse',
+            'Castelvetrano + rosemary. Friday + Saturday only. $11',
+          ],
+          [
+            'Brown butter laminated brioche',
+            'Eight folds. Polish flour. Pull-apart loaf. $14',
+          ],
+          [
+            'Miso chocolate babka',
+            'White miso + 70% Valrhona. Sliced + boxed. $16',
+          ],
+        ],
+      },
+      {
+        title: 'Standing orders',
+        items: [
+          [
+            'Weekly bread CSA',
+            '$32/mo · pickup Saturdays · two loaves rotated by the bench team',
+          ],
+          [
+            'Café wholesale',
+            'A.M. drops by 5:30 — Park Slope, Cobble Hill, Crown Heights',
+          ],
+        ],
+      },
     ],
   },
   {
-    slug: 'barbershop', name: 'Pinion & Crow Barber Co.', tagline: 'Old-house haircuts. Hot towel. Straight razor. No app.',
+    slug: 'barbershop',
+    name: 'Pinion & Crow Barber Co.',
+    tagline: 'Old-house haircuts. Hot towel. Straight razor. No app.',
     vertical: 'Barbershop — Portland, OR',
     layout: 'editorial',
     fonts: {h: 'Playfair Display', b: 'Work Sans'},
-    palette: {bg: '#1c1815', ink: '#f3ece0', accent: '#c8a26b', muted: '#8d7e6c', card: '#231e1a'},
+    palette: {
+      bg: '#1c1815',
+      ink: '#f3ece0',
+      accent: '#c8a26b',
+      muted: '#8d7e6c',
+      card: '#231e1a',
+    },
     nav: ['Services', 'Crew', 'Walk-in board', 'Find us'],
     hero: {kicker: 'Since 2014', cta: 'Get on the board'},
     sections: [
-      {title: 'The list', items: [
-        ['The Pinion cut', 'Scissor over comb, taper, hot towel finish. 45 min · $48'],
-        ['Straight-razor shave', 'Pre-shave hot wrap, lather, single-blade pass + cleanup. 35 min · $42'],
-        ['Beard sculpt + steam', 'Trim, shape, tonic, oil. 25 min · $30'],
-        ['Father + son seat', 'Two cuts in adjacent chairs. 90 min · $74'],
-      ]},
-      {title: 'Behind the chairs', items: [
-        ['Marco Pinion', 'Owner. Twelve years at Hilly\'s in San Francisco before opening up here.'],
-        ['Della Crowfoot', 'Razor specialist. Pittsburgh transplant. Books out three weeks.'],
-      ]},
+      {
+        title: 'The list',
+        items: [
+          [
+            'The Pinion cut',
+            'Scissor over comb, taper, hot towel finish. 45 min · $48',
+          ],
+          [
+            'Straight-razor shave',
+            'Pre-shave hot wrap, lather, single-blade pass + cleanup. 35 min · $42',
+          ],
+          ['Beard sculpt + steam', 'Trim, shape, tonic, oil. 25 min · $30'],
+          ['Father + son seat', 'Two cuts in adjacent chairs. 90 min · $74'],
+        ],
+      },
+      {
+        title: 'Behind the chairs',
+        items: [
+          [
+            'Marco Pinion',
+            "Owner. Twelve years at Hilly's in San Francisco before opening up here.",
+          ],
+          [
+            'Della Crowfoot',
+            'Razor specialist. Pittsburgh transplant. Books out three weeks.',
+          ],
+        ],
+      },
     ],
   },
   {
-    slug: 'bbq-joint', name: 'Hickory Hall', tagline: 'Whole-hog Carolina BBQ. Wood smoke from 4 a.m.',
+    slug: 'bbq-joint',
+    name: 'Hickory Hall',
+    tagline: 'Whole-hog Carolina BBQ. Wood smoke from 4 a.m.',
     vertical: 'Barbecue restaurant — Asheville, NC',
     layout: 'bold',
     fonts: {h: 'Bebas Neue', b: 'Source Sans 3'},
-    palette: {bg: '#181210', ink: '#fff6e8', accent: '#e8521a', muted: '#a08573', card: '#241a16'},
+    palette: {
+      bg: '#181210',
+      ink: '#fff6e8',
+      accent: '#e8521a',
+      muted: '#a08573',
+      card: '#241a16',
+    },
     nav: ['The Pit', 'Sides', 'Catering', 'Hours'],
     hero: {kicker: 'Pit-smoked since 2017', cta: 'Order the platter'},
     sections: [
-      {title: 'From the pit', items: [
-        ['Whole-hog plate', '12-hour hickory smoke, vinegar pepper, slaw, hush puppies. $24'],
-        ['Brisket sandwich', 'Texas-cut point, white bread, slaw, pickles. $18'],
-        ['Smoked half chicken', 'Dry rub, finished over coals, white sauce on the side. $19'],
-        ['Burnt ends, by the half-pound', 'Rendered, glazed, double-smoked. $14'],
-      ]},
-      {title: 'Sides + plates', items: [
-        ['Collards', 'Slow braised with smoked hock and apple cider vinegar. $6'],
-        ['Mac & cheese', 'Three-cheese, breadcrumb crust. $7'],
-        ['Banana pudding', 'Vanilla wafer, fresh whipped, salted vanilla. $7'],
-      ]},
+      {
+        title: 'From the pit',
+        items: [
+          [
+            'Whole-hog plate',
+            '12-hour hickory smoke, vinegar pepper, slaw, hush puppies. $24',
+          ],
+          [
+            'Brisket sandwich',
+            'Texas-cut point, white bread, slaw, pickles. $18',
+          ],
+          [
+            'Smoked half chicken',
+            'Dry rub, finished over coals, white sauce on the side. $19',
+          ],
+          [
+            'Burnt ends, by the half-pound',
+            'Rendered, glazed, double-smoked. $14',
+          ],
+        ],
+      },
+      {
+        title: 'Sides + plates',
+        items: [
+          [
+            'Collards',
+            'Slow braised with smoked hock and apple cider vinegar. $6',
+          ],
+          ['Mac & cheese', 'Three-cheese, breadcrumb crust. $7'],
+          [
+            'Banana pudding',
+            'Vanilla wafer, fresh whipped, salted vanilla. $7',
+          ],
+        ],
+      },
     ],
   },
   {
-    slug: 'climbing-gym', name: 'North Face Climbing Co-op', tagline: 'Volume, granite-textured holds, fifty new problems weekly.',
+    slug: 'climbing-gym',
+    name: 'North Face Climbing Co-op',
+    tagline: 'Volume, granite-textured holds, fifty new problems weekly.',
     vertical: 'Climbing gym — Boulder, CO',
     layout: 'architectural',
     fonts: {h: 'Archivo Black', b: 'Inter'},
-    palette: {bg: '#0e1418', ink: '#e6edf3', accent: '#5dd5c4', muted: '#7a8a96', card: '#161e24'},
+    palette: {
+      bg: '#0e1418',
+      ink: '#e6edf3',
+      accent: '#5dd5c4',
+      muted: '#7a8a96',
+      card: '#161e24',
+    },
     nav: ['Membership', 'Classes', 'Setting calendar', 'Visit'],
     hero: {kicker: 'Member-owned co-op', cta: 'Reserve a trial pass'},
     sections: [
-      {title: 'Walls + grades', items: [
-        ['Bouldering cave', '4,800 sq ft. V0-V11. Reset weekly by a rotating crew of four setters.'],
-        ['Lead arena', '45-ft routes, 1,500 lines per quarter, autobelays + top-rope stations.'],
-        ['Training board', 'MoonBoard 2019 set + Tension Board 2 + system board.'],
-      ]},
-      {title: 'Classes this week', items: [
-        ['Intro to lead', 'Tuesdays + Thursdays 7pm · $35 drop-in · $25 members'],
-        ['Strength + finger health', 'Saturdays 9am · 90 min · $40 / free for members'],
-        ['Kids climb club', 'Sundays 10am, ages 7-12 · 8-week sessions'],
-      ]},
+      {
+        title: 'Walls + grades',
+        items: [
+          [
+            'Bouldering cave',
+            '4,800 sq ft. V0-V11. Reset weekly by a rotating crew of four setters.',
+          ],
+          [
+            'Lead arena',
+            '45-ft routes, 1,500 lines per quarter, autobelays + top-rope stations.',
+          ],
+          [
+            'Training board',
+            'MoonBoard 2019 set + Tension Board 2 + system board.',
+          ],
+        ],
+      },
+      {
+        title: 'Classes this week',
+        items: [
+          [
+            'Intro to lead',
+            'Tuesdays + Thursdays 7pm · $35 drop-in · $25 members',
+          ],
+          [
+            'Strength + finger health',
+            'Saturdays 9am · 90 min · $40 / free for members',
+          ],
+          ['Kids climb club', 'Sundays 10am, ages 7-12 · 8-week sessions'],
+        ],
+      },
     ],
   },
   {
-    slug: 'cocktail-bar', name: 'Lantern & Owl', tagline: 'House-made bitters. Rotating amaro. Quiet enough to talk.',
+    slug: 'cocktail-bar',
+    name: 'Lantern & Owl',
+    tagline: 'House-made bitters. Rotating amaro. Quiet enough to talk.',
     vertical: 'Cocktail bar — New Orleans, LA',
     layout: 'editorial',
     fonts: {h: 'Cormorant Garamond', b: 'Karla'},
-    palette: {bg: '#0f0e14', ink: '#ece6d7', accent: '#d9a566', muted: '#897e6c', card: '#181620'},
+    palette: {
+      bg: '#0f0e14',
+      ink: '#ece6d7',
+      accent: '#d9a566',
+      muted: '#897e6c',
+      card: '#181620',
+    },
     nav: ['List', 'Reservations', 'Private rooms', 'About'],
-    hero: {kicker: 'A room with thirty-eight seats', cta: 'Reserve a banquette'},
+    hero: {
+      kicker: 'A room with thirty-eight seats',
+      cta: 'Reserve a banquette',
+    },
     sections: [
-      {title: 'On the list tonight', items: [
-        ['Smoke Signal', 'Mezcal, smoked pineapple, lime cordial, sea salt, applewood smoke. $17'],
-        ['Hollow Bell', 'Rye, Cynar, walnut bitters, hand-carved orange peel. $15'],
-        ['Cane & Citrus', 'White rum, lime, demerara, mint, sparkling lemon. $14'],
-        ['Negroni Reserve', 'Bombay Sapphire East, Antica Formula, Campari macerated 30 days. $19'],
-      ]},
-      {title: 'House practice', items: [
-        ['Bitters lab', 'We tincture our own across 14 botanicals — a 6-bottle list rotates monthly.'],
-        ['Glassware', 'Hand-blown, sourced from a five-person studio in West Virginia.'],
-      ]},
+      {
+        title: 'On the list tonight',
+        items: [
+          [
+            'Smoke Signal',
+            'Mezcal, smoked pineapple, lime cordial, sea salt, applewood smoke. $17',
+          ],
+          [
+            'Hollow Bell',
+            'Rye, Cynar, walnut bitters, hand-carved orange peel. $15',
+          ],
+          [
+            'Cane & Citrus',
+            'White rum, lime, demerara, mint, sparkling lemon. $14',
+          ],
+          [
+            'Negroni Reserve',
+            'Bombay Sapphire East, Antica Formula, Campari macerated 30 days. $19',
+          ],
+        ],
+      },
+      {
+        title: 'House practice',
+        items: [
+          [
+            'Bitters lab',
+            'We tincture our own across 14 botanicals — a 6-bottle list rotates monthly.',
+          ],
+          [
+            'Glassware',
+            'Hand-blown, sourced from a five-person studio in West Virginia.',
+          ],
+        ],
+      },
     ],
   },
   {
-    slug: 'coffee-roaster', name: 'Stalk & Tin Coffee', tagline: 'Single-farm. Lightly developed. Sold the week it\'s roasted.',
+    slug: 'coffee-roaster',
+    name: 'Stalk & Tin Coffee',
+    tagline: "Single-farm. Lightly developed. Sold the week it's roasted.",
     vertical: 'Specialty coffee roaster — Madison, WI',
     layout: 'clinical',
     fonts: {h: 'Manrope', b: 'Inter'},
-    palette: {bg: '#fbfaf6', ink: '#1a1814', accent: '#3a6b4e', muted: '#75716a', card: '#ffffff'},
+    palette: {
+      bg: '#fbfaf6',
+      ink: '#1a1814',
+      accent: '#3a6b4e',
+      muted: '#75716a',
+      card: '#ffffff',
+    },
     nav: ['Beans', 'Subscriptions', 'Café', 'Wholesale'],
-    hero: {kicker: 'Roasted Tuesdays + Fridays', cta: 'Browse this week\'s lots'},
+    hero: {
+      kicker: 'Roasted Tuesdays + Fridays',
+      cta: "Browse this week's lots",
+    },
     sections: [
-      {title: 'On the rack', items: [
-        ['Bolivia · La Pampa', 'Caturra. Honey processed. Apricot, brown sugar, soft cocoa. $22 / 250g'],
-        ['Ethiopia · Banko Gotiti', 'Heirloom. Natural. Strawberry, jasmine, mead-like body. $24 / 250g'],
-        ['Honduras · Las Capucas', 'Pacas. Washed. Almond, milk chocolate, cane sugar. $19 / 250g'],
-      ]},
-      {title: 'How we buy', items: [
-        ['Direct trade', 'We pay 30-50% above C-market. Contracts are public on the bag.'],
-        ['Cupping', 'Every lot scored 86+ by two cuppers before we contract it.'],
-      ]},
+      {
+        title: 'On the rack',
+        items: [
+          [
+            'Bolivia · La Pampa',
+            'Caturra. Honey processed. Apricot, brown sugar, soft cocoa. $22 / 250g',
+          ],
+          [
+            'Ethiopia · Banko Gotiti',
+            'Heirloom. Natural. Strawberry, jasmine, mead-like body. $24 / 250g',
+          ],
+          [
+            'Honduras · Las Capucas',
+            'Pacas. Washed. Almond, milk chocolate, cane sugar. $19 / 250g',
+          ],
+        ],
+      },
+      {
+        title: 'How we buy',
+        items: [
+          [
+            'Direct trade',
+            'We pay 30-50% above C-market. Contracts are public on the bag.',
+          ],
+          [
+            'Cupping',
+            'Every lot scored 86+ by two cuppers before we contract it.',
+          ],
+        ],
+      },
     ],
   },
   {
-    slug: 'crossfit-gym', name: 'Iron Bell Strength', tagline: 'Strength first. Conditioning second. Coached, not yelled at.',
+    slug: 'crossfit-gym',
+    name: 'Iron Bell Strength',
+    tagline: 'Strength first. Conditioning second. Coached, not yelled at.',
     vertical: 'Strength + conditioning gym — Salt Lake City, UT',
     layout: 'bold',
     fonts: {h: 'Oswald', b: 'Inter'},
-    palette: {bg: '#10141a', ink: '#f5f5f4', accent: '#f9c81a', muted: '#8a8d92', card: '#1a1f27'},
+    palette: {
+      bg: '#10141a',
+      ink: '#f5f5f4',
+      accent: '#f9c81a',
+      muted: '#8a8d92',
+      card: '#1a1f27',
+    },
     nav: ['Programs', 'Coaches', 'Schedule', 'Drop in'],
     hero: {kicker: 'Coached small-group strength', cta: 'Book a free intro'},
     sections: [
-      {title: 'Programs', items: [
-        ['Strength Foundations', '12-week beginner block. Squat, hinge, press, pull, carry. 3x/week.'],
-        ['Daily Strength', '60-min coached class. Periodized lifting + 12-minute conditioning piece.'],
-        ['Hypertrophy Lab', 'Bodybuilding-style 4-day split. Member-run + coach-checked.'],
-        ['Endurance Builder', '5K-to-marathon coaching. Saturday long runs from the gym door.'],
-      ]},
-      {title: 'Coaches', items: [
-        ['Mara Ellison', 'USAW L1 + CSCS. Eight years coaching. Bench focus.'],
-        ['Dev Kuretsky', 'Strongman background. Conditioning + carries.'],
-      ]},
+      {
+        title: 'Programs',
+        items: [
+          [
+            'Strength Foundations',
+            '12-week beginner block. Squat, hinge, press, pull, carry. 3x/week.',
+          ],
+          [
+            'Daily Strength',
+            '60-min coached class. Periodized lifting + 12-minute conditioning piece.',
+          ],
+          [
+            'Hypertrophy Lab',
+            'Bodybuilding-style 4-day split. Member-run + coach-checked.',
+          ],
+          [
+            'Endurance Builder',
+            '5K-to-marathon coaching. Saturday long runs from the gym door.',
+          ],
+        ],
+      },
+      {
+        title: 'Coaches',
+        items: [
+          [
+            'Mara Ellison',
+            'USAW L1 + CSCS. Eight years coaching. Bench focus.',
+          ],
+          ['Dev Kuretsky', 'Strongman background. Conditioning + carries.'],
+        ],
+      },
     ],
   },
   {
-    slug: 'dermatology', name: 'Field Avenue Skin Clinic', tagline: 'Medical dermatology with the cosmetic suite next door.',
+    slug: 'dermatology',
+    name: 'Field Avenue Skin Clinic',
+    tagline: 'Medical dermatology with the cosmetic suite next door.',
     vertical: 'Dermatology practice — Minneapolis, MN',
     layout: 'clinical',
     fonts: {h: 'DM Serif Display', b: 'DM Sans'},
-    palette: {bg: '#f4f1ec', ink: '#1e2024', accent: '#b56e6c', muted: '#6e7177', card: '#ffffff'},
+    palette: {
+      bg: '#f4f1ec',
+      ink: '#1e2024',
+      accent: '#b56e6c',
+      muted: '#6e7177',
+      card: '#ffffff',
+    },
     nav: ['Services', 'Providers', 'New patients', 'Book'],
-    hero: {kicker: 'Board-certified, in-network with 7 plans', cta: 'Request an appointment'},
+    hero: {
+      kicker: 'Board-certified, in-network with 7 plans',
+      cta: 'Request an appointment',
+    },
     sections: [
-      {title: 'Medical', items: [
-        ['Skin cancer screening', '20-min full body, dermoscopy, biopsy in-clinic if needed.'],
-        ['Acne management', 'Topicals, oral therapy, isotretinoin program, scar revision.'],
-        ['Psoriasis + eczema', 'Biologic + light therapy. Three suites with narrowband UVB.'],
-      ]},
-      {title: 'Cosmetic', items: [
-        ['Botox + filler', 'RN injectors trained at MN Aesthetic Institute.'],
-        ['Microneedling + PRP', '60-min protocol, four-session course.'],
-        ['Laser', 'Pico + IPL + erbium. Same-day topical numbing.'],
-      ]},
+      {
+        title: 'Medical',
+        items: [
+          [
+            'Skin cancer screening',
+            '20-min full body, dermoscopy, biopsy in-clinic if needed.',
+          ],
+          [
+            'Acne management',
+            'Topicals, oral therapy, isotretinoin program, scar revision.',
+          ],
+          [
+            'Psoriasis + eczema',
+            'Biologic + light therapy. Three suites with narrowband UVB.',
+          ],
+        ],
+      },
+      {
+        title: 'Cosmetic',
+        items: [
+          ['Botox + filler', 'RN injectors trained at MN Aesthetic Institute.'],
+          ['Microneedling + PRP', '60-min protocol, four-session course.'],
+          ['Laser', 'Pico + IPL + erbium. Same-day topical numbing.'],
+        ],
+      },
     ],
   },
   {
-    slug: 'electrician', name: 'Holloway Electric', tagline: 'Licensed, insured, picks up the phone.',
+    slug: 'electrician',
+    name: 'Holloway Electric',
+    tagline: 'Licensed, insured, picks up the phone.',
     vertical: 'Residential + light commercial electrician — Charleston, SC',
     layout: 'architectural',
     fonts: {h: 'Space Grotesk', b: 'Inter'},
-    palette: {bg: '#13171d', ink: '#eaecef', accent: '#f0b81b', muted: '#7d828a', card: '#1c2129'},
+    palette: {
+      bg: '#13171d',
+      ink: '#eaecef',
+      accent: '#f0b81b',
+      muted: '#7d828a',
+      card: '#1c2129',
+    },
     nav: ['Services', 'Service area', 'Reviews', 'Get a quote'],
     hero: {kicker: 'SC licensed master · Lic #4598-M', cta: 'Schedule a visit'},
     sections: [
-      {title: 'What we do', items: [
-        ['Panel upgrades', 'From 100A to 200A or 400A. Same-day inspection coordination.'],
-        ['EV charger install', 'Level 2 chargers — Tesla, ChargePoint, Wallbox. Permit included.'],
-        ['Whole-home rewires', 'Old knob-and-tube to NEC 2020. Drywall patch + paint subcontract.'],
-        ['Generator install + service', 'Generac + Kohler. Concrete pad, gas line, transfer switch.'],
-      ]},
-      {title: 'Service window', items: [
-        ['Same-day callbacks', 'Texts answered within 30 min during business hours.'],
-        ['On-time guarantee', 'If we\'re late beyond the 2-hour window, the service call is free.'],
-      ]},
+      {
+        title: 'What we do',
+        items: [
+          [
+            'Panel upgrades',
+            'From 100A to 200A or 400A. Same-day inspection coordination.',
+          ],
+          [
+            'EV charger install',
+            'Level 2 chargers — Tesla, ChargePoint, Wallbox. Permit included.',
+          ],
+          [
+            'Whole-home rewires',
+            'Old knob-and-tube to NEC 2020. Drywall patch + paint subcontract.',
+          ],
+          [
+            'Generator install + service',
+            'Generac + Kohler. Concrete pad, gas line, transfer switch.',
+          ],
+        ],
+      },
+      {
+        title: 'Service window',
+        items: [
+          [
+            'Same-day callbacks',
+            'Texts answered within 30 min during business hours.',
+          ],
+          [
+            'On-time guarantee',
+            "If we're late beyond the 2-hour window, the service call is free.",
+          ],
+        ],
+      },
     ],
   },
   {
-    slug: 'family-law', name: 'Wren & Hadley LLP', tagline: 'Family law, mediation, and collaborative divorce. Plain language.',
+    slug: 'family-law',
+    name: 'Wren & Hadley LLP',
+    tagline:
+      'Family law, mediation, and collaborative divorce. Plain language.',
     vertical: 'Family law firm — Raleigh, NC',
     layout: 'editorial',
     fonts: {h: 'Lora', b: 'Source Sans 3'},
-    palette: {bg: '#f6f3ee', ink: '#1b1c20', accent: '#5b6e4f', muted: '#6f6c66', card: '#ffffff'},
+    palette: {
+      bg: '#f6f3ee',
+      ink: '#1b1c20',
+      accent: '#5b6e4f',
+      muted: '#6f6c66',
+      card: '#ffffff',
+    },
     nav: ['Practice', 'Attorneys', 'Process', 'Consult'],
-    hero: {kicker: 'Twenty years in Wake County', cta: 'Request a private consult'},
+    hero: {
+      kicker: 'Twenty years in Wake County',
+      cta: 'Request a private consult',
+    },
     sections: [
-      {title: 'How we work', items: [
-        ['Collaborative divorce', 'Both spouses agree to settle out of court. Lower cost, child-first.'],
-        ['Mediation', 'Single neutral, two attorneys present. Half-day or full-day sessions.'],
-        ['Custody + co-parenting', 'Parenting plans drafted in plain language; review every 12 months.'],
-      ]},
-      {title: 'Why families call us', items: [
-        ['Flat-fee where possible', 'For uncontested matters, you get a fee letter at intake.'],
-        ['One point of contact', 'You don\'t bounce between paralegals. One attorney + one assistant.'],
-      ]},
+      {
+        title: 'How we work',
+        items: [
+          [
+            'Collaborative divorce',
+            'Both spouses agree to settle out of court. Lower cost, child-first.',
+          ],
+          [
+            'Mediation',
+            'Single neutral, two attorneys present. Half-day or full-day sessions.',
+          ],
+          [
+            'Custody + co-parenting',
+            'Parenting plans drafted in plain language; review every 12 months.',
+          ],
+        ],
+      },
+      {
+        title: 'Why families call us',
+        items: [
+          [
+            'Flat-fee where possible',
+            'For uncontested matters, you get a fee letter at intake.',
+          ],
+          [
+            'One point of contact',
+            "You don't bounce between paralegals. One attorney + one assistant.",
+          ],
+        ],
+      },
     ],
   },
   {
-    slug: 'florist', name: 'Bramble & Stem', tagline: 'Seasonal blooms, foraged stems, weekly market arrangements.',
+    slug: 'florist',
+    name: 'Bramble & Stem',
+    tagline: 'Seasonal blooms, foraged stems, weekly market arrangements.',
     vertical: 'Florist + event design — Nashville, TN',
     layout: 'warm',
     fonts: {h: 'DM Serif Text', b: 'Karla'},
-    palette: {bg: '#faf3ec', ink: '#23201d', accent: '#9b6b89', muted: '#888178', card: '#ffffff'},
+    palette: {
+      bg: '#faf3ec',
+      ink: '#23201d',
+      accent: '#9b6b89',
+      muted: '#888178',
+      card: '#ffffff',
+    },
     nav: ['Market days', 'Weddings', 'Subscriptions', 'Visit'],
-    hero: {kicker: 'Tuesdays + Fridays at the storefront', cta: 'Reserve a market bouquet'},
+    hero: {
+      kicker: 'Tuesdays + Fridays at the storefront',
+      cta: 'Reserve a market bouquet',
+    },
     sections: [
-      {title: 'What\'s in this week', items: [
-        ['Garden roses + ranunculus', 'Local-grown from a half-acre cutting field in Bell Buckle.'],
-        ['Foraged eucalyptus + ivy', 'Cut from our own backyard hedgerow + a partner farm.'],
-        ['Tulips + anemones', 'Dutch import for the season — last call mid-May.'],
-      ]},
-      {title: 'For your wedding', items: [
-        ['Full design', 'Bouquet, ceremony installation, reception centerpieces, send-off petals.'],
-        ['A-la-carte', 'Just bouquets + boutonnières. Pickup the morning of.'],
-      ]},
+      {
+        title: "What's in this week",
+        items: [
+          [
+            'Garden roses + ranunculus',
+            'Local-grown from a half-acre cutting field in Bell Buckle.',
+          ],
+          [
+            'Foraged eucalyptus + ivy',
+            'Cut from our own backyard hedgerow + a partner farm.',
+          ],
+          [
+            'Tulips + anemones',
+            'Dutch import for the season — last call mid-May.',
+          ],
+        ],
+      },
+      {
+        title: 'For your wedding',
+        items: [
+          [
+            'Full design',
+            'Bouquet, ceremony installation, reception centerpieces, send-off petals.',
+          ],
+          [
+            'A-la-carte',
+            'Just bouquets + boutonnières. Pickup the morning of.',
+          ],
+        ],
+      },
     ],
   },
   {
-    slug: 'hvac', name: 'Northstar HVAC', tagline: 'Heat pumps, mini-splits, ducted systems. Same-day service.',
+    slug: 'hvac',
+    name: 'Northstar HVAC',
+    tagline: 'Heat pumps, mini-splits, ducted systems. Same-day service.',
     vertical: 'HVAC installer + service — Saint Paul, MN',
     layout: 'architectural',
     fonts: {h: 'Space Grotesk', b: 'Inter'},
-    palette: {bg: '#f4f6f9', ink: '#161a22', accent: '#1f7ed8', muted: '#5f6675', card: '#ffffff'},
+    palette: {
+      bg: '#f4f6f9',
+      ink: '#161a22',
+      accent: '#1f7ed8',
+      muted: '#5f6675',
+      card: '#ffffff',
+    },
     nav: ['Service', 'Install', 'Maintenance plans', 'Estimate'],
-    hero: {kicker: 'NATE-certified · 24/7 service', cta: 'Book a free estimate'},
+    hero: {
+      kicker: 'NATE-certified · 24/7 service',
+      cta: 'Book a free estimate',
+    },
     sections: [
-      {title: 'What we install', items: [
-        ['Cold-climate heat pumps', 'Mitsubishi, Daikin, Bosch — rated to -15°F. Eligible for state rebates.'],
-        ['Ducted central air', 'Two-stage and variable-speed. We size with Manual J + S.'],
-        ['Ductless mini-splits', 'Per-room comfort. One outdoor unit, up to five heads.'],
-      ]},
-      {title: 'Service + maintenance', items: [
-        ['Twice-a-year tune-ups', 'Spring AC, fall furnace. Free filter set for plan members.'],
-        ['Emergency calls', 'Same-day service, 7-day calendar. Flat after-hours fee.'],
-      ]},
+      {
+        title: 'What we install',
+        items: [
+          [
+            'Cold-climate heat pumps',
+            'Mitsubishi, Daikin, Bosch — rated to -15°F. Eligible for state rebates.',
+          ],
+          [
+            'Ducted central air',
+            'Two-stage and variable-speed. We size with Manual J + S.',
+          ],
+          [
+            'Ductless mini-splits',
+            'Per-room comfort. One outdoor unit, up to five heads.',
+          ],
+        ],
+      },
+      {
+        title: 'Service + maintenance',
+        items: [
+          [
+            'Twice-a-year tune-ups',
+            'Spring AC, fall furnace. Free filter set for plan members.',
+          ],
+          [
+            'Emergency calls',
+            'Same-day service, 7-day calendar. Flat after-hours fee.',
+          ],
+        ],
+      },
     ],
   },
   {
-    slug: 'nail-studio', name: 'Cosmos Nail Studio', tagline: 'Gel + builder + Russian manicure, by a five-tech team.',
+    slug: 'nail-studio',
+    name: 'Cosmos Nail Studio',
+    tagline: 'Gel + builder + Russian manicure, by a five-tech team.',
     vertical: 'Nail studio — Austin, TX',
     layout: 'bold',
     fonts: {h: 'Syne', b: 'Inter'},
-    palette: {bg: '#f3eef7', ink: '#231d2c', accent: '#7b3df5', muted: '#8a809a', card: '#ffffff'},
+    palette: {
+      bg: '#f3eef7',
+      ink: '#231d2c',
+      accent: '#7b3df5',
+      muted: '#8a809a',
+      card: '#ffffff',
+    },
     nav: ['Menu', 'Techs', 'Gallery', 'Book'],
     hero: {kicker: 'Tuesday – Saturday · downtown', cta: 'Book a chair'},
     sections: [
-      {title: 'Menu', items: [
-        ['Russian manicure + gel', '90 min · cuticle work + gloss · $65'],
-        ['Builder gel set', '110 min · sculpted shape + apex · $85'],
-        ['Soft chrome / cat-eye', '15-min add-on · per nail · $5'],
-        ['Nail art, custom', 'Quote at the chair. Hand-drawn, decals, foil, encapsulated.'],
-      ]},
-      {title: 'Your tech', items: [
-        ['Anya Mirov', 'Russian-trained. Builder + structure specialist.'],
-        ['Joelle Kim', 'Pearl + chrome + cat-eye. Featured in Allure 2025.'],
-      ]},
+      {
+        title: 'Menu',
+        items: [
+          ['Russian manicure + gel', '90 min · cuticle work + gloss · $65'],
+          ['Builder gel set', '110 min · sculpted shape + apex · $85'],
+          ['Soft chrome / cat-eye', '15-min add-on · per nail · $5'],
+          [
+            'Nail art, custom',
+            'Quote at the chair. Hand-drawn, decals, foil, encapsulated.',
+          ],
+        ],
+      },
+      {
+        title: 'Your tech',
+        items: [
+          ['Anya Mirov', 'Russian-trained. Builder + structure specialist.'],
+          ['Joelle Kim', 'Pearl + chrome + cat-eye. Featured in Allure 2025.'],
+        ],
+      },
     ],
   },
   {
-    slug: 'physical-therapy', name: 'Cedar Bend PT', tagline: 'One-hour appointments. One PT, one room, one plan.',
+    slug: 'physical-therapy',
+    name: 'Cedar Bend PT',
+    tagline: 'One-hour appointments. One PT, one room, one plan.',
     vertical: 'Physical therapy — Bend, OR',
     layout: 'clinical',
     fonts: {h: 'Manrope', b: 'Inter'},
-    palette: {bg: '#f1f4f1', ink: '#1a201a', accent: '#5f8a4f', muted: '#6b7269', card: '#ffffff'},
+    palette: {
+      bg: '#f1f4f1',
+      ink: '#1a201a',
+      accent: '#5f8a4f',
+      muted: '#6b7269',
+      card: '#ffffff',
+    },
     nav: ['Conditions', 'Therapists', 'Insurance', 'Book'],
-    hero: {kicker: 'In-network with 12 plans · cash-pay options', cta: 'Request a 1-on-1 visit'},
+    hero: {
+      kicker: 'In-network with 12 plans · cash-pay options',
+      cta: 'Request a 1-on-1 visit',
+    },
     sections: [
-      {title: 'What we treat', items: [
-        ['Post-op recovery', 'Knee, hip, shoulder, ACL. Surgeon protocols + return-to-sport testing.'],
-        ['Chronic back + neck', 'McKenzie + DNS + targeted strength. Tracked outcomes at 4, 8, 12 weeks.'],
-        ['Runners + climbers', 'Gait analysis, finger and elbow load programs, return-to-trail planning.'],
-      ]},
-      {title: 'Our model', items: [
-        ['One PT per visit', 'Not handed off to an aide. The same therapist for the whole plan.'],
-        ['Outcomes published', 'We track and share recovery time vs. expected. Ask at intake.'],
-      ]},
+      {
+        title: 'What we treat',
+        items: [
+          [
+            'Post-op recovery',
+            'Knee, hip, shoulder, ACL. Surgeon protocols + return-to-sport testing.',
+          ],
+          [
+            'Chronic back + neck',
+            'McKenzie + DNS + targeted strength. Tracked outcomes at 4, 8, 12 weeks.',
+          ],
+          [
+            'Runners + climbers',
+            'Gait analysis, finger and elbow load programs, return-to-trail planning.',
+          ],
+        ],
+      },
+      {
+        title: 'Our model',
+        items: [
+          [
+            'One PT per visit',
+            'Not handed off to an aide. The same therapist for the whole plan.',
+          ],
+          [
+            'Outcomes published',
+            'We track and share recovery time vs. expected. Ask at intake.',
+          ],
+        ],
+      },
     ],
   },
   {
-    slug: 'plumber', name: 'Crestline Plumbing', tagline: 'Family-owned since 1983. Honest quotes, written warranties.',
+    slug: 'plumber',
+    name: 'Crestline Plumbing',
+    tagline: 'Family-owned since 1983. Honest quotes, written warranties.',
     vertical: 'Residential plumbing — Spokane, WA',
     layout: 'architectural',
     fonts: {h: 'Archivo', b: 'Inter'},
-    palette: {bg: '#fbfbfa', ink: '#181a20', accent: '#2e5fab', muted: '#5a6068', card: '#f1f3f8'},
+    palette: {
+      bg: '#fbfbfa',
+      ink: '#181a20',
+      accent: '#2e5fab',
+      muted: '#5a6068',
+      card: '#f1f3f8',
+    },
     nav: ['Services', 'About', 'Reviews', 'Schedule'],
-    hero: {kicker: 'Master plumber · Lic. PB-4520', cta: 'Get a same-day visit'},
+    hero: {
+      kicker: 'Master plumber · Lic. PB-4520',
+      cta: 'Get a same-day visit',
+    },
     sections: [
-      {title: 'Common calls', items: [
-        ['Water heater install + repair', 'Tankless, hybrid, traditional. Same-day if we have the model.'],
-        ['Sewer + drain', 'Camera inspection, hydro-jetting, trenchless replacement.'],
-        ['Repipe + slab leak', 'PEX + copper. Free estimate, written warranty, drywall patch coordinated.'],
-        ['Bathroom + kitchen remodel', 'We work with your GC or solo. Permit included.'],
-      ]},
-      {title: 'How we price', items: [
-        ['Flat-rate quotes', 'We give the number before we start. No surprise hourly add-ons.'],
-        ['Written warranty', '2 years on parts + labor. Lifetime on PEX repipes.'],
-      ]},
+      {
+        title: 'Common calls',
+        items: [
+          [
+            'Water heater install + repair',
+            'Tankless, hybrid, traditional. Same-day if we have the model.',
+          ],
+          [
+            'Sewer + drain',
+            'Camera inspection, hydro-jetting, trenchless replacement.',
+          ],
+          [
+            'Repipe + slab leak',
+            'PEX + copper. Free estimate, written warranty, drywall patch coordinated.',
+          ],
+          [
+            'Bathroom + kitchen remodel',
+            'We work with your GC or solo. Permit included.',
+          ],
+        ],
+      },
+      {
+        title: 'How we price',
+        items: [
+          [
+            'Flat-rate quotes',
+            'We give the number before we start. No surprise hourly add-ons.',
+          ],
+          [
+            'Written warranty',
+            '2 years on parts + labor. Lifetime on PEX repipes.',
+          ],
+        ],
+      },
     ],
   },
   {
-    slug: 'ramen-bar', name: 'Kōri Ramen', tagline: 'Tonkotsu, shio, miso. Tare made in-house. Twelve seats.',
+    slug: 'ramen-bar',
+    name: 'Kōri Ramen',
+    tagline: 'Tonkotsu, shio, miso. Tare made in-house. Twelve seats.',
     vertical: 'Ramen bar — Seattle, WA',
     layout: 'editorial',
     fonts: {h: 'Noto Serif JP', b: 'Inter'},
-    palette: {bg: '#16110d', ink: '#f1e9db', accent: '#dc4c3e', muted: '#8b7e6e', card: '#1f1814'},
+    palette: {
+      bg: '#16110d',
+      ink: '#f1e9db',
+      accent: '#dc4c3e',
+      muted: '#8b7e6e',
+      card: '#1f1814',
+    },
     nav: ['Bowls', 'Sides', 'About', 'Wait list'],
-    hero: {kicker: 'Counter seating only · no app, no DMs', cta: 'Get on the wait list'},
+    hero: {
+      kicker: 'Counter seating only · no app, no DMs',
+      cta: 'Get on the wait list',
+    },
     sections: [
-      {title: 'Bowls', items: [
-        ['Tonkotsu shio', '18-hour pork bone broth, sea-salt tare, ajitama, chashu, scallion. $17'],
-        ['Miso', 'Red + white miso blend, ground pork, corn, butter, bean sprouts, scallion. $16'],
-        ['Spicy ginger', 'Chicken broth, ginger tare, chili oil, ground pork, soft-boiled egg. $18'],
-        ['Tsukemen (dipping)', 'Dense double-soup, chilled noodles, dipping cup. $19'],
-      ]},
-      {title: 'House rules', items: [
-        ['No reservations', 'Wait list opens at 4:30pm at the door. We text when your seat\'s ready.'],
-        ['Twelve seats', 'No groups over four. Cash, Visa, MC.'],
-      ]},
+      {
+        title: 'Bowls',
+        items: [
+          [
+            'Tonkotsu shio',
+            '18-hour pork bone broth, sea-salt tare, ajitama, chashu, scallion. $17',
+          ],
+          [
+            'Miso',
+            'Red + white miso blend, ground pork, corn, butter, bean sprouts, scallion. $16',
+          ],
+          [
+            'Spicy ginger',
+            'Chicken broth, ginger tare, chili oil, ground pork, soft-boiled egg. $18',
+          ],
+          [
+            'Tsukemen (dipping)',
+            'Dense double-soup, chilled noodles, dipping cup. $19',
+          ],
+        ],
+      },
+      {
+        title: 'House rules',
+        items: [
+          [
+            'No reservations',
+            "Wait list opens at 4:30pm at the door. We text when your seat's ready.",
+          ],
+          ['Twelve seats', 'No groups over four. Cash, Visa, MC.'],
+        ],
+      },
     ],
   },
   {
-    slug: 'tattoo-parlor', name: 'Iron Heron Tattoo', tagline: 'Custom, single-needle, fine-line. Booked six months out.',
+    slug: 'tattoo-parlor',
+    name: 'Iron Heron Tattoo',
+    tagline: 'Custom, single-needle, fine-line. Booked six months out.',
     vertical: 'Tattoo studio — Philadelphia, PA',
     layout: 'bold',
     fonts: {h: 'Anton', b: 'Inter'},
-    palette: {bg: '#0d0d0e', ink: '#f4f1ec', accent: '#cd2b3c', muted: '#777472', card: '#161618'},
+    palette: {
+      bg: '#0d0d0e',
+      ink: '#f4f1ec',
+      accent: '#cd2b3c',
+      muted: '#777472',
+      card: '#161618',
+    },
     nav: ['Artists', 'Portfolio', 'Booking', 'Studio'],
-    hero: {kicker: 'Six artists · by appointment', cta: 'Apply for a booking slot'},
+    hero: {
+      kicker: 'Six artists · by appointment',
+      cta: 'Apply for a booking slot',
+    },
     sections: [
-      {title: 'Artists', items: [
-        ['Eva Linder', 'Fine-line, single-needle botanicals. Three-year book; quarterly drop on the 1st.'],
-        ['Dom Castile', 'Black & gray realism. Portraits + memorial work. Two-year book.'],
-        ['River Okonkwo', 'American traditional. Walk-ins on Fridays + Saturdays.'],
-        ['Pi Akhmatova', 'Geometric + dotwork. Sleeve specialist. Custom-only.'],
-      ]},
-      {title: 'Booking', items: [
-        ['Application', 'Fill our form with reference, placement, size, and a budget range.'],
-        ['Deposit', '$200 non-refundable, applied to your final session.'],
-      ]},
+      {
+        title: 'Artists',
+        items: [
+          [
+            'Eva Linder',
+            'Fine-line, single-needle botanicals. Three-year book; quarterly drop on the 1st.',
+          ],
+          [
+            'Dom Castile',
+            'Black & gray realism. Portraits + memorial work. Two-year book.',
+          ],
+          [
+            'River Okonkwo',
+            'American traditional. Walk-ins on Fridays + Saturdays.',
+          ],
+          [
+            'Pi Akhmatova',
+            'Geometric + dotwork. Sleeve specialist. Custom-only.',
+          ],
+        ],
+      },
+      {
+        title: 'Booking',
+        items: [
+          [
+            'Application',
+            'Fill our form with reference, placement, size, and a budget range.',
+          ],
+          ['Deposit', '$200 non-refundable, applied to your final session.'],
+        ],
+      },
     ],
   },
   {
-    slug: 'vegan-cafe', name: 'Greenhouse 14', tagline: 'Plant-only café and pastry counter. Open seven days.',
+    slug: 'vegan-cafe',
+    name: 'Greenhouse 14',
+    tagline: 'Plant-only café and pastry counter. Open seven days.',
     vertical: 'Vegan café — Burlington, VT',
     layout: 'warm',
     fonts: {h: 'Fraunces', b: 'Inter'},
-    palette: {bg: '#f1f4ec', ink: '#1b1e16', accent: '#4f7a3a', muted: '#7b8071', card: '#ffffff'},
+    palette: {
+      bg: '#f1f4ec',
+      ink: '#1b1e16',
+      accent: '#4f7a3a',
+      muted: '#7b8071',
+      card: '#ffffff',
+    },
     nav: ['Menu', 'Pastry', 'Brunch', 'Find us'],
-    hero: {kicker: 'Plant-based · 100% vegan', cta: 'See today\'s menu'},
+    hero: {kicker: 'Plant-based · 100% vegan', cta: "See today's menu"},
     sections: [
-      {title: 'The menu', items: [
-        ['Cashew ricotta toast', 'Sourdough, lemon-cashew ricotta, hot honey, microgreens. $12'],
-        ['Smoky tempeh BLT', 'Maple-smoked tempeh, butter lettuce, heirloom tomato, vegan aioli. $14'],
-        ['Mushroom + leek galette', 'Spelt crust, herbed cashew cream, oyster mushrooms, leek confit. $13'],
-        ['Cardamom oat latte', 'In-house oat milk, cardamom, La Colombe espresso. $5.50'],
-      ]},
-      {title: 'House practice', items: [
-        ['Compost program', 'Everything off the plates and the prep line goes to a 14-farm composter.'],
-        ['Local sourcing', 'Produce from 7 Vermont farms within 30 miles. Posted on the chalkboard.'],
-      ]},
+      {
+        title: 'The menu',
+        items: [
+          [
+            'Cashew ricotta toast',
+            'Sourdough, lemon-cashew ricotta, hot honey, microgreens. $12',
+          ],
+          [
+            'Smoky tempeh BLT',
+            'Maple-smoked tempeh, butter lettuce, heirloom tomato, vegan aioli. $14',
+          ],
+          [
+            'Mushroom + leek galette',
+            'Spelt crust, herbed cashew cream, oyster mushrooms, leek confit. $13',
+          ],
+          [
+            'Cardamom oat latte',
+            'In-house oat milk, cardamom, La Colombe espresso. $5.50',
+          ],
+        ],
+      },
+      {
+        title: 'House practice',
+        items: [
+          [
+            'Compost program',
+            'Everything off the plates and the prep line goes to a 14-farm composter.',
+          ],
+          [
+            'Local sourcing',
+            'Produce from 7 Vermont farms within 30 miles. Posted on the chalkboard.',
+          ],
+        ],
+      },
     ],
   },
   {
-    slug: 'vet', name: 'Northside Veterinary', tagline: 'Fear-free certified. Same-day sick visits. House calls.',
+    slug: 'vet',
+    name: 'Northside Veterinary',
+    tagline: 'Fear-free certified. Same-day sick visits. House calls.',
     vertical: 'Veterinary clinic — Madison, WI',
     layout: 'clinical',
     fonts: {h: 'DM Serif Display', b: 'Inter'},
-    palette: {bg: '#f4f1ec', ink: '#1d1f24', accent: '#6c8d8e', muted: '#727680', card: '#ffffff'},
+    palette: {
+      bg: '#f4f1ec',
+      ink: '#1d1f24',
+      accent: '#6c8d8e',
+      muted: '#727680',
+      card: '#ffffff',
+    },
     nav: ['Services', 'Care team', 'New patients', 'Book'],
     hero: {kicker: 'Fear-Free Certified Practice', cta: 'Book a visit'},
     sections: [
-      {title: 'For your pet', items: [
-        ['Wellness exams', 'Annual + senior. Bloodwork, dental scoring, vaccinations.'],
-        ['Sick visits', 'Same-day for cough, GI, urinary, ear, eye, skin.'],
-        ['Dental + surgery', 'In-house digital X-ray, full dental suite, soft tissue + ortho.'],
-        ['House calls', 'In-home euthanasia + senior wellness within 25 miles.'],
-      ]},
-      {title: 'Why Fear-Free', items: [
-        ['Treats + pheromones', 'Every room has a treat jar and species-specific calming spray.'],
-        ['No exam-table wrestling', 'Cats stay in their carriers. Dogs get the floor.'],
-      ]},
+      {
+        title: 'For your pet',
+        items: [
+          [
+            'Wellness exams',
+            'Annual + senior. Bloodwork, dental scoring, vaccinations.',
+          ],
+          ['Sick visits', 'Same-day for cough, GI, urinary, ear, eye, skin.'],
+          [
+            'Dental + surgery',
+            'In-house digital X-ray, full dental suite, soft tissue + ortho.',
+          ],
+          [
+            'House calls',
+            'In-home euthanasia + senior wellness within 25 miles.',
+          ],
+        ],
+      },
+      {
+        title: 'Why Fear-Free',
+        items: [
+          [
+            'Treats + pheromones',
+            'Every room has a treat jar and species-specific calming spray.',
+          ],
+          [
+            'No exam-table wrestling',
+            'Cats stay in their carriers. Dogs get the floor.',
+          ],
+        ],
+      },
     ],
   },
   {
-    slug: 'yoga-studio', name: 'Sage & Cedar Yoga', tagline: 'Vinyasa, Yin, prenatal. Seven instructors, four studios.',
+    slug: 'yoga-studio',
+    name: 'Sage & Cedar Yoga',
+    tagline: 'Vinyasa, Yin, prenatal. Seven instructors, four studios.',
     vertical: 'Yoga studio — Boise, ID',
     layout: 'warm',
     fonts: {h: 'Cormorant Garamond', b: 'Karla'},
-    palette: {bg: '#f1ece2', ink: '#1f1c16', accent: '#a47a4a', muted: '#7e776a', card: '#ffffff'},
+    palette: {
+      bg: '#f1ece2',
+      ink: '#1f1c16',
+      accent: '#a47a4a',
+      muted: '#7e776a',
+      card: '#ffffff',
+    },
     nav: ['Classes', 'Teachers', 'Workshops', 'New here?'],
-    hero: {kicker: 'Drop-in welcome · first class free', cta: 'See this week\'s schedule'},
+    hero: {
+      kicker: 'Drop-in welcome · first class free',
+      cta: "See this week's schedule",
+    },
     sections: [
-      {title: 'Class types', items: [
-        ['Vinyasa flow', '60-min flowing sequence. Levels 1, 2, and 2/3 mixed.'],
-        ['Yin', '75 min, long-hold floor postures. Props provided. Great for runners.'],
-        ['Prenatal + postnatal', 'Saturday mornings. Certified RPYT instructors.'],
-        ['Restorative', 'Sunday evenings. Bolsters, blankets, candlelight. No vinyasa.'],
-      ]},
-      {title: 'How to start', items: [
-        ['First class free', 'Drop in for any class on us — no card required.'],
-        ['Intro month', '$59 unlimited for 30 days. Renews to standard membership only if you opt in.'],
-      ]},
+      {
+        title: 'Class types',
+        items: [
+          [
+            'Vinyasa flow',
+            '60-min flowing sequence. Levels 1, 2, and 2/3 mixed.',
+          ],
+          [
+            'Yin',
+            '75 min, long-hold floor postures. Props provided. Great for runners.',
+          ],
+          [
+            'Prenatal + postnatal',
+            'Saturday mornings. Certified RPYT instructors.',
+          ],
+          [
+            'Restorative',
+            'Sunday evenings. Bolsters, blankets, candlelight. No vinyasa.',
+          ],
+        ],
+      },
+      {
+        title: 'How to start',
+        items: [
+          [
+            'First class free',
+            'Drop in for any class on us — no card required.',
+          ],
+          [
+            'Intro month',
+            '$59 unlimited for 30 days. Renews to standard membership only if you opt in.',
+          ],
+        ],
+      },
     ],
   },
 ];
@@ -486,7 +1100,7 @@ const sharedCss = (b) => `
 function makeNav(b) {
   return `<nav class="nav">
     <div class="wordmark">${b.name}</div>
-    <div class="nav-links">${b.nav.map(n => `<a>${n}</a>`).join('')}</div>
+    <div class="nav-links">${b.nav.map((n) => `<a>${n}</a>`).join('')}</div>
     <a class="btn">${b.hero.cta}</a>
   </nav>`;
 }
@@ -495,7 +1109,7 @@ function makeNav(b) {
 function warm(b) {
   return `<!doctype html><html><head><meta charset="utf-8"><title>${b.name}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=${b.fonts.h.replace(/ /g,'+')}:wght@400;500;700&family=${b.fonts.b.replace(/ /g,'+')}:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=${b.fonts.h.replaceAll(' ', '+')}:wght@400;500;700&family=${b.fonts.b.replaceAll(' ', '+')}:wght@400;500;600&display=swap" rel="stylesheet">
 <style>${sharedCss(b)}
 .hero { padding: 24px 0 80px; }
 .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
@@ -522,7 +1136,7 @@ ${makeNav(b)}
   <div class="hero-grid">
     <div>
       <div class="kicker">${b.hero.kicker}</div>
-      <h1>${b.tagline.replace(/\.$/,'')}<em>.</em></h1>
+      <h1>${b.tagline.replace(/\.$/, '')}<em>.</em></h1>
       <p class="lead">${b.vertical}.</p>
       <a class="btn">${b.hero.cta}</a>
     </div>
@@ -552,9 +1166,11 @@ ${makeNav(b)}
 
 /* Template 2: EDITORIAL — large serif, asymmetric, dark or light */
 function editorial(b) {
-  const isDark = ['#1c1815', '#16110d', '#0f0e14', '#0d0d0e'].includes(b.palette.bg);
+  const isDark = ['#1c1815', '#16110d', '#0f0e14', '#0d0d0e'].includes(
+    b.palette.bg,
+  );
   return `<!doctype html><html><head><meta charset="utf-8"><title>${b.name}</title>
-<link href="https://fonts.googleapis.com/css2?family=${b.fonts.h.replace(/ /g,'+')}:ital,wght@0,400;0,500;0,700;1,400&family=${b.fonts.b.replace(/ /g,'+')}:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=${b.fonts.h.replaceAll(' ', '+')}:ital,wght@0,400;0,500;0,700;1,400&family=${b.fonts.b.replaceAll(' ', '+')}:wght@400;500;600&display=swap" rel="stylesheet">
 <style>${sharedCss(b)}
 .hero { padding: 24px 0 70px; position: relative; }
 .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: center; }
@@ -614,7 +1230,7 @@ ${makeNav(b)}
 /* Template 3: CLINICAL — sans, clean grid, healthcare/professional */
 function clinical(b) {
   return `<!doctype html><html><head><meta charset="utf-8"><title>${b.name}</title>
-<link href="https://fonts.googleapis.com/css2?family=${b.fonts.h.replace(/ /g,'+')}:wght@400;500;700&family=${b.fonts.b.replace(/ /g,'+')}:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=${b.fonts.h.replaceAll(' ', '+')}:wght@400;500;700&family=${b.fonts.b.replaceAll(' ', '+')}:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>${sharedCss(b)}
 .top-banner { background: var(--accent); color: white; padding: 10px 0; text-align: center; font-size: 13px; letter-spacing: 0.04em; }
 .top-banner strong { font-weight: 600; }
@@ -655,7 +1271,7 @@ ${makeNav(b)}
     </div>
     <div class="hero-img">
       <img src="img/hero.jpg" alt="">
-      <div class="stat-card"><div class="n">${20 + Math.floor(Math.random()*15)} yrs</div><div class="l">in practice</div></div>
+      <div class="stat-card"><div class="n">${20 + Math.floor(Math.random() * 15)} yrs</div><div class="l">in practice</div></div>
     </div>
   </div>
 </section>
@@ -665,7 +1281,7 @@ ${makeNav(b)}
     <p class="muted">Our team handles a wide range of cases — start by telling us what's going on.</p>
   </div>
   <div class="cards">
-    ${b.sections[0].items.map(([t, d], i) => `<div class="card"><div class="icon">${i+1}</div><h3>${t}</h3><p>${d}</p></div>`).join('')}
+    ${b.sections[0].items.map(([t, d], i) => `<div class="card"><div class="icon">${i + 1}</div><h3>${t}</h3><p>${d}</p></div>`).join('')}
   </div>
 </section>
 <section class="wrap">
@@ -685,9 +1301,11 @@ ${makeNav(b)}
 
 /* Template 4: BOLD — high-contrast, big type, dark or saturated */
 function bold(b) {
-  const isDark = ['#181210', '#10141a', '#0d0d0e', '#0e1418'].includes(b.palette.bg);
+  const isDark = ['#181210', '#10141a', '#0d0d0e', '#0e1418'].includes(
+    b.palette.bg,
+  );
   return `<!doctype html><html><head><meta charset="utf-8"><title>${b.name}</title>
-<link href="https://fonts.googleapis.com/css2?family=${b.fonts.h.replace(/ /g,'+')}:wght@400;700&family=${b.fonts.b.replace(/ /g,'+')}:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=${b.fonts.h.replaceAll(' ', '+')}:wght@400;700&family=${b.fonts.b.replaceAll(' ', '+')}:wght@400;500;700&display=swap" rel="stylesheet">
 <style>${sharedCss(b)}
 .hero { padding: 30px 0 0; position: relative; overflow: hidden; }
 .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 0; align-items: stretch; min-height: 70vh; }
@@ -715,7 +1333,7 @@ ${makeNav(b)}
   <div class="wrap hero-grid">
     <div class="hero-text">
       <div class="kicker">${b.hero.kicker}</div>
-      <h1>${b.name.split(/\s+/).slice(0,2).join('<br>')}<br><em>${b.name.split(/\s+/).slice(2).join(' ') || ''}</em></h1>
+      <h1>${b.name.split(/\s+/).slice(0, 2).join('<br>')}<br><em>${b.name.split(/\s+/).slice(2).join(' ') || ''}</em></h1>
       <p class="lead">${b.tagline}</p>
       <a class="btn">${b.hero.cta}</a>
     </div>
@@ -749,7 +1367,7 @@ ${makeNav(b)}
 function architectural(b) {
   const isDark = ['#13171d', '#0e1418'].includes(b.palette.bg);
   return `<!doctype html><html><head><meta charset="utf-8"><title>${b.name}</title>
-<link href="https://fonts.googleapis.com/css2?family=${b.fonts.h.replace(/ /g,'+')}:wght@400;500;700&family=${b.fonts.b.replace(/ /g,'+')}:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=${b.fonts.h.replaceAll(' ', '+')}:wght@400;500;700&family=${b.fonts.b.replaceAll(' ', '+')}:wght@400;500;600&display=swap" rel="stylesheet">
 <style>${sharedCss(b)}
 .hero { padding: 30px 0 70px; }
 .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: end; }
@@ -793,7 +1411,7 @@ ${makeNav(b)}
 </section>
 <div class="wrap"><div class="spec-row">
   <div class="spec"><div class="l">Discipline</div><div class="v">${b.vertical.split('—')[0].trim()}</div></div>
-  <div class="spec"><div class="l">Region</div><div class="v">${(b.vertical.split('—')[1]||'').trim() || 'Local'}</div></div>
+  <div class="spec"><div class="l">Region</div><div class="v">${(b.vertical.split('—')[1] || '').trim() || 'Local'}</div></div>
   <div class="spec"><div class="l">Founded</div><div class="v">${b.hero.kicker.match(/(19|20)\d{2}/)?.[0] || '2014'}</div></div>
   <div class="spec"><div class="l">Hours</div><div class="v">Mon – Sat</div></div>
 </div></div>
@@ -803,7 +1421,7 @@ ${makeNav(b)}
     <div class="index">01 / Services</div>
   </div>
   <div class="grid-4">
-    ${b.sections[0].items.map(([t, d], i) => `<div class="grid-cell"><div class="n">${String(i+1).padStart(2,'0')}</div><h3>${t}</h3><p>${d}</p></div>`).join('')}
+    ${b.sections[0].items.map(([t, d], i) => `<div class="grid-cell"><div class="n">${String(i + 1).padStart(2, '0')}</div><h3>${t}</h3><p>${d}</p></div>`).join('')}
   </div>
 </section>
 <div class="image-band"><img src="img/a.jpg"><img src="img/b.jpg"></div>
@@ -813,7 +1431,7 @@ ${makeNav(b)}
     <div class="index">02 / Practice</div>
   </div>
   <div class="grid-4">
-    ${b.sections[1].items.map(([t, d], i) => `<div class="grid-cell"><div class="n">${String(i+1).padStart(2,'0')}</div><h3>${t}</h3><p>${d}</p></div>`).join('')}
+    ${b.sections[1].items.map(([t, d], i) => `<div class="grid-cell"><div class="n">${String(i + 1).padStart(2, '0')}</div><h3>${t}</h3><p>${d}</p></div>`).join('')}
   </div>
 </section>
 <div class="cta-band">
@@ -835,12 +1453,25 @@ for (const b of BUSINESSES) {
   const html = tpl(b);
   const dir = path.join(bizRoot, b.slug);
   fs.writeFileSync(path.join(dir, 'index.html'), html);
-  console.log(`✓ ${b.slug} (${b.layout}) — ${(html.length / 1024).toFixed(1)} KB`);
+  console.log(
+    `✓ ${b.slug} (${b.layout}) — ${(html.length / 1024).toFixed(1)} KB`,
+  );
 }
+
 console.log(`\nGenerated ${BUSINESSES.length} landing pages.`);
 
 // Export for capture pipeline
 fs.writeFileSync(
   path.join(bizRoot, '_businesses.json'),
-  JSON.stringify(BUSINESSES.map(({slug, name, vertical, layout, palette}) => ({slug, name, vertical, layout, palette})), null, 2)
+  JSON.stringify(
+    BUSINESSES.map(({slug, name, vertical, layout, palette}) => ({
+      slug,
+      name,
+      vertical,
+      layout,
+      palette,
+    })),
+    null,
+    2,
+  ),
 );
