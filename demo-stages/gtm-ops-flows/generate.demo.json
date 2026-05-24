@@ -1,0 +1,31 @@
+{
+  "name": "gtm-ops-generate",
+  "startUrl": "console/?route=generate",
+  "viewport": {"width": 1600, "height": 900},
+  "record": {"enabled": true, "size": {"width": 1600, "height": 900}},
+  "timing": {"speed": 1, "moveMs": 240, "clickPauseMs": 300, "scrollPauseMs": 260, "zoomMs": 420},
+  "polish": {
+    "cursor": {"style": "modern", "accentColor": "#ff5f00"},
+    "actionRail": {"enabled": false},
+    "captions": {"enabled": true, "position": "bottom"},
+    "zoom": {"defaultScale": 1.05, "durationMs": 420, "resetMs": 300}
+  },
+  "metadata": {"route": "generate", "pov": "prospect"},
+  "steps": [
+    {"action": "waitForText", "text": "Generate Proposal", "timeoutMs": 20000, "label": "Generate route ready"},
+    {"action": "caption", "text": "Generate binds buyer proof before a proposal can move to human review.", "ms": 2600, "label": "Intro"},
+    {"action": "pause", "ms": 900, "label": "Settle"},
+    {"action": "focus", "selector": "text=Use sample buyer proof", "label": "Move to proof binding"},
+    {"action": "click", "selector": "text=Use sample buyer proof", "label": "Bind sample buyer proof"},
+    {"action": "caption", "text": "One click binds real buyer evidence — no proposal without proof.", "ms": 2400, "label": "Proof bound"},
+    {"action": "pause", "ms": 1600, "label": "Let the draft engine unlock"},
+    {"action": "resetZoom", "label": "Back to full frame"},
+    {"action": "click", "selector": "text=Generate review draft", "label": "Generate the review draft"},
+    {"action": "caption", "text": "The draft renders with a live trace of every step that built it.", "ms": 2600, "label": "Trace beat"},
+    {"action": "pause", "ms": 3000, "label": "Hold on the trace as it completes"},
+    {"action": "scroll", "y": 220, "label": "Scroll the generate trace"},
+    {"action": "caption", "text": "Source evidence, scoring, and the approval gate stay in one loop.", "ms": 2600, "label": "Close beat"},
+    {"action": "pause", "ms": 1600, "label": "Hold final frame"},
+    {"action": "screenshot", "name": "generate", "label": "Poster frame"}
+  ]
+}
