@@ -172,6 +172,10 @@ export default function RoiCalculator({
 
   useEffect(() => {
     if (globalThis.fetch === undefined) return;
+    // Don't emit telemetry while autoplay is driving the values — those are
+    // synthetic scenario changes, not user calculations. Fire only once the
+    // visitor takes over (paused) or when rotation is off entirely.
+    if (autoRotate && !paused) return;
     if (tickerRef.current) clearTimeout(tickerRef.current);
     tickerRef.current = setTimeout(() => {
       const payload = {
@@ -199,6 +203,8 @@ export default function RoiCalculator({
     };
   }, [
     tickerEndpoint,
+    autoRotate,
+    paused,
     result.company,
     result.calls,
     result.ticket,
@@ -244,7 +250,10 @@ export default function RoiCalculator({
         <p
           className="opacity-70 text-base leading-relaxed min-h-[3rem] transition-opacity"
           data-testid="roi-scenario-blurb"
-          aria-live="polite"
+          // Only announce once the visitor drives the calculator. While
+          // autoplay rotates marketing copy every 5s, keep the live region
+          // silent so assistive tech isn't narrated at continuously.
+          aria-live={autoRotate && !paused ? 'off' : 'polite'}
         >
           {activeBlurb ?? (
             <>

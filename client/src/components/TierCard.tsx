@@ -28,7 +28,10 @@ const KICKER_BY_KIND: Record<string, string | undefined> = {
 };
 
 function defaultCrossSell(targetId: string) {
-  globalThis.location.hash = `offerings-${targetId}`;
+  // Absolute home URL, not a bare hash mutation: the #offerings-<id> anchors
+  // only exist on the home page, so setting the hash while on a product page
+  // (websites / ai-voice-agents) would point at nothing.
+  globalThis.location.href = `/#offerings-${targetId}`;
 }
 
 function tierButtonClass(item: OfferingItem, isDark: boolean) {
