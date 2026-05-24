@@ -223,14 +223,20 @@ describe('RoiCalculator scenario rotation (F005)', () => {
     // Scenario 2 in ROI_SCENARIOS is the dental practice.
     expect(headingText()).toContain('Tide Family Dental');
 
-    // Each rotating business carries its own bespoke wordmark font on the
-    // company span (round-3 F003, scoped to the ROI heading). The bistro
-    // renders Fraunces; the dental practice renders Archivo — proving the
-    // wordmark swaps per scenario rather than sharing one font.
-    const companySpan = document
-      .querySelector('#roi-heading')
-      ?.querySelector<HTMLElement>('span[style*="font-family"]');
-    expect(companySpan?.style.fontFamily).toContain('Archivo');
+    // Each rotating business carries its own bespoke wordmark lockup —
+    // its own font AND its own brand color (no shared site gradient).
+    // The dental practice is Archivo in the tide-teal #0d6e7a; the bistro
+    // was Fraunces in the wine #7a1f2b. Asserting both proves the wordmark
+    // is a real logo treatment, not just a font swap.
+    const wordmark = document.querySelector<HTMLElement>(
+      '[data-testid="roi-wordmark"]',
+    );
+    expect(wordmark, 'roi-wordmark span').not.toBeNull();
+    expect(wordmark!.style.fontFamily).toContain('Archivo');
+    expect(wordmark!.style.color.toLowerCase()).toBe('#0d6e7a');
+    // Dental tier carries no ornament; salon/bistro/fitness/plumbing do.
+    // The ornament span only renders once typing finishes (which it has
+    // by this point in the test).
   });
 
   it('stops rotating for good once the visitor focuses a field', () => {
