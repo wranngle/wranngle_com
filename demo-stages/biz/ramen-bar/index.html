@@ -1,0 +1,93 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Kōri Ramen</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #16110d;
+    --ink: #f1e9db;
+    --accent: #dc4c3e;
+    --muted: #8b7e6e;
+    --card: #1f1814;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display { font-family: 'Noto Serif JP', Georgia, serif; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 32px; max-width: 1280px; margin: 0 auto;
+  }
+  .wordmark { font-family: 'Noto Serif JP'; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .nav-links { display: flex; gap: 26px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; }
+  .btn {
+    display: inline-block; padding: 14px 22px; border-radius: 999px;
+    background: var(--accent); color: white; font-size: 14px;
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+  }
+  .kicker { font-size: 12px; text-transform: uppercase; letter-spacing: 0.16em; opacity: 0.6; margin-bottom: 14px; }
+  .muted { color: var(--muted); }
+  .pill { display: inline-block; padding: 4px 12px; border-radius: 999px; background: var(--accent); color: white; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+.hero { padding: 24px 0 70px; position: relative; }
+.hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: center; }
+.hero-headline { font-size: clamp(40px, 5.5vw, 78px); line-height: 0.98; letter-spacing: -0.025em; margin: 0 0 28px; font-weight: 400; }
+.hero-headline em { font-style: italic; color: var(--accent); }
+.hero .lead { font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.7); max-width: 480px; margin: 0 0 30px; }
+.hero-img { aspect-ratio: 4/5; overflow: hidden; transform: rotate(-1.5deg); box-shadow: 0 24px 60px rgba(0,0,0,0.3); }
+.section { padding: 80px 0; }
+.section h2 { font-size: clamp(36px, 4.5vw, 60px); margin: 0 0 56px; font-weight: 400; max-width: 900px; line-height: 1.04; letter-spacing: -0.02em; }
+.list { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+.list-item { border-top: 1px solid rgba(255,255,255,0.16); padding-top: 24px; }
+.list-item h3 { font-size: 28px; font-weight: 500; margin: 0 0 10px; letter-spacing: -0.01em; }
+.list-item h3 em { color: var(--accent); font-style: italic; }
+.list-item p { margin: 0; color: rgba(255,255,255,0.65); font-size: 15px; line-height: 1.6; }
+.image-band { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 16px; height: 460px; }
+.image-band img { width: 100%; height: 100%; object-fit: cover; }
+.story { display: grid; grid-template-columns: 0.5fr 1fr; gap: 96px; align-items: start; }
+.story .label { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.5; }
+.story h2 { margin-top: 18px; }
+.story p { font-size: 18px; line-height: 1.7; max-width: 620px; color: rgba(255,255,255,0.78); }
+.footer { padding: 60px 0; border-top: 1px solid rgba(255,255,255,0.12); text-align: center; font-size: 13px; opacity: 0.5; }
+</style></head><body>
+<nav class="nav">
+    <div class="wordmark">Kōri Ramen</div>
+    <div class="nav-links"><a>Bowls</a><a>Sides</a><a>About</a><a>Wait list</a></div>
+    <a class="btn">Get on the wait list</a>
+  </nav>
+<section class="hero wrap">
+  <div class="hero-grid">
+    <div>
+      <div class="kicker">Counter seating only · no app, no DMs</div>
+      <h1 class="hero-headline">Tonkotsu, shio, miso<em>.</em> Tare made in-house. Twelve seats<em>.</em></h1>
+      <p class="lead">Ramen bar — Seattle, WA.</p>
+      <a class="btn">Get on the wait list</a>
+    </div>
+    <div class="hero-img"><img src="img/hero.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
+  </div>
+</section>
+<section class="section wrap">
+  <h2>Bowls<em>.</em></h2>
+  <div class="list">
+    <div class="list-item"><h3>Tonkotsu shio<em>.</em></h3><p>18-hour pork bone broth, sea-salt tare, ajitama, chashu, scallion. $17</p></div><div class="list-item"><h3>Miso<em>.</em></h3><p>Red + white miso blend, ground pork, corn, butter, bean sprouts, scallion. $16</p></div><div class="list-item"><h3>Spicy ginger<em>.</em></h3><p>Chicken broth, ginger tare, chili oil, ground pork, soft-boiled egg. $18</p></div><div class="list-item"><h3>Tsukemen (dipping)<em>.</em></h3><p>Dense double-soup, chilled noodles, dipping cup. $19</p></div>
+  </div>
+</section>
+<div class="image-band"><img src="img/a.jpg"><img src="img/b.jpg"></div>
+<section class="section wrap">
+  <div class="story">
+    <div>
+      <div class="label">House rules</div>
+    </div>
+    <div>
+      <h2 style="margin-top:0">A room with a point of view<em>.</em></h2>
+      <p><strong>No reservations.</strong> Wait list opens at 4:30pm at the door. We text when your seat's ready.</p><p><strong>Twelve seats.</strong> No groups over four. Cash, Visa, MC.</p>
+    </div>
+  </div>
+</section>
+<footer class="footer">© Kōri Ramen · Ramen bar — Seattle, WA</footer>
+</body></html>
