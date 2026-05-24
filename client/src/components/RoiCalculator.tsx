@@ -348,7 +348,7 @@ export default function RoiCalculator({
               {result.company || 'Your business'} could capture
             </div>
             <div
-              className="brand-font text-5xl md:text-6xl font-bold leading-none"
+              className="brand-font text-5xl md:text-6xl font-bold leading-none text-[#5d8c61]"
               data-testid="roi-output-savings"
             >
               {formatCurrency(result.savingsMonthly)}
@@ -364,7 +364,7 @@ export default function RoiCalculator({
                 Missed calls / mo
               </dt>
               <dd
-                className="brand-font text-2xl font-bold mt-1"
+                className="brand-font text-2xl font-bold mt-1 text-[#d4524e]"
                 data-testid="roi-output-missed"
               >
                 {result.missedCallsMonthly.toFixed(0)}
@@ -375,7 +375,7 @@ export default function RoiCalculator({
                 Jobs newly booked / mo
               </dt>
               <dd
-                className="brand-font text-2xl font-bold mt-1"
+                className="brand-font text-2xl font-bold mt-1 text-[#5d8c61]"
                 data-testid="roi-output-jobs"
               >
                 {result.additionalJobsBooked.toFixed(1)}
@@ -386,7 +386,7 @@ export default function RoiCalculator({
                 Payback period
               </dt>
               <dd
-                className="brand-font text-2xl font-bold mt-1"
+                className="brand-font text-2xl font-bold mt-1 text-[#5d8c61]"
                 data-testid="roi-output-payback"
               >
                 {result.paybackMonths > 0
@@ -399,7 +399,7 @@ export default function RoiCalculator({
                 Annualized
               </dt>
               <dd
-                className="brand-font text-2xl font-bold mt-1"
+                className="brand-font text-2xl font-bold mt-1 text-[#5d8c61]"
                 data-testid="roi-output-annualized"
               >
                 {formatCurrency(result.savingsMonthly * 12)}
@@ -409,8 +409,7 @@ export default function RoiCalculator({
 
           <p className="text-[11px] opacity-50 mono-font leading-relaxed">
             Estimates only. Real recovery depends on your local market, current
-            voicemail flow, and how fast dispatch acts on the handoffs. Source
-            numbers in <code>client/src/lib/roi.ts</code>.
+            voicemail flow, and how fast dispatch acts on the handoffs.
           </p>
         </div>
       </div>
