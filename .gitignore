@@ -118,6 +118,9 @@ desktop.ini
 .symphony/
 .assessment.cache
 .work/attempts/
+.work/hero/
+.work/gtm-ops/
+.work/*.log
 openspec/
 .claude/commands/openspec/
 .gemini/commands/openspec/

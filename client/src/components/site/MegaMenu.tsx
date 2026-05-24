@@ -193,20 +193,6 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
               >
                 About Wranngle
               </Link>
-              <button
-                type="button"
-                onClick={() => {
-                  setOpen(false);
-                  onTalkToSarah();
-                }}
-                className="flex w-full items-center gap-2 text-left px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-medium opacity-80 hover:opacity-100"
-              >
-                <Sparkles
-                  size={14}
-                  className="text-[var(--s500)] sarah-glimmer"
-                />
-                Talk to Sarah
-              </button>
               <Link
                 href="/products/ai-voice-agents"
                 className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
@@ -225,6 +211,12 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
               >
                 gtm_ops
               </Link>
+              <a
+                href="/#faq"
+                className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
+              >
+                FAQ
+              </a>
             </div>
 
             <div className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-3">
@@ -250,6 +242,25 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
             <div className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-3">
               Contact
             </div>
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                onTalkToSarah();
+              }}
+              className="block w-full text-left px-3 py-2 mb-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
+            >
+              <span className="flex items-center gap-2">
+                <Sparkles
+                  size={14}
+                  className="text-[var(--s500)] sarah-glimmer"
+                />
+                Talk to Sarah
+              </span>
+              <span className="block text-[10px] opacity-60 font-normal mt-0.5">
+                Scope your project with a live intake call
+              </span>
+            </button>
             <a
               href="mailto:hello@wranngle.com"
               className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold mb-5"

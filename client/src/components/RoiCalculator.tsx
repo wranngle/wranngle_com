@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Calculator} from 'lucide-react';
 import {computeRoi, formatCurrency, type RoiResult} from '@/lib/roi.ts';
 
@@ -22,21 +22,144 @@ type RoiCalculatorProps = {
   initialCompany?: string;
   initialCalls?: number;
   initialTicket?: number;
+  /** Auto-rotate through ROI_SCENARIOS until the visitor takes over.
+   *  Tests pass false to pin the seeded inputs for deterministic assertions. */
+  autoRotate?: boolean;
 };
 
 const DEFAULT_TICKER_ENDPOINT = '/api/ticker';
 const TELEMETRY_DEBOUNCE_MS = 600;
+const SCENARIO_DWELL_MS = 5000;
+const TYPE_TICK_MS = 55;
+
+/**
+ * Mock business scenarios the calculator rotates through until the user
+ * takes over. Each drives the company name (typewriter), the calls/ticket
+ * inputs, the computed savings, and the blurb below — so a drive-by reader
+ * sees several concrete examples without touching anything. Average-ticket
+ * values are deliberately varied across verticals.
+ */
+const ROI_SCENARIOS = [
+  {
+    company: 'River North Bistro',
+    calls: 90,
+    ticket: 120,
+    blurb:
+      'Reservations, private events, and patio overflow — every missed call is a table that books somewhere else.',
+  },
+  {
+    company: 'Tide Family Dental',
+    calls: 140,
+    ticket: 320,
+    blurb:
+      'New-patient calls and same-day emergencies convert at a premium when someone actually answers after hours.',
+  },
+  {
+    company: 'Atlas Hair Studio',
+    calls: 110,
+    ticket: 95,
+    blurb:
+      'Color and cut bookings reschedule constantly; a 24/7 agent keeps the chair full instead of the voicemail.',
+  },
+  {
+    company: 'Northside Fitness Co.',
+    calls: 70,
+    ticket: 180,
+    blurb:
+      'On-ramp and drop-in inquiries spike at odd hours — capture the trial before the lead cools off.',
+  },
+  {
+    company: 'Cedar & Co Plumbing',
+    calls: 120,
+    ticket: 480,
+    blurb:
+      'A burst pipe at 2 AM is an emergency job; voicemail just sends it to the next contractor on the list.',
+  },
+] as const;
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    if (globalThis.window === undefined) return;
+    const mq = globalThis.matchMedia('(prefers-reduced-motion: reduce)');
+    setReduced(mq.matches);
+    const onChange = (event: MediaQueryListEvent) => {
+      setReduced(event.matches);
+    };
+
+    mq.addEventListener('change', onChange);
+    return () => {
+      mq.removeEventListener('change', onChange);
+    };
+  }, []);
+  return reduced;
+}
 
 export default function RoiCalculator({
   isDark,
   tickerEndpoint = DEFAULT_TICKER_ENDPOINT,
-  initialCompany = 'River North Bistro',
-  initialCalls = 80,
-  initialTicket = 350,
+  initialCompany = ROI_SCENARIOS[0].company,
+  initialCalls = ROI_SCENARIOS[0].calls,
+  initialTicket = ROI_SCENARIOS[0].ticket,
+  autoRotate = true,
 }: RoiCalculatorProps) {
   const [company, setCompany] = useState(initialCompany);
   const [calls, setCalls] = useState(initialCalls);
   const [ticket, setTicket] = useState(initialTicket);
+  // Once the visitor focuses or edits a field, the rotation stops for good
+  // and the values are theirs to drive.
+  const [paused, setPaused] = useState(false);
+  const [scenarioIndex, setScenarioIndex] = useState(0);
+  const [typedLen, setTypedLen] = useState(initialCompany.length);
+  const reducedMotion = usePrefersReducedMotion();
+
+  const takeOver = useCallback(() => {
+    setPaused(true);
+  }, []);
+
+  // Scenario rotation: advance the active scenario on a dwell timer until
+  // the visitor takes over. Reduced-motion users get a static first card.
+  useEffect(() => {
+    if (paused || reducedMotion || !autoRotate) return;
+    const id = globalThis.setInterval(() => {
+      setScenarioIndex((index) => (index + 1) % ROI_SCENARIOS.length);
+    }, SCENARIO_DWELL_MS);
+    return () => {
+      globalThis.clearInterval(id);
+    };
+  }, [paused, reducedMotion, autoRotate]);
+
+  // Apply the active scenario's calls/ticket immediately and type the
+  // company name out character by character for the heading effect.
+  useEffect(() => {
+    if (paused || !autoRotate) return;
+    const scenario = ROI_SCENARIOS[scenarioIndex];
+    setCalls(scenario.calls);
+    setTicket(scenario.ticket);
+    if (reducedMotion) {
+      setCompany(scenario.company);
+      setTypedLen(scenario.company.length);
+      return;
+    }
+
+    setTypedLen(0);
+    const id = globalThis.setInterval(() => {
+      setTypedLen((length) => {
+        const next = length + 1;
+        setCompany(scenario.company.slice(0, next));
+        if (next >= scenario.company.length) globalThis.clearInterval(id);
+        return next;
+      });
+    }, TYPE_TICK_MS);
+    return () => {
+      globalThis.clearInterval(id);
+    };
+  }, [scenarioIndex, paused, reducedMotion]);
+
+  const activeBlurb =
+    paused || !autoRotate ? undefined : ROI_SCENARIOS[scenarioIndex].blurb;
+  const isTyping =
+    autoRotate && !paused && !reducedMotion && typedLen < company.length;
 
   const result: RoiResult = useMemo(
     () => computeRoi({company, calls, ticket}),
@@ -49,6 +172,10 @@ export default function RoiCalculator({
 
   useEffect(() => {
     if (globalThis.fetch === undefined) return;
+    // Don't emit telemetry while autoplay is driving the values — those are
+    // synthetic scenario changes, not user calculations. Fire only once the
+    // visitor takes over (paused) or when rotation is off entirely.
+    if (autoRotate && !paused) return;
     if (tickerRef.current) clearTimeout(tickerRef.current);
     tickerRef.current = setTimeout(() => {
       const payload = {
@@ -76,6 +203,8 @@ export default function RoiCalculator({
     };
   }, [
     tickerEndpoint,
+    autoRotate,
+    paused,
     result.company,
     result.calls,
     result.ticket,
@@ -110,13 +239,30 @@ export default function RoiCalculator({
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--s500)] to-[var(--v500)]">
             {result.company || 'your business'}
           </span>
+          {isTyping && (
+            <span
+              aria-hidden
+              className="inline-block w-[3px] -mb-1 h-[0.9em] bg-[var(--s500)] animate-pulse align-baseline"
+            />
+          )}
           ?
         </h2>
-        <p className="opacity-60 text-lg leading-relaxed">
-          Plug in your call volume and the average ticket (reservation, booking,
-          intake, or service value). We assume 35% of inbound calls are missed
-          and that an AI agent picks up 95% of those. About 40% of recovered
-          after-hours calls convert. Conservative numbers on purpose.
+        <p
+          className="opacity-70 text-base leading-relaxed min-h-[3rem] transition-opacity"
+          data-testid="roi-scenario-blurb"
+          // Only announce once the visitor drives the calculator. While
+          // autoplay rotates marketing copy every 5s, keep the live region
+          // silent so assistive tech isn't narrated at continuously.
+          aria-live={autoRotate && !paused ? 'off' : 'polite'}
+        >
+          {activeBlurb ?? (
+            <>
+              Plug in your own call volume and average ticket. We assume 35% of
+              inbound calls are missed, an AI agent answers 95% of those, and
+              40% of recovered after-hours calls convert. Conservative on
+              purpose.
+            </>
+          )}
         </p>
       </div>
 
@@ -138,7 +284,9 @@ export default function RoiCalculator({
               type="text"
               value={company}
               data-testid="roi-input-company"
+              onFocus={takeOver}
               onChange={(event) => {
+                takeOver();
                 setCompany(event.target.value);
               }}
               className={`px-4 py-3 rounded-lg border ${inputBg} focus:outline-none focus:ring-2 focus:ring-[var(--s500)]`}
@@ -157,7 +305,9 @@ export default function RoiCalculator({
               max={10_000}
               value={calls}
               data-testid="roi-input-calls"
+              onFocus={takeOver}
               onChange={(event) => {
+                takeOver();
                 const next = Number.parseInt(event.target.value, 10);
                 setCalls(Number.isFinite(next) ? next : 0);
               }}
@@ -175,7 +325,9 @@ export default function RoiCalculator({
               max={100_000}
               value={ticket}
               data-testid="roi-input-ticket"
+              onFocus={takeOver}
               onChange={(event) => {
+                takeOver();
                 const next = Number.parseInt(event.target.value, 10);
                 setTicket(Number.isFinite(next) ? next : 0);
               }}

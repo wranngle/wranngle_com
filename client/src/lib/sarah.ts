@@ -7,9 +7,9 @@ export const SARAH_AGENT_ID = 'agent_7801kqqqhjmcfdsa1m2a8t9w6t5c';
  * the agent's prompt template in the ElevenLabs dashboard.
  */
 export type SarahMode =
-  | 'after-hours-demo' // homepage hero demo + AI agent intake flows
-  | 'sales-intake' // gtm_ops trial + workspace setup flows
-  | 'general'; // default, no specific surface
+  | 'lead-intake' // default on wranngle.com — open-ended project scoping call
+  | 'after-hours-demo' // role-play the caller's own after-hours agent
+  | 'general'; // ask which the caller wants
 
 let sarahTextPatchInstalled = false;
 let sarahTextObserver: MutationObserver | undefined;

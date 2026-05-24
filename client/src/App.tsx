@@ -3,26 +3,17 @@ import {motion} from 'framer-motion';
 import {
   ArrowRight,
   CalendarCheck,
-  Check,
-  FileText,
   MessageSquareText,
   PhoneCall,
   Zap,
 } from 'lucide-react';
 import {Link} from 'wouter';
-import {OFFERING_CATEGORIES, type OfferingItem} from '@/data/offerings.ts';
+import {OFFERING_CATEGORIES} from '@/data/offerings.ts';
 import IntakeForm from '@/components/IntakeForm.tsx';
-import AgentFactsPopout from '@/components/AgentFactsPopout.tsx';
 import RoiCalculator from '@/components/RoiCalculator.tsx';
-import AgentDemoButton from '@/components/AgentDemoButton.tsx';
 import StackedWidgetCarousel from '@/components/StackedWidgetCarousel.tsx';
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog.tsx';
-import {Button} from '@/components/ui/button.tsx';
+import TierCard from '@/components/TierCard.tsx';
+import {Dialog, DialogContent, DialogTrigger} from '@/components/ui/dialog.tsx';
 import type {AgentState} from '@/components/ui/orb.tsx';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
 import SiteFooter from '@/components/site/SiteFooter.tsx';
@@ -61,6 +52,26 @@ const VOICE_OPS_SIGNALS = [
 
 const OFFERINGS_CATEGORY_HASH_PREFIX = 'offerings-cat-';
 const OFFERINGS_ITEM_HASH_PREFIX = 'offerings-';
+
+// Every offering category is a first-class citizen: each gets the same
+// "product details" banner linking to its dedicated page (round-2 F014).
+const PRODUCT_DETAIL_LINKS: Record<string, {href: string; blurb: string}> = {
+  'ai-agents': {
+    href: '/products/ai-voice-agents',
+    blurb:
+      'Review the voice agent setup, channels, latency targets, and tier comparison before picking a plan.',
+  },
+  websites: {
+    href: '/products/websites',
+    blurb:
+      'Review the website build process, launch targets, and package comparison before picking a tier.',
+  },
+  gtm_ops: {
+    href: '/products/gtm-ops',
+    blurb:
+      'Review the proposal workflow, demo, and implementation notes before picking a tier.',
+  },
+};
 const SARAH_ORB_STATES: AgentState[] = ['thinking', 'listening', 'talking'];
 type HomeAbVariant = 'control' | 'value-first';
 
@@ -85,12 +96,6 @@ function resolveHomeAbVariant() {
     AB_VARIANTS[globalThis.Math.floor(Math.random() * AB_VARIANTS.length)];
   globalThis.localStorage.setItem(AB_STORAGE_KEY, pick);
   return pick;
-}
-
-function formatPrice(value: number) {
-  return Number.isInteger(value)
-    ? value.toString()
-    : value.toFixed(2).replace(/\\.0?0$/, '');
 }
 
 function findOfferingCategoryId(offeringId: string) {
@@ -169,9 +174,6 @@ const WranngleLanding = () => {
                 className="grid lg:grid-cols-[0.86fr_1.14fr] gap-10 xl:gap-14 items-start"
               >
                 <div className="max-w-2xl">
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-4 mono-font">
-                    AI CALL ANSWERING
-                  </div>
                   <h1 className="brand-font text-5xl sm:text-6xl md:text-7xl font-bold leading-[0.95] mb-5">
                     AI call coverage for busy teams.
                   </h1>
@@ -207,8 +209,6 @@ const WranngleLanding = () => {
                       Talk to Sarah
                     </ButtonGhost>
                   </div>
-
-                  <AgentDemoButton isDark={isDark} />
 
                   <div className="mt-8 grid grid-cols-3 gap-3 max-w-xl">
                     {VOICE_HERO_METRICS.map((metric) => (
@@ -367,7 +367,7 @@ const WranngleLanding = () => {
           speaking-text="Sarah is speaking"
           placement="bottom-right"
           dynamic-variables={buildSarahDynamicVariables(
-            'after-hours-demo',
+            'lead-intake',
             'wranngle-com/home',
           )}
         ></elevenlabs-convai>
@@ -499,10 +499,10 @@ function OfferingsSection({
               {category.description}
             </p>
 
-            {category.id === 'websites' && (
+            {PRODUCT_DETAIL_LINKS[category.id] && (
               <div className="max-w-3xl mx-auto mb-8">
                 <Link
-                  href="/products/websites"
+                  href={PRODUCT_DETAIL_LINKS[category.id].href}
                   className={`group flex items-center justify-between gap-4 px-5 py-4 rounded-[12px_4px_12px_4px] border-y border-r border-l-4 border-l-[var(--v500)] transition-colors hover:border-l-[var(--s500)] ${
                     isDark
                       ? 'border-white/10 bg-[#18181b] hover:bg-[#1f1f24]'
@@ -514,35 +514,7 @@ function OfferingsSection({
                       PRODUCT DETAILS
                     </div>
                     <p className="text-sm font-bold leading-tight">
-                      Review the website build process, launch targets, and
-                      package comparison before picking a tier.
-                    </p>
-                  </div>
-                  <ArrowRight
-                    size={18}
-                    className="text-[var(--s500)] shrink-0 group-hover:translate-x-1 transition-transform"
-                  />
-                </Link>
-              </div>
-            )}
-
-            {category.id === 'gtm_ops' && (
-              <div className="max-w-3xl mx-auto mb-8">
-                <Link
-                  href="/products/gtm-ops"
-                  className={`group flex items-center justify-between gap-4 px-5 py-4 rounded-[12px_4px_12px_4px] border-y border-r border-l-4 border-l-[var(--v500)] transition-colors hover:border-l-[var(--s500)] ${
-                    isDark
-                      ? 'border-white/10 bg-[#18181b] hover:bg-[#1f1f24]'
-                      : 'border-black/5 bg-white hover:bg-[#faf6ed]'
-                  }`}
-                >
-                  <div className="min-w-0">
-                    <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--v500)] mb-1">
-                      PRODUCT DETAILS
-                    </div>
-                    <p className="text-sm font-bold leading-tight">
-                      Review the proposal workflow, demo, and implementation
-                      notes before picking a tier.
+                      {PRODUCT_DETAIL_LINKS[category.id].blurb}
                     </p>
                   </div>
                   <ArrowRight
@@ -561,11 +533,16 @@ function OfferingsSection({
               }`}
             >
               {category.items.map((item) => (
-                <OfferingCard
+                <TierCard
                   key={item.id}
                   item={item}
                   isDark={isDark}
-                  abVariant={abVariant}
+                  anchored
+                  ctaLabel={
+                    abVariant === 'value-first'
+                      ? item.cta.replace(/^Get /, 'Start ')
+                      : item.cta
+                  }
                 />
               ))}
             </div>
@@ -573,257 +550,6 @@ function OfferingsSection({
         ),
       )}
     </section>
-  );
-}
-
-type OfferingCardPricing = {
-  priceLabel: string;
-  priceSuffix: string;
-  ctaLabel: string;
-  addonCopy: string;
-  annualSavings: boolean;
-};
-
-function getOfferingCardPricing(
-  item: OfferingItem,
-  abVariant: HomeAbVariant,
-): OfferingCardPricing {
-  // SaaS tiers with an annual discount always surface the slashed-monthly
-  // price next to the annual rate — that is the standard SaaS pricing
-  // pattern customers expect. AI agents stay on the monthly headline price
-  // unless the value-first AB variant is active.
-  const isSaas = item.facts?.kind === 'saas';
-  const hasPositiveDiscount = (item.facts?.discountPercent ?? 0) > 0;
-  const annualSavings =
-    hasPositiveDiscount && (isSaas || abVariant === 'value-first');
-  const rawPrice = item.facts?.annualMonthly ?? Number(item.price);
-  const monthlyPrice = item.facts?.headlinePrice ?? Number(item.price);
-  const hasDiscount = annualSavings;
-  const isFree = item.price === '0';
-
-  return {
-    priceLabel: isFree
-      ? 'Free'
-      : `$${formatPrice(hasDiscount ? rawPrice : monthlyPrice)}`,
-    priceSuffix: getOfferingPriceSuffix(item, hasDiscount),
-    ctaLabel: hasDiscount ? item.cta.replace(/^Get /, 'Start ') : item.cta,
-    addonCopy: getOfferingAddonCopy(item, hasDiscount, rawPrice),
-    annualSavings,
-  };
-}
-
-function getOfferingPriceSuffix(item: OfferingItem, hasDiscount: boolean) {
-  if (item.price === '0') return '';
-  if (hasDiscount) return '/mo annual';
-  return item.priceCadence === 'monthly' ? '/mo' : ' one-time';
-}
-
-function getOfferingAddonCopy(
-  item: OfferingItem,
-  hasDiscount: boolean,
-  rawPrice: number,
-) {
-  const isSaas = item.facts?.kind === 'saas';
-  if (!item.monthlyAddon) return '';
-  if (hasDiscount && isSaas) {
-    return `or $${formatPrice(rawPrice)} /mo annual equivalent`;
-  }
-
-  return item.monthlyAddon.label.startsWith('/')
-    ? `+ $${item.monthlyAddon.price}${item.monthlyAddon.label}`
-    : `+ $${item.monthlyAddon.price}/mo ${item.monthlyAddon.label}`;
-}
-
-function OfferingBadge({badge}: {badge?: string}) {
-  if (!badge) return null;
-
-  return (
-    <div className="absolute top-0 left-8 bg-[var(--v500)] text-[9px] font-bold px-4 py-1.5 rounded-b-lg uppercase tracking-wider shadow-md z-30 border-x border-b border-white/10">
-      {badge}
-    </div>
-  );
-}
-
-function OfferingPriceBlock({
-  item,
-  pricing,
-}: {
-  item: OfferingItem;
-  pricing: OfferingCardPricing;
-}) {
-  const isSaas = item.facts?.kind === 'saas';
-  const showStrikethrough =
-    pricing.annualSavings && item.facts && item.facts.headlinePrice > 0;
-  const fullMonthly =
-    showStrikethrough && item.facts
-      ? `$${formatPrice(item.facts.headlinePrice)}`
-      : undefined;
-
-  return (
-    <div className="mb-6">
-      <div className="flex items-baseline gap-2 flex-wrap">
-        {fullMonthly ? (
-          <span
-            className="text-2xl font-bold opacity-40 line-through decoration-[var(--v500)]"
-            aria-label={`Regular monthly price ${fullMonthly}`}
-          >
-            {fullMonthly}
-          </span>
-        ) : null}
-        <span className="text-4xl font-bold">
-          {pricing.priceLabel}
-          {item.price !== '0' && (
-            <span className="text-sm font-normal opacity-50">
-              {pricing.priceSuffix}
-            </span>
-          )}
-        </span>
-      </div>
-      {pricing.addonCopy && (
-        <div className="text-sm opacity-60 mt-1">{pricing.addonCopy}</div>
-      )}
-      {isSaas && pricing.annualSavings && item.facts ? (
-        <div className="text-xs font-bold uppercase tracking-wide text-[var(--v500)] mt-1">
-          Save {item.facts.discountPercent}% with annual billing
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
-function OfferingFeatureList({features}: {features: string[]}) {
-  return (
-    <ul className="space-y-3 mb-8 flex-1">
-      {features.map((feature) => (
-        <li
-          key={feature}
-          className="flex items-center gap-3 text-sm opacity-80"
-        >
-          <Check
-            size={16}
-            className="text-[var(--s500)] shrink-0"
-            aria-hidden
-          />{' '}
-          {feature}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function getOfferingButtonClass(item: OfferingItem, isDark: boolean) {
-  if (item.badge) {
-    return 'bg-[var(--v500)] hover:bg-[var(--v500)]/90 hover:scale-[1.02] transition-all';
-  }
-
-  return isDark
-    ? 'bg-white/10 text-white hover:bg-white/20'
-    : 'bg-black/10 text-black hover:bg-black/20';
-}
-
-function OfferingCard({
-  item,
-  isDark,
-  abVariant,
-}: {
-  item: OfferingItem;
-  isDark: boolean;
-  abVariant: HomeAbVariant;
-}) {
-  const [factsOpen, setFactsOpen] = useState(false);
-  const [intakeOpen, setIntakeOpen] = useState(false);
-  const isSaas = item.facts?.kind === 'saas';
-  const pricing = getOfferingCardPricing(item, abVariant);
-
-  return (
-    <div
-      id={`offerings-${item.id}`}
-      className="relative group h-full scroll-mt-24"
-    >
-      <div
-        className={`relative h-full p-8 rounded-[24px_4px_24px_4px] border-y border-r border-l-4 border-l-[var(--s500)] ${
-          isDark ? 'border-white/10 bg-[#18181b]' : 'border-black/5 bg-white'
-        } flex flex-col noise-overlay overflow-hidden`}
-      >
-        <OfferingBadge badge={item.badge} />
-
-        <div className="relative z-10 flex flex-col h-full">
-          <div className="flex justify-between items-start mb-2 mt-6">
-            <div>
-              {isSaas && (
-                <div className="mono-font text-[10px] text-[var(--s500)] tracking-[0.08em] mb-1">
-                  gtm_ops // SAAS
-                </div>
-              )}
-              <h3 className="brand-font text-2xl font-bold">{item.name}</h3>
-            </div>
-          </div>
-          <p className="text-sm opacity-60 mb-6">{item.description}</p>
-
-          <div className="flex-1 flex flex-col">
-            <OfferingPriceBlock item={item} pricing={pricing} />
-            <OfferingFeatureList features={item.features} />
-          </div>
-
-          {item.facts && (
-            <Dialog open={factsOpen} onOpenChange={setFactsOpen}>
-              <DialogTrigger asChild>
-                <button
-                  type="button"
-                  className="w-full mb-3 px-4 py-2 border border-current rounded-md text-xs font-bold uppercase tracking-wider opacity-80 hover:opacity-100 hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all flex items-center justify-center gap-2"
-                >
-                  <FileText size={14} /> View Spec Sheet
-                </button>
-              </DialogTrigger>
-              <DialogContent className="bg-transparent border-none shadow-none p-0 max-w-fit outline-none [&>button]:bg-[#12111a] [&>button]:text-white [&>button]:opacity-100 [&>button]:shadow-lg">
-                <DialogTitle className="sr-only">
-                  {item.name} spec sheet
-                </DialogTitle>
-                <AgentFactsPopout
-                  facts={item.facts}
-                  itemName={item.name}
-                  onGetStarted={() => {
-                    // Close popout, then open intake on the next tick — Radix
-                    // Dialog focus-trap cleanup races if both happen in the
-                    // same render commit, which manifested as the spec sheet
-                    // closing without the intake ever opening.
-                    setFactsOpen(false);
-                    globalThis.setTimeout(() => {
-                      setIntakeOpen(true);
-                    }, 80);
-                  }}
-                  onCrossSell={(targetId) => {
-                    setFactsOpen(false);
-                    // Hash-jump to the cross-sell card so the user lands on the
-                    // right offering tile and can read it in context.
-                    globalThis.location.hash = `offerings-${targetId}`;
-                  }}
-                />
-              </DialogContent>
-            </Dialog>
-          )}
-
-          <Dialog open={intakeOpen} onOpenChange={setIntakeOpen}>
-            <DialogTrigger asChild>
-              <Button
-                className={`w-full ${getOfferingButtonClass(item, isDark)}`}
-              >
-                {pricing.ctaLabel} <ArrowRight size={14} className="ml-2" />
-              </Button>
-            </DialogTrigger>
-            <DialogContent
-              className={
-                isDark
-                  ? 'bg-[#12111a] text-[#fcfaf5] border-white/10'
-                  : 'bg-white text-[#12111a] border-black/10'
-              }
-            >
-              <IntakeForm selectedPackage={item.id} />
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -1008,91 +734,137 @@ const ButtonGhost = ({
   </button>
 );
 
+// Polar → cartesian for placing incoming-call blips on the radar ring.
+function radarPoint(angleDeg: number) {
+  const r = 64;
+  const rad = (angleDeg * Math.PI) / 180;
+  return {x: Math.cos(rad) * r, y: Math.sin(rad) * r};
+}
+
 const RadarWatchdog = () => {
+  // Fixed clock angles where incoming calls land; each blip flashes white as
+  // the sweep passes, then settles green ("answered").
+  const calls = [38, 105, 172, 246, 312];
   return (
-    <div className="h-48 w-full flex items-center justify-center relative overflow-hidden bg-black/20 rounded-lg border border-white/5">
+    <div className="h-48 w-full flex items-center justify-center relative overflow-hidden bg-black/30 rounded-lg border border-white/5">
       <div
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 opacity-15"
         style={{
           backgroundImage:
             'radial-gradient(circle, #fff 1px, transparent 1px), radial-gradient(circle, #fff 1px, transparent 1px)',
-          backgroundSize: '20px 20px',
-          backgroundPosition: '0 0, 10px 10px',
+          backgroundSize: '22px 22px',
+          backgroundPosition: '0 0, 11px 11px',
         }}
       />
 
-      {[60, 120, 180].map((size, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full border border-[var(--s500)] opacity-20"
+      {[64, 122, 180].map((size) => (
+        <motion.div
+          key={size}
+          className="absolute rounded-full border border-[var(--s500)]"
           style={{width: size, height: size}}
+          animate={{opacity: [0.08, 0.24, 0.08]}}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: size / 240,
+          }}
         />
       ))}
 
+      {/* Conic sweep with a trailing fade. */}
       <motion.div
-        className="absolute w-1/2 h-1/2 origin-bottom-right bg-gradient-to-tl from-[var(--s500)]/0 to-[var(--s500)]/50"
-        style={{top: 0, left: 0, borderRight: '1px solid var(--s500)'}}
+        className="absolute h-44 w-44 rounded-full"
+        style={{
+          background:
+            'conic-gradient(from 0deg, transparent 0deg, transparent 300deg, rgba(255,95,0,0.45) 358deg, rgba(255,95,0,0.7) 360deg)',
+        }}
         animate={{rotate: 360}}
-        transition={{duration: 4, repeat: Infinity, ease: 'linear'}}
+        transition={{duration: 3.4, repeat: Infinity, ease: 'linear'}}
       />
 
-      <motion.div
-        className="absolute w-2 h-2 bg-white rounded-full shadow-[0_0_10px_white]"
-        initial={{opacity: 0, scale: 0, top: '30%', left: '40%'}}
-        animate={{opacity: [0, 1, 0], scale: [0, 1.5, 0]}}
-        transition={{duration: 2, repeat: Infinity, repeatDelay: 1}}
-      />
-      <motion.div
-        className="absolute w-1.5 h-1.5 bg-[var(--v500)] rounded-full shadow-[0_0_10px_var(--v500)]"
-        initial={{opacity: 0, scale: 0, top: '60%', left: '70%'}}
-        animate={{opacity: [0, 1, 0], scale: [0, 1.5, 0]}}
-        transition={{duration: 3, repeat: Infinity, repeatDelay: 0.5}}
-      />
+      {/* Incoming calls: flash white, then settle to "answered" green. */}
+      {calls.map((angle) => {
+        const {x, y} = radarPoint(angle);
+        return (
+          <motion.div
+            key={angle}
+            className="absolute h-2 w-2 rounded-full"
+            style={{transform: `translate(${x}px, ${y}px)`}}
+            animate={{
+              backgroundColor: ['#ffffff', '#ffffff', '#5d8c61', '#5d8c61'],
+              boxShadow: [
+                '0 0 10px #fff',
+                '0 0 10px #fff',
+                '0 0 8px #5d8c61',
+                '0 0 8px #5d8c61',
+              ],
+              scale: [0.6, 1.6, 1, 1],
+            }}
+            transition={{
+              duration: 3.4,
+              repeat: Infinity,
+              times: [0, 0.04, 0.12, 1],
+              delay: (angle / 360) * 3.4,
+              ease: 'easeOut',
+            }}
+          />
+        );
+      })}
 
-      <div className="absolute z-10 text-[8px] font-mono text-[var(--s500)] flex flex-col items-center">
-        <span>CALLS</span>
-        <span className="tabular-nums">14 OPEN</span>
+      <div className="absolute z-10 flex flex-col items-center gap-0.5">
+        <PhoneCall size={14} className="text-[var(--s500)]" aria-hidden />
+        <span className="font-mono text-[8px] tracking-widest text-[var(--s500)]">
+          ANSWERING
+        </span>
+        <span className="font-mono text-[8px] tabular-nums text-[#5d8c61]">
+          0 MISSED
+        </span>
       </div>
     </div>
   );
 };
 
+// Deterministic per-bar speech envelope — no Math.random in render so the
+// waveform is stable across re-renders and SSR.
+const SPECTRAL_BARS = Array.from({length: 22}, (_, i) => {
+  const envelope = Math.sin((i / 21) * Math.PI); // louder in the middle
+  const peak = 28 + envelope * 60;
+  return {peak: `${Math.round(peak)}%`, delay: (i % 6) * 0.07};
+});
+
 const SpectralAnalyzer = () => {
   return (
-    <div className="h-48 w-full flex flex-col justify-between p-4 bg-black/20 rounded-lg border border-white/5 relative overflow-hidden">
+    <div className="h-48 w-full flex flex-col justify-between p-4 bg-black/30 rounded-lg border border-white/5 relative overflow-hidden">
       <div className="flex justify-between text-[10px] font-mono opacity-50 mb-2">
-        <span>FREQ: 44.1kHz</span>
-        <span>GAIN: +12dB</span>
+        <span>VOICE IN</span>
+        <span>QUALIFYING</span>
       </div>
 
-      <div className="flex items-end justify-between h-24 gap-1">
-        {Array.from({length: 20}).map((_, i) => (
+      <div className="flex items-end justify-between h-24 gap-[3px]">
+        {SPECTRAL_BARS.map((bar, i) => (
           <motion.div
             key={i}
-            className="w-full bg-[var(--s500)] rounded-t-sm opacity-80"
-            animate={{
-              height: ['10%', `${Math.random() * 80 + 20}%`, '10%'],
-              backgroundColor:
-                i > 12 ? ['#cf3c69', '#cf3c69'] : ['#ff5f00', '#ff5f00'],
-            }}
+            className="w-full rounded-t-sm bg-gradient-to-t from-[var(--s500)] to-[var(--v500)]"
+            animate={{height: ['14%', bar.peak, '22%', '14%']}}
             transition={{
-              duration: 0.5,
+              duration: 1.1,
               repeat: Infinity,
               repeatType: 'mirror',
-              delay: i * 0.05,
+              delay: bar.delay,
               ease: 'easeInOut',
             }}
           />
         ))}
       </div>
 
-      <div className="mt-2 h-6 w-full bg-black/40 rounded flex items-center px-2 font-mono text-[9px] text-green-400 gap-2">
-        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+      <div className="mt-2 h-6 w-full bg-black/40 rounded flex items-center px-2 font-mono text-[9px] text-[#5d8c61] gap-2">
+        <span className="h-1.5 w-1.5 rounded-full bg-[#5d8c61] animate-pulse" />
         <TypewriterSequence
           sequence={[
-            '> ACCOUNT_CONTEXT_CONFIRMED',
-            '> REQUEST_TYPE: URGENT_SUPPORT',
-            '> TEAM_SUMMARY_READY',
+            '> caller intent: new booking',
+            '> urgency: high · routed',
+            '> qualified — summary ready',
           ]}
         />
       </div>
@@ -1102,57 +874,104 @@ const SpectralAnalyzer = () => {
 
 const SynapseLink = () => {
   return (
-    <div className="h-48 w-full flex items-center justify-center relative bg-black/20 rounded-lg border border-white/5">
-      <div className="absolute left-8 w-12 h-12 rounded-full border-2 border-[var(--s500)] flex items-center justify-center bg-[var(--s500)]/10 z-10">
-        <div className="w-4 h-4 bg-[var(--s500)] rounded-full animate-ping opacity-50" />
+    <div className="h-48 w-full flex items-center justify-center relative bg-black/30 rounded-lg border border-white/5">
+      {/* Agent node (source) */}
+      <div className="absolute left-7 flex flex-col items-center gap-1.5 z-10">
+        <div className="w-12 h-12 rounded-full border-2 border-[var(--s500)] flex items-center justify-center bg-[var(--s500)]/10">
+          <motion.div
+            className="w-3.5 h-3.5 bg-[var(--s500)] rounded-full"
+            animate={{scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6]}}
+            transition={{duration: 1.6, repeat: Infinity, ease: 'easeInOut'}}
+          />
+        </div>
+        <span className="font-mono text-[8px] tracking-widest text-white/55">
+          AGENT
+        </span>
       </div>
-      <div className="absolute right-8 w-12 h-12 rounded-lg border-2 border-white/20 flex items-center justify-center bg-white/5 z-10">
-        <Zap size={18} />
-      </div>
+
+      {/* CRM node (destination) — flashes on packet arrival */}
+      <motion.div
+        className="absolute right-7 flex flex-col items-center gap-1.5 z-10"
+        animate={{scale: [1, 1, 1.12, 1]}}
+        transition={{
+          duration: 2.4,
+          repeat: Infinity,
+          times: [0, 0.78, 0.86, 1],
+          ease: 'easeOut',
+        }}
+      >
+        <motion.div
+          className="w-12 h-12 rounded-lg border-2 flex items-center justify-center"
+          animate={{
+            borderColor: [
+              'rgba(255,255,255,0.2)',
+              'rgba(255,255,255,0.2)',
+              '#5d8c61',
+              'rgba(255,255,255,0.2)',
+            ],
+            backgroundColor: [
+              'rgba(255,255,255,0.05)',
+              'rgba(255,255,255,0.05)',
+              'rgba(93,140,97,0.25)',
+              'rgba(255,255,255,0.05)',
+            ],
+          }}
+          transition={{
+            duration: 2.4,
+            repeat: Infinity,
+            times: [0, 0.78, 0.86, 1],
+          }}
+        >
+          <Zap size={18} className="text-white/80" />
+        </motion.div>
+        <span className="font-mono text-[8px] tracking-widest text-white/55">
+          CRM + INBOX
+        </span>
+      </motion.div>
 
       <svg className="absolute inset-0 w-full h-full pointer-events-none">
         <path
-          d="M 60 96 C 150 96, 250 96, 300 96"
+          d="M 56 96 C 150 96, 250 96, 300 96"
           stroke="rgba(255,255,255,0.1)"
           strokeWidth="2"
           fill="none"
         />
-        <path
-          d="M 60 96 C 150 96, 250 96, 300 96"
-          stroke="url(#gradient)"
+        <motion.path
+          d="M 56 96 C 150 96, 250 96, 300 96"
+          stroke="var(--s500)"
           strokeWidth="2"
           fill="none"
-          strokeDasharray="5 5"
+          strokeDasharray="6 8"
+          animate={{strokeDashoffset: [0, -28]}}
+          transition={{duration: 1, repeat: Infinity, ease: 'linear'}}
         />
-        <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="transparent" />
-            <stop offset="50%" stopColor="var(--s500)" />
-            <stop offset="100%" stopColor="transparent" />
-          </linearGradient>
-        </defs>
       </svg>
 
+      {/* Handoff packets travel agent → CRM, then the badge lands. */}
       {[0, 1, 2].map((i) => (
         <motion.div
           key={i}
-          className="absolute top-1/2 w-3 h-1.5 bg-white rounded-full shadow-[0_0_10px_var(--s500)]"
-          initial={{left: '15%', opacity: 0}}
+          className="absolute top-1/2 h-2 w-3.5 rounded-full bg-white shadow-[0_0_10px_var(--s500)]"
+          initial={{left: '16%', opacity: 0}}
           animate={{left: '80%', opacity: [0, 1, 1, 0]}}
           transition={{
-            duration: 2,
+            duration: 2.4,
             repeat: Infinity,
             delay: i * 0.8,
-            ease: 'linear',
+            ease: 'easeInOut',
           }}
-          style={{marginTop: -3}}
+          style={{marginTop: -4}}
         />
       ))}
 
       <motion.div
-        className="absolute right-0 top-6 bg-white text-black text-[9px] font-bold px-2 py-1 rounded shadow-lg font-mono"
-        animate={{y: [0, -5, 0], opacity: [0.5, 1, 0.5]}}
-        transition={{duration: 2, repeat: Infinity}}
+        className="absolute right-4 top-5 bg-[#5d8c61] text-white text-[9px] font-bold px-2 py-1 rounded shadow-lg font-mono"
+        animate={{y: [4, 4, -2, 4], opacity: [0, 0, 1, 0]}}
+        transition={{
+          duration: 2.4,
+          repeat: Infinity,
+          times: [0, 0.78, 0.88, 1],
+        }}
       >
         +1 LEAD
       </motion.div>

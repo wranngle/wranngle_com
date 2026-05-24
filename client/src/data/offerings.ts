@@ -53,8 +53,71 @@ export type OfferingItem = {
   badge?: string;
   cta: string;
   monthlyAddon?: {price: string; label: string};
+  /** Name of the tier this one builds on. When set, the card renders
+   *  "Everything in <includesPrevious>, plus:" and `features` lists only the
+   *  deltas — never restating features the lower tier already covers. */
+  includesPrevious?: string;
   facts?: OfferingFacts;
 };
+
+/** Uniform price-display spec derived from a tier — the single source of
+ *  truth consumed by TierCard so every card on every page renders pricing
+ *  identically (round-2 F006 + F011). */
+export type TierPricing = {
+  isFree: boolean;
+  /** Headline price, e.g. "$250", "$900", "Free". */
+  priceLabel: string;
+  /** Cadence suffix, e.g. "/mo", " one-time", "". */
+  priceSuffix: string;
+  /** Pink "billed annually, save N%" line — present only when a real annual
+   *  discount exists. */
+  annualLine?: string;
+  /** Secondary add-on line (per-location, maintenance), or undefined. */
+  addonLine?: string;
+};
+
+function formatTierPrice(value: number): string {
+  // Currency display: whole numbers render bare ("250"), fractional values
+  // keep two decimals ("212.50", "16.67") rather than stripping zeros.
+  return Number.isInteger(value)
+    ? value.toLocaleString('en-US')
+    : value.toFixed(2);
+}
+
+export function getTierPricing(item: OfferingItem): TierPricing {
+  const isFree = item.price === '0';
+  const priceLabel = isFree ? 'Free' : `$${item.price}`;
+  const priceSuffix = isFree
+    ? ''
+    : item.priceCadence === 'monthly'
+      ? '/mo'
+      : ' one-time';
+
+  const {facts} = item;
+  const hasDiscount = (facts?.discountPercent ?? 0) > 0 && !isFree;
+  const annualLine =
+    hasDiscount && facts
+      ? `or $${formatTierPrice(facts.annualMonthly)}/mo billed annually · save ${facts.discountPercent}%`
+      : undefined;
+
+  // Add-on line: per-location for agents, maintenance for websites. SaaS
+  // tiers express their annual story through annualLine, so their monthly
+  // addon (the "/yr" annual plan) is intentionally omitted here.
+  let addonLine: string | undefined;
+  if (item.monthlyAddon && facts?.kind !== 'saas') {
+    const {price, label} = item.monthlyAddon;
+    addonLine = label.startsWith('/')
+      ? `+ $${price}${label}`
+      : `+ $${price}/mo ${label}`;
+    if (facts?.kind === 'website') {
+      // Websites get an annual maintenance option too (two months free).
+      const yearly = Number(price) * 10;
+      addonLine += ` · or $${formatTierPrice(yearly)}/yr (save 17%)`;
+    }
+  }
+
+  return {isFree, priceLabel, priceSuffix, annualLine, addonLine};
+}
 
 export type OfferingCategory = {
   id: string;
@@ -125,13 +188,13 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           'Voice, web chat, and two-way SMS with booking and human handoff. Built for teams that need coverage across more than one channel.',
         badge: 'Most Popular',
         cta: 'Get Elite Agent',
+        includesPrevious: 'Core Agent',
         features: [
-          'Triple-channel: voice, web chat, two-way SMS',
-          '24/7/365 priority coverage',
+          'Adds web chat and two-way SMS to voice',
           'ElevenLabs custom voice identity',
           'Cal.com calendar booking from within the call',
           'Direct transfer to a human if requested',
-          'Unified inbox across channels',
+          'Unified inbox across all channels',
           'Priority support, 4-hour response',
         ],
         facts: {
@@ -234,15 +297,14 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
         badge: 'Best Value',
         cta: 'Start Business Site',
         monthlyAddon: {price: '250', label: 'maintenance'},
+        includesPrevious: 'Landing Page',
         features: [
           'Up to 5 pages with custom design',
           'Headless CMS (you edit copy without us)',
           'Analytics dashboard',
-          'Lead capture form → email + webhook',
           'Lighthouse 90+ performance budget',
-          'Cloudflare hosting (first year included)',
-          'Source code ownership (Git handoff)',
-          '$250/mo maintenance + content support',
+          'First year of Cloudflare hosting included',
+          'Optional $250/mo maintenance + content support',
         ],
         facts: {
           kind: 'website',
@@ -406,9 +468,9 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
           'For teams that need SSO, role-based access, a custom domain, and unlimited proposal runs.',
         cta: 'Talk to Sales',
         monthlyAddon: {price: '990', label: '/yr annual plan'},
+        includesPrevious: 'Plus',
         features: [
           'Unlimited proposals',
-          'Everything in Plus',
           'SSO (Google + Azure AD)',
           'Team workspaces with role-based access',
           'Custom domain (proposals.yourco.com)',

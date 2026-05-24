@@ -64,38 +64,81 @@ const FAQ_ITEMS: FAQItem[] = [
     answer:
       'Out of the box: English, Spanish, French, Arabic, Chinese, Japanese, and Korean. Additional languages are available on request.',
   },
-  // Money & limits
   {
-    group: 'Money & limits',
+    group: 'How it works',
+    question: 'What if I have multiple business locations?',
+    answer:
+      "Each location gets its own forwarding number, knowledge base, and routing rules — but all share one unified inbox so you don't lose visibility. Per-location add-ons are priced on each spec sheet.",
+  },
+  // Websites
+  {
+    group: 'Websites',
+    question: 'How fast does a website ship, and what do I get?',
+    answer:
+      'A Landing Page ships in about 7 days; a Business Site (up to 5 pages, CMS, analytics) in about 3 weeks. Both include a mobile-first build, SEO foundations, contact forms wired to email and a webhook, Cloudflare hosting, and the full source code — no page-builder lock-in.',
+  },
+  {
+    group: 'Websites',
+    question: 'Do I own the code, and can I edit content myself?',
+    answer:
+      'Yes. Every site is handed off via Git, so the source is yours. The Business Site adds a headless CMS so you can edit copy without us. Maintenance is optional — monthly, or annually with two months free.',
+  },
+  {
+    group: 'Websites',
+    question: 'Can a website include a chat or voice agent?',
+    answer:
+      'Yes. A site captures form leads on its own; add a web chat or voice agent when you also want to answer questions and qualify visitors after hours. The same lead then flows into one follow-up path.',
+  },
+  // gtm_ops
+  {
+    group: 'gtm_ops',
+    question: 'What is gtm_ops?',
+    answer:
+      'gtm_ops is a proposal console that turns lead details into branded PDF proposals. It accepts a form, webhook, CRM export, or voice-agent handoff, enriches the lead, fills a typed template, renders the PDF, and keeps a replayable run log. There is a live, no-signup demo on the product page.',
+  },
+  {
+    group: 'gtm_ops',
+    question: 'How is gtm_ops priced?',
+    answer:
+      'Start free for 14 days with 5 proposal runs and no card. Plus is $20/mo (or $16.67/mo billed annually) for 50 proposals, branded PDFs, intake forms, and a full audit log. Pro is $99/mo (or $82.50/mo annually) for unlimited proposals, SSO, team workspaces, and a custom domain.',
+  },
+  {
+    group: 'gtm_ops',
+    question: 'Where does the proposal data come from?',
+    answer:
+      'Any intake source: web chat, a Wranngle voice-agent call, a contact form, a CRM export, or a webhook. gtm_ops normalizes the fields, runs enrichment (Clay and Apollo), and feeds a typed template — so a proposal never starts from a blank form.',
+  },
+  // Pricing & plans
+  {
+    group: 'Pricing & plans',
     question: 'What if usage exceeds my plan limits?',
     answer:
       "Limits prevent abuse and keep the plan sized correctly. If normal business volume hits the cap, we'll review it with you before any overage fees apply. No surprise bills.",
   },
   {
-    group: 'Money & limits',
+    group: 'Pricing & plans',
+    question: 'Is there an annual discount?',
+    answer:
+      'Yes. Voice agents save 15–20% on annual billing, gtm_ops plans save about 17%, and website maintenance gets two months free paid annually. Every tile shows both the monthly and annual rate.',
+  },
+  {
+    group: 'Pricing & plans',
     question: 'What if I cancel?',
     answer:
-      'Monthly plans cancel anytime, end-of-period. Annual plans (which save up to 20%) carry a 50% early-termination fee on remaining months. Your data stays exportable for 30 days after cancellation.',
+      'Monthly plans cancel anytime, end-of-period. Annual plans carry a 50% early-termination fee on remaining months. Your data stays exportable for 30 days after cancellation.',
   },
   // Trust & data
   {
     group: 'Trust & data',
-    question: 'Is caller data safe?',
+    question: 'Is caller and lead data safe?',
     answer:
-      'Encrypted at rest and in transit. GDPR- and CCPA-aligned. You own the data; export or deletion requests are processed within 30 days. Recordings retained 90 days by default — longer retention available on request.',
-  },
-  // Product
-  {
-    group: 'Product',
-    question: 'What if I have multiple business locations?',
-    answer:
-      "Each location gets its own forwarding number, knowledge base, and routing rules — but all share one unified inbox so you don't lose visibility. Per-location add-ons are priced on each spec sheet.",
+      'Encrypted at rest and in transit. GDPR- and CCPA-aligned. You own the data; export or deletion requests are processed within 30 days. Recordings are retained 90 days by default — longer retention available on request.',
   },
   {
-    group: 'Product',
-    question: 'What is gtm_ops?',
+    group: 'Trust & data',
+    question: 'Will callers know they are talking to an AI?',
     answer:
-      'gtm_ops is a proposal console for turning lead details into branded PDFs. It includes enrichment, templates, a run log, and a live no-signup demo. See the dedicated product page for the pipeline and tiers.',
+      'Yes. Sarah and every deployed agent announce that they are an AI and that the call may be recorded at the start of the call, and confirm plainly if a caller asks. Agents are never configured to claim to be human.',
   },
 ];
 
@@ -104,7 +147,19 @@ type FAQProps = {
 };
 
 export default function FAQ({isDark = true}: FAQProps) {
-  const [openIndex, setOpenIndex] = useState<number>(0);
+  // Multiple panels may be open at once; opening one never collapses
+  // another. Seeded with the first item open.
+  const [openIndices, setOpenIndices] = useState<Set<number>>(
+    () => new Set([0]),
+  );
+  const toggleIndex = (idx: number) => {
+    setOpenIndices((previous) => {
+      const next = new Set(previous);
+      if (next.has(idx)) next.delete(idx);
+      else next.add(idx);
+      return next;
+    });
+  };
 
   // Group while preserving original order
   const groups: Record<string, Array<FAQItem & {idx: number}>> = {};
@@ -153,20 +208,17 @@ export default function FAQ({isDark = true}: FAQProps) {
               <div className="mono-font text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--s500)] mb-2 pl-0.5">
                 // {group}
               </div>
-              {items.map((item) => {
-                const isOpen = openIndex === item.idx;
-                return (
-                  <FAQRow
-                    key={item.idx}
-                    item={item}
-                    isOpen={isOpen}
-                    isDark={isDark}
-                    onToggle={() => {
-                      setOpenIndex(isOpen ? -1 : item.idx);
-                    }}
-                  />
-                );
-              })}
+              {items.map((item) => (
+                <FAQRow
+                  key={item.idx}
+                  item={item}
+                  isOpen={openIndices.has(item.idx)}
+                  isDark={isDark}
+                  onToggle={() => {
+                    toggleIndex(item.idx);
+                  }}
+                />
+              ))}
             </div>
           ))}
         </div>

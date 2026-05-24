@@ -320,31 +320,26 @@ function AgentDemoSecondaryAction() {
 }
 
 /**
- * Pre-modal gate shown before the actual intake form. Recommends a quick
- * voice demo with Sarah and offers two paths:
- *   1. Hear Sarah first — opens the ElevenLabs voice widget (the user can
- *      come back to fill the form afterwards via the same CTA).
- *   2. Continue to form — dismisses the gate and renders the intake form.
+ * Pre-modal gate shown before the typed intake form. Sarah is Wranngle's
+ * own lead-intake voice agent — not just a product demo — so the gate
+ * frames a live call as the open-ended way to scope the project: she asks
+ * everything the form asks and more, in conversation. Two paths:
+ *   1. Scope it with Sarah — opens the ElevenLabs voice widget for a live
+ *      intake call (the user can still fill the form afterwards).
+ *   2. Continue to form — dismisses the gate and renders the typed form.
  *
- * Used by all packages so the recommended-voice-demo step is consistent
- * across AI agent and gtm_ops intake flows (round-2 feedback F006 + F027).
+ * Used by all packages so the intake-call option is consistent across AI
+ * agent and gtm_ops flows (round-2 feedback F006 + F016 + F027).
  */
 function SarahPreModalGate({
   tierName,
-  modeLabel,
   onContinue,
   isTrial,
 }: {
   tierName: string;
-  modeLabel: 'sales-intake' | 'after-hours-demo';
   onContinue: () => void;
   isTrial: boolean;
 }) {
-  const blurb =
-    modeLabel === 'sales-intake'
-      ? `Sarah is our recommended sales-intake voice agent. She can answer questions about ${tierName} live, pre-qualify the request, and book a follow-up before you fill the form.`
-      : `Sarah is the after-hours AI demo. She'll show what your team's missed call would sound like before you fill the intake form.`;
-
   return (
     <div className="py-3" data-testid="sarah-pre-modal">
       <DialogHeader>
@@ -354,9 +349,14 @@ function SarahPreModalGate({
             className="text-[var(--s500)] sarah-glimmer"
             aria-hidden
           />
-          Hear Sarah first?
+          Scope it with Sarah first?
         </DialogTitle>
-        <DialogDescription>{blurb}</DialogDescription>
+        <DialogDescription>
+          Sarah is Wranngle&apos;s own lead-intake agent — not just a demo. Tell
+          her about {tierName} and your situation in your own words; she asks
+          everything this form asks and more, then routes the summary to the
+          team. Prefer to type? Skip straight to the form.
+        </DialogDescription>
       </DialogHeader>
 
       <div className="mt-5 grid sm:grid-cols-2 gap-3">
@@ -371,7 +371,7 @@ function SarahPreModalGate({
             className="h-12 px-4 bg-[var(--s500)] text-white font-bold uppercase text-xs rounded-md shadow-lg hover:scale-[1.02] transition-all inline-flex items-center justify-center gap-2"
           >
             <Sparkles size={14} className="sarah-glimmer" aria-hidden />
-            Hear Sarah first
+            Scope it with Sarah
           </button>
         </DialogClose>
         <button
@@ -384,8 +384,8 @@ function SarahPreModalGate({
         </button>
       </div>
       <p className="mt-3 text-[11px] opacity-55 leading-relaxed">
-        Sarah will announce that she&apos;s an AI agent at the start of the
-        call. Mic permissions required; no signup.
+        Sarah announces she&apos;s an AI agent at the start of the call. Mic
+        permissions required; no signup.
       </p>
     </div>
   );
@@ -799,16 +799,13 @@ const IntakeForm = ({
   }
 
   const isSaas = isSaasPackage(currentPackage);
-  const isAgent = isAgentPackage(currentPackage);
 
   if (sarahGateOpen) {
     const offering = getOfferingById(currentPackage);
-    const tierName = offering?.name ?? 'this tier';
-    const modeLabel = isAgent ? 'after-hours-demo' : 'sales-intake';
+    const tierName = offering?.name ?? 'what you need';
     return (
       <SarahPreModalGate
         tierName={tierName}
-        modeLabel={modeLabel}
         isTrial={currentPackage === 'gtm-ops-trial'}
         onContinue={() => {
           setSarahGateOpen(false);
