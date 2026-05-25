@@ -439,15 +439,16 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
         ref={fieldRef}
         className="absolute inset-0"
         style={{
-          // Radial dissolve — the opaque core deliberately stays smaller
-          // than the hero zoom footprint so the dissolve intrudes a little
-          // into the hero edges (a soft vignette feel). Multi-stop curve
-          // gives a much gentler falloff than a hard 0→100 ramp; the field
-          // melts into the page background instead of cutting off.
+          // Radial dissolve — closest-side ties the gradient envelope to
+          // the field box so the fade actually reaches the edges (the
+          // previous explicit 95% × 90% scaled past the box and was
+          // effectively still opaque at the corners). Multi-stop curve
+          // gives a soft falloff and the opaque core stops short of the
+          // hero footprint so the dissolve gently feathers the hero edges.
           WebkitMaskImage:
-            'radial-gradient(ellipse 95% 90% at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 38%, rgba(0,0,0,0.92) 55%, rgba(0,0,0,0.62) 72%, rgba(0,0,0,0.28) 86%, transparent 100%)',
+            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.78) 64%, rgba(0,0,0,0.42) 80%, rgba(0,0,0,0.14) 92%, transparent 100%)',
           maskImage:
-            'radial-gradient(ellipse 95% 90% at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 38%, rgba(0,0,0,0.92) 55%, rgba(0,0,0,0.62) 72%, rgba(0,0,0,0.28) 86%, transparent 100%)',
+            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.78) 64%, rgba(0,0,0,0.42) 80%, rgba(0,0,0,0.14) 92%, transparent 100%)',
         }}
       >
         {tilesRef.current.map((tile, idx) => (
