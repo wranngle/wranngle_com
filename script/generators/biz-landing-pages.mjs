@@ -20,9 +20,12 @@ const repoRoot = path.resolve(here, '../..');
 const bizRoot = path.join(repoRoot, 'demo-stages/biz');
 
 /* ------------------------------------------------------------------ */
-/* 20 business identities — distinct palette + font + layout each      */
+/* 37 business identities — distinct palette + font + layout each      */
 /* ------------------------------------------------------------------ */
 // Layout variants: editorial | clinical | bold | warm | architectural
+// `featured: true` means the tile enters the hero spotlight rotation in
+// PolygonTileHero. Default is false — those tiles stay in the ring as
+// static landing-page fill.
 const BUSINESSES = [
   {
     slug: 'bakery',
@@ -1052,6 +1055,361 @@ const BUSINESSES = [
           ],
         ],
       },
+    ],
+  },
+
+  // ------- Ring 3 fill (17 more businesses, none featured) -------------
+
+  {
+    slug: 'accounting-firm', name: 'Lattimer & Holt CPA',
+    tagline: 'Tax, audit, and outsourced controller. Fixed monthly fee.',
+    vertical: 'Accounting firm — Charlotte, NC', layout: 'editorial',
+    fonts: {h: 'Cormorant Garamond', b: 'Inter'},
+    palette: {bg: '#f6f4ef', ink: '#171924', accent: '#1d4f7a', muted: '#6e7280', card: '#ffffff'},
+    nav: ['Services', 'Industries', 'Insights', 'Engage'],
+    hero: {kicker: 'CPA-led since 2008', cta: 'Schedule a fee proposal'},
+    sections: [
+      {title: 'Practice', items: [
+        ['Tax compliance', '1040, 1065, 1120-S, 1120-C. State multistate when relevant.'],
+        ['Outsourced controller', 'Monthly close, KPI pack, board-ready financials.'],
+        ['Audit & assurance', 'Reviews, compilations, single-audits for nonprofit clients.'],
+        ['M&A diligence', 'Quality-of-earnings, working capital, post-close support.'],
+      ]},
+      {title: 'How we work', items: [
+        ['Fixed fee', 'Engagement letters in flat-fee tiers. No surprise hourly bills.'],
+        ['One partner', "You don't get reshuffled between staff. One partner, one manager."],
+      ]},
+    ],
+  },
+  {
+    slug: 'pet-grooming', name: 'Bramble & Boop',
+    tagline: 'Fear-free grooming. Two-tech rooms. Walk-out same hour.',
+    vertical: 'Dog & cat grooming — Denver, CO', layout: 'warm',
+    fonts: {h: 'DM Serif Display', b: 'Karla'},
+    palette: {bg: '#fbf3ef', ink: '#241915', accent: '#d77b58', muted: '#8b7b73', card: '#ffffff'},
+    nav: ['Services', 'Pricing', 'Our team', 'Book'],
+    hero: {kicker: 'Open Tue – Sat', cta: 'Book your pup'},
+    sections: [
+      {title: 'Menu', items: [
+        ['Bath & blow-out', '60 min · oatmeal shampoo, brush, nail trim, ear clean. From $48'],
+        ['Full groom', '90 min · breed cut, sanitary trim, paw pads, finish spray. From $78'],
+        ['Cat tidy', '45 min · sanitary, mat removal, nail trim, light bath. From $58'],
+        ['Puppy intro', '30 min · gentle desensitization + light tidy. $35'],
+      ]},
+      {title: 'Why families come back', items: [
+        ['Two-tech rooms', 'No crating between steps. One groomer + one assistant per dog.'],
+        ['Calming protocol', 'Pheromone diffusers + non-slip mats + treat reinforcement.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'music-school', name: 'Stoneharbor Music Conservatory',
+    tagline: 'Private lessons, ensembles, and recitals. Ages 5 to 95.',
+    vertical: 'Music school — Pittsburgh, PA', layout: 'editorial',
+    fonts: {h: 'Playfair Display', b: 'Source Sans 3'},
+    palette: {bg: '#1a1925', ink: '#ede8da', accent: '#c89b4a', muted: '#8e8a99', card: '#222132'},
+    nav: ['Lessons', 'Faculty', 'Concerts', 'Enroll'],
+    hero: {kicker: 'Conservatory model · since 1994', cta: 'Schedule a trial lesson'},
+    sections: [
+      {title: 'Instruments', items: [
+        ['Piano', 'Classical, jazz, pop. Yamaha grands in every studio.'],
+        ['Strings', 'Violin, viola, cello, bass. Suzuki + traditional methodologies.'],
+        ['Voice', 'Classical, musical theater, contemporary. RCM-trained faculty.'],
+        ['Guitar', 'Classical, electric, bass. Performance + theory tracks.'],
+      ]},
+      {title: 'Calendar', items: [
+        ['Recitals', 'Three per year, on stage at the Carnegie Music Hall.'],
+        ['Summer intensives', 'Two-week chamber music + jazz camps for ages 12+.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'car-detail', name: 'Mirror Finish Auto Spa',
+    tagline: 'Ceramic coatings, paint correction, leather restoration.',
+    vertical: 'Auto detailing — Scottsdale, AZ', layout: 'bold',
+    fonts: {h: 'Oswald', b: 'Inter'},
+    palette: {bg: '#0c1116', ink: '#f4f6f9', accent: '#26d3a5', muted: '#7e8895', card: '#161d24'},
+    nav: ['Detail menu', 'Ceramic', 'Gallery', 'Book'],
+    hero: {kicker: 'Indoor bay · climate-controlled', cta: 'Reserve your bay'},
+    sections: [
+      {title: 'Packages', items: [
+        ['Express detail', '2 hr · wash, decon, interior vacuum, dressings. $189'],
+        ['Showroom detail', '5 hr · clay, single-stage polish, full interior shampoo. $385'],
+        ['Ceramic coating', '9H ceramic. 1-day, 3-yr, 5-yr, or lifetime tiers. From $1,200'],
+        ['Paint correction', 'Multi-stage cut + polish. Swirl + scratch removal. From $850'],
+      ]},
+      {title: 'Materials', items: [
+        ['Gyeon, CarPro, Jescar', 'Coating partners. All chemistry pH-balanced + paint-safe.'],
+        ['IGL ceramics certified', 'Installer training updated annually. Warranty registered.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'juice-bar', name: 'Sun & Stone Juicery',
+    tagline: 'Cold-pressed, never bottled. Daily cleanse kits.',
+    vertical: 'Juice bar — Santa Cruz, CA', layout: 'warm',
+    fonts: {h: 'Fraunces', b: 'Karla'},
+    palette: {bg: '#fdf7ec', ink: '#1d2218', accent: '#fb8a3c', muted: '#82826e', card: '#ffffff'},
+    nav: ['Juices', 'Cleanse', 'Bowls', 'Pickup'],
+    hero: {kicker: 'Pressed daily at 5 a.m.', cta: 'Build your cleanse'},
+    sections: [
+      {title: "Today's press", items: [
+        ['Green Goddess', 'Kale, spinach, cucumber, celery, apple, ginger, lemon. $11'],
+        ['Beet Reset', 'Beet, carrot, apple, lemon, turmeric. $10'],
+        ['Citrus Sun', 'Orange, grapefruit, ginger, cayenne, lemon. $9'],
+        ['Brazil Nut Mylk', 'Brazil nut, dates, vanilla, sea salt, cardamom. $8'],
+      ]},
+      {title: 'Cleanses', items: [
+        ['1-day reset', '6 bottles · 32oz spring water · pickup or delivery. $89'],
+        ['3-day deep cleanse', '18 bottles · electrolyte support · coaching call. $245'],
+      ]},
+    ],
+  },
+  {
+    slug: 'bookbinder', name: 'Argent Bookworks',
+    tagline: 'Hand-bound journals, leather repair, restoration.',
+    vertical: 'Bookbindery — Providence, RI', layout: 'editorial',
+    fonts: {h: 'Lora', b: 'Inter'},
+    palette: {bg: '#f3eee5', ink: '#1f1c14', accent: '#7a4c2a', muted: '#6f6a5e', card: '#fffaf0'},
+    nav: ['Bespoke', 'Repair', 'Workshops', 'Studio'],
+    hero: {kicker: 'In a 1903 carriage house', cta: 'Commission a journal'},
+    sections: [
+      {title: 'Services', items: [
+        ['Custom journals', 'Coptic, longstitch, or case-bound. Choose paper + spine. From $85'],
+        ['Repair & restoration', 'Spine repair, hinge tightening, recasing. Estimates by appointment.'],
+        ['Heirloom rebinding', 'Bible, family album, or first-edition leather rebind.'],
+      ]},
+      {title: 'Workshops', items: [
+        ['Intro to bookbinding', '4 weeks · Sunday afternoons. $325 incl. materials.'],
+        ['Leather covering', '2-day intensive. Held quarterly.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'pottery-studio', name: 'Riverstone Clay Co-op',
+    tagline: 'Member-run wheel + hand-build studio. Two electric kilns.',
+    vertical: 'Pottery studio — Portland, ME', layout: 'warm',
+    fonts: {h: 'DM Serif Display', b: 'Karla'},
+    palette: {bg: '#efeae0', ink: '#1f1c17', accent: '#b25d3e', muted: '#766f63', card: '#ffffff'},
+    nav: ['Membership', 'Classes', 'Open studio', 'Shop'],
+    hero: {kicker: '20 wheels · two kilns · open 7 days', cta: 'Reserve a class'},
+    sections: [
+      {title: 'Classes', items: [
+        ['Beginner wheel', '6 weeks · Mondays 6:30. Includes 25 lbs clay + firing. $325'],
+        ['Hand-building', '4 weeks · Wednesdays 6:30. $245'],
+        ['Glaze intensive', 'Weekend workshop. Lab session + glaze formulation.'],
+      ]},
+      {title: 'Studio access', items: [
+        ['Open membership', '$110/mo · 24/7 keycard · 25 lbs clay/mo · two kiln firings.'],
+        ['Day pass', '$30 · all materials included for guests of members.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'chiropractor', name: 'Hilltown Spine + Wellness',
+    tagline: 'Gentle adjustment, soft-tissue work, exercise prescription.',
+    vertical: 'Chiropractic clinic — Burlington, VT', layout: 'clinical',
+    fonts: {h: 'DM Serif Display', b: 'DM Sans'},
+    palette: {bg: '#f3f1ec', ink: '#1c1f1d', accent: '#578f7a', muted: '#6f7674', card: '#ffffff'},
+    nav: ['Conditions', 'Care team', 'Insurance', 'Book'],
+    hero: {kicker: 'In-network with 9 plans', cta: 'Request a 1-on-1 visit'},
+    sections: [
+      {title: 'What we treat', items: [
+        ['Low back + sciatica', 'Adjustment + soft tissue + targeted rehab. 4-12 visit plans.'],
+        ['Neck + headaches', 'Cervical-thoracic mobility, posture, ergonomic coaching.'],
+        ['Sports + recovery', 'In-season + off-season programming for endurance + power athletes.'],
+      ]},
+      {title: 'How we work', items: [
+        ['Outcomes published', 'We track recovery vs. expected. Numbers reviewed at every visit.'],
+        ['Same-doc continuity', 'Your initial DC stays your DC. No mid-plan rotation.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'pilates-studio', name: 'Halcyon Pilates',
+    tagline: 'Reformer, mat, tower. Class caps of six. Always.',
+    vertical: 'Pilates studio — Cambridge, MA', layout: 'editorial',
+    fonts: {h: 'Cormorant Garamond', b: 'Inter'},
+    palette: {bg: '#f7f4ee', ink: '#1d1d23', accent: '#9b6b89', muted: '#827d77', card: '#ffffff'},
+    nav: ['Classes', 'Instructors', 'Schedule', 'Visit'],
+    hero: {kicker: 'Capped at 6 students. Every class.', cta: "See this week's roster"},
+    sections: [
+      {title: 'Class formats', items: [
+        ['Reformer 50', '50 min · classical sequence on the reformer. All levels.'],
+        ['Tower + mat', '60 min · combo of tower spring work and mat conditioning.'],
+        ['Pre/postnatal', '50 min · pelvic floor + diastasis-aware programming.'],
+      ]},
+      {title: 'New here?', items: [
+        ['Intro privates', 'Two-session intro with the lead instructor. $185 total.'],
+        ['First class free', 'Drop into any group class on us. Bring grip socks (or borrow ours).'],
+      ]},
+    ],
+  },
+  {
+    slug: 'sushi-bar', name: 'Ohba Sushi',
+    tagline: 'Twelve-seat omakase. Edomae style. One seating, two services.',
+    vertical: 'Sushi bar — Chicago, IL', layout: 'editorial',
+    fonts: {h: 'Noto Serif JP', b: 'Inter'},
+    palette: {bg: '#15110c', ink: '#f2ead8', accent: '#c47140', muted: '#8e7e69', card: '#1d1812'},
+    nav: ['Menu', 'Reservations', 'Chef', 'About'],
+    hero: {kicker: 'Twelve seats. Two seatings.', cta: 'Reserve a seat'},
+    sections: [
+      {title: 'The omakase', items: [
+        ['Omakase, 12-course', '$185pp · zensai, sashimi, 8 nigiri, soup, dessert.'],
+        ['Omakase, 18-course', '$245pp · extended nigiri course + chef-selected wagyu add-on.'],
+        ['Sake pairing', '5-pour pairing curated to the night\'s fish. +$95pp.'],
+      ]},
+      {title: 'Sourcing', items: [
+        ['Toyosu direct', 'Tuna, uni, hirame flown twice weekly via our broker in Tokyo.'],
+        ['Hudson Valley + Maine', 'Trout, scallop, oyster from East Coast partners we visit yearly.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'pizzeria', name: 'Anchor & Coal Pizza',
+    tagline: 'Neapolitan dough, 90-second bake, wood-fired in a 900° oven.',
+    vertical: 'Pizzeria — Oakland, CA', layout: 'bold',
+    fonts: {h: 'Bebas Neue', b: 'Inter'},
+    palette: {bg: '#1a1411', ink: '#fbf5e7', accent: '#e2462a', muted: '#a6927e', card: '#231b16'},
+    nav: ['Menu', 'Hours', 'Catering', 'Visit'],
+    hero: {kicker: 'Wood-fired since 2018', cta: 'Order pickup'},
+    sections: [
+      {title: 'Pizzas', items: [
+        ['Margherita DOP', 'San Marzano, fior di latte, basil, EVOO. $19'],
+        ['Diavola', "Spicy soppressata, calabrian chili, fior di latte. $22"],
+        ['Funghi', 'Wild mushroom, taleggio, truffle oil, thyme. $24'],
+        ['Bianca', 'Pecorino, ricotta, garlic confit, lemon zest, arugula. $21'],
+      ]},
+      {title: 'About the dough', items: [
+        ['72-hour cold ferment', 'Caputo flour, 65% hydration, room rise + 3-day cold rest.'],
+        ['Imported oven', 'Acunto from Naples. 900°F floor, 90-second bake.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'wine-bar', name: 'Vesper & Vine',
+    tagline: 'Natural wine, small-producer cellar, snacks worth driving for.',
+    vertical: 'Wine bar — Hudson, NY', layout: 'editorial',
+    fonts: {h: 'Cormorant Garamond', b: 'Karla'},
+    palette: {bg: '#161220', ink: '#f0e6d2', accent: '#a67a4f', muted: '#897e6e', card: '#1c1828'},
+    nav: ['By the glass', 'Bottle list', 'Snacks', 'Reserve'],
+    hero: {kicker: 'Open 5pm – late · closed Mondays', cta: 'Reserve a high-top'},
+    sections: [
+      {title: 'On tonight', items: [
+        ['Rosé · Loire pet-nat', 'Cabernet franc, méthode ancestrale. By the glass. $14'],
+        ['Orange · Slovenia', 'Ribolla gialla, 8 days skin contact, unfiltered. $16'],
+        ['Red · Etna Rosso', 'Nerello mascalese, volcanic-soil terroir. $18'],
+        ['White · Jura savagnin', 'Oxidative, walnut + brine, perfect with our gougères. $19'],
+      ]},
+      {title: 'The cellar', items: [
+        ['Direct-import program', 'Two-thirds of the bottle list comes from importers we visit annually.'],
+        ['BYOB Sundays', '$25 corkage, capped at one bottle. Any vintage welcome.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'bookstore', name: 'Halcyon & Press',
+    tagline: 'Independent bookstore + café. Weekly events, slow coffee.',
+    vertical: 'Independent bookstore — Asheville, NC', layout: 'warm',
+    fonts: {h: 'Lora', b: 'Inter'},
+    palette: {bg: '#f6f0e3', ink: '#241e18', accent: '#76583a', muted: '#7b7468', card: '#ffffff'},
+    nav: ['New arrivals', 'Events', 'Café', 'About'],
+    hero: {kicker: 'Open seven days · café until 6', cta: "Browse this week's picks"},
+    sections: [
+      {title: 'Stock', items: [
+        ['Literary fiction', 'Curated by Mara, our buyer of nine years.'],
+        ['Poetry + chapbooks', 'Strong on small-press and Appalachian voices.'],
+        ['Children\'s', 'Our biggest section. Storytime every Saturday at 10:30.'],
+        ['Used + rare', 'Three sections. Cash buying Thursdays + Saturdays.'],
+      ]},
+      {title: 'Programming', items: [
+        ['Author readings', 'Most Tuesdays + Thursdays. RSVP required for the back room.'],
+        ['Two book clubs', 'Literary fiction (1st Wed) + nonfiction (last Sunday).'],
+      ]},
+    ],
+  },
+  {
+    slug: 'gelato-shop', name: 'Lago Gelato',
+    tagline: 'Italian-style gelato. Twenty flavors. Made every morning.',
+    vertical: 'Gelato shop — Princeton, NJ', layout: 'warm',
+    fonts: {h: 'Fraunces', b: 'Karla'},
+    palette: {bg: '#fbf3e9', ink: '#2a1f18', accent: '#d44a4a', muted: '#8f7e6e', card: '#ffffff'},
+    nav: ['Flavors', 'Pints', 'Catering', 'Find us'],
+    hero: {kicker: 'Made daily before 10 a.m.', cta: "See today's case"},
+    sections: [
+      {title: 'On the case today', items: [
+        ['Pistachio (Bronte DOP)', 'Sicilian pistachios. No coloring. The one most people remember.'],
+        ['Salted caramel + olive oil', 'Maldon flake on top. House-made caramel.'],
+        ['Stracciatella', 'Fior di latte base + house-shaved Valrhona shards.'],
+        ['Burnt honey + walnut', 'Local raw honey + candied walnut. Limited.'],
+      ]},
+      {title: 'For your event', items: [
+        ['Catering carts', 'Cart + scooper + 50 cups, 3 flavors. From $385.'],
+        ['Wedding cakes', 'Three-flavor gelato cake, ribbon-built. Two weeks notice.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'locksmith', name: 'Cardinal Lock + Key',
+    tagline: 'Residential + automotive locksmith. 30-minute response.',
+    vertical: 'Locksmith — Indianapolis, IN', layout: 'architectural',
+    fonts: {h: 'Space Grotesk', b: 'Inter'},
+    palette: {bg: '#101418', ink: '#e8eaee', accent: '#f0b81b', muted: '#7b8089', card: '#181c22'},
+    nav: ['Services', 'Service area', 'Reviews', 'Call'],
+    hero: {kicker: '24/7 dispatch · 30-min response inside I-465', cta: 'Call now'},
+    sections: [
+      {title: 'What we do', items: [
+        ['Lockouts', 'Home, business, automotive. Most cars done in 5 min.'],
+        ['Rekey + replace', 'Cylinder rekey, smart lock install, full lockset replacement.'],
+        ['Automotive keys', 'Cut + program for most makes, 2005-present. Onsite, no tow.'],
+        ['Safe service', 'Combination changes, lockouts, vault repair.'],
+      ]},
+      {title: 'On-time guarantee', items: [
+        ['30-min in town', "If we don't arrive in 30 min inside I-465, the service call is free."],
+        ['Flat-rate pricing', 'Quoted before we work. No hourly creep.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'roofer', name: 'Foundry Roofing',
+    tagline: 'Standing-seam metal, architectural shingle, leak diagnosis.',
+    vertical: 'Roofing contractor — Kansas City, MO', layout: 'architectural',
+    fonts: {h: 'Archivo', b: 'Inter'},
+    palette: {bg: '#fbfbf9', ink: '#171a20', accent: '#2e6cb5', muted: '#5d646e', card: '#f1f3f8'},
+    nav: ['Services', 'Materials', 'Process', 'Estimate'],
+    hero: {kicker: 'Licensed · MO + KS · Lic. R-2098', cta: 'Get a free estimate'},
+    sections: [
+      {title: 'Materials', items: [
+        ['Standing-seam metal', '24-gauge Galvalume. 30+ year warranty. Concealed fastener.'],
+        ['Architectural shingle', 'Owens Corning Duration. Class 4 impact-resistant options.'],
+        ['Synthetic slate + cedar', 'DaVinci composite + cedar shake alternatives.'],
+        ['EPDM + TPO', 'Flat-roof commercial systems. 15- and 20-year warranties.'],
+      ]},
+      {title: 'How we work', items: [
+        ['Drone inspection', 'Full roof report with photos in 48 hours.'],
+        ['Insurance liaison', 'We work directly with your adjuster on storm claims.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'landscaper', name: 'Quartermile Landscape Design',
+    tagline: 'Native plantings, hardscape, irrigation. Full design-build.',
+    vertical: 'Landscape design + build — Austin, TX', layout: 'warm',
+    fonts: {h: 'DM Serif Display', b: 'Karla'},
+    palette: {bg: '#f3f1e6', ink: '#1d2017', accent: '#6f8246', muted: '#7d7d6c', card: '#ffffff'},
+    nav: ['Design', 'Build', 'Maintenance', 'Portfolio'],
+    hero: {kicker: 'Native-first since 2011', cta: 'Schedule a consult'},
+    sections: [
+      {title: 'Practice', items: [
+        ['Design + plan', 'Master plan, planting palette, irrigation, lighting. Phased budget.'],
+        ['Build + install', "We're the contractor too. No handoff. Crews are in-house, W-2."],
+        ['Native plantings', 'Hill Country natives + adapted Mediterraneans. Lower water year-round.'],
+        ['Stone + steel hardscape', 'Walls, patios, ramadas, fire features. Local quarried stone.'],
+      ]},
+      {title: 'Aftercare', items: [
+        ['90-day establishment', 'Watering + adjustment included on every install.'],
+        ['Annual maintenance', 'Optional. Spring + fall visits, irrigation tune-up included.'],
+      ]},
     ],
   },
 ];
