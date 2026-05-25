@@ -18,9 +18,10 @@ const CANONICAL_ORIGIN = 'https://wranngle.com';
  * `/products/<slug>` — same component, same meta, canonical URL on
  * both routes points to `/` so search engines see one page, not two.
  *
- * To swap the home page to a different product, change this constant
- * and update `HOME_PRODUCT_META_KEY` (or just rely on the product's
- * own /products/<slug> ROUTE_META entry, which is what `/` will read).
+ * To swap the home page to a different product, change `HOME_PRODUCT`.
+ * `RouteHeadSync` below derives `/`'s metadata from the chosen product's
+ * own `/products/<slug>` entry in `ROUTE_META`, so no separate home-page
+ * meta block is needed.
  */
 type ProductSlug = 'ai-voice-agents' | 'websites' | 'gtm-ops';
 const HOME_PRODUCT: ProductSlug = 'ai-voice-agents';
