@@ -60,6 +60,31 @@ const config: FlatXoConfig = [
     },
   },
   {
+    // Generator scripts (.mjs) are dev-time one-shots — exempt from the
+    // stricter unicorn/prettier rules that don't earn their bytes here.
+    files: ['script/generators/**/*.mjs'],
+    rules: {
+      'unicorn/no-process-exit': 'off',
+      'unicorn/catch-error-name': 'off',
+      'unicorn/prefer-optional-catch-binding': 'off',
+      'unicorn/better-regex': 'off',
+      'unicorn/prefer-string-replace-all': 'off',
+      'unicorn/prefer-spread': 'off',
+      'unicorn/prefer-ternary': 'off',
+      'unicorn/no-array-for-each': 'off',
+      'n/prefer-global/buffer': 'off',
+      'n/no-extraneous-import': 'off',
+      'import-x/no-extraneous-dependencies': 'off',
+      'import-x/no-absolute-path': 'off',
+      'promise/param-names': 'off',
+      'no-promise-executor-return': 'off',
+      'no-unused-vars': 'off',
+      '@stylistic/padding-line-between-statements': 'off',
+      'prettier/prettier': 'off',
+      'max-lines': 'off',
+    },
+  },
+  {
     files: ['tests/**/*.ts'],
     rules: {
       'unicorn/no-process-exit': 'off',

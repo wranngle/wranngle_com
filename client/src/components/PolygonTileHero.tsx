@@ -57,11 +57,20 @@ const CFG = {
  *  matters: tile 0 is the center, then ring 1 spirals out, then ring 2.
  *  See the prototype for the ring construction. */
 type TileContent =
-  | {kind: 'demo'; id: string; poster: string; video: string; label: string}
+  | {
+      kind: 'demo';
+      id: string;
+      poster: string;
+      video: string;
+      label: string;
+      featured: true;
+    }
   // image tiles can carry a `wide` widescreen source — shown when the tile
   // is hero-zoomed so the 1600×1000 landing-page screenshot unfurls fully;
-  // `src` (smaller thumb crop) is shown in the ring.
-  | {kind: 'image'; src: string; wide?: string; alt: string}
+  // `src` (smaller thumb crop) is shown in the ring. `featured: true`
+  // means the tile rotates through the center spotlight; everything else
+  // stays in the ring as static landing-page fill.
+  | {kind: 'image'; src: string; wide?: string; alt: string; featured?: boolean}
   | {kind: 'primitive'};
 
 const ASSET_BASE = '/assets/hero-demos';
@@ -72,6 +81,7 @@ const DEMO_TILES: TileContent[] = [
     poster: `${ASSET_BASE}/trattoria.poster.jpg`,
     video: `${ASSET_BASE}/trattoria.webm`,
     label: 'Bella Vista Trattoria',
+    featured: true,
   },
   {
     kind: 'demo',
@@ -79,6 +89,7 @@ const DEMO_TILES: TileContent[] = [
     poster: `${ASSET_BASE}/dental.poster.jpg`,
     video: `${ASSET_BASE}/dental.webm`,
     label: 'Tidewater Family Dental',
+    featured: true,
   },
   {
     kind: 'demo',
@@ -86,23 +97,27 @@ const DEMO_TILES: TileContent[] = [
     poster: `${ASSET_BASE}/salon.poster.jpg`,
     video: `${ASSET_BASE}/salon.webm`,
     label: 'Atlas Hair Co.',
+    featured: true,
   },
 ];
 
-// Twenty mock business landing pages — generated under demo-stages/biz/
+// 37 mock business landing pages — generated under demo-stages/biz/
 // and screenshotted to client/public/assets/hero-tiles/<slug>.{jpg,thumb.jpg}
 // by script/generators/{biz-landing-pages,capture-biz-tiles}.mjs. Order
-// drives the ring spotlight rotation; we interleave layout variants so
-// adjacent ring slots feel visually distinct.
+// drives the ring placement (k=1 = 6 tiles, k=2 = 12 tiles, k=3 = 18 tiles).
+// `featured: true` on a stock tile means it joins the demo rotation —
+// the 3 demo videos + 2 hand-picked stock pages = 5 total in the spotlight
+// cycle; the rest stay in the ring as static landing-page fill.
 const STOCK_TILES: TileContent[] = [
-  // Inner ring (k=1) — 6 tiles. Mix all five layout families.
-  {slug: 'bakery', name: 'Aviary Bakehouse'},
-  {slug: 'climbing-gym', name: 'North Face Climbing Co-op'},
+  // Inner ring (k=1) — 6 tiles. Two are featured (rotate to hero); these
+  // are the strongest non-demo pages visually.
+  {slug: 'bakery', name: 'Aviary Bakehouse', featured: true},
+  {slug: 'climbing-gym', name: 'North Face Climbing Co-op', featured: true},
   {slug: 'cocktail-bar', name: 'Lantern & Owl'},
   {slug: 'nail-studio', name: 'Cosmos Nail Studio'},
   {slug: 'coffee-roaster', name: 'Stalk & Tin Coffee'},
   {slug: 'plumber', name: 'Crestline Plumbing'},
-  // Outer-populated ring (k=2) — 12 tiles. Remaining 12 mocks.
+  // Middle ring (k=2) — 12 tiles, all static fill.
   {slug: 'ramen-bar', name: 'Kōri Ramen'},
   {slug: 'florist', name: 'Bramble & Stem'},
   {slug: 'tattoo-parlor', name: 'Iron Heron Tattoo'},
@@ -115,13 +130,33 @@ const STOCK_TILES: TileContent[] = [
   {slug: 'family-law', name: 'Wren & Hadley LLP'},
   {slug: 'physical-therapy', name: 'Cedar Bend PT'},
   {slug: 'hvac', name: 'Northstar HVAC'},
+  // Outer ring (k=3) — 18 tiles, all static fill. Filled by the 17 newer
+  // pages + 'vet' + 'barbershop' to round out the ring exactly.
   {slug: 'vet', name: 'Northside Veterinary'},
   {slug: 'barbershop', name: 'Pinion & Crow Barber Co.'},
-].map(({slug, name}) => ({
+  {slug: 'accounting-firm', name: 'Lattimer & Holt CPA'},
+  {slug: 'pet-grooming', name: 'Bramble & Boop'},
+  {slug: 'music-school', name: 'Stoneharbor Music Conservatory'},
+  {slug: 'car-detail', name: 'Mirror Finish Auto Spa'},
+  {slug: 'juice-bar', name: 'Sun & Stone Juicery'},
+  {slug: 'bookbinder', name: 'Argent Bookworks'},
+  {slug: 'pottery-studio', name: 'Riverstone Clay Co-op'},
+  {slug: 'chiropractor', name: 'Hilltown Spine + Wellness'},
+  {slug: 'pilates-studio', name: 'Halcyon Pilates'},
+  {slug: 'sushi-bar', name: 'Ohba Sushi'},
+  {slug: 'pizzeria', name: 'Anchor & Coal Pizza'},
+  {slug: 'wine-bar', name: 'Vesper & Vine'},
+  {slug: 'bookstore', name: 'Halcyon & Press'},
+  {slug: 'gelato-shop', name: 'Lago Gelato'},
+  {slug: 'locksmith', name: 'Cardinal Lock + Key'},
+  {slug: 'roofer', name: 'Foundry Roofing'},
+  {slug: 'landscaper', name: 'Quartermile Landscape Design'},
+].map(({slug, name, featured}) => ({
   kind: 'image' as const,
   src: `/assets/hero-tiles/${slug}.thumb.jpg`,
   wide: `/assets/hero-tiles/${slug}.jpg`,
   alt: name,
+  featured: featured ?? false,
 }));
 
 const PRIMITIVE: TileContent = {kind: 'primitive'};
@@ -186,16 +221,29 @@ function buildTiles(): TileGeom[] {
       const by = Math.sin(a1) * k;
       for (let j = 0; j < k; j++) {
         const t = j / k;
-        // Inner two rings get real imagery; outer rings stay primitive
+        // Inner three rings get real imagery; outer rings stay primitive
         // so the field reads as endless and the radial mask dissolves
         // it cleanly into the page.
-        const content = k <= 2 ? consume() : PRIMITIVE;
+        const content = k <= 3 ? consume() : PRIMITIVE;
         push(k, ax + (bx - ax) * t, ay + (by - ay) * t, content);
       }
     }
   }
 
   return tiles;
+}
+
+/** Indices of tiles flagged `featured` — only these cycle through the
+ *  hero spotlight rotation. The rest stay in the ring as landing-page
+ *  fill. Computed once from the same buildTiles() output. */
+function featuredIndices(tiles: TileGeom[]): number[] {
+  const out: number[] = [];
+  for (const [i, t] of tiles.entries()) {
+    const c = t.content;
+    if (c.kind === 'demo' || (c.kind === 'image' && c.featured)) out.push(i);
+  }
+
+  return out;
 }
 
 function easeOutBack(p: number) {
@@ -245,11 +293,16 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
   useEffect(() => {
     const tiles = tilesRef.current;
     if (tiles.length === 0) return;
+    // Only `featured` tiles rotate through the spotlight — 3 demo videos
+    // + 2 hand-picked stock pages = 5 hero candidates. Everything else
+    // stays in the ring as static landing-page fill.
+    const heroPool = featuredIndices(tiles);
     let raf = 0;
     let animClock = 0;
     let heroTimer = 0;
     let lastTs: number | undefined;
-    let heroIdx = 0;
+    let poolPos = 0;
+    let heroIdx = heroPool[0] ?? 0;
     const cycle = CFG.transIn + CFG.heroHold + CFG.transOut;
 
     const draw = () => {
@@ -262,12 +315,13 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
 
       let hAmt: number;
       if (reduce) {
-        heroIdx = 0;
+        heroIdx = heroPool[0] ?? 0;
         hAmt = 1;
       } else {
-        while (heroTimer >= cycle && tiles.length > 0) {
+        while (heroTimer >= cycle && heroPool.length > 0) {
           heroTimer -= cycle;
-          heroIdx = (heroIdx + 1) % tiles.length;
+          poolPos = (poolPos + 1) % heroPool.length;
+          heroIdx = heroPool[poolPos];
           // Re-render only when the hero changes — keeps the video
           // swap in lockstep with the spotlight.
           setHeroIndex(heroIdx);
@@ -385,13 +439,15 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
         ref={fieldRef}
         className="absolute inset-0"
         style={{
-          // Radial dissolve — opaque core for the hero tile (now widescreen
-          // 16:10 at full zoom, so the ellipse is wider than tall), edges
-          // fade into the page background so the field reads as endless.
+          // Radial dissolve — the opaque core deliberately stays smaller
+          // than the hero zoom footprint so the dissolve intrudes a little
+          // into the hero edges (a soft vignette feel). Multi-stop curve
+          // gives a much gentler falloff than a hard 0→100 ramp; the field
+          // melts into the page background instead of cutting off.
           WebkitMaskImage:
-            'radial-gradient(ellipse 78% 70% at 50% 50%, #000 0 76%, transparent 100%)',
+            'radial-gradient(ellipse 95% 90% at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 38%, rgba(0,0,0,0.92) 55%, rgba(0,0,0,0.62) 72%, rgba(0,0,0,0.28) 86%, transparent 100%)',
           maskImage:
-            'radial-gradient(ellipse 78% 70% at 50% 50%, #000 0 76%, transparent 100%)',
+            'radial-gradient(ellipse 95% 90% at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 38%, rgba(0,0,0,0.92) 55%, rgba(0,0,0,0.62) 72%, rgba(0,0,0,0.28) 86%, transparent 100%)',
         }}
       >
         {tilesRef.current.map((tile, idx) => (

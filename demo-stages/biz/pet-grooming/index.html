@@ -1,0 +1,92 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Bramble & Boop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400;500;700&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbf3ef;
+    --ink: #241915;
+    --accent: #d77b58;
+    --muted: #8b7b73;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+  body {
+    font-family: 'Karla', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display { font-family: 'DM Serif Display', Georgia, serif; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 32px; max-width: 1280px; margin: 0 auto;
+  }
+  .wordmark { font-family: 'DM Serif Display'; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .nav-links { display: flex; gap: 26px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; }
+  .btn {
+    display: inline-block; padding: 14px 22px; border-radius: 999px;
+    background: var(--accent); color: white; font-size: 14px;
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+  }
+  .kicker { font-size: 12px; text-transform: uppercase; letter-spacing: 0.16em; opacity: 0.6; margin-bottom: 14px; }
+  .muted { color: var(--muted); }
+  .pill { display: inline-block; padding: 4px 12px; border-radius: 999px; background: var(--accent); color: white; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+.hero { padding: 24px 0 80px; }
+.hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(40px, 5.5vw, 76px); line-height: 1.04; letter-spacing: -0.02em; margin: 0 0 20px; font-weight: 400; }
+.hero h1 em { color: var(--accent); font-style: italic; }
+.hero p.lead { font-size: 19px; line-height: 1.55; max-width: 520px; color: var(--ink); opacity: 0.78; margin: 0 0 32px; }
+.hero-img { aspect-ratio: 4/5; border-radius: 14px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.15); }
+.hero-img img { width: 100%; height: 100%; object-fit: cover; }
+.section { padding: 80px 0; }
+.section h2 { font-size: clamp(28px, 3.5vw, 44px); margin: 0 0 48px; max-width: 700px; line-height: 1.1; font-weight: 400; }
+.menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px 56px; }
+.menu-item { padding-bottom: 22px; border-bottom: 1px solid rgba(0,0,0,0.08); }
+.menu-item h3 { font-size: 22px; margin: 0 0 6px; font-weight: 500; }
+.menu-item p { margin: 0; color: var(--muted); font-size: 15px; }
+.image-band { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; height: 320px; }
+.image-band img { width: 100%; height: 100%; object-fit: cover; }
+.story { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: center; }
+.story-img { aspect-ratio: 4/3; border-radius: 14px; overflow: hidden; }
+.story p { font-size: 17px; line-height: 1.7; color: var(--ink); opacity: 0.78; }
+.footer { padding: 60px 0; border-top: 1px solid rgba(0,0,0,0.08); text-align: center; font-size: 14px; color: var(--muted); }
+</style></head><body>
+<nav class="nav">
+    <div class="wordmark">Bramble & Boop</div>
+    <div class="nav-links"><a>Services</a><a>Pricing</a><a>Our team</a><a>Book</a></div>
+    <a class="btn">Book your pup</a>
+  </nav>
+<section class="hero wrap">
+  <div class="hero-grid">
+    <div>
+      <div class="kicker">Open Tue – Sat</div>
+      <h1>Fear-free grooming. Two-tech rooms. Walk-out same hour<em>.</em></h1>
+      <p class="lead">Dog & cat grooming — Denver, CO.</p>
+      <a class="btn">Book your pup</a>
+    </div>
+    <div class="hero-img"><img src="img/hero.jpg" alt=""></div>
+  </div>
+</section>
+<section class="section wrap">
+  <h2>Menu</h2>
+  <div class="menu-grid">
+    <div class="menu-item"><h3>Bath & blow-out</h3><p>60 min · oatmeal shampoo, brush, nail trim, ear clean. From $48</p></div><div class="menu-item"><h3>Full groom</h3><p>90 min · breed cut, sanitary trim, paw pads, finish spray. From $78</p></div><div class="menu-item"><h3>Cat tidy</h3><p>45 min · sanitary, mat removal, nail trim, light bath. From $58</p></div><div class="menu-item"><h3>Puppy intro</h3><p>30 min · gentle desensitization + light tidy. $35</p></div>
+  </div>
+</section>
+<div class="image-band"><img src="img/a.jpg"><img src="img/b.jpg"><img src="img/c.jpg"></div>
+<section class="section wrap">
+  <div class="story">
+    <div class="story-img"><img src="img/d.jpg"></div>
+    <div>
+      <div class="kicker">Why families come back</div>
+      <h2 style="margin-bottom:24px">Made by hand.<br>Sold by hand.</h2>
+      <p><strong>Two-tech rooms.</strong> No crating between steps. One groomer + one assistant per dog.</p><p><strong>Calming protocol.</strong> Pheromone diffusers + non-slip mats + treat reinforcement.</p>
+    </div>
+  </div>
+</section>
+<footer class="footer">Bramble & Boop · Dog & cat grooming — Denver, CO</footer>
+</body></html>
