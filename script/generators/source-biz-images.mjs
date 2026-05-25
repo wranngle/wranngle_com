@@ -14,8 +14,33 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, '../..');
 const bizRoot = path.join(repoRoot, 'demo-stages/biz');
 
-// slug → keyword list (Unsplash search keywords, order of preference)
+// slug → keyword list (Unsplash search keywords, order of preference).
+// Every slug listed in demo-stages/biz/_businesses.json should have an
+// entry here so the source script can refresh images for any tile after
+// a delete or rotation. The hero-tiles-drift test enforces 1:1.
 const KEYWORDS = {
+  // ---- original 20 (rings 1–2) ----
+  'bakery': ['sourdough,bread', 'bakery,loaves', 'artisan,bread', 'baker,oven', 'flour,dusted'],
+  'barbershop': ['barber,scissors', 'barbershop,chair', 'straight,razor', 'barber,cape', 'barbershop,interior'],
+  'bbq-joint': ['bbq,smoker', 'brisket,plate', 'pulled,pork', 'barbecue,ribs', 'smokehouse'],
+  'climbing-gym': ['climbing,gym', 'bouldering,wall', 'rock,climber', 'climbing,holds', 'belay,lead'],
+  'cocktail-bar': ['cocktail,bar', 'bartender,shaker', 'mezcal,smoke', 'amaro,glass', 'speakeasy'],
+  'coffee-roaster': ['coffee,roaster', 'coffee,beans', 'pour,over', 'espresso,shot', 'latte,art'],
+  'crossfit-gym': ['crossfit,gym', 'barbell,deadlift', 'kettlebell', 'strength,training', 'gym,equipment'],
+  'dermatology': ['dermatology', 'skin,clinic', 'doctor,exam', 'medical,office', 'wellness,clinic'],
+  'electrician': ['electrician', 'electrical,panel', 'wiring,install', 'circuit,breaker', 'tools,belt'],
+  'family-law': ['law,office', 'attorney,desk', 'legal,documents', 'gavel,books', 'consultation'],
+  'florist': ['florist,bouquet', 'flower,shop', 'wedding,flowers', 'fresh,blooms', 'roses,arrangement'],
+  'hvac': ['hvac,install', 'heat,pump', 'air,conditioner', 'mini,split', 'ductwork'],
+  'nail-studio': ['nail,salon', 'manicure', 'gel,nails', 'nail,art', 'nail,polish'],
+  'physical-therapy': ['physical,therapy', 'rehab,clinic', 'exercise,ball', 'recovery,table', 'therapist,patient'],
+  'plumber': ['plumber', 'pipe,wrench', 'water,heater', 'plumbing,install', 'kitchen,sink'],
+  'ramen-bar': ['ramen,bowl', 'tonkotsu', 'noodle,broth', 'ramen,shop', 'chashu,pork'],
+  'tattoo-parlor': ['tattoo,artist', 'tattoo,studio', 'fine,line,tattoo', 'tattoo,machine', 'tattoo,sleeve'],
+  'vegan-cafe': ['vegan,cafe', 'plant,based,bowl', 'avocado,toast', 'smoothie,bowl,vegan', 'salad,greens'],
+  'vet': ['veterinarian', 'dog,checkup', 'cat,exam', 'vet,clinic', 'puppy,visit'],
+  'yoga-studio': ['yoga,studio', 'yoga,pose', 'meditation,mat', 'vinyasa,flow', 'savasana'],
+  // ---- ring 3 fill ----
   'accounting-firm': ['accounting', 'office,desk', 'finance', 'spreadsheet', 'calculator'],
   'pet-grooming': ['dog,grooming', 'cat,pet', 'puppy', 'dog,bath', 'pet,brush'],
   'music-school': ['piano,lesson', 'guitar,music', 'violin', 'drums', 'sheet,music'],
@@ -33,7 +58,7 @@ const KEYWORDS = {
   'locksmith': ['key,lock', 'door,lock', 'locksmith,tools', 'security,key', 'old,key'],
   'roofer': ['roof,construction', 'roofing,shingles', 'house,roof', 'metal,roof', 'roof,worker'],
   'landscaper': ['garden,landscape', 'lawn,mower', 'backyard,garden', 'hedge,trim', 'flower,bed'],
-  // ---- ring 4 fill ----
+  // ---- ring 4 fill (16 more) ----
   'bike-shop': ['bicycle,shop', 'cycling,road', 'mountain,bike', 'bike,wheel', 'bike,workshop'],
   'vinyl-shop': ['vinyl,records', 'turntable', 'record,store', 'cassette,vinyl', 'music,store'],
   'candle-maker': ['candle,wax', 'candle,jar', 'candle,workshop', 'soy,candle', 'candle,studio'],

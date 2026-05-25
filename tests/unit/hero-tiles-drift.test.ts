@@ -72,4 +72,21 @@ describe('hero-tiles drift', () => {
     );
     expect(broken.map((e) => e.slug)).toEqual([]);
   });
+
+  it('source-biz-images.mjs has a KEYWORDS entry for every slug', () => {
+    // If a slug ships in the registry but not in source-biz-images.mjs,
+    // the script can never refresh its imagery after a delete — the
+    // captures are effectively read-only and orphan from regeneration.
+    const sourceScript = readFileSync(
+      path.join(REPO_ROOT, 'script/generators/source-biz-images.mjs'),
+      'utf8',
+    );
+    const kwSlugs = new Set(
+      [...sourceScript.matchAll(/^\s*'([a-z][a-z\d-]*)':\s*\[/gm)].map(
+        (m) => m[1],
+      ),
+    );
+    const missing = componentSlugs.filter((s) => !kwSlugs.has(s));
+    expect(missing).toEqual([]);
+  });
 });
