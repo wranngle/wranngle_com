@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
+import {TileTracerField, type TileSnapshot} from '@/components/tileTracers.ts';
 
 /**
  * PolygonTileHero — port of the operator's polygon-tile-hero.html prototype.
@@ -181,11 +182,14 @@ const STOCK_TILES: TileContent[] = [
 const PRIMITIVE: TileContent = {kind: 'primitive'};
 
 /** Per-tile baked offsets + phases. Deterministic seeds so SSR + client
- *  match and the field doesn't pop on hydration. */
+ *  match and the field doesn't pop on hydration. The `d*` fields are the
+ *  tile's live geometry, rewritten by the draw loop each frame so the comet
+ *  tracer overlay can route along the current lattice (see tileTracers.ts). */
 type TileGeom = {
   ring: number;
   ox: number;
   oy: number;
+  ang: number; // baked ring angle (atan2 of the ring offset)
   // Per-tile drift/pulse/sway phase offsets (radians)
   pdx: number;
   pdy: number;
@@ -194,6 +198,12 @@ type TileGeom = {
   // Per-tile frequency jitter
   fj: number;
   content: TileContent;
+  // Live geometry (CSS px / radians), updated per frame.
+  dx: number;
+  dy: number;
+  ds: number;
+  dr: number;
+  dt: number;
 };
 
 function seededRand(seed: number) {
@@ -220,12 +230,18 @@ function buildTiles(): TileGeom[] {
       ring,
       ox,
       oy,
+      ang: ring === 0 ? 0 : Math.atan2(oy, ox),
       pdx: rng() * 6.283,
       pdy: rng() * 6.283,
       pp: rng() * 6.283,
       ps: rng() * 6.283,
       fj: 0.82 + rng() * 0.4,
       content,
+      dx: 0,
+      dy: 0,
+      ds: 0,
+      dr: 0,
+      dt: 0,
     });
   };
 
@@ -301,6 +317,7 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
   /* eslint-disable @typescript-eslint/no-restricted-types -- React refs use null sentinel. */
   const containerRef = useRef<HTMLDivElement | null>(null);
   const fieldRef = useRef<HTMLDivElement | null>(null);
+  const tracerCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const tilesRef = useRef<TileGeom[]>(buildTiles());
   // Per-tile <div> refs in render order.
   const tileElementsRef = useRef<Array<HTMLDivElement | null>>([]);
@@ -318,12 +335,26 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
     // + 2 hand-picked stock pages = 5 hero candidates. Everything else
     // stays in the ring as static landing-page fill.
     const heroPool = featuredIndices(tiles);
+    // Comet tracers: fire a glowing ember pulse from the hero outward along
+    // the ring lattice each time a hero finishes zooming in. Skipped under
+    // reduced-motion. The tile geometry the tracer routes along is the live
+    // d* fields written below in the draw loop.
+    const ringTiles: TileSnapshot[][] = [];
+    for (const t of tiles) {
+      (ringTiles[t.ring] ??= []).push(t);
+    }
+
+    const tracerCanvas = tracerCanvasRef.current;
+    const tracers =
+      tracerCanvas && !reduce ? new TileTracerField(tracerCanvas) : undefined;
+
     let raf = 0;
     let animClock = 0;
     let heroTimer = 0;
     let lastTs: number | undefined;
     let poolPos = 0;
     let heroIdx = heroPool[0] ?? 0;
+    let firedForHero = false;
     const cycle = CFG.transIn + CFG.heroHold + CFG.transOut;
 
     const draw = () => {
@@ -343,6 +374,7 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
           heroTimer -= cycle;
           poolPos = (poolPos + 1) % heroPool.length;
           heroIdx = heroPool[poolPos];
+          firedForHero = false;
           // Re-render only when the hero changes — keeps the video
           // swap in lockstep with the spotlight.
           setHeroIndex(heroIdx);
@@ -409,16 +441,53 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
             ? 9_000_000 + Math.round(h * 2000)
             : Math.round((CFG.rings - tl.ring) * 1000 + (3200 - fy));
 
+        const radius = CFG.cornerRadius * ratio;
         const s = el.style;
         s.width = `${fwidth.toFixed(2)}px`;
         s.height = `${fheight.toFixed(2)}px`;
         s.left = `${fx.toFixed(2)}px`;
         s.top = `${fy.toFixed(2)}px`;
         s.transform = `translate(-50%,-50%) rotate(${rot.toFixed(2)}deg)`;
-        s.borderRadius = `${(CFG.cornerRadius * ratio).toFixed(2)}px`;
+        s.borderRadius = `${radius.toFixed(2)}px`;
         s.borderWidth = `${(2 * (1 + 0.6 * h)).toFixed(2)}px`;
         s.opacity = op.toFixed(3);
         s.zIndex = String(z);
+
+        // Snapshot live geometry for the comet tracer (CSS px / radians).
+        // The hero unfurls to widescreen, but tracers only need a square
+        // outline to launch from, so we use the vertical edge.
+        tl.dx = fx;
+        tl.dy = fy;
+        tl.ds = fheight;
+        tl.dr = radius;
+        tl.dt = (rot * Math.PI) / 180;
+      }
+
+      // Comet tracers — fire once per hero, the moment it finishes zooming
+      // in, then composite the live ember pulses over the DOM tiles.
+      if (tracers) {
+        const dpr = Math.min(globalThis.devicePixelRatio || 1, 2);
+        const W = Math.max(2, Math.round(field.clientWidth * dpr));
+        const H = Math.max(2, Math.round(field.clientHeight * dpr));
+        if (
+          !firedForHero &&
+          !reduce &&
+          heroTimer >= CFG.transIn &&
+          heroPool.length > 0
+        ) {
+          firedForHero = true;
+          tracers.firePulse(
+            animClock,
+            W,
+            H,
+            dpr,
+            tiles[heroIdx],
+            ringTiles,
+            CFG.rings,
+          );
+        }
+
+        tracers.render(animClock, W, H, dpr);
       }
     };
 
@@ -440,6 +509,7 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
 
     return () => {
       if (raf) cancelAnimationFrame(raf);
+      tracers?.dispose();
     };
   }, [reduce]);
 
@@ -497,6 +567,26 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
           </div>
         ))}
       </div>
+      {/* Comet-tracer overlay — WebGL ember pulses composited over the
+          tiles. `screen` blend makes the embers glow over the imagery
+          without a dark box; the same radial mask keeps the tracers
+          dissolving into the page edges as the field does. */}
+      <canvas
+        ref={tracerCanvasRef}
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        style={{
+          // Above the ring tiles (z up to ~8k) but BELOW the zoomed hero
+          // (z≈9.0M) — so embers streak across the field behind the hero
+          // and the spotlighted tile stays crisply on top.
+          zIndex: 8_500_000,
+          mixBlendMode: 'screen',
+          WebkitMaskImage:
+            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.78) 64%, rgba(0,0,0,0.42) 80%, rgba(0,0,0,0.14) 92%, transparent 100%)',
+          maskImage:
+            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.78) 64%, rgba(0,0,0,0.42) 80%, rgba(0,0,0,0.14) 92%, transparent 100%)',
+        }}
+        aria-hidden="true"
+      />
       {(caption ?? subcaption) && (
         <div className="pointer-events-none absolute inset-x-0 bottom-1 z-[60] flex flex-col items-center gap-1">
           {caption && (

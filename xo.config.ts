@@ -44,6 +44,17 @@ const config: FlatXoConfig = [
     rules: sharedRulesOff,
   },
   {
+    // tileTracers.ts is a faithful port of a WebGL shader prototype. Its
+    // class groups private render helpers ahead of the public API and uses
+    // an explicit field assignment in the constructor — both flagged by
+    // purely-cosmetic ordering rules that fight the ported structure.
+    files: ['client/src/components/tileTracers.ts'],
+    rules: {
+      '@typescript-eslint/member-ordering': 'off',
+      '@typescript-eslint/parameter-properties': 'off',
+    },
+  },
+  {
     files: ['scripts/**/*.ts', 'script/**/*.ts'],
     rules: {
       'unicorn/no-process-exit': 'off',
