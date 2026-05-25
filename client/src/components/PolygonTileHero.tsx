@@ -566,27 +566,22 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
             />
           </div>
         ))}
+        {/* Comet-tracer overlay — WebGL ember pulses composited over the
+            ring tiles via `screen` blend. It lives INSIDE the masked field
+            so it shares the field's stacking context: its z (8.5M) sits
+            above the ring tiles (z up to ~8k) but below the zoomed hero
+            (z≈9.0M), so the embers streak behind the spotlighted tile.
+            (As a sibling of the field it would lose, because the field's
+            mask makes it a stacking context and the hero's 9M can't escape
+            it.) The field's mask already dissolves this child at the edges,
+            so no separate mask is needed here. */}
+        <canvas
+          ref={tracerCanvasRef}
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          style={{zIndex: 8_500_000, mixBlendMode: 'screen'}}
+          aria-hidden="true"
+        />
       </div>
-      {/* Comet-tracer overlay — WebGL ember pulses composited over the
-          tiles. `screen` blend makes the embers glow over the imagery
-          without a dark box; the same radial mask keeps the tracers
-          dissolving into the page edges as the field does. */}
-      <canvas
-        ref={tracerCanvasRef}
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        style={{
-          // Above the ring tiles (z up to ~8k) but BELOW the zoomed hero
-          // (z≈9.0M) — so embers streak across the field behind the hero
-          // and the spotlighted tile stays crisply on top.
-          zIndex: 8_500_000,
-          mixBlendMode: 'screen',
-          WebkitMaskImage:
-            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.78) 64%, rgba(0,0,0,0.42) 80%, rgba(0,0,0,0.14) 92%, transparent 100%)',
-          maskImage:
-            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.78) 64%, rgba(0,0,0,0.42) 80%, rgba(0,0,0,0.14) 92%, transparent 100%)',
-        }}
-        aria-hidden="true"
-      />
       {(caption ?? subcaption) && (
         <div className="pointer-events-none absolute inset-x-0 bottom-1 z-[60] flex flex-col items-center gap-1">
           {caption && (
