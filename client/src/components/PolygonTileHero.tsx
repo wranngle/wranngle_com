@@ -6,16 +6,23 @@ import {TileTracerField, type TileSnapshot} from '@/components/tileTracers.ts';
  *
  * One primitive (rounded outlined square) repeated in concentric hexagonal
  * rings around a center tile. The field drifts/breathes/sways with
- * deterministic per-tile randomness. One tile at a time is selected as the
- * "hero": it animates from its ring slot to the center, zooms ~3.7×, holds
- * ~3s, then animates back out — a continuous spotlight rotation.
+ * deterministic per-tile randomness. Only `featured` tiles cycle through
+ * the spotlight — currently 5 of 53 (3 demo videos + 2 hand-picked
+ * landing pages). When chosen, a tile animates from its ring slot to the
+ * center, zooms ~3.4× vertically + unfurls to 16:10 widescreen, holds
+ * ~3s, then animates back out.
  *
  * The whole field is radially masked so its edges dissolve into the page
- * background with no hard edge. Inner rings (1-2) carry real imagery: the
- * three demo verticals (trattoria/dental/salon) swap their poster for a
- * playing <video> when they're in hero position; the other populated tiles
- * show landing-page stock photos. Outer rings stay as pure primitives so
- * the field reads as endless and dissolves cleanly.
+ * background with no hard edge. Rings 1-4 carry real imagery: the three
+ * demo verticals (trattoria/dental/salon) swap their poster for a playing
+ * <video> when they're in hero position; the other populated tiles show
+ * mock landing-page screenshots. Ring 5 (and the back half of ring 4)
+ * stays primitive — those slots sit in the mask's heavy-fade band where
+ * they dissolve out before they ever read as empty.
+ *
+ * A WebGL ember tracer overlay (see tileTracers.ts) sits inside the
+ * field, beneath the zoomed hero, and fires a glowing comet pulse from
+ * the hero outward along the ring lattice each time a hero settles.
  *
  * Props match the previous StackedWidgetCarousel contract so call sites
  * in App.tsx + websites.tsx don't change.
@@ -30,13 +37,13 @@ type Props = {
 };
 
 // === Layout + motion configuration ====================================
-// Direct port of CFG from polygon-tile-hero.html with three changes:
-// - rings reduced from 8 → 5 (we don't need that big a buffer here)
-// - tileSize/spacing tuned for the hero band height (560px) instead of 700+
-// - heroExtraWidth added so the zoomed hero unfurls from a square ring
-//   tile into a 16:10 widescreen — necessary so the ElevenLabs demo
-//   recordings (960×600) and the 1600×1000 mock landing-page captures
-//   fit without cropping when a tile is in the center spotlight.
+// Port of CFG from polygon-tile-hero.html, adapted for our hero band:
+// - rings 5 (1 + 6 + 12 + 18 + 24 + 30 = 91 tile slots; 53 are populated)
+// - tileSize/spacing tuned for the 460/600 px hero band
+// - heroZoom 3.4× vertically + heroExtraWidth 1.6 → the zoomed hero
+//   unfurls from a square ring tile to 16:10 widescreen so the
+//   ElevenLabs demo recordings (960×600) and the 1600×1000 mock
+//   landing-page captures fit without cropping at the spotlight.
 const CFG = {
   sides: 6, // hexagon ring layout
   rings: 5, // 1 center + 5 rings → 1 + 6 + 12 + 18 + 24 + 30 = 91 tiles
@@ -53,10 +60,12 @@ const CFG = {
   spotlightDim: 0.32, // dim of non-hero tiles while a hero is up
 };
 
-/** Imagery on the populated inner-ring tiles. The first three carry the
- *  real demo videos; the rest carry static landing-page imagery. Order
- *  matters: tile 0 is the center, then ring 1 spirals out, then ring 2.
- *  See the prototype for the ring construction. */
+/** Imagery on the populated tile slots. The first three entries are the
+ *  ElevenLabs-recorded demos (trattoria/dental/salon — they swap from
+ *  poster to playing <video> when in hero position); the rest are mock
+ *  landing-page screenshots. Order matters: tile 0 is the center, then
+ *  ring 1 spirals out, then ring 2, then ring 3, then ring 4. See the
+ *  prototype for the ring construction. */
 type TileContent =
   | {
       kind: 'demo';
@@ -102,13 +111,16 @@ const DEMO_TILES: TileContent[] = [
   },
 ];
 
-// 37 mock business landing pages — generated under demo-stages/biz/
-// and screenshotted to client/public/assets/hero-tiles/<slug>.{jpg,thumb.jpg}
-// by script/generators/{biz-landing-pages,capture-biz-tiles}.mjs. Order
-// drives the ring placement (k=1 = 6 tiles, k=2 = 12 tiles, k=3 = 18 tiles).
-// `featured: true` on a stock tile means it joins the demo rotation —
-// the 3 demo videos + 2 hand-picked stock pages = 5 total in the spotlight
-// cycle; the rest stay in the ring as static landing-page fill.
+// Mock business landing pages — generated under demo-stages/biz/ and
+// screenshotted to client/public/assets/hero-tiles/<slug>.{jpg,thumb.jpg}
+// by script/generators/{biz-landing-pages,capture-biz-tiles}.mjs.
+// Order drives ring placement: 6 in k=1 + 12 in k=2 + 18 in k=3 + 16 in
+// k=4 = 52 stock tiles (the 53rd populated slot is the center, taken by
+// a DEMO_TILES entry). The 8 unfilled back slots of k=4 stay primitive
+// inside the mask's heavy-fade band.
+// `featured: true` on a stock tile means it joins the spotlight cycle —
+// the 3 demo videos + 2 hand-picked stock pages = 5 in rotation; every
+// other tile is static landing-page fill.
 const STOCK_TILES: TileContent[] = [
   // Inner ring (k=1) — 6 tiles. Two are featured (rotate to hero); these
   // are the strongest non-demo pages visually.
@@ -131,8 +143,7 @@ const STOCK_TILES: TileContent[] = [
   {slug: 'family-law', name: 'Wren & Hadley LLP'},
   {slug: 'physical-therapy', name: 'Cedar Bend PT'},
   {slug: 'hvac', name: 'Northstar HVAC'},
-  // Outer ring (k=3) — 18 tiles, all static fill. Filled by the 17 newer
-  // pages + 'vet' + 'barbershop' to round out the ring exactly.
+  // Outer ring (k=3) — 18 tiles, all static fill.
   {slug: 'vet', name: 'Northside Veterinary'},
   {slug: 'barbershop', name: 'Pinion & Crow Barber Co.'},
   {slug: 'accounting-firm', name: 'Lattimer & Holt CPA'},
@@ -152,9 +163,9 @@ const STOCK_TILES: TileContent[] = [
   {slug: 'locksmith', name: 'Cardinal Lock + Key'},
   {slug: 'roofer', name: 'Foundry Roofing'},
   {slug: 'landscaper', name: 'Quartermile Landscape Design'},
-  // Outer ring (k=4) — 24 slots. 16 of the 16 new pages fill the front;
-  // 8 unfilled slots in the heavy-fade band stay as primitives (they
-  // dissolve out via the radial mask before they ever read as empty).
+  // Outer ring (k=4) — 24 slots. The 16 entries below fill the front;
+  // the back 8 stay primitive inside the heavy-fade band (they dissolve
+  // out via the radial mask before they ever read as empty).
   {slug: 'bike-shop', name: 'Allwheel Cycle Works'},
   {slug: 'vinyl-shop', name: 'Bandstand Records'},
   {slug: 'candle-maker', name: 'Wax & Wick Studio'},
