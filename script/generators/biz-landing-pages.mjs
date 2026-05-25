@@ -1412,6 +1412,329 @@ const BUSINESSES = [
       ]},
     ],
   },
+
+  // ------- Ring 4 fill (16 more businesses, none featured) -------------
+
+  {
+    slug: 'bike-shop', name: 'Allwheel Cycle Works',
+    tagline: 'Road, gravel, MTB. Full service, custom builds.',
+    vertical: 'Bike shop — Bozeman, MT', layout: 'bold',
+    fonts: {h: 'Oswald', b: 'Inter'},
+    palette: {bg: '#101115', ink: '#f3f5f8', accent: '#ff5a36', muted: '#7c828a', card: '#181a20'},
+    nav: ['Bikes', 'Service', 'Custom builds', 'Visit'],
+    hero: {kicker: 'Family-owned since 1996', cta: 'Book a fit'},
+    sections: [
+      {title: 'Brands we carry', items: [
+        ['Specialized', 'Road, gravel, MTB, e-bikes. Full Roubaix + Tarmac + Stumpjumper line.'],
+        ['Trek + Cervélo', 'Performance road + tri. Project One customs welcome.'],
+        ['Surly + Salsa', 'Touring, bikepacking, gravel. Built-in-store with custom wheels.'],
+      ]},
+      {title: 'Service shop', items: [
+        ['Pro fit studio', '90-min Retül fit with our certified fitter. $185.'],
+        ['Overhauls', 'Complete teardown + rebuild. 7-day turnaround in season.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'vinyl-shop', name: 'Bandstand Records',
+    tagline: 'New + used vinyl, weekly listening parties, full-stocked jazz wall.',
+    vertical: 'Record store — Detroit, MI', layout: 'editorial',
+    fonts: {h: 'Playfair Display', b: 'Work Sans'},
+    palette: {bg: '#181423', ink: '#ede5cd', accent: '#e1a64c', muted: '#8e8472', card: '#231d2f'},
+    nav: ['New arrivals', 'Used + rare', 'Events', 'Sell to us'],
+    hero: {kicker: 'Open seven days · cash buying daily', cta: "Browse this week's arrivals"},
+    sections: [
+      {title: 'On the floor', items: [
+        ['Jazz + soul', 'Full ECM library, Blue Note reissues, Strata-East deep cuts.'],
+        ['New + reissue', 'Most major releases day-of. Subscriptions available.'],
+        ['$1 bin', 'Refreshed Tuesdays. Two crates, twelve genres, infinite digging.'],
+      ]},
+      {title: 'In-store', items: [
+        ['Listening bar', 'Eight stations · Stanton + Audio-Technica. Bring records, stay an hour.'],
+        ['Friday DJ sets', 'Local guests, 5–8pm, cash bar opens at 4.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'candle-maker', name: 'Wax & Wick Studio',
+    tagline: 'Hand-poured soy candles. Custom scents. Wholesale + retail.',
+    vertical: 'Candle studio — Asheville, NC', layout: 'warm',
+    fonts: {h: 'Fraunces', b: 'Karla'},
+    palette: {bg: '#f9f3e7', ink: '#231d15', accent: '#a05a3a', muted: '#83786a', card: '#ffffff'},
+    nav: ['Shop', 'Workshops', 'Wholesale', 'Visit'],
+    hero: {kicker: 'Hand-poured at the studio', cta: 'Shop the line'},
+    sections: [
+      {title: 'Standard line', items: [
+        ['Fig + Black Tea', '8 oz · 50-hr burn · soy + coconut blend. $28'],
+        ['Smoked Cedar', '12 oz · double-wick · 70-hr burn. $34'],
+        ['Bergamot & Rosemary', '8 oz · spring/summer favorite. $28'],
+      ]},
+      {title: 'Workshops', items: [
+        ['Pour-your-own', 'Saturdays 2pm · 90 min · take home two 8-oz candles. $55'],
+        ['Custom scent lab', 'By appointment · two-hour blend session with our perfumer. $145'],
+      ]},
+    ],
+  },
+  {
+    slug: 'watch-repair', name: 'Trenton Watchworks',
+    tagline: 'Mechanical watch service. Vintage restoration. Forty years on the bench.',
+    vertical: 'Watch repair — Trenton, NJ', layout: 'editorial',
+    fonts: {h: 'Lora', b: 'Inter'},
+    palette: {bg: '#181923', ink: '#e6dfc8', accent: '#b58d4f', muted: '#86826f', card: '#1f2030'},
+    nav: ['Services', 'Vintage', 'Brands', 'Schedule'],
+    hero: {kicker: 'Forty years on the bench', cta: 'Mail-in a watch'},
+    sections: [
+      {title: 'Service', items: [
+        ['Full overhaul', 'Disassembly, cleaning, lubrication, timing regulation. 4–6 weeks.'],
+        ['Crystal + crown', 'Replacement with OEM or generic per request. 1–2 weeks.'],
+        ['Vintage restoration', 'Case refinishing, hand re-luming, dial restoration as needed.'],
+      ]},
+      {title: 'Brands we service', items: [
+        ['Swiss mechanical', 'Rolex, Omega, IWC, Cartier, Tudor, JLC, Tag Heuer.'],
+        ['Japanese + American', 'Seiko, Citizen, Grand Seiko, Hamilton, Bulova, Elgin.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'knife-sharpening', name: 'Whetstone & Co.',
+    tagline: 'Japanese stone sharpening. Pickup + drop-off at four markets weekly.',
+    vertical: 'Knife sharpening — Brooklyn, NY', layout: 'architectural',
+    fonts: {h: 'Space Grotesk', b: 'Inter'},
+    palette: {bg: '#13161d', ink: '#e8ebf0', accent: '#6cbfdc', muted: '#7d8390', card: '#1c1f28'},
+    nav: ['Schedule', 'Pricing', 'Stones', 'About'],
+    hero: {kicker: 'Trained at Sakai Takayuki', cta: 'Schedule a pickup'},
+    sections: [
+      {title: 'What we sharpen', items: [
+        ['Chef + paring', '8" chef $14 · paring $9 · santoku $14 · gyuto $16'],
+        ['Bread + serrated', '$18 each. Most can be re-toothed once before retirement.'],
+        ['Scissors + shears', '$12–$22 depending on size. Pinking shears welcome.'],
+      ]},
+      {title: 'Where to find us', items: [
+        ['Markets weekly', 'Park Slope Sat AM · Brooklyn Bridge Park Sun · Union Sq Wed/Fri.'],
+        ['Mail-in', 'Flat $8 return shipping. Quote within 24 hours of receipt.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'arborist', name: 'Greatwood Tree Care',
+    tagline: 'ISA-certified arborists. Pruning, removal, plant health care.',
+    vertical: 'Tree care — Atlanta, GA', layout: 'architectural',
+    fonts: {h: 'Archivo', b: 'Inter'},
+    palette: {bg: '#f7f6f1', ink: '#1a1e17', accent: '#3f6b3f', muted: '#6c706a', card: '#ffffff'},
+    nav: ['Services', 'Plant health', 'About', 'Estimate'],
+    hero: {kicker: 'ISA-certified · TCIA accredited', cta: 'Request a free estimate'},
+    sections: [
+      {title: 'Services', items: [
+        ['Pruning', 'Structural, crown thinning, deadwooding. Done by climber + ground crew.'],
+        ['Removal', 'From precision technical removals to straight-fall. Stump grinding incl.'],
+        ['Plant health care', 'Soil injection, deep-root fertilization, pest/disease treatment.'],
+      ]},
+      {title: 'Why we get called back', items: [
+        ['Insurance + permits', 'Fully insured, bonded, all permits pulled before work starts.'],
+        ['Clean property', "Logs hauled, brush chipped, lawn raked. We leave it cleaner than we found."],
+      ]},
+    ],
+  },
+  {
+    slug: 'garden-nursery', name: 'Greenstone Nursery',
+    tagline: 'Native + adapted plants. Twelve greenhouses. Designer consultations.',
+    vertical: 'Plant nursery — Eugene, OR', layout: 'warm',
+    fonts: {h: 'DM Serif Display', b: 'Karla'},
+    palette: {bg: '#f0eee4', ink: '#1d201a', accent: '#5f7a3c', muted: '#7a7d70', card: '#ffffff'},
+    nav: ['What\'s in stock', 'Design', 'Workshops', 'Visit'],
+    hero: {kicker: 'Open year-round · seven days', cta: 'See this week\'s stock'},
+    sections: [
+      {title: 'Sections', items: [
+        ['Natives', 'Willamette Valley + Cascade-adapted. Pollinator-friendly throughout.'],
+        ['Edibles', 'Heirloom tomato + pepper starts, berries, dwarf fruit trees.'],
+        ['Houseplants', 'Twelve greenhouses, ferns through aroids. Bring photos for ID help.'],
+      ]},
+      {title: 'Beyond plants', items: [
+        ['Design consults', '90 min on-site · planting plan + sketch. $185.'],
+        ['Soil + amendment', 'Bagged and bulk. Delivery within 15 miles.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'frame-shop', name: 'Cornerstone Custom Framing',
+    tagline: 'Conservation framing. Mat cutting. Restoration. Twenty-year hardware warranty.',
+    vertical: 'Picture framing — Newport, RI', layout: 'editorial',
+    fonts: {h: 'Cormorant Garamond', b: 'Karla'},
+    palette: {bg: '#f6f3eb', ink: '#1d1c18', accent: '#7e5731', muted: '#7c7669', card: '#ffffff'},
+    nav: ['Services', 'Mouldings', 'Portfolio', 'Quote'],
+    hero: {kicker: 'PPFA-certified framer · since 1998', cta: 'Schedule a consult'},
+    sections: [
+      {title: 'How we frame', items: [
+        ['Conservation', 'UV-protective glazing, acid-free mat + backing, hinge-mounting.'],
+        ['Floating + box', 'Floating mat, deep shadow box, fabric-wrapped fillets.'],
+        ['Restoration', 'Old frame regilding, repair of damaged corners, new acid-free liners.'],
+      ]},
+      {title: 'The basics', items: [
+        ['Two-week turnaround', 'Most jobs ready in 10–14 days. Rush options available.'],
+        ['Twenty-year warranty', 'All hardware + glass. We re-fit free, lifetime.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'letterpress', name: 'Hollow Press Print Co.',
+    tagline: 'Letterpress wedding invites, business cards, posters. Cotton stock only.',
+    vertical: 'Letterpress studio — Richmond, VA', layout: 'editorial',
+    fonts: {h: 'Lora', b: 'Inter'},
+    palette: {bg: '#f5efe0', ink: '#1c1810', accent: '#a85b2a', muted: '#7c7666', card: '#ffffff'},
+    nav: ['Custom', 'Wedding', 'Cards', 'Shop'],
+    hero: {kicker: 'Vandercook + Heidelberg on the floor', cta: 'Get a project quote'},
+    sections: [
+      {title: 'What we print', items: [
+        ['Wedding suites', 'Save-the-dates, invitations, RSVPs, day-of pieces. Custom + bespoke.'],
+        ['Business stationery', 'Cards, letterhead, envelopes. Two-color register guaranteed.'],
+        ['Show posters + art prints', 'Limited-edition wood-type. Available in the shop.'],
+      ]},
+      {title: 'How we work', items: [
+        ['Cotton stock only', 'Crane Lettra in three weights. Deep impression on every print.'],
+        ['Two-pull register', 'Multi-color jobs run twice through the press for tight fit.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'ice-cream-truck', name: 'Big Dipper Mobile Creamery',
+    tagline: 'Old-school ice cream truck. Bookings + neighborhood routes.',
+    vertical: 'Ice cream truck — Atlanta, GA', layout: 'warm',
+    fonts: {h: 'Fraunces', b: 'Karla'},
+    palette: {bg: '#fdf2e9', ink: '#26180e', accent: '#e8504a', muted: '#8e7e6d', card: '#ffffff'},
+    nav: ['Find the truck', 'Book us', 'Flavors', 'About'],
+    hero: {kicker: 'Six neighborhoods on rotation', cta: 'Book for an event'},
+    sections: [
+      {title: 'Our truck', items: [
+        ['Soft-serve + dipped', 'Vanilla, chocolate, twist. Sprinkles + dips on the side.'],
+        ['Hand-scooped', 'Eight rotating flavors. From local cream + cane sugar.'],
+        ['Frozen treats', 'Fudge bars, push pops, fruit pops. All from a small Atlanta maker.'],
+      ]},
+      {title: 'For events', items: [
+        ['Birthday parties', '2-hr min · 50 servings · $345 + travel. Weekday discount.'],
+        ['Schools + offices', 'Subsidized for end-of-year + summer kickoffs. Quote in 24 hr.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'arcade-bar', name: 'Neon & Quarters',
+    tagline: 'Sixty arcade cabinets, twelve pinball, full bar, kitchen until 1am.',
+    vertical: 'Arcade bar — Brooklyn, NY', layout: 'bold',
+    fonts: {h: 'Bebas Neue', b: 'Inter'},
+    palette: {bg: '#0e0a1d', ink: '#ecdcff', accent: '#ff3aa2', muted: '#8e83a1', card: '#1c1430'},
+    nav: ['Machines', 'Drinks', 'Events', 'Visit'],
+    hero: {kicker: '21+ · open 5pm – 2am', cta: 'See machine list'},
+    sections: [
+      {title: 'On the floor', items: [
+        ['Classic cabinets', 'Galaga, Pac-Man, Defender, Donkey Kong, Tron, Joust, Punch-Out.'],
+        ['Fighters', 'Street Fighter II Champ, Marvel vs Capcom, KOF, Tekken 3.'],
+        ['Pinball', 'Twelve machines on rotation. Stern, Bally, Williams, Data East.'],
+      ]},
+      {title: 'Bar + kitchen', items: [
+        ['Beer + cocktail', 'Twenty taps, weekly cocktail board. Cheap shot specials before 7.'],
+        ['Smashed burgers + fries', 'Kitchen till 1am every night. Vegan smash on the menu too.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'piano-tuner', name: 'Sterling Piano Service',
+    tagline: 'In-home tuning, voicing, action regulation. Concert prep available.',
+    vertical: 'Piano tuner + technician — Boston, MA', layout: 'editorial',
+    fonts: {h: 'Cormorant Garamond', b: 'Inter'},
+    palette: {bg: '#f6f1e6', ink: '#1d1c18', accent: '#7e5731', muted: '#7c7669', card: '#ffffff'},
+    nav: ['Services', 'About', 'Rates', 'Schedule'],
+    hero: {kicker: 'PTG Registered Piano Technician', cta: 'Schedule a tuning'},
+    sections: [
+      {title: 'Services', items: [
+        ['Standard tuning', '~90 min in-home · $185 in 128. Pitch-raise add-on if neglected.'],
+        ['Voicing + regulation', 'Tone shaping + action adjustment. Half-day or full-day jobs.'],
+        ['Concert prep', 'For schools, venues, recording studios. On-call same-week.'],
+      ]},
+      {title: 'For your piano', items: [
+        ['Twice-yearly schedule', 'Most home pianos benefit from spring + fall visits.'],
+        ['Humidity control', 'Dampp-Chaser sales + install. Stable RH = stable tuning.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'bike-courier', name: 'Cardinal Courier Co-op',
+    tagline: 'Bike messenger service. Same-hour delivery inside the loop.',
+    vertical: 'Courier service — Chicago, IL', layout: 'bold',
+    fonts: {h: 'Oswald', b: 'Inter'},
+    palette: {bg: '#161114', ink: '#f1e9e4', accent: '#cc2929', muted: '#807068', card: '#1f1819'},
+    nav: ['Service', 'Pricing', 'Riders', 'Account'],
+    hero: {kicker: 'Worker-owned co-op · since 2011', cta: 'Book a delivery'},
+    sections: [
+      {title: 'Service tiers', items: [
+        ['Standard', 'Same-day · 3-hour window · $18 base + $2/mi after 2.'],
+        ['Rush', 'Pickup in 15 min · delivery in 60 · $35 base + $3/mi after 2.'],
+        ['Scheduled', 'Daily route between two points · monthly rate.'],
+      ]},
+      {title: 'Why us', items: [
+        ['No vehicles', 'Bikes only. We beat car traffic from 7am to 7pm any day.'],
+        ['Live tracking', 'Every job is tracked from pickup to drop. You see the path.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'leather-goods', name: 'Foundling Leatherworks',
+    tagline: 'Hand-stitched bags, wallets, belts. Vegetable-tanned leather only.',
+    vertical: 'Leather goods studio — Lexington, KY', layout: 'warm',
+    fonts: {h: 'DM Serif Text', b: 'Inter'},
+    palette: {bg: '#f4ece0', ink: '#241910', accent: '#7a4a26', muted: '#806f5e', card: '#fff9ed'},
+    nav: ['Shop', 'Bespoke', 'Repair', 'About'],
+    hero: {kicker: 'Made one at a time, in our studio', cta: 'See current pieces'},
+    sections: [
+      {title: 'Standard pieces', items: [
+        ['Tote bag', '14" x 12" · saddle-stitch · brass hardware. $345 — choose four colors.'],
+        ['Bifold wallet', "Six cards, two slip pockets, full-grain Horween. $145."],
+        ['Belt', '1.25" or 1.5" · solid brass buckle · 18-month break-in warranty. $115.'],
+      ]},
+      {title: 'Beyond product', items: [
+        ['Bespoke work', 'From your sketch + spec. 6–10 week turnaround.'],
+        ['Repair + restoration', 'Stitch repair, hardware replacement, leather conditioning.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'sail-school', name: 'Newport Harbor Sailing',
+    tagline: 'ASA-certified lessons, charters, summer programs.',
+    vertical: 'Sailing school — Newport, RI', layout: 'clinical',
+    fonts: {h: 'Manrope', b: 'Inter'},
+    palette: {bg: '#eef3f7', ink: '#0f1f2a', accent: '#2a78c8', muted: '#5f6c79', card: '#ffffff'},
+    nav: ['Courses', 'Charters', 'Summer camp', 'About'],
+    hero: {kicker: 'ASA-accredited · Newport waterfront', cta: 'Book a course'},
+    sections: [
+      {title: 'Courses', items: [
+        ['ASA 101 Basic Keelboat', '3 days · 24 hrs on-water · J/22s. $695 incl. materials.'],
+        ['ASA 103 Coastal Cruising', '4 days · 32 hrs on-water · Beneteau 36s. $1,195.'],
+        ['ASA 104 Bareboat Charter', 'Prepares for international charters. $1,395.'],
+      ]},
+      {title: 'Programs', items: [
+        ['Summer camp', 'Ages 8–14 · weeklong sessions June–August. Limit 16 per session.'],
+        ['Charters', 'Half-day, full-day, sunset. Boat + captain. From $385.'],
+      ]},
+    ],
+  },
+  {
+    slug: 'film-lab', name: 'Argentic Film Lab',
+    tagline: 'C-41, E-6, B&W. Scan + return service. Two-day turnaround.',
+    vertical: 'Film photography lab — Brooklyn, NY', layout: 'architectural',
+    fonts: {h: 'Space Grotesk', b: 'Inter'},
+    palette: {bg: '#0f1116', ink: '#e6e8ee', accent: '#e08e3b', muted: '#7d828c', card: '#181b22'},
+    nav: ['Develop + scan', 'Drop-off', 'Pricing', 'Mail-in'],
+    hero: {kicker: 'Open seven days · scans in 48 hr', cta: 'Mail in your roll'},
+    sections: [
+      {title: 'Services', items: [
+        ['Develop + scan', 'C-41 35mm $14 · 120 $16 · scans at lab + high-res included.'],
+        ['E-6 slide', '35mm + 120 · returned mounted or unmounted. $18/$22.'],
+        ['Black & white', 'Hand-processed in our darkroom. Tri-X, HP5, T-Max, Delta. $16/$18.'],
+      ]},
+      {title: 'Other', items: [
+        ['Scanning only', 'Send in already-developed negatives. Flat $0.75/frame for hi-res.'],
+        ['Push + pull', '+1/+2 stops standard. Special requests gladly accepted.'],
+      ]},
+    ],
+  },
 ];
 
 /* ------------------------------------------------------------------ */

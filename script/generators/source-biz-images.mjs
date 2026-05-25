@@ -33,6 +33,23 @@ const KEYWORDS = {
   'locksmith': ['key,lock', 'door,lock', 'locksmith,tools', 'security,key', 'old,key'],
   'roofer': ['roof,construction', 'roofing,shingles', 'house,roof', 'metal,roof', 'roof,worker'],
   'landscaper': ['garden,landscape', 'lawn,mower', 'backyard,garden', 'hedge,trim', 'flower,bed'],
+  // ---- ring 4 fill ----
+  'bike-shop': ['bicycle,shop', 'cycling,road', 'mountain,bike', 'bike,wheel', 'bike,workshop'],
+  'vinyl-shop': ['vinyl,records', 'turntable', 'record,store', 'cassette,vinyl', 'music,store'],
+  'candle-maker': ['candle,wax', 'candle,jar', 'candle,workshop', 'soy,candle', 'candle,studio'],
+  'watch-repair': ['watch,repair', 'wristwatch,vintage', 'pocket,watch', 'watchmaker', 'watch,tools'],
+  'knife-sharpening': ['knife,sharpening', 'chef,knife', 'whetstone', 'kitchen,knife', 'sharpening,stone'],
+  'arborist': ['tree,climb', 'tree,care', 'arborist,worker', 'tree,prune', 'forest,canopy'],
+  'garden-nursery': ['plant,nursery', 'greenhouse,plant', 'garden,seedling', 'potted,plant', 'plant,shop'],
+  'frame-shop': ['picture,frame', 'art,framing', 'gallery,frame', 'wooden,frame', 'matted,art'],
+  'letterpress': ['letterpress', 'printing,press', 'typography,print', 'wood,type', 'printing,workshop'],
+  'ice-cream-truck': ['ice,cream,truck', 'ice,cream,cone', 'soft,serve', 'sundae', 'ice,cream,parlor'],
+  'arcade-bar': ['arcade,games', 'pinball', 'neon,arcade', 'arcade,cabinet', 'retro,gaming'],
+  'piano-tuner': ['piano,tuning', 'grand,piano', 'piano,keys', 'piano,interior', 'piano,wires'],
+  'bike-courier': ['bike,courier', 'messenger,bag', 'urban,cycling', 'city,bike', 'bike,delivery'],
+  'leather-goods': ['leather,workshop', 'leather,bag', 'leather,wallet', 'tanned,leather', 'leather,craft'],
+  'sail-school': ['sailboat', 'sailing,school', 'yacht,sail', 'marina', 'sailing,sea'],
+  'film-lab': ['film,camera', 'darkroom', 'film,processing', '35mm,film', 'photography,lab'],
 };
 
 const slugs = Object.keys(KEYWORDS);

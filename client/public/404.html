@@ -96,5 +96,27 @@
       </p>
       <a href="/">Back to home -></a>
     </main>
+    <!-- Sarah widget — even on the static 404 (served by Cloudflare for
+         direct hits to unknown URLs), callers should be able to reach the
+         agent. Mirrors GlobalSarahWidget.tsx from the SPA. -->
+    <elevenlabs-convai
+      agent-id="agent_7801kqqqhjmcfdsa1m2a8t9w6t5c"
+      avatar-orb-color-1="#ff5f00"
+      avatar-orb-color-2="#cf3c69"
+      action-text="Talk to Sarah"
+      expand-text="Talk to Sarah"
+      collapse-text="Collapse"
+      start-call-text="Start voice demo"
+      end-call-text="End voice demo"
+      listening-text="Sarah is listening"
+      speaking-text="Sarah is speaking"
+      placement="bottom-right"
+      dynamic-variables='{"mode":"lead-intake","surface_context":"wranngle-com/404"}'
+    ></elevenlabs-convai>
+    <script
+      src="https://unpkg.com/@elevenlabs/convai-widget-embed@0.12.2"
+      async
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
