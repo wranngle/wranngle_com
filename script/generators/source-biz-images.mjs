@@ -1,10 +1,17 @@
 #!/usr/bin/env node
 /**
- * Pulls 5 themed JPGs per slug from Unsplash source.unsplash.com into
+ * Pulls 5 placeholder JPGs per slug into
  *   demo-stages/biz/<slug>/img/{hero,a,b,c,d}.jpg
  *
- * Idempotent: skips any slug whose directory already has 5 JPGs.
- * Fallback: picsum.photos seeded by slug+letter if Unsplash 404s.
+ * Currently sources from picsum.photos with a deterministic
+ * `${slug}-${letter}` seed — Unsplash's free `source.unsplash.com`
+ * endpoint was shut down (returns 503 globally as of 2026-05). The
+ * KEYWORDS map below stays as documentation of intent for each slug;
+ * a future themed source (Unsplash API + key, Pexels, etc.) can read
+ * it without changing the call sites.
+ *
+ * Idempotent: skips any slug whose directory already has 5 JPGs of
+ * non-trivial size (>8 KB).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -14,10 +21,11 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, '../..');
 const bizRoot = path.join(repoRoot, 'demo-stages/biz');
 
-// slug → keyword list (Unsplash search keywords, order of preference).
-// Every slug listed in demo-stages/biz/_businesses.json should have an
-// entry here so the source script can refresh images for any tile after
-// a delete or rotation. The hero-tiles-drift test enforces 1:1.
+// slug → keyword list. Documents the visual intent for each tile (and
+// is what a future themed source would query). Picsum doesn't use these
+// — it just needs a stable seed — but every slug listed in
+// demo-stages/biz/_businesses.json must still have an entry so the
+// inventory stays complete. The hero-tiles-drift test enforces 1:1.
 const KEYWORDS = {
   // ---- original 20 (rings 1–2) ----
   'bakery': ['sourdough,bread', 'bakery,loaves', 'artisan,bread', 'baker,oven', 'flour,dusted'],
@@ -80,47 +88,34 @@ const KEYWORDS = {
 const slugs = Object.keys(KEYWORDS);
 const LETTERS = ['hero', 'a', 'b', 'c', 'd'];
 
-async function downloadOne(slug, letter, keyword, retry = 0) {
+async function downloadOne(slug, letter) {
   const dir = path.join(bizRoot, slug, 'img');
   fs.mkdirSync(dir, {recursive: true});
   const dest = path.join(dir, `${letter}.jpg`);
   if (fs.existsSync(dest) && fs.statSync(dest).size > 8000) return 'cached';
 
-  // Unsplash source endpoint redirects to a CDN — fetch follows redirects.
-  const sig = Math.floor(Math.random() * 1_000_000);
-  const url = `https://source.unsplash.com/featured/1600x1064/?${encodeURIComponent(keyword)}&sig=${sig}`;
-  try {
-    const res = await fetch(url, {redirect: 'follow'});
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const buf = Buffer.from(await res.arrayBuffer());
-    if (buf.length < 8000) throw new Error(`thin response ${buf.length} bytes`);
-    fs.writeFileSync(dest, buf);
-    return 'unsplash';
-  } catch (e) {
-    if (retry < 1) {
-      await new Promise((r) => setTimeout(r, 800));
-      return downloadOne(slug, letter, keyword, retry + 1);
-    }
-    // Fallback: picsum seeded by slug+letter
-    const psig = `${slug}-${letter}`.replaceAll(/[^a-z0-9]/gi, '');
-    const purl = `https://picsum.photos/seed/${psig}/1600/1064`;
-    const pres = await fetch(purl, {redirect: 'follow'});
-    if (!pres.ok) throw new Error(`picsum HTTP ${pres.status}`);
-    const pbuf = Buffer.from(await pres.arrayBuffer());
-    fs.writeFileSync(dest, pbuf);
-    return 'picsum';
-  }
+  // picsum.photos seeded by slug+letter so repeated runs converge on
+  // the same image per slot. Lazy.medium.com / Pexels / Unsplash-with-key
+  // could slot in here later by keying off the KEYWORDS map above.
+  const seed = `${slug}-${letter}`.replaceAll(/[^a-z\d]/gi, '');
+  const url = `https://picsum.photos/seed/${seed}/1600/1064`;
+  const res = await fetch(url, {redirect: 'follow'});
+  if (!res.ok) throw new Error(`picsum HTTP ${res.status}`);
+  const buf = Buffer.from(await res.arrayBuffer());
+  fs.writeFileSync(dest, buf);
+  return 'picsum';
 }
 
-const tally = {unsplash: 0, picsum: 0, cached: 0};
+const tally = {picsum: 0, cached: 0};
 for (const slug of slugs) {
-  const keywords = KEYWORDS[slug];
-  // Parallel within a slug (5 at a time)
+  // Parallel within a slug (5 letters at a time).
   const results = await Promise.all(
-    LETTERS.map((letter, i) => downloadOne(slug, letter, keywords[i]).catch((e) => `error:${e.message}`)),
+    LETTERS.map((letter) =>
+      downloadOne(slug, letter).catch((e) => `error:${e.message}`),
+    ),
   );
-  const summary = results.map((r) => r).join(', ');
   for (const r of results) if (tally[r] !== undefined) tally[r]++;
-  console.log(`✓ ${slug.padEnd(18)} ${summary}`);
+  console.log(`✓ ${slug.padEnd(18)} ${results.join(', ')}`);
 }
-console.log(`\nDone. Unsplash: ${tally.unsplash}, picsum: ${tally.picsum}, cached: ${tally.cached}`);
+
+console.log(`\nDone. picsum: ${tally.picsum}, cached: ${tally.cached}`);
