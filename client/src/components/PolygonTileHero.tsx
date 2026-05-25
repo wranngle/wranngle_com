@@ -531,15 +531,16 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
         className="absolute inset-0"
         style={{
           // Radial dissolve — closest-side ties the gradient envelope to
-          // the field box so the fade actually reaches the edges (the
-          // previous explicit 95% × 90% scaled past the box and was
-          // effectively still opaque at the corners). Multi-stop curve
-          // gives a soft falloff and the opaque core stops short of the
-          // hero footprint so the dissolve gently feathers the hero edges.
+          // the field box so the fade reaches the edges. The opaque core
+          // is pulled in to ~24% so the soft falloff intrudes ~one tile
+          // further into the hero's surround (the hero's centre text still
+          // sits inside the solid core; only its edges feather). The
+          // canvas tracer overlay is a child of this div and inherits the
+          // same mask, so embers dissolve identically.
           WebkitMaskImage:
-            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.78) 64%, rgba(0,0,0,0.42) 80%, rgba(0,0,0,0.14) 92%, transparent 100%)',
+            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 24%, rgba(0,0,0,0.82) 46%, rgba(0,0,0,0.48) 66%, rgba(0,0,0,0.18) 85%, transparent 100%)',
           maskImage:
-            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.78) 64%, rgba(0,0,0,0.42) 80%, rgba(0,0,0,0.14) 92%, transparent 100%)',
+            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 24%, rgba(0,0,0,0.82) 46%, rgba(0,0,0,0.48) 66%, rgba(0,0,0,0.18) 85%, transparent 100%)',
         }}
       >
         {tilesRef.current.map((tile, idx) => (
