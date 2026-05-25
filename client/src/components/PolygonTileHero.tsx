@@ -575,9 +575,10 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
         ref={tracerCanvasRef}
         className="pointer-events-none absolute inset-0 h-full w-full"
         style={{
-          // Above the hero tile (which zooms to z≈9.0M) so the comet
-          // traces over the whole field, matching the prototype.
-          zIndex: 9_010_000,
+          // Above the ring tiles (z up to ~8k) but BELOW the zoomed hero
+          // (z≈9.0M) — so embers streak across the field behind the hero
+          // and the spotlighted tile stays crisply on top.
+          zIndex: 8_500_000,
           mixBlendMode: 'screen',
           WebkitMaskImage:
             'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 48%, rgba(0,0,0,0.78) 64%, rgba(0,0,0,0.42) 80%, rgba(0,0,0,0.14) 92%, transparent 100%)',

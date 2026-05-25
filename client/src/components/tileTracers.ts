@@ -52,7 +52,7 @@ export const TRACER_DEFAULTS: TracerParams = {
   headSize: 8,
   burnIn: 240,
   burnOut: 440,
-  pathSmooth: 3,
+  pathSmooth: 4,
   emberScale: 34,
   emberFlow: 1.2,
   cometBulge: 2.1,
@@ -232,25 +232,52 @@ function buildChain(
   return chain;
 }
 
-/** Triangle-strip ribbon (x, y, arc-length, side) for the shader. */
+/**
+ * Triangle-strip ribbon (x, y, arc-length, side) for the shader. Uses a
+ * miter join at each vertex — the offset normal bisects the incoming and
+ * outgoing segments and is lengthened by 1/cos(θ/2) (clamped) so the two
+ * ribbon sides don't pinch or cross at corners. A centered-difference
+ * normal (the naive approach) folds the ribbon onto itself at sharp turns,
+ * which under additive blending shows up as bright glare seams.
+ */
 function buildRibbon(pts: Pt[], cum: number[], halfW: number): Float32Array {
   const n = pts.length;
   const v: number[] = [];
+  const miterLimit = 2.4;
   for (let i = 0; i < n; i++) {
-    const a = pts[Math.max(0, i - 1)];
-    const b = pts[Math.min(n - 1, i + 1)];
-    const tx = b.x - a.x;
-    const ty = b.y - a.y;
-    const tl = Math.hypot(tx, ty) || 1;
-    const nx = -ty / tl;
-    const ny = tx / tl;
+    const cur = pts[i];
+    const prev = pts[Math.max(0, i - 1)];
+    const next = pts[Math.min(n - 1, i + 1)];
+    let inx = cur.x - prev.x;
+    let iny = cur.y - prev.y;
+    let outx = next.x - cur.x;
+    let outy = next.y - cur.y;
+    const inl = Math.hypot(inx, iny) || 1;
+    const outl = Math.hypot(outx, outy) || 1;
+    inx /= inl;
+    iny /= inl;
+    outx /= outl;
+    outy /= outl;
+    // Segment normals, then the (normalized) miter direction.
+    const ninx = -iny;
+    const niny = inx;
+    const noutx = -outy;
+    const nouty = outx;
+    let mx = ninx + noutx;
+    let my = niny + nouty;
+    const ml = Math.hypot(mx, my) || 1;
+    mx /= ml;
+    my /= ml;
+    // 1/cos(θ/2) = 1/(miter·n_in); clamp so a near-reversal can't blow up.
+    const cos = mx * ninx + my * niny;
+    const off = halfW * Math.min(miterLimit, 1 / Math.max(0.4, cos));
     v.push(
-      pts[i].x + nx * halfW,
-      pts[i].y + ny * halfW,
+      cur.x + mx * off,
+      cur.y + my * off,
       cum[i],
       1,
-      pts[i].x - nx * halfW,
-      pts[i].y - ny * halfW,
+      cur.x - mx * off,
+      cur.y - my * off,
       cum[i],
       -1,
     );
@@ -420,6 +447,13 @@ export class TileTracerField {
     this.aSide = gl.getAttribLocation(prog, 'a_side');
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE);
+    // MAX blend (where supported) so overlapping ribbon fragments at
+    // corners/turns and crossing tracers take the brighter value instead
+    // of summing — additive summing is what produced the glare seams.
+    // Each fragment already carries its full core+glow profile, so nothing
+    // depends on accumulation within a tracer; only overlaps differ.
+    const ext = gl.getExtension('EXT_blend_minmax');
+    if (ext) gl.blendEquation(ext.MAX_EXT);
     return true;
   }
 
