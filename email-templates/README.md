@@ -425,7 +425,7 @@ To add new templates or improve existing ones:
 
 ## 📄 License
 
-Proprietary - Wranngle Systems LLC © 2026
+MIT © Wranngle LLC — see the repository [LICENSE](../LICENSE).
 
 ---
 
@@ -433,7 +433,7 @@ Proprietary - Wranngle Systems LLC © 2026
 
 - **Email:** support@wranngle.com
 - **Documentation:** https://docs.wranngle.com/emails
-- **GitHub Issues:** https://github.com/wranngle/email-templates/issues
+- **GitHub Issues:** https://github.com/wranngle/wranngle_com/issues
 
 ---
 

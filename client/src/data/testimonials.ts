@@ -1,4 +1,9 @@
 /**
+ * ILLUSTRATIVE / SAMPLE DATA — composite scenarios based on typical results,
+ * NOT quotes from real named customers. The grid renders an "Illustrative
+ * examples" disclaimer. Do not present these as genuine endorsements; swap in
+ * real, consenting-customer quotes before treating any of this as a claim.
+ *
  * Runtime testimonial registry. Mirrors content/testimonials.yaml
  * field-for-field; tests/e2e/testimonials.test.tsx asserts both files
  * stay in sync. Edit YAML first, then mirror here.

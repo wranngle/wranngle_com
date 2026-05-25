@@ -25,7 +25,7 @@ You can run the tests using:
 We rely on automated tooling rather than a massive rulebook to keep the codebase consistent.
 
 - Check your code with `bun run lint`.
-- If you are touching UI code, please review `.agents/DESIGN.md` first—it is the canonical source of truth for our design tokens and aesthetic.
+- If you are touching UI code, please review [`DESIGN.md`](DESIGN.md) first—it is the canonical source of truth for our design tokens and aesthetic.
 - Keep it simple and pragmatic.
 
 ## Filing a Pull Request

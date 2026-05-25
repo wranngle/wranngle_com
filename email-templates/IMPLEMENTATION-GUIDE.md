@@ -534,7 +534,7 @@ export async function sendTestEmail(templateName: string, recipient: string) {
 - **Email Template Docs:** `email-templates/README.md`
 - **Deliverability Guide:** `email-templates/DELIVERABILITY.md`
 - **Support:** support@wranngle.com
-- **GitHub Issues:** https://github.com/wranngle/email-templates/issues
+- **GitHub Issues:** https://github.com/wranngle/wranngle_com/issues
 
 ---
 

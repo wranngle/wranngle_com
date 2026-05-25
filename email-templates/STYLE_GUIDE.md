@@ -533,10 +533,10 @@ Rich Communication Services (RCS) upgrades SMS with:
 
 ### RCS Sender Configuration
 
-**Wranngle RCS Sender:**
-- Sender ID: `XEf22b2df6414c9923fafecacc1e3c6cbb`
+**Wranngle RCS Sender:** (real IDs live in the Twilio console / env, not here)
+- Sender ID: `XE...`
 - Display Name: "Wranngle"
-- Messaging Service: `MG18bfef5a022578102a9165c1c9a514db`
+- Messaging Service: `MG...`
 - SMS Fallback: `+15550100`
 
 ### Content API Templates
@@ -546,15 +546,15 @@ All RCS messages use Twilio Content API templates with pre-approved content:
 | Template | ContentSid | RCS Type | Variables | Actions | Media |
 |----------|------------|----------|-----------|---------|-------|
 | welcome | HX... | card | FIRST_NAME, PACKAGE | Dashboard, Call Support, Get Started | hero-welcome.png |
-| invoice-receipt | HX1b5b613cb2b06c27582ec3a8e5801e0d | card | AMOUNT, INVOICE_ID | View Receipt, Call Billing | receipt-confirmed.png |
-| notification | HX0bc926ca95862f317bd8c88d5d3855cc | card | EVENT_TYPE, EVENT_DATA | View Details | notification-alert.png |
-| password-reset | HX4e7e81ce36c38a5916080b56c376ca15 | card | RESET_URL, EXPIRY_TIME | Reset Password | security-shield.png |
-| lead-intake | HX27f7b91af27cee722463cd80d2eacb5c | card | BUSINESS_NAME, INDUSTRY, OWNER_NAME, PHONE | Call Lead, View in CRM | logo-card.png |
-| sales-cold-outreach | HXfffe48244baca47d9d597c74f34b763a | carousel | FIRST_NAME, COMPANY, REP_NAME | Schedule Demo, Interested (x3 cards) | ai-agents, analytics, integrations |
+| invoice-receipt | HX... | card | AMOUNT, INVOICE_ID | View Receipt, Call Billing | receipt-confirmed.png |
+| notification | HX... | card | EVENT_TYPE, EVENT_DATA | View Details | notification-alert.png |
+| password-reset | HX... | card | RESET_URL, EXPIRY_TIME | Reset Password | security-shield.png |
+| lead-intake | HX... | card | BUSINESS_NAME, INDUSTRY, OWNER_NAME, PHONE | Call Lead, View in CRM | logo-card.png |
+| sales-cold-outreach | HX... | carousel | FIRST_NAME, COMPANY, REP_NAME | Schedule Demo, Interested (x3 cards) | ai-agents, analytics, integrations |
 | sales-demo-followup | HX... | card | FIRST_NAME, REP_EMAIL | Get Started, Call Us, Ready to Buy | followup.png |
 | sales-proposal-sent | HX... | card | FIRST_NAME, PACKAGE, PRICE | View Proposal, Accept, Questions? | proposal-ready.png |
-| sales-quote-followup | HX68644320a6764633724c8945b4fc1a22 | card | FIRST_NAME, QUOTE_ID, REP_NAME | View Quote, Accept Quote | followup.png |
-| sales-winback | HXb4f5a844ec6b99993ec1835d50df1ba6 | carousel | FIRST_NAME, NEW_FEATURE_1, NEW_FEATURE_2 | Reactivate, Tell Me More (x3 cards) | ai-agents, integrations, winback |
+| sales-quote-followup | HX... | card | FIRST_NAME, QUOTE_ID, REP_NAME | View Quote, Accept Quote | followup.png |
+| sales-winback | HX... | carousel | FIRST_NAME, NEW_FEATURE_1, NEW_FEATURE_2 | Reactivate, Tell Me More (x3 cards) | ai-agents, integrations, winback |
 
 ### RCS Content Types Used
 
