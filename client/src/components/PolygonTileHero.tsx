@@ -341,7 +341,7 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
     // d* fields written below in the draw loop.
     const ringTiles: TileSnapshot[][] = [];
     for (const t of tiles) {
-      (ringTiles[t.ring] ??= []).push(t as unknown as TileSnapshot);
+      (ringTiles[t.ring] ??= []).push(t);
     }
 
     const tracerCanvas = tracerCanvasRef.current;
@@ -481,7 +481,7 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
             W,
             H,
             dpr,
-            tiles[heroIdx] as unknown as TileSnapshot,
+            tiles[heroIdx],
             ringTiles,
             CFG.rings,
           );
