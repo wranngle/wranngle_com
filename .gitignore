@@ -319,3 +319,6 @@ openspec/
 .claude/commands/openspec/
 .gemini/commands/openspec/
 .artifacts/
+
+# Screenshot scratch from hero-tile capture pipeline
+.tmp-screenshots/
