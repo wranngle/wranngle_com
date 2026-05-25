@@ -22,13 +22,7 @@ import type {AgentState} from '@/components/ui/orb.tsx';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
 import SiteFooter from '@/components/site/SiteFooter.tsx';
 import {useDarkMode} from '@/components/site/DarkModeToggle.tsx';
-import {
-  SARAH_AGENT_ID,
-  buildSarahDynamicVariables,
-  ensureSarahWidgetScript,
-  goTalkToSarah,
-  openSarahWidget,
-} from '@/lib/sarah.ts';
+import {goTalkToSarah, openSarahWidget} from '@/lib/sarah.ts';
 
 const VOICE_HERO_METRICS = [
   {value: '24/7', label: 'after-hours coverage'},
@@ -140,10 +134,6 @@ const WranngleLanding = () => {
 
   const heroCta =
     abVariant === 'value-first' ? 'Build my call flow' : 'Get call coverage';
-
-  useEffect(() => {
-    ensureSarahWidgetScript();
-  }, []);
 
   // Scroll to anchor on hash navigation (e.g. /#offerings, /#offerings-premium).
   useEffect(() => {
@@ -354,23 +344,8 @@ const WranngleLanding = () => {
 
         <SiteFooter isDark={isDark} />
 
-        <elevenlabs-convai
-          agent-id={SARAH_AGENT_ID}
-          avatar-orb-color-1="#ff5f00"
-          avatar-orb-color-2="#cf3c69"
-          action-text="Talk to Sarah"
-          expand-text="Talk to Sarah"
-          collapse-text="Collapse"
-          start-call-text="Start voice demo"
-          end-call-text="End voice demo"
-          listening-text="Sarah is listening"
-          speaking-text="Sarah is speaking"
-          placement="bottom-right"
-          dynamic-variables={buildSarahDynamicVariables(
-            'lead-intake',
-            'wranngle-com/home',
-          )}
-        ></elevenlabs-convai>
+        {/* The <elevenlabs-convai> widget is mounted globally in Router.tsx
+            so every route gets it — see GlobalSarahWidget.tsx. */}
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {Route, Switch, Redirect, useLocation} from 'wouter';
 import App from './App.tsx';
+import GlobalSarahWidget from './components/GlobalSarahWidget.tsx';
 import TermsOfService from './pages/terms-of-service.tsx';
 import PrivacyPolicy from './pages/privacy-policy.tsx';
 import About from './pages/about.tsx';
@@ -168,6 +169,9 @@ export default function Router() {
         <Route path="/pilot" component={Pilot} />
         <Route component={NotFound} />
       </Switch>
+      {/* Single mount point for the Sarah widget so every route shows
+          it. App.tsx no longer renders its own <elevenlabs-convai>. */}
+      <GlobalSarahWidget />
     </>
   );
 }

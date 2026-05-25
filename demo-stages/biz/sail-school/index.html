@@ -1,0 +1,105 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Newport Harbor Sailing</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #eef3f7;
+    --ink: #0f1f2a;
+    --accent: #2a78c8;
+    --muted: #5f6c79;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display { font-family: 'Manrope', Georgia, serif; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 32px; max-width: 1280px; margin: 0 auto;
+  }
+  .wordmark { font-family: 'Manrope'; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .nav-links { display: flex; gap: 26px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; }
+  .btn {
+    display: inline-block; padding: 14px 22px; border-radius: 999px;
+    background: var(--accent); color: white; font-size: 14px;
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+  }
+  .kicker { font-size: 12px; text-transform: uppercase; letter-spacing: 0.16em; opacity: 0.6; margin-bottom: 14px; }
+  .muted { color: var(--muted); }
+  .pill { display: inline-block; padding: 4px 12px; border-radius: 999px; background: var(--accent); color: white; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+.top-banner { background: var(--accent); color: white; padding: 10px 0; text-align: center; font-size: 13px; letter-spacing: 0.04em; }
+.top-banner strong { font-weight: 600; }
+.hero { padding: 50px 0 80px; }
+.hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(40px, 5vw, 66px); line-height: 1.06; letter-spacing: -0.02em; margin: 0 0 22px; font-weight: 500; }
+.hero p.lead { font-size: 18px; line-height: 1.65; color: var(--muted); max-width: 520px; margin: 0 0 32px; }
+.cta-row { display: flex; gap: 14px; align-items: center; }
+.btn.outline { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+.hero-img { aspect-ratio: 4/3; border-radius: 14px; overflow: hidden; position: relative; box-shadow: 0 30px 70px rgba(0,0,0,0.12); }
+.stat-card { position: absolute; bottom: 18px; left: 18px; background: var(--card); padding: 18px 22px; border-radius: 12px; box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+.stat-card .n { font-size: 32px; font-weight: 700; color: var(--accent); line-height: 1; }
+.stat-card .l { font-size: 12px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+.section { padding: 80px 0; }
+.section-head { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-bottom: 56px; align-items: end; }
+.section h2 { font-size: clamp(28px, 3.4vw, 42px); margin: 0; font-weight: 500; line-height: 1.1; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.card { background: var(--card); padding: 28px; border-radius: 14px; box-shadow: 0 1px 0 rgba(0,0,0,0.04); }
+.card .icon { width: 40px; height: 40px; border-radius: 10px; background: var(--accent); display: flex; align-items: center; justify-content: center; color: white; margin-bottom: 18px; font-size: 18px; font-weight: 700; }
+.card h3 { font-size: 18px; margin: 0 0 10px; font-weight: 600; }
+.card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: 60px 0; }
+.split-img { aspect-ratio: 4/3; border-radius: 14px; overflow: hidden; }
+.footer { padding: 50px 0; background: var(--card); margin-top: 60px; text-align: center; font-size: 14px; color: var(--muted); }
+</style></head><body>
+<div class="top-banner">Now booking · ASA-accredited · Newport waterfront</div>
+<nav class="nav">
+    <div class="wordmark">Newport Harbor Sailing</div>
+    <div class="nav-links"><a>Courses</a><a>Charters</a><a>Summer camp</a><a>About</a></div>
+    <a class="btn">Book a course</a>
+  </nav>
+<section class="hero wrap">
+  <div class="hero-grid">
+    <div>
+      <div class="kicker">Sailing school — Newport, RI</div>
+      <h1>ASA-certified lessons, charters, summer programs.</h1>
+      <p class="lead">Ages 8–14 · weeklong sessions June–August. Limit 16 per session.</p>
+      <div class="cta-row">
+        <a class="btn">Book a course</a>
+        <a class="btn outline">Call us</a>
+      </div>
+    </div>
+    <div class="hero-img">
+      <img src="img/hero.jpg" alt="">
+      <div class="stat-card"><div class="n">25 yrs</div><div class="l">in practice</div></div>
+    </div>
+  </div>
+</section>
+<section class="section wrap">
+  <div class="section-head">
+    <h2>Courses</h2>
+    <p class="muted">Our team handles a wide range of cases — start by telling us what's going on.</p>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="icon">1</div><h3>ASA 101 Basic Keelboat</h3><p>3 days · 24 hrs on-water · J/22s. $695 incl. materials.</p></div><div class="card"><div class="icon">2</div><h3>ASA 103 Coastal Cruising</h3><p>4 days · 32 hrs on-water · Beneteau 36s. $1,195.</p></div><div class="card"><div class="icon">3</div><h3>ASA 104 Bareboat Charter</h3><p>Prepares for international charters. $1,395.</p></div>
+  </div>
+</section>
+<section class="wrap">
+  <div class="split">
+    <div class="split-img"><img src="img/a.jpg"></div>
+    <div>
+      <div class="kicker">Programs</div>
+      <h2 style="margin-bottom:22px">Care that doesn't feel rushed.</h2>
+      <p><strong>Summer camp.</strong> <span class="muted">Ages 8–14 · weeklong sessions June–August. Limit 16 per session.</span></p><p><strong>Charters.</strong> <span class="muted">Half-day, full-day, sunset. Boat + captain. From $385.</span></p>
+      <a class="btn" style="margin-top:18px">Book a course</a>
+    </div>
+  </div>
+</section>
+<footer class="footer">Newport Harbor Sailing · Sailing school — Newport, RI · Mon-Fri · accepting new patients</footer>
+</body></html>

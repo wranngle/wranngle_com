@@ -294,5 +294,133 @@
     "layout": "warm",
     "full": "/assets/hero-tiles/landscaper.jpg",
     "thumb": "/assets/hero-tiles/landscaper.thumb.jpg"
+  },
+  {
+    "slug": "bike-shop",
+    "name": "Allwheel Cycle Works",
+    "vertical": "Bike shop — Bozeman, MT",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/bike-shop.jpg",
+    "thumb": "/assets/hero-tiles/bike-shop.thumb.jpg"
+  },
+  {
+    "slug": "vinyl-shop",
+    "name": "Bandstand Records",
+    "vertical": "Record store — Detroit, MI",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/vinyl-shop.jpg",
+    "thumb": "/assets/hero-tiles/vinyl-shop.thumb.jpg"
+  },
+  {
+    "slug": "candle-maker",
+    "name": "Wax & Wick Studio",
+    "vertical": "Candle studio — Asheville, NC",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/candle-maker.jpg",
+    "thumb": "/assets/hero-tiles/candle-maker.thumb.jpg"
+  },
+  {
+    "slug": "watch-repair",
+    "name": "Trenton Watchworks",
+    "vertical": "Watch repair — Trenton, NJ",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/watch-repair.jpg",
+    "thumb": "/assets/hero-tiles/watch-repair.thumb.jpg"
+  },
+  {
+    "slug": "knife-sharpening",
+    "name": "Whetstone & Co.",
+    "vertical": "Knife sharpening — Brooklyn, NY",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/knife-sharpening.jpg",
+    "thumb": "/assets/hero-tiles/knife-sharpening.thumb.jpg"
+  },
+  {
+    "slug": "arborist",
+    "name": "Greatwood Tree Care",
+    "vertical": "Tree care — Atlanta, GA",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/arborist.jpg",
+    "thumb": "/assets/hero-tiles/arborist.thumb.jpg"
+  },
+  {
+    "slug": "garden-nursery",
+    "name": "Greenstone Nursery",
+    "vertical": "Plant nursery — Eugene, OR",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/garden-nursery.jpg",
+    "thumb": "/assets/hero-tiles/garden-nursery.thumb.jpg"
+  },
+  {
+    "slug": "frame-shop",
+    "name": "Cornerstone Custom Framing",
+    "vertical": "Picture framing — Newport, RI",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/frame-shop.jpg",
+    "thumb": "/assets/hero-tiles/frame-shop.thumb.jpg"
+  },
+  {
+    "slug": "letterpress",
+    "name": "Hollow Press Print Co.",
+    "vertical": "Letterpress studio — Richmond, VA",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/letterpress.jpg",
+    "thumb": "/assets/hero-tiles/letterpress.thumb.jpg"
+  },
+  {
+    "slug": "ice-cream-truck",
+    "name": "Big Dipper Mobile Creamery",
+    "vertical": "Ice cream truck — Atlanta, GA",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/ice-cream-truck.jpg",
+    "thumb": "/assets/hero-tiles/ice-cream-truck.thumb.jpg"
+  },
+  {
+    "slug": "arcade-bar",
+    "name": "Neon & Quarters",
+    "vertical": "Arcade bar — Brooklyn, NY",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/arcade-bar.jpg",
+    "thumb": "/assets/hero-tiles/arcade-bar.thumb.jpg"
+  },
+  {
+    "slug": "piano-tuner",
+    "name": "Sterling Piano Service",
+    "vertical": "Piano tuner + technician — Boston, MA",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/piano-tuner.jpg",
+    "thumb": "/assets/hero-tiles/piano-tuner.thumb.jpg"
+  },
+  {
+    "slug": "bike-courier",
+    "name": "Cardinal Courier Co-op",
+    "vertical": "Courier service — Chicago, IL",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/bike-courier.jpg",
+    "thumb": "/assets/hero-tiles/bike-courier.thumb.jpg"
+  },
+  {
+    "slug": "leather-goods",
+    "name": "Foundling Leatherworks",
+    "vertical": "Leather goods studio — Lexington, KY",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/leather-goods.jpg",
+    "thumb": "/assets/hero-tiles/leather-goods.thumb.jpg"
+  },
+  {
+    "slug": "sail-school",
+    "name": "Newport Harbor Sailing",
+    "vertical": "Sailing school — Newport, RI",
+    "layout": "clinical",
+    "full": "/assets/hero-tiles/sail-school.jpg",
+    "thumb": "/assets/hero-tiles/sail-school.thumb.jpg"
+  },
+  {
+    "slug": "film-lab",
+    "name": "Argentic Film Lab",
+    "vertical": "Film photography lab — Brooklyn, NY",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/film-lab.jpg",
+    "thumb": "/assets/hero-tiles/film-lab.thumb.jpg"
   }
 ]

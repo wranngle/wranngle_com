@@ -7,6 +7,7 @@ const spaHtmlRoutes = [
   'about',
   'built-by',
   'offerings',
+  'pilot',
   'pricing',
   'privacy',
   'products/ai-voice-agents',
@@ -45,6 +46,12 @@ const routeMeta: Record<
     title: 'Pricing - Wranngle Systems',
     description:
       'Core Agent and Elite Agent pricing for AI call coverage, plus custom programs for multi-location teams.',
+  },
+  pilot: {
+    canonicalPath: '/pilot',
+    title: 'Pilot Agreement - Wranngle Systems',
+    description:
+      '30-day click-through pilot agreement for the Wranngle Systems voice agent + gtm_ops bundle. Flat $1,000, refund on miss.',
   },
   privacy: {
     canonicalPath: '/privacy',

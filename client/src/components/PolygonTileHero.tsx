@@ -151,6 +151,25 @@ const STOCK_TILES: TileContent[] = [
   {slug: 'locksmith', name: 'Cardinal Lock + Key'},
   {slug: 'roofer', name: 'Foundry Roofing'},
   {slug: 'landscaper', name: 'Quartermile Landscape Design'},
+  // Outer ring (k=4) — 24 slots. 16 of the 16 new pages fill the front;
+  // 8 unfilled slots in the heavy-fade band stay as primitives (they
+  // dissolve out via the radial mask before they ever read as empty).
+  {slug: 'bike-shop', name: 'Allwheel Cycle Works'},
+  {slug: 'vinyl-shop', name: 'Bandstand Records'},
+  {slug: 'candle-maker', name: 'Wax & Wick Studio'},
+  {slug: 'watch-repair', name: 'Trenton Watchworks'},
+  {slug: 'knife-sharpening', name: 'Whetstone & Co.'},
+  {slug: 'arborist', name: 'Greatwood Tree Care'},
+  {slug: 'garden-nursery', name: 'Greenstone Nursery'},
+  {slug: 'frame-shop', name: 'Cornerstone Custom Framing'},
+  {slug: 'letterpress', name: 'Hollow Press Print Co.'},
+  {slug: 'ice-cream-truck', name: 'Big Dipper Mobile Creamery'},
+  {slug: 'arcade-bar', name: 'Neon & Quarters'},
+  {slug: 'piano-tuner', name: 'Sterling Piano Service'},
+  {slug: 'bike-courier', name: 'Cardinal Courier Co-op'},
+  {slug: 'leather-goods', name: 'Foundling Leatherworks'},
+  {slug: 'sail-school', name: 'Newport Harbor Sailing'},
+  {slug: 'film-lab', name: 'Argentic Film Lab'},
 ].map(({slug, name, featured}) => ({
   kind: 'image' as const,
   src: `/assets/hero-tiles/${slug}.thumb.jpg`,
@@ -221,10 +240,12 @@ function buildTiles(): TileGeom[] {
       const by = Math.sin(a1) * k;
       for (let j = 0; j < k; j++) {
         const t = j / k;
-        // Inner three rings get real imagery; outer rings stay primitive
-        // so the field reads as endless and the radial mask dissolves
-        // it cleanly into the page.
-        const content = k <= 3 ? consume() : PRIMITIVE;
+        // Rings 1-4 carry real imagery (ring 5 stays primitive as fade
+        // buffer for the radial mask). consume() returns PRIMITIVE once
+        // the populated list runs out, so the back half of ring 4 ends
+        // up primitive — fine, they dissolve in the mask's heavy-fade
+        // band before they ever read as empty.
+        const content = k <= 4 ? consume() : PRIMITIVE;
         push(k, ax + (bx - ax) * t, ay + (by - ay) * t, content);
       }
     }

@@ -479,5 +479,213 @@
       "muted": "#7d7d6c",
       "card": "#ffffff"
     }
+  },
+  {
+    "slug": "bike-shop",
+    "name": "Allwheel Cycle Works",
+    "vertical": "Bike shop — Bozeman, MT",
+    "layout": "bold",
+    "palette": {
+      "bg": "#101115",
+      "ink": "#f3f5f8",
+      "accent": "#ff5a36",
+      "muted": "#7c828a",
+      "card": "#181a20"
+    }
+  },
+  {
+    "slug": "vinyl-shop",
+    "name": "Bandstand Records",
+    "vertical": "Record store — Detroit, MI",
+    "layout": "editorial",
+    "palette": {
+      "bg": "#181423",
+      "ink": "#ede5cd",
+      "accent": "#e1a64c",
+      "muted": "#8e8472",
+      "card": "#231d2f"
+    }
+  },
+  {
+    "slug": "candle-maker",
+    "name": "Wax & Wick Studio",
+    "vertical": "Candle studio — Asheville, NC",
+    "layout": "warm",
+    "palette": {
+      "bg": "#f9f3e7",
+      "ink": "#231d15",
+      "accent": "#a05a3a",
+      "muted": "#83786a",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "watch-repair",
+    "name": "Trenton Watchworks",
+    "vertical": "Watch repair — Trenton, NJ",
+    "layout": "editorial",
+    "palette": {
+      "bg": "#181923",
+      "ink": "#e6dfc8",
+      "accent": "#b58d4f",
+      "muted": "#86826f",
+      "card": "#1f2030"
+    }
+  },
+  {
+    "slug": "knife-sharpening",
+    "name": "Whetstone & Co.",
+    "vertical": "Knife sharpening — Brooklyn, NY",
+    "layout": "architectural",
+    "palette": {
+      "bg": "#13161d",
+      "ink": "#e8ebf0",
+      "accent": "#6cbfdc",
+      "muted": "#7d8390",
+      "card": "#1c1f28"
+    }
+  },
+  {
+    "slug": "arborist",
+    "name": "Greatwood Tree Care",
+    "vertical": "Tree care — Atlanta, GA",
+    "layout": "architectural",
+    "palette": {
+      "bg": "#f7f6f1",
+      "ink": "#1a1e17",
+      "accent": "#3f6b3f",
+      "muted": "#6c706a",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "garden-nursery",
+    "name": "Greenstone Nursery",
+    "vertical": "Plant nursery — Eugene, OR",
+    "layout": "warm",
+    "palette": {
+      "bg": "#f0eee4",
+      "ink": "#1d201a",
+      "accent": "#5f7a3c",
+      "muted": "#7a7d70",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "frame-shop",
+    "name": "Cornerstone Custom Framing",
+    "vertical": "Picture framing — Newport, RI",
+    "layout": "editorial",
+    "palette": {
+      "bg": "#f6f3eb",
+      "ink": "#1d1c18",
+      "accent": "#7e5731",
+      "muted": "#7c7669",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "letterpress",
+    "name": "Hollow Press Print Co.",
+    "vertical": "Letterpress studio — Richmond, VA",
+    "layout": "editorial",
+    "palette": {
+      "bg": "#f5efe0",
+      "ink": "#1c1810",
+      "accent": "#a85b2a",
+      "muted": "#7c7666",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "ice-cream-truck",
+    "name": "Big Dipper Mobile Creamery",
+    "vertical": "Ice cream truck — Atlanta, GA",
+    "layout": "warm",
+    "palette": {
+      "bg": "#fdf2e9",
+      "ink": "#26180e",
+      "accent": "#e8504a",
+      "muted": "#8e7e6d",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "arcade-bar",
+    "name": "Neon & Quarters",
+    "vertical": "Arcade bar — Brooklyn, NY",
+    "layout": "bold",
+    "palette": {
+      "bg": "#0e0a1d",
+      "ink": "#ecdcff",
+      "accent": "#ff3aa2",
+      "muted": "#8e83a1",
+      "card": "#1c1430"
+    }
+  },
+  {
+    "slug": "piano-tuner",
+    "name": "Sterling Piano Service",
+    "vertical": "Piano tuner + technician — Boston, MA",
+    "layout": "editorial",
+    "palette": {
+      "bg": "#f6f1e6",
+      "ink": "#1d1c18",
+      "accent": "#7e5731",
+      "muted": "#7c7669",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "bike-courier",
+    "name": "Cardinal Courier Co-op",
+    "vertical": "Courier service — Chicago, IL",
+    "layout": "bold",
+    "palette": {
+      "bg": "#161114",
+      "ink": "#f1e9e4",
+      "accent": "#cc2929",
+      "muted": "#807068",
+      "card": "#1f1819"
+    }
+  },
+  {
+    "slug": "leather-goods",
+    "name": "Foundling Leatherworks",
+    "vertical": "Leather goods studio — Lexington, KY",
+    "layout": "warm",
+    "palette": {
+      "bg": "#f4ece0",
+      "ink": "#241910",
+      "accent": "#7a4a26",
+      "muted": "#806f5e",
+      "card": "#fff9ed"
+    }
+  },
+  {
+    "slug": "sail-school",
+    "name": "Newport Harbor Sailing",
+    "vertical": "Sailing school — Newport, RI",
+    "layout": "clinical",
+    "palette": {
+      "bg": "#eef3f7",
+      "ink": "#0f1f2a",
+      "accent": "#2a78c8",
+      "muted": "#5f6c79",
+      "card": "#ffffff"
+    }
+  },
+  {
+    "slug": "film-lab",
+    "name": "Argentic Film Lab",
+    "vertical": "Film photography lab — Brooklyn, NY",
+    "layout": "architectural",
+    "palette": {
+      "bg": "#0f1116",
+      "ink": "#e6e8ee",
+      "accent": "#e08e3b",
+      "muted": "#7d828c",
+      "card": "#181b22"
+    }
   }
 ]
