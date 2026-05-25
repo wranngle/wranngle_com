@@ -1,5 +1,10 @@
 # Testimonial manifest.
 #
+# ILLUSTRATIVE / SAMPLE DATA — composite scenarios based on typical results,
+# NOT quotes from real named customers. The rendered grid shows an
+# "Illustrative examples" disclaimer. Replace with real, consenting-customer
+# quotes before presenting any of this as a genuine endorsement.
+#
 # Source of truth for the state/ZIP-filterable testimonial grid rendered
 # by client/src/components/TestimonialGrid.tsx. The runtime registry
 # lives at client/src/data/testimonials.ts and MUST match this file

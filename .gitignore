@@ -33,6 +33,7 @@ logs/
 old/
 diff.txt
 .autosync/lease.json
+.local/
 
 # OpenSpec working state (proposals churn — keep specs/ only)
 openspec/changes/

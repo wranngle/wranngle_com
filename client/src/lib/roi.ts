@@ -22,8 +22,8 @@
  *                                  that convert to a booked job. Lower than
  *                                  daytime live-agent rate (~55%) because
  *                                  unattended captures still need follow-up.
- *   AGENT_COST_PER_MONTH     299   Wranngle "Pro" tier monthly price floor.
- *                                  Used for payback period only.
+ *   AGENT_COST_PER_MONTH     250   Core Agent entry tier (the lowest agent
+ *                                  monthly price). Used for payback period only.
  *
  * Formula:
  *   missed_calls_monthly      = inbound_calls_monthly * MISSED_CALL_RATE
@@ -39,7 +39,7 @@ export const ROI_ASSUMPTIONS = Object.freeze({
   MISSED_CALL_RATE: 0.35,
   AGENT_ANSWER_RATE: 0.95,
   AGENT_CAPTURE_RATE: 0.4,
-  AGENT_COST_PER_MONTH: 299,
+  AGENT_COST_PER_MONTH: 250,
 });
 
 export type RoiInputs = {

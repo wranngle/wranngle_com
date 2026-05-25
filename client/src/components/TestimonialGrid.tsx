@@ -58,11 +58,18 @@ export default function TestimonialGrid({
     >
       <header className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
+          <span
+            data-testid="testimonial-illustrative-badge"
+            className="mb-2 inline-block rounded-md border border-current/20 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide opacity-70"
+          >
+            Illustrative examples
+          </span>
           <h2 className="text-2xl font-semibold tracking-tight">
             What trades operators are saying
           </h2>
           <p className="text-sm opacity-70">
-            Filter by state or ZIP to find a business near yours.
+            Composite scenarios based on typical results — not statements from
+            named customers. Filter by state or ZIP to explore by region.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-3">

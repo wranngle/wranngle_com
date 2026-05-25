@@ -51,6 +51,9 @@ const describeIfLive =
 
 const LEAD_INTAKE_WORKFLOW_ID = 'SY5XCbzxX32eCIeO';
 const UMS_WORKFLOW_ID = 'CBoXlSNiDOHA5YmA';
+// Live-run recipient comes from env (TEST_PHONE_NUMBER); reserved-range fallback
+// keeps a real number out of the public repo.
+const TEST_RECIPIENT_PHONE = process.env.TEST_PHONE_NUMBER ?? '+15555550100';
 
 const mockLead = {
   businessName: 'Integration Test Corp',
@@ -127,7 +130,7 @@ describeIfLive('Lead Intake Notification Flow', () => {
           'X-Webhook-Secret': WEBHOOK_SECRET,
         },
         body: JSON.stringify({
-          phone_number: '+12602217355',
+          phone_number: TEST_RECIPIENT_PHONE,
           template: 'lead-intake',
           variables: {
             BUSINESS_NAME: mockLead.businessName,
@@ -159,7 +162,7 @@ describeIfLive('Lead Intake Notification Flow', () => {
           'X-Webhook-Secret': WEBHOOK_SECRET,
         },
         body: JSON.stringify({
-          phone_number: '+12602217355',
+          phone_number: TEST_RECIPIENT_PHONE,
           template: 'lead-intake',
           variables: {
             BUSINESS_NAME: mockLead.businessName,
