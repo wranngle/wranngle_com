@@ -74,7 +74,7 @@ export type TileSnapshot = {
   dt: number; // current rotation (radians)
 };
 
-type Pt = {x: number; y: number};
+export type Pt = {x: number; y: number};
 type TracerPath = {
   cum: number[];
   len: number;
@@ -87,19 +87,19 @@ type Pulse = {t0: number; halfW: number; paths: TracerPath[]};
 
 const TAU = Math.PI * 2;
 
-function angDiff(a: number, b: number) {
+export function angDiff(a: number, b: number) {
   let d = a - b;
   while (d > Math.PI) d -= TAU;
   while (d < -Math.PI) d += TAU;
   return d;
 }
 
-function clamp(v: number, lo: number, hi: number) {
+export function clamp(v: number, lo: number, hi: number) {
   return v < lo ? lo : Math.min(v, hi);
 }
 
 /** Polyline tracing the outline of a rounded square centered at (cx,cy). */
-function roundedOutline(o: {
+export function roundedOutline(o: {
   cx: number;
   cy: number;
   half: number;
@@ -146,7 +146,7 @@ function roundedOutline(o: {
   return pts;
 }
 
-function nearestIndex(pts: Pt[], qx: number, qy: number) {
+export function nearestIndex(pts: Pt[], qx: number, qy: number) {
   let bi = 0;
   let bd = 1e18;
   for (const [i, p] of pts.entries()) {
@@ -162,7 +162,12 @@ function nearestIndex(pts: Pt[], qx: number, qy: number) {
   return bi;
 }
 
-function routeSpan(pts: Pt[], iA: number, iB: number, dir: number): Pt[] {
+export function routeSpan(
+  pts: Pt[],
+  iA: number,
+  iB: number,
+  dir: number,
+): Pt[] {
   const n = pts.length;
   const out = [pts[iA]];
   let i = iA;
@@ -176,7 +181,7 @@ function routeSpan(pts: Pt[], iA: number, iB: number, dir: number): Pt[] {
   return out;
 }
 
-function dedupe(pts: Pt[]): Pt[] {
+export function dedupe(pts: Pt[]): Pt[] {
   const out = [pts[0]];
   for (let i = 1; i < pts.length; i++) {
     const p = out.at(-1)!;
@@ -186,7 +191,7 @@ function dedupe(pts: Pt[]): Pt[] {
   return out;
 }
 
-function chaikin(ptsIn: Pt[], iters: number): Pt[] {
+export function chaikin(ptsIn: Pt[], iters: number): Pt[] {
   let pts = ptsIn;
   for (let it = 0; it < iters; it++) {
     if (pts.length < 3) break;
@@ -241,7 +246,11 @@ function buildChain(
  * normal (the naive approach) folds the ribbon onto itself at sharp turns,
  * which under additive blending shows up as bright glare seams.
  */
-function buildRibbon(pts: Pt[], cum: number[], halfW: number): Float32Array {
+export function buildRibbon(
+  pts: Pt[],
+  cum: number[],
+  halfW: number,
+): Float32Array {
   const n = pts.length;
   const v: number[] = [];
   const miterLimit = 2.4;
