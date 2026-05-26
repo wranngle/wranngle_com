@@ -487,15 +487,15 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
           heroPool.length > 0
         ) {
           firedForHero = true;
-          tracers.firePulse(
-            animClock,
-            W,
-            H,
-            dpr,
-            tiles[heroIdx],
+          tracers.firePulse({
+            clock: animClock,
+            w: W,
+            h: H,
+            scale: dpr,
+            heroTile: tiles[heroIdx],
             ringTiles,
-            CFG.rings,
-          );
+            rings: CFG.rings,
+          });
         }
 
         tracers.render(animClock, W, H, dpr);
