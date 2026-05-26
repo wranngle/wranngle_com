@@ -121,10 +121,16 @@ function AgreementBody() {
     <div className="space-y-6">
       {AGREEMENT_BODY.map((section, index) => (
         <section key={section.heading ?? `intro-${index}`}>
+          {/* h2 (not h3): the page's <h1> is "Pilot Agreement"; each
+              numbered clause is a top-level section of the agreement, so
+              the semantic level must be h2 to match the source markdown
+              and avoid a heading-level skip (an a11y violation found by
+              the route-level a11y audit). text-xl preserves the visual
+              size — semantic level is independent of font-size. */}
           {section.heading ? (
-            <h3 className="brand-font text-xl font-semibold mb-2">
+            <h2 className="brand-font text-xl font-semibold mb-2">
               {section.heading}
-            </h3>
+            </h2>
           ) : null}
           {section.paragraphs?.map((paragraph) => (
             <p key={paragraph} className="opacity-80 mb-3 leading-relaxed">
