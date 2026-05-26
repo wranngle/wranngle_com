@@ -174,7 +174,11 @@ export default function FAQ({isDark = true}: FAQProps) {
       className="pt-10 pb-24 px-6 max-w-7xl mx-auto w-full scroll-mt-24"
     >
       <div className="grid lg:grid-cols-[1fr_1.6fr] gap-10 lg:gap-16 items-start">
-        <div className="lg:sticky lg:top-24">
+        {/* min-w-0 on both grid children: grid items default to
+            min-width:auto and won't shrink below their content's intrinsic
+            width, which pushed the accordion column ~13px past a 375px
+            phone (horizontal scrollbar). */}
+        <div className="lg:sticky lg:top-24 min-w-0">
           <div className="mono-font text-[10px] font-bold uppercase tracking-widest text-[var(--s500)] mb-2">
             FAQ
           </div>
@@ -202,7 +206,7 @@ export default function FAQ({isDark = true}: FAQProps) {
           </p>
         </div>
 
-        <div>
+        <div className="min-w-0">
           {Object.entries(groups).map(([group, items]) => (
             <div key={group} className="mb-7">
               <div className="mono-font text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--s500)] mb-2 pl-0.5">
