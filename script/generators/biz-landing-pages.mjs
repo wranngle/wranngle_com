@@ -1786,6 +1786,17 @@ function makeNav(b) {
   </nav>`;
 }
 
+/**
+ * Deterministic "years in practice" for the clinical stat-card, seeded
+ * from the slug so regeneration is idempotent. (Previously Math.random()
+ * here drifted the committed HTML on every run.) Returns 20–34.
+ */
+function statYears(slug) {
+  let h = 0;
+  for (const ch of slug) h = (h * 31 + ch.codePointAt(0)) % 997;
+  return 20 + (h % 15);
+}
+
 /* Template 1: WARM — soft cream, two-col hero with image right, two image bands */
 function warm(b) {
   return `<!doctype html><html><head><meta charset="utf-8"><title>${b.name}</title>
@@ -1952,7 +1963,7 @@ ${makeNav(b)}
     </div>
     <div class="hero-img">
       <img src="img/hero.jpg" alt="">
-      <div class="stat-card"><div class="n">${20 + Math.floor(Math.random() * 15)} yrs</div><div class="l">in practice</div></div>
+      <div class="stat-card"><div class="n">${statYears(b.slug)} yrs</div><div class="l">in practice</div></div>
     </div>
   </div>
 </section>
