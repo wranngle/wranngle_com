@@ -1,0 +1,6 @@
+# Cloudflare Pages redirects. See https://developers.cloudflare.com/pages/configuration/redirects/
+# /profile.md → /cody-arnold.md (301): profile.md was an alias-by-duplicate-file. The
+# robots.txt ProfileAlias line keeps advertising the URL; crawlers follow the 301 to
+# the canonical content. Eliminates the byte-identical 5.5 KB duplicate on every deploy
+# and the silent drift risk if one file is updated and the other isn't.
+/profile.md /cody-arnold.md 301
