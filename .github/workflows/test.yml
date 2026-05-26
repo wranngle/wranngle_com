@@ -30,6 +30,8 @@ jobs:
         run: bash scripts/bin/lint-no-new-ts-nocheck.sh
         env:
           BASE_REF: origin/${{ github.base_ref || 'main' }}
+      - name: Test (vitest)
+        run: bun run test:run
       - name: Build (vite + workers)
         run: bun run build
       - name: Gitleaks scan
