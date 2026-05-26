@@ -99,14 +99,15 @@ function clamp(v: number, lo: number, hi: number) {
 }
 
 /** Polyline tracing the outline of a rounded square centered at (cx,cy). */
-function roundedOutline(
-  cx: number,
-  cy: number,
-  half: number,
-  radIn: number,
-  rot: number,
-): Pt[] {
-  const rad = Math.max(0, Math.min(radIn, half * 0.999));
+function roundedOutline(o: {
+  cx: number;
+  cy: number;
+  half: number;
+  rad: number;
+  rot: number;
+}): Pt[] {
+  const {cx, cy, half, rot} = o;
+  const rad = Math.max(0, Math.min(o.rad, half * 0.999));
   const hr = half - rad;
   const c = Math.cos(rot);
   const s = Math.sin(rot);
@@ -458,26 +459,27 @@ export class TileTracerField {
   }
 
   /** Build a pulse from the hero tile outward along the live tile lattice. */
-  firePulse(
-    clock: number,
-    w: number,
-    h: number,
-    scale: number,
-    heroTile: TileSnapshot,
-    ringTiles: TileSnapshot[][],
-    rings: number,
-  ) {
+  firePulse(args: {
+    clock: number;
+    w: number;
+    h: number;
+    scale: number;
+    heroTile: TileSnapshot;
+    ringTiles: TileSnapshot[][];
+    rings: number;
+  }) {
+    const {clock, w, h, scale, heroTile, ringTiles, rings} = args;
     const p = this.params;
     if (p.tracerCount <= 0) return;
     const cx = w / 2;
     const cy = h / 2;
-    const heroOut = roundedOutline(
-      heroTile.dx * scale,
-      heroTile.dy * scale,
-      (heroTile.ds * scale) / 2,
-      heroTile.dr * scale,
-      heroTile.dt,
-    );
+    const heroOut = roundedOutline({
+      cx: heroTile.dx * scale,
+      cy: heroTile.dy * scale,
+      half: (heroTile.ds * scale) / 2,
+      rad: heroTile.dr * scale,
+      rot: heroTile.dt,
+    });
     const maxR = Math.hypot(cx, cy) + w * 0.42;
     const count = Math.max(1, Math.round(p.tracerCount));
     const halfW = clamp(
@@ -503,13 +505,13 @@ export class TileTracerField {
         const t = chain[ci];
         const tcx = t.dx * scale;
         const tcy = t.dy * scale;
-        const out = roundedOutline(
-          tcx,
-          tcy,
-          (t.ds * scale) / 2,
-          t.dr * scale,
-          t.dt,
-        );
+        const out = roundedOutline({
+          cx: tcx,
+          cy: tcy,
+          half: (t.ds * scale) / 2,
+          rad: t.dr * scale,
+          rot: t.dt,
+        });
         const prev = pp.at(-1)!;
         const iEntry = nearestIndex(out, prev.x, prev.y);
         const nxt = ci < chain.length - 1 ? chain[ci + 1] : undefined;
