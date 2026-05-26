@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ROI business-wordmark lockups are aspect-locked inline SVGs sized by
+   height (≈5.3:1). On a narrow phone their natural width (~433px at the
+   heading's text-5xl) overflows the viewport, so cap them to the shell. */
+[data-testid='roi-wordmark'] svg {
+  max-width: 100%;
+}
+
 /* LIGHT MODE */
 :root {
   --button-outline: rgba(0, 0, 0, 0.1);

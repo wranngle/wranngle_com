@@ -68,6 +68,12 @@ function shellStyle(): React.CSSProperties {
   return {
     display: 'inline-block',
     height: `${HEIGHT_EM}em`,
+    // The lockup's natural width is height × ~5.3 (1700/320 viewBox). At the
+    // ROI heading's text-5xl (48px) that's ~433px, which overflows a 375px
+    // phone. max-width:100% caps the shell to the heading width; the paired
+    // `svg { max-width: 100% }` rule in index.css scales the artwork to fit.
+    // Identity on desktop (natural width < container, so the cap never binds).
+    maxWidth: '100%',
     verticalAlign: '-0.45em',
     lineHeight: 0,
     background: '#fcfaf5',
