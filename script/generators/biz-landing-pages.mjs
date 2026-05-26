@@ -13,7 +13,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import {fileURLToPath} from 'node:url';
+import {fileURLToPath, pathToFileURL} from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, '../..');
@@ -2136,34 +2136,52 @@ ${makeNav(b)}
 
 const LAYOUTS = {warm, editorial, clinical, bold, architectural};
 
-/* ------------------------------------------------------------------ */
-/* Run                                                                 */
-/* ------------------------------------------------------------------ */
-for (const b of BUSINESSES) {
+// Exported so the determinism test can call the pure template functions
+// + statYears directly without triggering file writes. The generate()
+// side-effect only runs when the script is invoked as a CLI (main guard).
+export {BUSINESSES, LAYOUTS, statYears, makeNav};
+
+/** Render one business to HTML (pure — no I/O). */
+export function renderBusiness(b) {
   const tpl = LAYOUTS[b.layout];
   if (!tpl) throw new Error(`unknown layout ${b.layout} for ${b.slug}`);
-  const html = tpl(b);
-  const dir = path.join(bizRoot, b.slug);
-  fs.writeFileSync(path.join(dir, 'index.html'), html);
-  console.log(
-    `✓ ${b.slug} (${b.layout}) — ${(html.length / 1024).toFixed(1)} KB`,
+  return tpl(b);
+}
+
+/* ------------------------------------------------------------------ */
+/* Run (CLI side effect)                                               */
+/* ------------------------------------------------------------------ */
+function generate() {
+  for (const b of BUSINESSES) {
+    const html = renderBusiness(b);
+    const dir = path.join(bizRoot, b.slug);
+    fs.writeFileSync(path.join(dir, 'index.html'), html);
+    console.log(
+      `✓ ${b.slug} (${b.layout}) — ${(html.length / 1024).toFixed(1)} KB`,
+    );
+  }
+
+  console.log(`\nGenerated ${BUSINESSES.length} landing pages.`);
+
+  // Export for capture pipeline
+  fs.writeFileSync(
+    path.join(bizRoot, '_businesses.json'),
+    JSON.stringify(
+      BUSINESSES.map(({slug, name, vertical, layout, palette}) => ({
+        slug,
+        name,
+        vertical,
+        layout,
+        palette,
+      })),
+      null,
+      2,
+    ),
   );
 }
 
-console.log(`\nGenerated ${BUSINESSES.length} landing pages.`);
-
-// Export for capture pipeline
-fs.writeFileSync(
-  path.join(bizRoot, '_businesses.json'),
-  JSON.stringify(
-    BUSINESSES.map(({slug, name, vertical, layout, palette}) => ({
-      slug,
-      name,
-      vertical,
-      layout,
-      palette,
-    })),
-    null,
-    2,
-  ),
-);
+// Run only when invoked directly (node script/generators/biz-landing-pages.mjs),
+// not when imported by a test.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  generate();
+}
