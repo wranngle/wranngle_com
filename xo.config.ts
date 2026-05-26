@@ -84,6 +84,7 @@ const config: FlatXoConfig = [
       'unicorn/prefer-ternary': 'off',
       'unicorn/no-array-for-each': 'off',
       'n/prefer-global/buffer': 'off',
+      'n/prefer-global/process': 'off',
       'n/no-extraneous-import': 'off',
       'import-x/no-extraneous-dependencies': 'off',
       'import-x/no-absolute-path': 'off',
