@@ -38,14 +38,27 @@ summary.
 
 ## Local Commands
 
+All Git automation is now the single binary `git_good`
+(`~/.dotfiles/scripts/bin/git_good`), which replaced the older
+`repo-automation.sh`, `github-hygiene.sh`, `git-autosync.sh`,
+`agent-git-guard.sh`, `git-conformance`, `git-wip-gc`, and `gh-issue.sh`.
+
 ```bash
-repo-automation.sh observe
-repo-automation.sh doctor
-repo-automation.sh policy
-github-hygiene.sh triage-failures
-github-hygiene.sh repair-failures
+git_good observe               # dump current repo state as NDJSON
+git_good status                # human-readable repo + ledger summary
+git_good conform               # verify repo matches the hardcoded contract
+git_good triage                # list recent GitHub Actions failures
+git_good repair                # retire legacy AI/self-repair workflows
+git_good sync                  # autostash dirty tree (local-only; cron also runs this)
+git_good unstash               # pop the latest git_good stash
+git_good gc                    # drop stashes >30d + prune patches
+git_good guard baseline|finalize  # NDJSON pre/post guard, fails closed
+git_good defaults              # print the hardcoded constants
+git_good --dry-run <sub>       # demote any mutating subcommand to print-only
 ```
 
-`.autosync/policy.env`, `.autosync/pause`, and `.autosync/lease.json` are
-per-repo overrides. The generated contract is the default; local overrides are
-for explicit temporary exceptions.
+Runtime artifacts live under `<repo>/.artifacts/git_good/`:
+`events.<date>.jsonl` (ECS-shaped event ledger, date-keyed), flat
+`stash.<uuid>.patch` files, and `baseline.<session>.tsv` for the guard
+contract. A cron entry runs `git_good sync` every 15 minutes locally
+to keep dirty trees auto-stashed.
