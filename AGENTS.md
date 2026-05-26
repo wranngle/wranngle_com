@@ -21,71 +21,79 @@ current source. The direct path targets the production Pages project
 ## Project Overview
 This project is the web application and landing page for **Wranngle Systems**, an AI and automation consultancy. It features a distinct "console" aesthetic and integrates an **ElevenLabs Conversational AI** agent.
 
-The application is a full-stack **TypeScript** project structured as a monorepo, utilizing **Express** for the backend and **React** for the frontend, built with **Vite**.
+The application is a **TypeScript** SPA hosted on **Cloudflare Pages**: a React frontend (Vite-built) shipped as a static bundle and a small serverless API layer running on **Cloudflare Pages Functions** under `functions/api/`. There is no long-running backend server.
 
 ## Tech Stack
-- **Language:** TypeScript
-- **Runtime:** Bun
-- **Frontend:** React, Tailwind CSS, Framer Motion, Radix UI Primitives, Lucide Icons.
-- **Backend:** Express.js.
-- **Validation:** Arktype.
-- **Storage:** In-memory `MemStorage` (implemented in `server/storage.ts`).
-- **Build Tooling:** Vite (Frontend), esbuild (Backend bundling).
-- **Integrations:** ElevenLabs (`elevenlabs-convai` web component).
+- **Language:** TypeScript.
+- **Runtime:** Bun (local dev), Cloudflare Workers (production).
+- **Frontend:** React, Tailwind CSS, Framer Motion, Radix UI primitives, Lucide icons, wouter for routing, React Query.
+- **Backend:** Cloudflare Pages Functions (serverless), one file per route under `functions/api/`.
+- **Validation:** ArkType (not Zod) — `type({...})` syntax in `shared/schema.ts`.
+- **Build Tooling:** Vite (single bundler; SSR/prerender of selected routes happens via `script/build.ts`). No backend bundling step — Pages Functions ship as-is.
+- **Storage:** No database. Lead data is forwarded to n8n via webhook; events flow through the Pages Functions.
+- **Integrations:** ElevenLabs (`<elevenlabs-convai>` web component), n8n (lead/event webhooks), Cloudflare Pages.
 
 ## Directory Structure
-- **`client/`**: Frontend source code.
-  - **`src/App.tsx`**: Main application component containing the landing page layout and logic.
-  - **`src/components/ui/`**: Reusable UI components (based on Radix UI).
-  - **`src/hooks/`**: Custom React hooks.
-- **`server/`**: Backend source code.
-  - **`index.ts`**: Entry point. Sets up the Express server and middleware.
-  - **`routes.ts`**: API route definitions.
-  - **`storage.ts`**: In-memory data storage implementation.
-- **`shared/`**: Code shared between client and server.
-  - **`schema.ts`**: Data validation schemas using Arktype.
-- **`script/`**: Build and utility scripts.
-  - **`build.ts`**: Custom build script that handles both client (Vite) and server (esbuild) bundling.
+- **`client/`** — Frontend source code (React SPA).
+  - **`src/App.tsx`** — AI voice agents home page (served at `/` and `/products/ai-voice-agents`).
+  - **`src/Router.tsx`** — wouter route table + canonical/meta sync.
+  - **`src/components/`** — Page-level components (PolygonTileHero, GlobalSarahWidget, etc.).
+  - **`src/components/ui/`** — Shadcn/Radix primitives.
+  - **`src/pages/`** — Other top-level routes (about, websites, gtm-ops, pilot, etc.).
+  - **`src/lib/`** — Shared client helpers (Sarah widget loader, theming, etc.).
+  - **`public/`** — Static assets copied verbatim into `dist/`.
+- **`functions/`** — Cloudflare Pages Functions (serverless API).
+  - **`api/leads.ts`** — Lead capture → ArkType validation → n8n webhook.
+  - **`api/health.ts`** — Health check.
+  - **`api/stripe-webhook.ts`**, **`api/checkout.ts`**, **`api/events.ts`**, **`api/ticker.ts`**, **`api/send-welcome-email.ts`** — additional endpoints.
+  - **`api/_middleware.ts`** — request middleware shared across functions.
+- **`shared/`** — Code shared between client and functions.
+  - **`schema.ts`** — ArkType schemas.
+- **`script/`** — Build + recording + generator scripts.
+  - **`build.ts`** — production build (Vite + selected-route prerender).
+  - **`record-hero-demos.ts`**, **`record-gtm-ops-demos.ts`** — Playwright recordings.
+  - **`generators/`** — mock landing-page generator + capture pipeline.
+- **`scripts/`** (plural) — Operational scripts (n8n, SMTP, smoke tests).
+- **`demo-stages/`** — Static landing pages used by the recording pipeline.
+- **`email-templates/`** — Production email template system.
 
 ## Development Workflow
 
 ### Prerequisites
-- Bun runtime
+- Bun runtime.
 
 ### Key Commands
-- **Install Dependencies:** `bun install`
-- **Start Development Server:** `bun run dev`
-  - Runs the backend with Bun (hot reload) and the frontend via Vite middleware.
-  - Access at `http://localhost:5000` (default).
-- **Type Checking:** `bun run check` (runs `tsc`)
+- **Install:** `bun install`
+- **Dev server:** `bun run dev` — Vite dev server with HMR on `http://localhost:5173`. Use `bun run dev:functions` to test Pages Functions locally via wrangler.
+- **Type-check:** `bun run check` (`tsc`).
+- **Lint:** `bun run lint` / `bun run lint:fix` (XO + Prettier).
+- **Test:** `bun run test` (Vitest).
 
 ### Build & Production
-- **Build:** `bun run build`
-  - Cleans `dist/`.
-  - Builds frontend using Vite.
-  - Bundles backend using `esbuild` into `dist/index.cjs`.
-- **Start Production:** `bun run start`
-  - Executes the bundled server: `bun run dist/index.cjs`.
+- **Build:** `bun run build` — runs `script/build.ts` which invokes Vite, prerenders the SPA HTML routes listed in `vite.config.ts` (`spaHtmlRoutes`), and writes the bundle to `dist/`. There is no separate backend bundling step.
+- **Preview locally:** `bun run preview` — `wrangler pages dev dist` so Functions run against the built bundle.
+- **Deploy (fast path):** `bun run deploy:live` — builds then uploads directly to the `wranngle-com` Pages project on `main`. Use this over waiting for GitHub-triggered builds.
+- **Re-upload current dist/:** `bun run deploy:upload` — skips the build, useful when `dist/` is already fresh.
 
 ## Architecture & Conventions
 
 ### Shared Schema
-Data models are defined in `shared/schema.ts`. This file exports Arktype schemas for type safety across the full stack.
-- **Example:** `userSchema` and `insertUserSchema`.
+Data models live in `shared/schema.ts` as ArkType schemas — these are the single source of truth shared between the SPA and the Pages Functions.
 
 ### API Routes
-- API routes are defined in `server/routes.ts` and registered in `server/index.ts`.
-- The backend serves API requests starting with `/api` and falls back to serving the static frontend client for all other routes (in production).
+- Each function is a file under `functions/api/`. The filename maps to the URL: `functions/api/leads.ts` serves `/api/leads`.
+- POST handlers validate incoming JSON against an ArkType schema from `shared/schema.ts` and forward to the appropriate webhook (typically n8n).
+- All other paths fall through to the React SPA via the Pages static handler.
 
 ### Frontend Styling
-- **Tailwind CSS** is used for styling.
-- **Fonts:** Bricolage Grotesque and JetBrains Mono are loaded via Google Fonts.
-- **Colors:** Custom brand colors (e.g., `--s500`, `--v500`) are defined in global styles within `App.tsx` or CSS files.
+- **Tailwind CSS** is the styling system.
+- **Fonts:** Bricolage Grotesque and JetBrains Mono via Google Fonts.
+- **Colors:** Brand colors (`--s500`, `--v500`, etc.) are defined in `client/src/index.css` and consumed via Tailwind utilities.
 
 ### ElevenLabs Integration
-- The conversational agent is embedded using the `<elevenlabs-convai>` custom element.
-- **Agent ID:** `agent_7801kqqqhjmcfdsa1m2a8t9w6t5c`.
-- The integration script is dynamically injected in `App.tsx`.
+- The conversational agent is embedded via the `<elevenlabs-convai>` custom element.
+- **Agent ID:** `agent_7801kqqqhjmcfdsa1m2a8t9w6t5c` (single source: `SARAH_AGENT_ID` in `client/src/lib/sarah.ts`).
+- The widget is mounted globally by `GlobalSarahWidget.tsx` inside `Router.tsx` so every SPA route shows it. The static `client/public/404.html` mirrors the same agent ID + widget version inline (a drift test in `client/src/lib/sarah.test.ts` enforces parity).
 
 <!-- /dotfiles-import: GEMINI.md sha256:bb9a645e5a9a015ee0410d6262fa53054e017b89224924d3cd663bb241534b09 -->
 
