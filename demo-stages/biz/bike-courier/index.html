@@ -9,7 +9,10 @@
     --card: #1f1819;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+  /* overflow-x:hidden — the editorial layout's rotated hero image spills
+     ~8px past the viewport, which otherwise shows a stray horizontal
+     scrollbar. Clipping it preserves the rotation aesthetic. */
+  html, body { margin: 0; padding: 0; overflow-x: hidden; background: var(--bg); color: var(--ink); }
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.6;
