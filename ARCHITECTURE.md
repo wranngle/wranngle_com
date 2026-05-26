@@ -33,14 +33,17 @@
 
 Single-page app served as static assets from Cloudflare Pages. Routes (see [`Router.tsx`](client/src/Router.tsx)):
 
-- `/` — landing page ([`App.tsx`](client/src/App.tsx)) with hero, the full offerings section (consolidated from the former `/offerings` page), Talk-to-Sarah voice demo, FAQ, and a small founder note linking to `/about`
-- `/about` — Wranngle Systems + Cody Arnold ([`pages/about.tsx`](client/src/pages/about.tsx)), portrait, GitHub projects grid (live `wranngle/*` repo cards), socials. The legacy `/built-by` URL still resolves here.
-- `/products/gtm-ops` (alias `/products/gtm_ops`) — dedicated product page for the gtm_ops SaaS ([`pages/gtm-ops.tsx`](client/src/pages/gtm-ops.tsx))
-- `/privacy`, `/terms` — legal pages
-- `/offerings` — backcompat redirect to `/#offerings`
-- `/*` — `not-found.tsx`
+- `/` and `/products/ai-voice-agents` — AI voice-agents home ([`App.tsx`](client/src/App.tsx)). Same component on both; canonical URL is `/`. Carries the polygon-tile hero ([`PolygonTileHero.tsx`](client/src/components/PolygonTileHero.tsx) + the WebGL comet-tracer overlay in [`tileTracers.ts`](client/src/components/tileTracers.ts)), the offerings catalog (consolidated from the former `/offerings` page), FAQ, and a founder note linking to `/about`.
+- `/products/websites` — Websites product page ([`pages/websites.tsx`](client/src/pages/websites.tsx)); also embeds the polygon-tile hero.
+- `/products/gtm-ops` (alias `/products/gtm_ops`) — gtm_ops SaaS product page ([`pages/gtm-ops.tsx`](client/src/pages/gtm-ops.tsx)).
+- `/about` — Wranngle Systems + Cody Arnold ([`pages/about.tsx`](client/src/pages/about.tsx)), portrait, GitHub projects grid, socials. The legacy `/built-by` URL still resolves here.
+- `/pricing` — Core/Elite agent pricing ([`routes/pricing.tsx`](client/src/routes/pricing.tsx)).
+- `/pilot` — 30-day click-through pilot agreement ([`pages/pilot.tsx`](client/src/pages/pilot.tsx)).
+- `/privacy`, `/terms` — legal pages.
+- `/offerings` — backcompat redirect to `/#offerings`.
+- `/*` — [`not-found.tsx`](client/src/pages/not-found.tsx) (and [`public/404.html`](client/public/404.html) as the Cloudflare static fallback for direct hits to unknown URLs that never enter React).
 
-Routing via `wouter`. Brand tokens live in [`client/src/index.css`](client/src/index.css) as HSL variables, mapped from `wranngle/gtm_ops/tokens/`. Tailwind config in [`tailwind.config.ts`](tailwind.config.ts) with shadcn/Radix UI components.
+Routing via `wouter`. The ElevenLabs Sarah widget is mounted once at the Router root by [`GlobalSarahWidget.tsx`](client/src/components/GlobalSarahWidget.tsx) so every SPA route surfaces it; per-route `surface_context` lets the agent prompt branch on which page the caller is on. Brand tokens live in [`client/src/index.css`](client/src/index.css) as HSL variables, mapped from `wranngle/gtm_ops/tokens/`. Tailwind config in [`tailwind.config.ts`](tailwind.config.ts) with shadcn/Radix UI components.
 
 ### `functions/api/` — Cloudflare Pages Functions
 
