@@ -1779,6 +1779,27 @@ const sharedCss = (b) => `
   .kicker { font-size: 12px; text-transform: uppercase; letter-spacing: 0.16em; opacity: 0.6; margin-bottom: 14px; }
   .muted { color: var(--muted); }
   .pill { display: inline-block; padding: 4px 12px; border-radius: 999px; background: var(--accent); color: white; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* ---- mobile (≤768px) ----------------------------------------------
+     The 5 layouts share these class names, so one breakpoint here makes
+     every page responsive. Without it the multi-column grids never
+     collapse: the 2-col hero squeezes its image into a ~60px sliver and
+     the nav wordmark overlaps the (decorative, hrefless) nav links. */
+  @media (max-width: 768px) {
+    .wrap { padding: 0 20px; }
+    .nav { padding: 16px 20px; gap: 14px; }
+    .nav-links { display: none; }
+    .hero-grid, .story, .split, .section-head, .hero-meta {
+      grid-template-columns: 1fr !important; gap: 28px !important;
+    }
+    .menu-grid, .menu-list, .list, .cards {
+      grid-template-columns: 1fr !important;
+    }
+    .spec-row, .grid-4, .image-band {
+      grid-template-columns: 1fr 1fr !important; height: auto !important;
+    }
+    .hero-img { transform: none !important; }
+  }
 `;
 
 function makeNav(b) {

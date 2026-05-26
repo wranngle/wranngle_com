@@ -37,6 +37,27 @@
   .muted { color: var(--muted); }
   .pill { display: inline-block; padding: 4px 12px; border-radius: 999px; background: var(--accent); color: white; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
 
+  /* ---- mobile (≤768px) ----------------------------------------------
+     The 5 layouts share these class names, so one breakpoint here makes
+     every page responsive. Without it the multi-column grids never
+     collapse: the 2-col hero squeezes its image into a ~60px sliver and
+     the nav wordmark overlaps the (decorative, hrefless) nav links. */
+  @media (max-width: 768px) {
+    .wrap { padding: 0 20px; }
+    .nav { padding: 16px 20px; gap: 14px; }
+    .nav-links { display: none; }
+    .hero-grid, .story, .split, .section-head, .hero-meta {
+      grid-template-columns: 1fr !important; gap: 28px !important;
+    }
+    .menu-grid, .menu-list, .list, .cards {
+      grid-template-columns: 1fr !important;
+    }
+    .spec-row, .grid-4, .image-band {
+      grid-template-columns: 1fr 1fr !important; height: auto !important;
+    }
+    .hero-img { transform: none !important; }
+  }
+
 .hero { padding: 24px 0 70px; position: relative; }
 .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: center; }
 .hero-headline { font-size: clamp(40px, 5.5vw, 78px); line-height: 0.98; letter-spacing: -0.025em; margin: 0 0 28px; font-weight: 400; }
