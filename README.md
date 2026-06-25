@@ -80,19 +80,19 @@ Functions read their config from Cloudflare Pages environment variables
 
 ## Project structure
 
-- `client/` — React SPA: pages, components, `lib/`, and ArkType-backed forms.
-- `functions/api/` — Cloudflare Pages Functions: `leads`, `checkout`,
+- `client/` holds the React SPA: pages, components, `lib/`, and ArkType-backed forms.
+- `functions/api/` holds the Cloudflare Pages Functions: `leads`, `checkout`,
   `stripe-webhook`, `events`, `ticker`, `health`, and a rate-limiting
   `_middleware`.
-- `shared/` — ArkType schemas and message templates shared across both sides.
-- `email-templates/` — HTML email template system: a master template, per-type
-  templates, and a Bun build/preview/validation pipeline. The transport in
-  `functions/api/send-welcome-email.ts` is a commented reference stub, not a
+- `shared/` holds ArkType schemas and message templates used by both sides.
+- `email-templates/` is an HTML email template system: a master template,
+  per-type templates, and a Bun build/preview/validation pipeline. The transport
+  in `functions/api/send-welcome-email.ts` is a commented reference stub, not a
   wired-up sender.
-- `demo-stages/` — static demo landing pages and recorded flows used to capture
-  the product demo videos.
-- `script/`, `scripts/` — build, demo-recording, and ops helper scripts.
-- `tests/` — Vitest unit, e2e (happy-dom), and integration tests. The
+- `demo-stages/` holds static demo landing pages and recorded flows used to
+  capture the product demo videos.
+- `script/` and `scripts/` hold build, demo-recording, and ops helper scripts.
+- `tests/` holds Vitest unit, e2e (happy-dom), and integration tests. The
   integration suite is gated behind `RUN_LIVE_INTEGRATION=1`.
 
 See [`ARCHITECTURE.md`](ARCHITECTURE.md) for the request flow and layer detail.
