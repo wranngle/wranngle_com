@@ -1,97 +1,102 @@
-# PinchGrab
+# wranngle.com
 
-A local Chrome/Edge extension that turns a UI element into structured context for a review agent. Hold `Alt` to outline elements, `Alt+Click` to capture, and the page, selectors, accessibility data, and a screenshot land in a JSONL bundle you can hand to an LLM.
+Source for [wranngle.com](https://wranngle.com), the site for Wranngle, an
+AI and automation operator lab run by Cody Arnold. It is a React single-page
+app deployed to Cloudflare Pages, with a small set of serverless Functions for
+lead capture, Stripe checkout, and event telemetry, plus an embedded
+ElevenLabs voice agent ("Sarah") as a live demo.
 
-[![CI](https://github.com/wranngle/pinchgrab/actions/workflows/ci.yml/badge.svg)](https://github.com/wranngle/pinchgrab/actions/workflows/ci.yml)
+## What it is
 
-![Alt+Click on any element drops a JSONL capture into the side panel](docs/hero.gif)
+- **Marketing site** for voice agents, websites, and a `gtm_ops` proposal
+  workflow, with an ROI calculator, an A/B-tested home variant, and a
+  founder/about page.
+- **Live voice demo.** The ElevenLabs Conversational AI widget is mounted on
+  every route ([`GlobalSarahWidget.tsx`](client/src/components/GlobalSarahWidget.tsx)).
+  Each route passes a `surface_context` so the agent's opening line matches the
+  page. Mic permission required, no signup. The agent's prompt and knowledge
+  base live in the ElevenLabs dashboard, not in this repo.
+- **Serverless lead capture.** `POST /api/leads` validates input with ArkType,
+  sanitizes it, dedupes within a 15-minute window, and forwards to an n8n
+  webhook. n8n owns the downstream lead flow.
+- **Stripe checkout.** `POST /api/checkout` creates a Stripe Checkout Session
+  against the Stripe REST API when `STRIPE_SECRET_KEY` is set, with consent
+  collection. `POST /api/stripe-webhook` verifies the Stripe signature and
+  forwards paid sessions into the same n8n flow. Both no-op cleanly when the
+  secrets are absent.
+- **Event telemetry.** `POST /api/events` and `POST /api/ticker` validate
+  funnel events and write one structured JSON line per event. Durable storage
+  (D1 / Logpush) is not wired yet; lines are readable via `wrangler tail` and
+  can be forwarded to a sink without a redeploy.
 
-> Personal tool, built and used by one developer. Loaded unpacked, not published to any store. No telemetry, no server, no external users. Captures stay on disk.
+This is a working personal site, not a multi-tenant SaaS. There is no database
+in this repo, no auth, and no customer data store. Wranngle is pre-revenue.
 
-## What it captures
+## Tech stack
 
-Each `Alt+Click` writes one JSONL row describing the clicked element:
+- **Frontend:** React 18, Vite 7, Tailwind CSS 3, Radix UI / shadcn components,
+  Framer Motion, and a react-three-fiber / three.js WebGL hero. Routing via
+  `wouter`. TypeScript throughout.
+- **Backend:** Cloudflare Pages Functions (`functions/api/`) running on
+  Cloudflare Workers.
+- **Validation:** ArkType, with shared client/server schemas in `shared/`.
+- **Voice:** ElevenLabs ConvAI embed widget, version-pinned.
+- **Tooling:** Bun for install / scripts / build, XO for lint, Vitest +
+  happy-dom for tests.
+- **Hosting:** Cloudflare Pages.
 
-- **Selectors** the agent can replay against a live page: a short unique CSS path, an XPath, a `jsPath`, and the DOM breadcrumb. The CSS builder filters Tailwind and CSS-in-JS hash classes, then trims interior path segments while keeping the selector unique.
-- **Framework context** when present: React fiber, Vue vnode, Lit, Stencil, Svelte, and plain web components are sniffed for component name and source file.
-- **Accessibility signals**: computed role, accessible name, ARIA state, tab index, and editable/required/disabled flags.
-- **Page header**: URL, route, viewport, color scheme, reduced-motion, direction, zoom, and a few recent DOM mutations for repro context.
-- **Visuals**: matched CSS rules, the box model, computed styles, and an optional cropped screenshot via `chrome.tabs.captureVisibleTab`.
+## Getting started
 
-You can type a comment beside any capture; it rides along in the same row as `feedback`.
-
-## Install
+Requires [Bun](https://bun.sh).
 
 ```bash
 bun install
-bun run build
+bun run dev        # Vite dev server with hot reload (http://localhost:5173)
+bun run check      # TypeScript typecheck
+bun run lint       # XO
+bun run test       # Vitest
+bun run build      # production build -> dist/
+bun run preview    # local Cloudflare Pages preview, including Functions
 ```
 
-Then load the unpacked build:
-
-1. Open `chrome://extensions` or `edge://extensions`.
-2. Turn on Developer mode.
-3. Click **Load unpacked** and pick the repo's `extension/` folder.
-4. Pin PinchGrab, open a page, hold `Alt` to outline, `Alt+Click` to capture.
-
-`Alt+drag` rubber-bands a region and captures every element inside it. The side panel lists captures, holds comments, and drives exports.
-
-## Export
-
-The side panel writes captures under `Downloads/pinchgrab/<workspace>/`. A workspace export is a `.tar.zst` archive (the tar encoder and zstd frame writer are pure TypeScript, see `src/tar.ts`) containing:
-
-- `<workspace>.jsonl` — one manifest row, then page, selector, and feedback rows
-- `README.md` — what the bundle is and how to read it
-- `repair-index.md` — a triage punch list for the agent to start from
-- `screenshots.json` — uid-keyed index of captures and pages
-- `schema.json` — JSON Schema (draft 2020-12) for every row type
-- `duckdb.sql` — copy-and-paste SQL recipes for querying the JSONL with DuckDB
-- screenshot PNGs when captured
-
-The older standalone capture schema lives at [docs/capture-schema.json](docs/capture-schema.json), with samples in [docs/capture-sample.jsonl](docs/capture-sample.jsonl).
-
-## Replay and recipe utilities
-
-A set of Node scripts work on a capture JSONL after the fact:
+### Deploy
 
 ```bash
-bun run replay            # resolve every capture against a live page (CSS -> XPath -> a11y fallback)
-bun run replay:multi      # replay across multiple URLs
-bun run export:playwright  # emit a Playwright script from the captures
-bun run export:puppeteer   # emit a Puppeteer script
-bun run export:english     # emit a plain-English, step-by-step recipe
-bun run visual-diff        # diff two capture sets
-bun run network-capture    # capture/replay network rows
-bun run annotator          # annotate capture steps
+bun run deploy        # deploy dist/ to Cloudflare Pages
+bun run deploy:live   # build locally, then upload to the live Pages project
+bun run deploy:upload # upload an already-built dist/ without rebuilding
 ```
 
-`bin/pinchgrab replay <capture.jsonl> <url>` opens the URL in headless Chromium and locates every captured element through the CSS -> XPath -> accessibility-name fallback chain. It exits 0 only when every entry resolves to exactly one element, and `--auth-state <storage.json>` loads a Playwright storage state so authenticated captures replay on logged-in pages. Entries rescued by a non-CSS strategy get logged to a healing ledger so you can see which selectors are drifting.
+### Environment
 
-## Develop
+Functions read their config from Cloudflare Pages environment variables
+(Settings -> Environment variables); see [`.env.example`](.env.example).
 
-```bash
-bun run build        # bundle src/*.ts -> extension/*.js with Bun
-bun run watch        # rebuild on change
-bun run typecheck    # tsc --noEmit
-bun run lint         # xo
-bun run test         # full suite: typecheck, lint, Playwright specs, legacy export/replay tests
-bun run test:fast    # quicker subset
-bun run devserver    # static server for the test pages
-```
+- `N8N_WEBHOOK_URL` (required for lead capture) and `N8N_WEBHOOK_SECRET`
+  (sent as `X-Webhook-Secret`).
+- `STRIPE_SECRET_KEY` and `SITE_URL` enable checkout; `STRIPE_WEBHOOK_SECRET`
+  enables paid-session fulfillment.
+- `ALLOWED_ORIGIN` for CORS.
 
-CI runs typecheck, lint, the Playwright and legacy test suites, plus shellcheck, yamllint, actionlint, and a gitleaks scan.
+## Project structure
 
-## Layout
+- `client/` — React SPA: pages, components, `lib/`, and ArkType-backed forms.
+- `functions/api/` — Cloudflare Pages Functions: `leads`, `checkout`,
+  `stripe-webhook`, `events`, `ticker`, `health`, and a rate-limiting
+  `_middleware`.
+- `shared/` — ArkType schemas and message templates shared across both sides.
+- `email-templates/` — HTML email template system: a master template, per-type
+  templates, and a Bun build/preview/validation pipeline. The transport in
+  `functions/api/send-welcome-email.ts` is a commented reference stub, not a
+  wired-up sender.
+- `demo-stages/` — static demo landing pages and recorded flows used to capture
+  the product demo videos.
+- `script/`, `scripts/` — build, demo-recording, and ops helper scripts.
+- `tests/` — Vitest unit, e2e (happy-dom), and integration tests. The
+  integration suite is gated behind `RUN_LIVE_INTEGRATION=1`.
 
-- `src/` — TypeScript extension source (content script, side panel, background) and the `.mjs` replay/export utilities.
-- `extension/` — the built unpacked extension you load into the browser.
-- `bin/` — the `pinchgrab` replay CLI.
-- `tests/` — Playwright specs and the legacy export/replay test suite, with JSONL fixtures.
-- `scripts/` — build and repo automation.
-- `docs/` — capture schema, sample JSONL, and the hero gif.
-
-`.agents/`, `lib/`, and parts of `scripts/bin/` are vendored from the author's dotfiles for local agent and Git tooling. They are not part of the extension and are not needed to build or run it.
+See [`ARCHITECTURE.md`](ARCHITECTURE.md) for the request flow and layer detail.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [`LICENSE`](LICENSE).
