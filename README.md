@@ -6,7 +6,7 @@ Wranngle Systems is Cody Arnold's pre-revenue operator lab for voice AI and work
 
 - **Live site:** [wranngle.com](https://wranngle.com)
 - **Voice agent demo:** [wranngle.com/#talk-to-sarah](https://wranngle.com/#talk-to-sarah): Sarah is a live ElevenLabs ConvAI agent embedded on the page; mic permission required, no signup.
-- **gtm_ops product page:** [wranngle.com/products/gtm-ops](https://wranngle.com/products/gtm-ops) with a no-signup runtime demo at [app.wranngle.com/console/?route=generate&demo=1](https://app.wranngle.com/console/?route=generate&demo=1).
+- **gtm_ops product page:** [wranngle.com/products/gtm-ops](https://wranngle.com/products/gtm-ops); the product page links to the gtm_ops console at [app.wranngle.com](https://app.wranngle.com).
 
 ## Tech Stack
 
@@ -78,8 +78,8 @@ bun run deploy:upload
 - `functions/`: Cloudflare Pages Functions (serverless API endpoints).
 - `shared/`: Shared TypeScript schemas and utilities (ArkType).
 - `script/`: Build and utility scripts.
-- `email-templates/`: Production-ready email template system with master inheritance.
-- `openspec/`: Project specifications and change proposals.
+- `email-templates/`: Email template system with master inheritance.
+- `content/`: Site content (pilot agreement, testimonials).
 - `docs/`: Project documentation and architecture guides.
 
 ## Architecture
@@ -88,10 +88,10 @@ This is a static site with serverless API functions:
 
 - **Frontend**: React SPA built with Vite, served globally via Cloudflare Pages CDN
 - **API**: Cloudflare Pages Functions handle `/api/*` routes (e.g., `/api/leads`)
-- **Lead Capture**: Form submissions are validated with ArkType and forwarded to an n8n webhook
+- **Lead Capture**: Lead capture is validated server-side in `functions/api/leads.ts` and forwarded to the n8n webhook; ArkType schemas live in `shared/schema.ts` and are used by other API surfaces
 - **Checkout**: `/api/checkout` creates Stripe Checkout Sessions with native consent collection when `STRIPE_SECRET_KEY` is configured
 - **Fulfillment**: `/api/stripe-webhook` verifies Stripe Checkout events and forwards paid sessions into the n8n lead flow
-- **Email System**: Production-ready transactional email templates with master inheritance
+- **Email System**: Transactional email templates with master inheritance, local preview generation, and template test scripts
 - **Environment Variables**: Set `N8N_WEBHOOK_URL` and optional `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` / `SITE_URL` in Cloudflare Pages dashboard
 
 ## Email Templates
@@ -121,7 +121,8 @@ bun run email:test
 
 **Key Features:**
 
-- Cross-client compatible (Gmail, Outlook, Apple Mail, etc.)
+- Local preview generation
+- Template test scripts
 - Mobile responsive
 - Brand-consistent design
 - Master template inheritance
