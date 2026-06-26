@@ -88,7 +88,7 @@ This is a static site with serverless API functions:
 
 - **Frontend**: React SPA built with Vite, served globally via Cloudflare Pages CDN
 - **API**: Cloudflare Pages Functions handle `/api/*` routes (e.g., `/api/leads`)
-- **Lead Capture**: Lead capture is validated server-side in `functions/api/leads.ts` and forwarded to the n8n webhook; ArkType schemas live in `shared/schema.ts` and are used by other API surfaces
+- **Lead Capture**: Lead capture is validated server-side in `functions/api/leads.ts` and forwarded to the n8n webhook; `shared/schema.ts` currently backs the welcome-email example, while `/api/events` keeps a local ArkType telemetry schema
 - **Checkout**: `/api/checkout` creates Stripe Checkout Sessions with native consent collection when `STRIPE_SECRET_KEY` is configured
 - **Fulfillment**: `/api/stripe-webhook` verifies Stripe Checkout events and forwards paid sessions into the n8n lead flow
 - **Email System**: Transactional email templates with master inheritance, local preview generation, and template test scripts
