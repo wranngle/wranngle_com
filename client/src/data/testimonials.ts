@@ -13,11 +13,8 @@
  * Keep both axes populated — the filter promise from round-2 §6 item-4
  * is "search by state/ZIP, only matching cards render".
  */
-export type TestimonialVertical =
-  | 'plumbers'
-  | 'hvac'
-  | 'electricians'
-  | 'other';
+// prettier-ignore
+export type TestimonialVertical = 'plumbers' | 'hvac' | 'electricians' | 'other';
 
 export type Testimonial = {
   id: string;
