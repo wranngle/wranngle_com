@@ -426,11 +426,10 @@ export class TileTracerField {
       antialias: true,
       preserveDrawingBuffer: true,
     };
+    // prettier-ignore
     const gl =
       this.glc.getContext('webgl', opts) ??
-      (this.glc.getContext('experimental-webgl', opts) as
-        | WebGLRenderingContext
-        | undefined);
+      (this.glc.getContext('experimental-webgl', opts) as WebGLRenderingContext | undefined);
     if (!gl) return false;
     this.gl = gl;
     const vs = this.compile(gl.VERTEX_SHADER, VERT);

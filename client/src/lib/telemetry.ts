@@ -6,10 +6,8 @@
  * available so events survive page navigation (CTA click → route change).
  */
 
-export type TelemetryEventName =
-  | 'cta.clicked'
-  | 'voice.demo.opened'
-  | 'voice.demo.completed';
+// prettier-ignore
+export type TelemetryEventName = 'cta.clicked' | 'voice.demo.opened' | 'voice.demo.completed';
 
 export type TelemetryFields = Record<
   string,

@@ -14,12 +14,8 @@ import React from 'react';
  * wordmark assembles like a brand reveal rather than popping at the end.
  */
 
-export type RoiBusinessId =
-  | 'trattoria'
-  | 'dental'
-  | 'salon'
-  | 'fitness'
-  | 'plumbing';
+// prettier-ignore
+export type RoiBusinessId = 'trattoria' | 'dental' | 'salon' | 'fitness' | 'plumbing';
 
 type Props = {
   id: RoiBusinessId;
