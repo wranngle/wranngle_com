@@ -41,7 +41,7 @@ export default function PrivacyPolicy() {
               Privacy Policy
             </h1>
             <p className="text-sm opacity-60 mb-12">
-              Last Updated: May 4, 2026
+              Last Updated: May 31, 2026
             </p>
 
             <div className="space-y-8 leading-relaxed">
@@ -548,7 +548,59 @@ export default function PrivacyPolicy() {
 
               <section>
                 <h2 className="brand-font text-2xl font-bold mb-4">
-                  14. Changes to This Privacy Policy
+                  14. PinchGrab Browser Extension
+                </h2>
+                <p className="opacity-80 mb-4">
+                  PinchGrab is our browser extension for annotating web page
+                  elements and exporting that feedback for AI coding agents. Its
+                  data practices are deliberately different from — and far
+                  narrower than — the voice agent Service described above.
+                </p>
+                <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
+                  <li>
+                    <strong>Activation is explicit:</strong> PinchGrab only
+                    reads a page after you activate it on that page by clicking
+                    the PinchGrab toolbar icon. It has no standing access to
+                    your browsing.
+                  </li>
+                  <li>
+                    <strong>What it accesses:</strong> the structure, text, and
+                    a screenshot of the elements you explicitly capture, plus
+                    the title and URL of tabs you activate it on (used to label
+                    and organize your captures).
+                  </li>
+                  <li>
+                    <strong>Everything stays on your device:</strong> captures,
+                    comments, and screenshots are stored in your browser&apos;s
+                    local extension storage and, when you export, in your
+                    Downloads folder under &quot;pinchgrab/&quot;. The extension
+                    does not transmit your captures, comments, screenshots, or
+                    browsing data to Wranngle or any other server.
+                  </li>
+                  <li>
+                    <strong>No analytics or telemetry:</strong> the extension
+                    contains no tracking. Its only network request is a
+                    read-only, anonymous query of GitHub&apos;s public API to
+                    display the project&apos;s star count; it carries no capture
+                    or personal data.
+                  </li>
+                  <li>
+                    <strong>Deleting your data:</strong> remove the files under
+                    Downloads/pinchgrab/ and clear the extension&apos;s data
+                    from your browser&apos;s extension settings. Because we
+                    never receive your data, there is nothing for us to delete
+                    on our side.
+                  </li>
+                </ul>
+                <p className="opacity-80 mt-4">
+                  Questions about PinchGrab&apos;s data handling:
+                  hello@wranngle.com.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="brand-font text-2xl font-bold mb-4">
+                  15. Changes to This Privacy Policy
                 </h2>
                 <p className="opacity-80 mb-4">
                   We may update this Privacy Policy from time to time. We will
@@ -567,7 +619,7 @@ export default function PrivacyPolicy() {
 
               <section>
                 <h2 className="brand-font text-2xl font-bold mb-4">
-                  15. Contact Us
+                  16. Contact Us
                 </h2>
                 <p className="opacity-80 mb-4">
                   If you have questions about this Privacy Policy or our data
