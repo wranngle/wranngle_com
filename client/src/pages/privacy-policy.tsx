@@ -552,8 +552,8 @@ export default function PrivacyPolicy() {
                 </h2>
                 <p className="opacity-80 mb-4">
                   PinchGrab is our browser extension for annotating web page
-                  elements and exporting that feedback for AI coding agents.
-                  Its data practices are deliberately different from — and far
+                  elements and exporting that feedback for AI coding agents. Its
+                  data practices are deliberately different from — and far
                   narrower than — the voice agent Service described above.
                 </p>
                 <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
@@ -581,8 +581,8 @@ export default function PrivacyPolicy() {
                     <strong>No analytics or telemetry:</strong> the extension
                     contains no tracking. Its only network request is a
                     read-only, anonymous query of GitHub&apos;s public API to
-                    display the project&apos;s star count; it carries no
-                    capture or personal data.
+                    display the project&apos;s star count; it carries no capture
+                    or personal data.
                   </li>
                   <li>
                     <strong>Deleting your data:</strong> remove the files under
