@@ -54,6 +54,7 @@
         "AI automation",
         "Voice AI engineering",
         "ElevenLabs Conversational AI",
+        "ElevenAgents",
         "OpenAI API",
         "Anthropic Claude",
         "Google Gemini",
@@ -150,7 +151,7 @@
         "Cloudflare serverless applications",
         "Evaluation harnesses",
         "Operational runbooks",
-        "Latency-budgeted voice systems",
+        "Eval-gated voice deployments",
         "Microsoft 365 architecture",
         "Multi-tenant IT operations automation"
       ],
@@ -227,7 +228,7 @@
             "Lead capture",
             "Evaluation harnesses",
             "Schema-validated webhook contracts",
-            "Latency-budgeted voice systems"
+            "Eval-gated voice deployments"
           ],
           "occupationLocation": {
             "@type": "Country",
@@ -295,7 +296,7 @@
           "encodingFormat": "text/markdown"
         }
       ],
-      "description": "Cody Arnold is the founder of Wranngle Systems LLC and Lead Automation Engineer with 10+ years of experience building automation across multi-tenant IT environments. He builds AI voice agents on ElevenLabs Conversational AI, workflow automation on n8n, lead capture and CRM enrichment systems, proposal-generation runtimes, and evaluation harnesses for busy teams. Recent production work: ElevenLabs on-call voice agent across 15 client sites in 5 client organizations with 500ms latency envelope, schema-validated webhook contracts, and Vitest + synthetic-conversation regression harness."
+      "description": "Cody Arnold is the founder of Wranngle Systems LLC and Lead Automation Engineer with 10+ years of experience building automation across multi-tenant IT environments. He builds AI voice agents on the ElevenLabs Agents platform, workflow automation on n8n, lead capture and CRM enrichment systems, proposal-generation runtimes, and evaluation harnesses for busy teams. Recent production work: an inbound on-call voice agent live across 5 client organizations spanning 20+ sites, with schema-validated webhook contracts and a Vitest + synthetic-conversation regression harness gating every prompt change."
     },
     {
       "@type": "Organization",
@@ -315,6 +316,7 @@
       "knowsAbout": [
         "AI voice agents",
         "ElevenLabs Conversational AI",
+        "ElevenAgents",
         "n8n workflow automation",
         "CRM enrichment",
         "Lead capture",
