@@ -647,7 +647,7 @@ function TileContentNode({
         src={src}
         alt={content.alt}
         className="block h-full w-full object-cover"
-        loading="lazy"
+        loading={isHero ? 'eager' : 'lazy'}
       />
     );
   }
@@ -659,7 +659,7 @@ function TileContentNode({
         src={content.poster}
         alt={content.label}
         className="absolute inset-0 h-full w-full object-cover"
-        loading="lazy"
+        loading={isHero ? 'eager' : 'lazy'}
         style={{
           opacity: isHero && !reduce ? 0 : 1,
           transition: 'opacity 220ms',
