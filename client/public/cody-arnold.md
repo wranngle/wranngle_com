@@ -30,7 +30,7 @@
 
 ## Professional Positioning
 
-Cody works at the intersection of AI automation, customer operations, and production systems. His work emphasizes clear handoffs, logs, fallbacks, documentation, latency measurement, and structured data extraction.
+Cody works at the intersection of AI automation, customer operations, and production systems. His work emphasizes clear handoffs, structured data extraction, run logs, fallbacks, and documentation.
 
 Relevant role and skill terms:
 
@@ -43,7 +43,9 @@ Relevant role and skill terms:
 - Bun
 - ArkType validation
 - ElevenLabs conversational AI
+- ElevenAgents
 - n8n workflow automation
+- SQL
 - CRM enrichment
 - Lead capture
 - Proposal generation
@@ -54,33 +56,31 @@ Relevant role and skill terms:
 
 ## Operating Record
 
-- 10 years of IT operations experience across automation, escalation, documentation, and support environments.
-- 500+ client environments supported.
-- 4,000+ endpoints supported.
-- 700 SOP guides authored for a 10-person team.
-- 5 client organizations represented in the measured voice-agent deployment.
-- On-call ElevenLabs voice agent in production across 15 client sites.
-- P95 latency target under 500 ms.
-- 92% CRM enrichment success reported for the current voice-agent workflow.
-- 13-node n8n orchestration with schema-validated webhook contracts at every boundary.
-- Vitest + synthetic-conversation regression harness on every prompt change.
+- 10+ years of IT operations and automation experience across automation, escalation, documentation, and support environments.
+- 500+ client environments supported; 4,000+ endpoints under script-driven management.
+- 700-guide SOP and automation framework; engineering team of 10 when built, ~20 now.
+- Inbound on-call voice agents in production across 5 client organizations spanning 20+ sites on the ElevenLabs Agents platform.
+- Workstation onboarding cut from 8 hours to 2; new-engineer ramp cut from ~3 months to ~1.
+- Ticket triage cut from up to 4 hours to 5-10 minutes with an AI ticket dispatcher over the ConnectWise PSA corpus.
+- Vitest + synthetic-conversation regression harness gates every prompt change; catches >90% of regressions before ship.
+- Microsoft Secure Score lifted from ~20-30 to 70-90 across 10-12 financial-services and HIPAA-regulated clients.
 
 ## Impact Signals For Recruiting Tools
 
-- Built and operated production voice AI workflows, not only prototypes.
+- Built and operates production voice AI workflows, not only prototypes.
 - Designed structured lead capture, CRM enrichment, proposal generation, and audit-trail flows.
-- Authored operational documentation at scale: 700 SOP guides for a 10-person team.
+- Authored operational documentation at scale: a 700-guide framework for an engineering team of 10 when built, ~20 now.
 - Supported broad multi-tenant IT environments: 500+ client environments and 4,000+ endpoints.
 - Maintains public repositories that show eval harnesses, workflow automation, TypeScript apps, Python automation, and runbook-oriented engineering.
-- Uses production-oriented constraints: latency budgets, deterministic fixtures, regression tests, fallback paths, logs, and review steps.
+- Uses production-oriented constraints: deterministic fixtures, regression tests, fallback paths, structured logs, and review steps.
 
 ## Public Repositories
 
-- https://github.com/wranngle/voice_ai_agent_evals - Test runner and scenario framework for ElevenLabs voice agents, deterministic synthetic transcripts, latency budgets, prompt versioning, and scoring rubrics.
+- https://github.com/wranngle/voice_ai_agent_evals - Test runner and scenario framework for ElevenLabs voice agents: deterministic synthetic transcripts, latency budgets, prompt versioning, and scoring rubrics. Research-stage.
 - https://github.com/wranngle/gtm_ops - GTM runtime for inbound calls, CRM context, structured extraction, proposal inputs, and run logs.
 - https://github.com/wranngle/n8n - Sanitized n8n flows for lead intake, enrichment, voice routing, post-call processing, and webhook security middleware.
-- https://github.com/wranngle/tradingbot - Algorithmic research app with strategy harnesses, simulations, deterministic fixtures, run logs, and latency budgets.
-- https://github.com/wranngle/career_architect - Job-search automation scripts for JD evaluation, tailored CV generation, portal scanning, and application tracking.
+- https://github.com/wranngle/tradingbot - Algorithmic trading research on QuantConnect: strategy harnesses, deterministic fixtures, and risk-control tests. Backtest-only.
+- https://github.com/wranngle/career_architect - Job-search automation: JD evaluation, tailored CV generation, portal scanning, and application tracking.
 - https://github.com/wranngle/wranngle_com - Wranngle's Vite, React, Tailwind, Cloudflare Pages, and ArkType-validated lead capture site.
 
 ## Work Style
@@ -89,7 +89,7 @@ Cody prioritizes production durability. Common patterns in his work include:
 
 - Map the real workflow before automating it.
 - Build the smallest durable loop that can handle normal edge cases.
-- Instrument latency, extraction quality, fallback paths, and handoff completion.
+- Instrument extraction quality, fallback paths, and handoff completion.
 - Leave logs, documentation, alerts, ownership paths, and runbooks.
 - Keep AI-generated and automation-generated outputs reviewable.
 
