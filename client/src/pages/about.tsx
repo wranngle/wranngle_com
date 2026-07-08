@@ -45,7 +45,7 @@ const REPOS: RepoEntry[] = [
     fullName: 'wranngle/tradingbot',
     role: 'Testing discipline',
     blurb:
-      'Algorithmic research app with strategy harnesses, simulations, deterministic fixtures, run logs, and latency budgets.',
+      'Algorithmic trading research on QuantConnect: strategy harnesses, simulations, deterministic fixtures, and risk-control tests. Backtest-only.',
   },
   {
     fullName: 'wranngle/career_architect',
@@ -63,7 +63,7 @@ const REPOS: RepoEntry[] = [
 
 const TRUST_MARKERS = [
   {
-    value: '10 years',
+    value: '10+ years',
     label: 'IT operations experience',
     detail:
       'I spent a decade running automation inside live support work rather than beside it, so every script had to keep working through the next on-call shift.',
@@ -84,19 +84,19 @@ const TRUST_MARKERS = [
     value: '700',
     label: 'SOP guides authored',
     detail:
-      'I wrote the runbook library so a team of ten could move without guessing. Any engineer could pick up an unfamiliar task and run it the same way every time.',
+      'I wrote the runbook library so a team of ten could move without guessing. It held up as the team grew to twenty, and new-engineer ramp fell from about three months to one.',
   },
   {
-    value: '15',
-    label: 'Client sites in voice deployment',
+    value: '20+',
+    label: 'Sites covered by voice agents',
     detail:
-      'ElevenLabs on-call voice agents run in production across fifteen client sites, with zero dropped calls, P95 latency under 500 ms, and CRM enrichment that succeeds on 92% of calls.',
+      'ElevenLabs on-call voice agents run in production across five client organizations spanning more than twenty sites. The agent does intake and triage, then hands the call to a person with the caller context intact.',
   },
   {
-    value: '<500 ms',
-    label: 'P95 latency target',
+    value: '>90%',
+    label: 'Regressions caught before ship',
     detail:
-      'Voice is unforgiving because callers hear every pause, so I measure latency, fallbacks, and transcript quality on every release rather than waiting for a customer to notice.',
+      'Voice is unforgiving because callers hear every failure, so a synthetic-conversation harness gates every prompt change and catches regressions before a caller ever could.',
   },
 ];
 
@@ -109,7 +109,7 @@ const WORK_SHAPES = [
   {
     label: 'Workflow automation',
     title: 'Workflow infrastructure around the agent',
-    body: 'A 13-node n8n orchestration enriches the lead during the call, writes back to the CRM in flight, and surfaces a clean handoff to Slack. Every boundary is schema-validated so the LLM cannot poison downstream systems.',
+    body: 'An n8n orchestration layer enriches the lead during the call, writes back to the CRM in flight, and surfaces a clean handoff to Slack. Every boundary is schema-validated so the LLM cannot poison downstream systems.',
   },
   {
     label: 'Product systems',
@@ -137,7 +137,7 @@ const PRINCIPLES = [
   {
     Icon: Gauge,
     title: 'Measure failure points',
-    body: 'Latency budgets, enrichment success, transcript fixtures, and regression prompts matter because voice systems fail in front of users, not in staging.',
+    body: 'Latency budgets, extraction quality, transcript fixtures, and regression prompts matter because voice systems fail in front of users, not in staging.',
   },
   {
     Icon: FileText,
@@ -326,9 +326,10 @@ export default function About() {
                       Recent work
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
-                      ElevenLabs on-call voice agents in production across 15
-                      client sites. Synthetic-conversation regression harness
-                      gates every prompt change. P95 under 500 ms.
+                      ElevenLabs on-call voice agents in production across 5
+                      client organizations spanning 20+ sites. A
+                      synthetic-conversation regression harness gates every
+                      prompt change.
                     </dd>
                   </div>
                 </dl>

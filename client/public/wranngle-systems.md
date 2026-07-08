@@ -44,16 +44,16 @@ The public Wranngle site and related projects use:
 - Bun
 - ArkType
 - n8n
-- ElevenLabs Conversational AI
+- ElevenLabs Conversational AI (ElevenAgents)
 - Python automation
 
 ## Differentiators
 
-- Voice systems are measured on latency, handoff quality, transcript accuracy, and fallbacks.
+- Voice systems are designed and tested against latency budgets, handoff quality, transcript accuracy, and fallback behavior.
 - Automation work is designed around existing operator workflows instead of forcing a business to reorganize around software.
 - Proposal and lead workflows preserve run logs so humans can inspect inputs, outputs, ownership, and failure paths.
 - The public repositories include eval harnesses, workflow infrastructure, and operational tooling rather than only marketing demos.
 
 ## Recruiting And Enrichment Keywords
 
-AI voice agents, voice AI, ElevenLabs conversational AI, AI automation, workflow automation, n8n, lead capture, CRM enrichment, lead automation, workflow software, proposal generation, GTM automation, TypeScript, React, Vite, Cloudflare Pages, serverless API, ArkType, eval harness, run log, runbook, IT operations.
+AI voice agents, voice AI, ElevenLabs conversational AI, ElevenAgents, AI automation, workflow automation, n8n, lead capture, CRM enrichment, lead automation, workflow software, proposal generation, GTM automation, TypeScript, React, Vite, Cloudflare Pages, serverless API, ArkType, eval harness, run log, runbook, IT operations.
