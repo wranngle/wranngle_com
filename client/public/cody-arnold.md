@@ -30,7 +30,7 @@
 
 ## Professional Positioning
 
-Cody works at the intersection of AI automation, customer operations, and production systems. His work emphasizes clear handoffs, structured data extraction, run logs, fallbacks, and documentation.
+Cody builds AI automation for customer operations and runs it in production. His systems hand off to people with context intact, pull structured data from messy conversations, keep run logs, fall back when something breaks, and ship documented, because automation that cannot explain itself does not stay in production.
 
 Relevant role and skill terms:
 
