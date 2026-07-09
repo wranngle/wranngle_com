@@ -133,7 +133,9 @@ const WranngleLanding = () => {
   const [abVariant] = useState<HomeAbVariant>(() => resolveHomeAbVariant());
 
   const heroCta =
-    abVariant === 'value-first' ? 'Build my call flow' : 'Get 24/7 call coverage';
+    abVariant === 'value-first'
+      ? 'Build my call flow'
+      : 'Get 24/7 call coverage';
 
   // Scroll to anchor on hash navigation (e.g. /#offerings, /#offerings-premium).
   useEffect(() => {
