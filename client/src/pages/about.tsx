@@ -231,24 +231,28 @@ export default function About() {
                 <div className="mt-8 space-y-5 text-base md:text-xl leading-relaxed">
                   <p>
                     Wranngle builds AI voice agents and workflow automation for
-                    teams with real customer follow-up. The job is
-                    straightforward — answer the call, get the useful details,
-                    route the work into tools the team already checks, and make
-                    every step easy to review afterwards.
+                    service businesses where the phone keeps ringing while every
+                    tech is on a job: plumbing and HVAC shops, dealerships, help
+                    desks. The agent answers the call, collects what a
+                    dispatcher would ask for, and writes the job into the CRM
+                    and tools the team already checks. Afterward, every step is
+                    on record and easy to review.
                   </p>
                   <p className={mutedText}>
-                    This work started in IT operations. Automation had to
-                    support live service shifts, not run alongside them. That
-                    background still shapes everything that ships now: the voice
-                    agent has to fail visibly when it fails, the CRM write-back
-                    has to be reproducible, the handoff has to be readable by
-                    whoever picks up next.
+                    The discipline comes from 10+ years in IT operations,
+                    supporting live service shifts where automation either
+                    carried real work or got in the way. A script that failed
+                    quietly meant a person inherited the mess mid-shift.
+                    Everything Wranngle ships still holds that line: fail
+                    visibly, write back to the CRM reproducibly, keep the
+                    handoff readable for whoever takes the next step.
                   </p>
                   <p className={mutedText}>
-                    Most of the day is spent on the handoff. What did the agent
-                    understand? Where did the work go after the call ended? If
-                    something broke, can the team see exactly which step broke
-                    and replay the inputs?
+                    Most of the day goes to the handoff, because that is where
+                    automation earns trust or loses it. What did the agent hear,
+                    where did the job land, and who owns it now? When something
+                    breaks, the team can see the exact step that failed and
+                    replay the same inputs until the answer is boring.
                   </p>
                 </div>
               </div>

@@ -169,16 +169,18 @@ const WranngleLanding = () => {
               >
                 <div className="max-w-2xl">
                   <h1 className="brand-font text-5xl sm:text-6xl md:text-7xl font-bold leading-[0.95] mb-5">
-                    AI call coverage for busy teams.
+                    Your phone rings. Every tech is on a job.
                   </h1>
                   <p className="text-xl md:text-2xl font-semibold leading-snug mb-4 max-w-xl">
-                    Answer, qualify, schedule, and hand off calls when your team
-                    is busy, closed, or already helping someone else.
+                    Wranngle answers 24/7 when your team can&apos;t: it takes
+                    the name, number, and problem, flags what can&apos;t wait,
+                    and books the job into an open window.
                   </p>
                   <p className="text-base md:text-lg opacity-75 leading-relaxed mb-7 max-w-xl">
-                    Sarah is the live demo. She asks for the useful details,
-                    separates urgent requests from routine follow-up, and sends
-                    the summary to the tools your team already checks.
+                    Sarah is the live demo agent on this page. Tell her about a
+                    burst pipe or a loaner car; she can tell the difference. She
+                    takes a name and number, books a window, and sends the
+                    summary to Slack, your CRM, or email.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Dialog>
