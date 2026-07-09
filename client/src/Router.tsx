@@ -42,9 +42,9 @@ const HomeComponent = PRODUCT_COMPONENT[HOME_PRODUCT];
  */
 const ROUTE_META: Record<string, {title: string; description: string}> = {
   '/': {
-    title: 'Wranngle Systems | AI Call Coverage for Busy Teams',
+    title: 'Stop missing leads with AI call coverage | Wranngle',
     description:
-      'Wranngle Systems builds AI call coverage for busy teams: call answering, qualification, scheduling, and clean handoffs.',
+      "Stop losing leads to missed calls. Sarah's live demo shows Wranngle's AI call answering service qualifies leads, books appointments, and hands them off.",
   },
   '/about': {
     title: 'Cody Arnold - About Wranngle',
@@ -62,9 +62,9 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
       'Landing pages and business websites built with fast performance, lead capture, SEO foundations, and owned source code.',
   },
   '/products/ai-voice-agents': {
-    title: 'AI Call Coverage for Busy Teams — Wranngle Systems',
+    title: 'Stop missing leads with AI call coverage | Wranngle',
     description:
-      'Answer, qualify, schedule, and hand off calls when your team is busy, closed, or already helping someone else.',
+      "Stop losing leads to missed calls. Sarah's live demo shows Wranngle's AI call answering service qualifies leads, books appointments, and hands them off.",
   },
   '/privacy': {
     title: 'Privacy Policy — Wranngle Systems',
