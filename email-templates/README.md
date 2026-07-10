@@ -1,8 +1,8 @@
-# Wranngle Email Template System
+# Wranngle email template system
 
 A production email template system with master template inheritance, deliverability checks, and live previews.
 
-## 🎯 Features
+## Features
 
 - **Master Template Inheritance** - Single source of truth that cascades to all child templates
 - **Cross-Client Compatible** - Works across Gmail, Outlook, Apple Mail, and 90+ email clients
@@ -12,7 +12,7 @@ A production email template system with master template inheritance, deliverabil
 - **Developer Friendly** - TypeScript-based builder with variable replacement
 - **Live Preview** - Visual preview dashboard for rapid iteration
 
-## 📁 Directory Structure
+## Directory structure
 
 ```
 email-templates/
@@ -35,16 +35,16 @@ email-templates/
 └── README.md                         # This file
 ```
 
-## 🚀 Quick Start
+## Quick start
 
-### 1. Install Dependencies
+### 1. Install dependencies
 
 ```bash
 cd email-templates
 bun install juice  # For CSS inlining
 ```
 
-### 2. Build a Template
+### 2. Build a template
 
 ```bash
 # Generate preview with sample data
@@ -57,7 +57,7 @@ bun run build/template-builder.ts welcome --inline
 bun run build/template-builder.ts welcome --inline --minify
 ```
 
-### 3. Preview Templates
+### 3. Preview templates
 
 Open `preview/index.html` in your browser to see the interactive preview dashboard.
 
@@ -66,7 +66,7 @@ Open `preview/index.html` in your browser to see the interactive preview dashboa
 bun run preview:emails
 ```
 
-### 4. Use in Your Application
+### 4. Use in your application
 
 ```typescript
 import { EmailTemplateBuilder } from './email-templates/build/template-builder';
@@ -88,9 +88,9 @@ await sendEmail({
 });
 ```
 
-## 📧 Available Templates
+## Available templates
 
-### 1. Welcome Email (`welcome.html`)
+### 1. Welcome email (`welcome.html`)
 **Purpose:** Sent when a new customer signs up
 **Use Case:** Onboarding, first impressions
 **Variables:**
@@ -160,7 +160,7 @@ await builder.build('notification', {
 
 ---
 
-### 4. Password Reset (`password-reset.html`)
+### 4. Password reset (`password-reset.html`)
 **Purpose:** Secure password reset flow
 **Use Case:** Account security, credential recovery
 **Variables:**
@@ -183,7 +183,7 @@ await builder.build('password-reset', {
 });
 ```
 
-## 🎨 Brand Guidelines
+## Brand guidelines
 
 ### Colors
 ```css
@@ -199,15 +199,15 @@ await builder.build('password-reset', {
 - **Body Size:** 16px (mobile-friendly)
 - **Line Height:** 1.6 (readability)
 
-### Design Elements
+### Design elements
 - **Left Border:** 4px solid orange (`#ff5f00`)
 - **Border Radius:** 8px (modern, friendly)
 - **Padding:** Generous whitespace for readability
 - **Console Aesthetic:** Monospace text, technical language
 
-## 🛠️ Customization
+## Customization
 
-### Adding a New Template
+### Adding a new template
 
 1. Create the template file in `templates/`:
 
@@ -247,7 +247,7 @@ private getSampleData(templateName: string): TemplateVariables {
 bun run build/template-builder.ts my-template
 ```
 
-### Modifying the Master Template
+### Modifying the master template
 
 The master template (`master/master-template.html`) contains:
 - Header with logo
@@ -257,7 +257,7 @@ The master template (`master/master-template.html`) contains:
 
 **To update:** Edit `master/master-template.html` and rebuild all templates. Changes cascade automatically.
 
-## 📊 Deliverability Checks
+## Deliverability checks
 
 Templates are checked against the basics that affect inbox placement:
 
@@ -280,9 +280,9 @@ Templates are checked against the basics that affect inbox placement:
 
 See [DELIVERABILITY.md](./DELIVERABILITY.md) for setup and testing notes.
 
-## 🧪 Testing
+## Testing
 
-### Cross-Client Testing
+### Cross-client testing
 
 Test on these platforms before production:
 - **Gmail** (Desktop + Mobile)
@@ -296,7 +296,7 @@ Test on these platforms before production:
 - [Email on Acid](https://www.emailonacid.com) - Spam testing
 - [Mail-Tester](https://www.mail-tester.com) - Free spam score
 
-### Spam Testing
+### Spam testing
 
 ```bash
 # Check spam score (target: < 3/10)
@@ -304,14 +304,14 @@ curl -X POST https://www.mail-tester.com/test.php \
   -d "email=$(cat welcome-preview.html)"
 ```
 
-### A/B Testing
+### A/B testing
 
 Track these metrics:
 - **Open Rate:** Subject line effectiveness
 - **Click Rate:** CTA placement and copy
 - **Conversion Rate:** Overall email success
 
-## 🚢 Production Deployment
+## Production deployment
 
 ### 1. Configure ESP (SendGrid, Mailgun, etc.)
 
@@ -342,7 +342,7 @@ async function sendWelcomeEmail(user: User) {
 }
 ```
 
-### 2. Set Environment Variables
+### 2. Set environment variables
 
 ```bash
 # ESP Configuration
@@ -355,7 +355,7 @@ TRACK_OPENS=true
 TRACK_CLICKS=true
 ```
 
-### 3. Monitor Deliverability
+### 3. Monitor deliverability
 
 Track these metrics:
 - **Delivery Rate:** > 98%
@@ -363,9 +363,9 @@ Track these metrics:
 - **Complaint Rate:** < 0.1%
 - **Open Rate:** 15-25% (B2B)
 
-## 📚 Variable Reference
+## Variable reference
 
-### Common Variables (All Templates)
+### Common variables (all templates)
 ```typescript
 {
   // User Info
@@ -386,33 +386,33 @@ Track these metrics:
 }
 ```
 
-### Template-Specific Variables
+### Template-specific variables
 See individual template sections above for complete variable lists.
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
-### Images Not Loading
+### Images not loading
 - Use absolute URLs (not relative paths)
 - Host on CDN for reliability
 - Always include `alt` text
 - Test with images blocked
 
-### Outlook Rendering Issues
+### Outlook rendering issues
 - Avoid nested tables (max 2-3 levels)
 - Use fixed widths, not percentages
 - Test in Outlook 2016+ (different rendering engine)
 
-### Gmail Clipping
+### Gmail clipping
 - Keep total email size under 100KB
 - Minimize CSS (use inlining)
 - Remove unnecessary whitespace
 
-### Mobile Display Issues
+### Mobile display issues
 - Test on real devices
 - Use minimum 16px font size
 - Make buttons touch-friendly (44px+)
 
-## 🤝 Contributing
+## Contributing
 
 To add new templates or improve existing ones:
 
@@ -423,18 +423,15 @@ To add new templates or improve existing ones:
 5. Test across email clients
 6. Submit a pull request
 
-## 📄 License
+## License
 
-MIT © Wranngle LLC — see the repository [LICENSE](../LICENSE).
+MIT © Wranngle LLC; see the repository [LICENSE](../LICENSE).
 
 ---
 
-## 🆘 Support
+## Support
 
 - **Email:** support@wranngle.com
 - **Documentation:** https://docs.wranngle.com/emails
 - **GitHub Issues:** https://github.com/wranngle/wranngle_com/issues
 
----
-
-**Built with ❤️ by the Wranngle Team**
