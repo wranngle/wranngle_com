@@ -6,7 +6,7 @@
 
 # Wranngle Systems
 
-Wranngle Systems is Cody Arnold's pre-revenue operator lab for voice AI and workflow automation. This project is the official website and landing page, featuring a console-themed UI and an integrated ElevenLabs Conversational AI agent.
+answer, triage, and book 24/7: the wranngle.com landing page where sarah takes the call live
 
 ### [**wranngle.com**](https://wranngle.com)
 
