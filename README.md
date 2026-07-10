@@ -1,8 +1,13 @@
+![The wranngle.com landing hero: the headline "Your phone rings. Every tech is on a job." beside the animated hex-tile grid, where three tiles (restaurant, dental, salon) are recorded ElevenLabs widget runs and the remaining tiles are static screenshot fill](docs/hero.webp)
+
 # Wranngle Systems
 
-Wranngle Systems is Cody Arnold's pre-revenue operator lab for voice AI and workflow automation. This project is the official website and landing page, featuring a console-themed UI and an integrated ElevenLabs Conversational AI agent.
+[![CI](https://github.com/wranngle/wranngle_com/actions/workflows/ci.yml/badge.svg)](https://github.com/wranngle/wranngle_com/actions/workflows/ci.yml) [![License](https://img.shields.io/github/license/wranngle/wranngle_com?color=A371F7)](LICENSE) ![Status](https://img.shields.io/badge/status-active-brightgreen)
 
-![The wranngle.com landing page: AI call coverage headline beside the animated demo-tile grid of recorded ElevenLabs widget runs](docs/hero.webp)
+> [!NOTE]
+> Active personal project. Used in my own workflow. Issues triaged on a personal-time cadence.
+
+Wranngle Systems is Cody Arnold's pre-revenue operator lab for voice AI and workflow automation. This project is the official website and landing page, featuring a console-themed UI and an integrated ElevenLabs Conversational AI agent.
 
 ## Demo
 
@@ -10,7 +15,7 @@ Wranngle Systems is Cody Arnold's pre-revenue operator lab for voice AI and work
 - **Voice agent demo:** [wranngle.com/#talk-to-sarah](https://wranngle.com/#talk-to-sarah): Sarah is a live ElevenLabs ConvAI agent embedded on the page; mic permission required, no signup.
 - **gtm_ops product page:** [wranngle.com/products/gtm-ops](https://wranngle.com/products/gtm-ops); the product page links to the gtm_ops console at [app.wranngle.com](https://app.wranngle.com).
 
-## Tech Stack
+## Tech stack
 
 - **Runtime:** [Bun](https://bun.sh) (local dev), Cloudflare Workers (production)
 - **Frontend:** React, Tailwind CSS, Framer Motion, Radix UI
@@ -19,7 +24,7 @@ Wranngle Systems is Cody Arnold's pre-revenue operator lab for voice AI and work
 - **AI Integration:** ElevenLabs Conversational AI
 - **Hosting:** Cloudflare Pages (free tier)
 
-## Getting Started
+## Getting started
 
 ### Prerequisites
 
@@ -41,7 +46,7 @@ bun run dev
 
 The application will be available at `http://localhost:5173`.
 
-### Build & Production
+### Build and production
 
 To build the project for production:
 
@@ -74,7 +79,7 @@ If `dist/` is already freshly built, upload it without rebuilding:
 bun run deploy:upload
 ```
 
-## Project Structure
+## Project structure
 
 - `client/`: React frontend source code.
 - `functions/`: Cloudflare Pages Functions (serverless API endpoints).
@@ -96,11 +101,11 @@ This is a static site with serverless API functions:
 - **Email System**: Transactional email templates with master inheritance, local preview generation, and template test scripts
 - **Environment Variables**: Set `N8N_WEBHOOK_URL` and optional `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` / `SITE_URL` in Cloudflare Pages dashboard
 
-## Email Templates
+## Email templates
 
 This project includes an email template system. See [`email-templates/README.md`](email-templates/README.md) for full documentation.
 
-### Quick Start
+### Quick start
 
 ```bash
 # Preview all email templates
