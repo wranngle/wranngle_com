@@ -6,7 +6,7 @@
 
 # Wranngle Systems
 
-answer, triage, and book 24/7: the wranngle.com landing page where sarah takes the call live
+answer, triage, and book 24/7: wranngle.com, where sarah picks up when every tech is on a job
 
 ### [**wranngle.com**](https://wranngle.com)
 
