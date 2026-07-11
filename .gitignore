@@ -326,3 +326,6 @@ openspec/
 # Internal Symphony orchestration machinery (local-only; re-stamped by dotfiles bootstrap)
 /bin/symphony
 /WORKFLOW.md
+
+# internal toolchain stays local (dotfiles source-only; see WRANNGLE-README-SYSTEM.md)
+/scripts/bin/llm.sh
