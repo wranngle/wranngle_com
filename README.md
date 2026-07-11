@@ -1,13 +1,28 @@
 ![The wranngle.com landing hero: the headline "Your phone rings. Every tech is on a job." beside the animated hex-tile grid, where three tiles (restaurant, dental, salon) are recorded ElevenLabs widget runs and the remaining tiles are static screenshot fill](docs/hero.webp)
 
+<div align="center">
+
+#### voice agent · lead capture · stripe checkout · llms.txt · 53 demo storefronts
+
 # Wranngle Systems
 
-[![CI](https://github.com/wranngle/wranngle_com/actions/workflows/ci.yml/badge.svg)](https://github.com/wranngle/wranngle_com/actions/workflows/ci.yml) [![License](https://img.shields.io/github/license/wranngle/wranngle_com?color=A371F7)](LICENSE) ![Status](https://img.shields.io/badge/status-active-brightgreen)
-
-> [!NOTE]
-> Active personal project. Used in my own workflow. Issues triaged on a personal-time cadence.
-
 Wranngle Systems is Cody Arnold's pre-revenue operator lab for voice AI and workflow automation. This project is the official website and landing page, featuring a console-themed UI and an integrated ElevenLabs Conversational AI agent.
+
+### [**wranngle.com**](https://wranngle.com)
+
+**[Demo](#demo)** · **[Tech stack](#tech-stack)** · **[Getting started](#getting-started)** · **[Architecture](#architecture)** · **[Email templates](#email-templates)** · **[License](#license)**
+
+[![CI](https://github.com/wranngle/wranngle_com/actions/workflows/ci.yml/badge.svg)](https://github.com/wranngle/wranngle_com/actions/workflows/ci.yml) [![License](https://img.shields.io/github/license/wranngle/wranngle_com?color=FF5F00)](LICENSE) ![Status](https://img.shields.io/badge/status-active-brightgreen)
+
+</div>
+
+- 📞 Sarah, a live ElevenLabs ConvAI voice agent on every route
+- 📥 Lead capture, ArkType-validated and forwarded to n8n
+- 💳 Stripe Checkout Sessions with webhook fulfillment
+- 🤖 llms.txt and llms-full.txt for AI crawlers
+- 🏪 53 generated demo storefront landing pages
+
+One repo, one Cloudflare Pages deploy, the whole storefront. 120 vitest tests.
 
 ## Demo
 
@@ -90,6 +105,14 @@ bun run deploy:upload
 - `docs/`: Project documentation and architecture guides.
 
 ## Architecture
+
+```mermaid
+flowchart LR
+    SPA[React SPA] --> FN[Pages Functions]
+    FN --> N8N[n8n webhook]
+    FN --> STRIPE[Stripe]
+    SPA --> EL[ElevenLabs agent]
+```
 
 This is a static site with serverless API functions:
 
