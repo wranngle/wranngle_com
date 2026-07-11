@@ -6,7 +6,7 @@
 
 # Wranngle Systems
 
-answer, triage, and book 24/7: wranngle.com, where sarah picks up when every tech is on a job
+> answer, triage, and book 24/7: an ElevenLabs voice agent named sarah picks up
 
 ### [**wranngle.com**](https://wranngle.com)
 
