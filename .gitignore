@@ -322,3 +322,7 @@ openspec/
 
 # Screenshot scratch from hero-tile capture pipeline
 .tmp-screenshots/
+
+# Internal Symphony orchestration machinery (local-only; re-stamped by dotfiles bootstrap)
+/bin/symphony
+/WORKFLOW.md
