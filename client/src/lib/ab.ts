@@ -23,20 +23,23 @@ export type AbHeadline = {
 export const AB_HEADLINES: Record<AbVariant, AbHeadline> = {
   A: {
     variant: 'A',
-    headline: 'Voice AI that answers every call your trade business misses.',
-    subhead: 'Book jobs after hours without hiring a receptionist.',
+    headline: 'One AI front door for every customer conversation.',
+    subhead:
+      'Web chat, voice, Slack, Teams, and Discord \u2014 answered and dispatched.',
     cta: 'Hear it live',
   },
   B: {
     variant: 'B',
-    headline: "Stop losing $40k a year to calls you don't answer.",
-    subhead: 'Wranngle voice agents capture, qualify, and book the lead.',
+    headline: 'Stop losing leads in channels nobody is watching.',
+    subhead:
+      'Wranngle captures, qualifies, and dispatches the lead \u2014 wherever it lands.',
     cta: 'Run the numbers',
   },
   C: {
     variant: 'C',
-    headline: 'Your phone is your storefront. Staff it 24/7 for $499/mo.',
-    subhead: 'A voice agent trained on your jobs, your prices, your areas.',
+    headline: 'Every channel is your storefront. Staff them all with one AI.',
+    subhead:
+      'A front end trained on your services, your prices, your policies.',
     cta: 'Start Wranngling',
   },
 };

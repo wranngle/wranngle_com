@@ -8,7 +8,7 @@ export const SARAH_AGENT_ID = 'agent_7801kqqqhjmcfdsa1m2a8t9w6t5c';
  */
 export type SarahMode =
   | 'lead-intake' // default on wranngle.com — open-ended project scoping call
-  | 'after-hours-demo' // role-play the caller's own after-hours agent
+  | 'roleplay-demo' // role-play the caller's own front-end agent
   | 'general'; // ask which the caller wants
 
 let sarahTextPatchInstalled = false;

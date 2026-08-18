@@ -6,68 +6,64 @@ import {
 } from './offerings.ts';
 
 /**
- * SSOT pricing-display contract (round-2 F006 + F011). TierCard renders
- * every tile on every page through getTierPricing, so these assertions are
- * the single guard that pricing reads identically everywhere.
+ * SSOT pricing-display contract. TierCard renders every tile through
+ * getTierPricing, so these assertions are the single guard that pricing
+ * reads identically everywhere: three tiers, monthly-only, no annual
+ * lines, no add-on lines.
  */
 describe('getTierPricing', () => {
-  it('agent tier: monthly headline + annual discount line (per-location addon is spec-sheet only)', () => {
-    const core = getOfferingById('basic')!;
-    const p = getTierPricing(core);
+  it('base tier: monthly headline, no annual line, no addon line', () => {
+    const base = getOfferingById('basic')!;
+    const p = getTierPricing(base);
     expect(p.isFree).toBe(false);
     expect(p.priceLabel).toBe('$250');
     expect(p.priceSuffix).toBe('/mo');
-    expect(p.annualLine).toBe('or $212.50/mo billed annually · save 15%');
-    // Agents carry no item.monthlyAddon; the per-location price stays on the
-    // spec sheet, so the tile shows no addon line (matches prior behavior).
-    expect(p.addonLine).toBeUndefined();
-  });
-
-  it('free trial: Free label, no suffix, no annual line', () => {
-    const trial = getOfferingById('gtm-ops-trial')!;
-    const p = getTierPricing(trial);
-    expect(p.isFree).toBe(true);
-    expect(p.priceLabel).toBe('Free');
-    expect(p.priceSuffix).toBe('');
     expect(p.annualLine).toBeUndefined();
-  });
-
-  it('website tier: one-time headline + annual maintenance option, no SaaS-style annual line', () => {
-    const landing = getOfferingById('landing-page')!;
-    const p = getTierPricing(landing);
-    expect(p.priceLabel).toBe('$900');
-    expect(p.priceSuffix).toBe(' one-time');
-    expect(p.annualLine).toBeUndefined(); // websites carry no monthly discount
-    expect(p.addonLine).toContain('+ $100/mo maintenance');
-    expect(p.addonLine).toContain('/yr · save 17%');
-  });
-
-  it('SaaS tier: shows annual discount line and suppresses the /yr addon line', () => {
-    const plus = getOfferingById('gtm-ops-plus')!;
-    const p = getTierPricing(plus);
-    expect(p.annualLine).toContain('billed annually');
-    expect(p.annualLine).toContain('save 17%');
-    // SaaS expresses annual via annualLine, never a duplicate addon line.
     expect(p.addonLine).toBeUndefined();
+  });
+
+  it('upgrade tier: $500/mo, monthly-only', () => {
+    const upgrade = getOfferingById('premium')!;
+    const p = getTierPricing(upgrade);
+    expect(p.priceLabel).toBe('$500');
+    expect(p.priceSuffix).toBe('/mo');
+    expect(p.annualLine).toBeUndefined();
+    expect(p.addonLine).toBeUndefined();
+  });
+
+  it('max tier: $900/mo, monthly-only', () => {
+    const max = getOfferingById('gtm-ops-pro')!;
+    const p = getTierPricing(max);
+    expect(p.priceLabel).toBe('$900');
+    expect(p.priceSuffix).toBe('/mo');
+    expect(p.annualLine).toBeUndefined();
+    expect(p.addonLine).toBeUndefined();
+  });
+
+  it('ladder: exactly one category with the three tiers in base→max order', () => {
+    expect(OFFERING_CATEGORIES).toHaveLength(1);
+    const ids = OFFERING_CATEGORIES[0].items.map((i) => i.id);
+    expect(ids).toEqual(['basic', 'premium', 'gtm-ops-pro']);
+    const prices = OFFERING_CATEGORIES[0].items.map((i) =>
+      Number(i.price.replace(',', '')),
+    );
+    expect(prices).toEqual([250, 500, 900]);
   });
 
   it('higher tiers declare includesPrevious and never restate lower-tier features', () => {
-    const elite = getOfferingById('premium')!;
-    expect(elite.includesPrevious).toBe('Core Agent');
-    const core = getOfferingById('basic')!;
-    // No Elite feature line should duplicate a Core feature line verbatim.
-    for (const f of elite.features) expect(core.features).not.toContain(f);
+    const upgrade = getOfferingById('premium')!;
+    expect(upgrade.includesPrevious).toBe('Omni Intake');
 
-    const pro = getOfferingById('gtm-ops-pro')!;
-    expect(pro.includesPrevious).toBe('Plus');
-    expect(pro.features).not.toContain('Everything in Plus');
+    const max = getOfferingById('gtm-ops-pro')!;
+    expect(max.includesPrevious).toBe('Internal AI');
+    expect(max.features).not.toContain('Everything in Internal AI');
   });
 
-  it('every tier produces a non-empty price label', () => {
-    for (const cat of OFFERING_CATEGORIES) {
-      for (const item of cat.items) {
-        expect(getTierPricing(item).priceLabel.length).toBeGreaterThan(0);
-      }
+  it('every tier is a monthly subscription with no monthlyAddon', () => {
+    for (const item of OFFERING_CATEGORIES[0].items) {
+      expect(item.priceCadence).toBe('monthly');
+      expect(item.monthlyAddon).toBeUndefined();
+      expect(item.facts?.discountPercent).toBe(0);
     }
   });
 });

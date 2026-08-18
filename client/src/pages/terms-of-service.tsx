@@ -57,7 +57,7 @@ export default function TermsOfService() {
                 </p>
                 <p className="opacity-80">
                   These Terms apply to all users of the Service, including
-                  customers who have purchased AI voice agent subscriptions.
+                  customers who have purchased Service subscriptions.
                 </p>
               </section>
 
@@ -66,14 +66,18 @@ export default function TermsOfService() {
                   2. Service Description
                 </h2>
                 <p className="opacity-80 mb-4">
-                  Wranngle Systems provides AI-powered voice agents designed to
-                  handle inbound calls for organizations, plus the gtm_ops
-                  proposal-generation runtime. The Service includes:
+                  Wranngle Systems provides a unified AI front end that answers,
+                  triages, and dispatches customer conversations for
+                  organizations, plus the gtm_ops proposal-generation runtime.
+                  The Service includes:
                 </p>
                 <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
-                  <li>24/7 AI voice agent for call answering</li>
+                  <li>
+                    Conversation answering across web chat, voice, Slack, Teams,
+                    and Discord
+                  </li>
                   <li>Lead qualification and capture</li>
-                  <li>Two-way SMS communication</li>
+                  <li>SMS notification and follow-up communication</li>
                   <li>Web chat integration</li>
                   <li>Calendar integration via Cal.com</li>
                   <li>
@@ -111,19 +115,28 @@ export default function TermsOfService() {
                   4. Subscription Plans and Billing
                 </h2>
                 <p className="opacity-80 mb-4">
-                  <strong>Core Agent ($250/month):</strong> Includes voice-only
-                  AI agent with 1,000 voice minutes and 500 SMS segments per
-                  month.
+                  <strong>Omni Intake ($250/month):</strong> The omni-channel AI
+                  front end — web chat, voice, Slack, Teams, and Discord — with
+                  structured intake and dispatch, subject to fair-use limits of
+                  1,000 voice minutes and 500 SMS segments per month.
                 </p>
                 <p className="opacity-80 mb-4">
-                  <strong>Elite Agent ($500/month):</strong> Includes
-                  triple-channel voice + web + SMS AI agents with 2,500 voice
-                  minutes and 1,500 SMS segments per month.
+                  <strong>Internal AI ($500/month):</strong> Everything in Omni
+                  Intake, plus an internal AI layer trained on your company
+                  knowledge that resolves requests and takes actions in
+                  connected systems, with fair-use limits of 2,500 voice minutes
+                  and 1,500 SMS segments per month.
                 </p>
                 <p className="opacity-80 mb-4">
-                  Subscriptions are billed monthly in advance. Annual
-                  subscriptions receive a discount (15% for Core, 20% for Elite)
-                  and require 12-month commitment.
+                  <strong>gtm_ops Platform ($900/month):</strong> Everything in
+                  Internal AI, plus the gtm_ops go-to-market platform: lead
+                  enrichment, branded proposal generation, replayable run logs,
+                  SSO, team workspaces, and a custom domain.
+                </p>
+                <p className="opacity-80 mb-4">
+                  All subscriptions are billed monthly in advance and may be
+                  cancelled at any time, effective at the end of the current
+                  billing period. Annual plans are not offered.
                 </p>
                 <p className="opacity-80">
                   You authorize us to charge your payment method for all fees
@@ -206,8 +219,8 @@ export default function TermsOfService() {
                     impersonation, or unlawful surveillance)
                   </li>
                   <li>
-                    Route the Service into geographies or call types where AI
-                    voice agents are prohibited by local law
+                    Route the Service into geographies or conversation types
+                    where AI agents are prohibited by local law
                   </li>
                 </ul>
                 <p className="opacity-80 mt-4">

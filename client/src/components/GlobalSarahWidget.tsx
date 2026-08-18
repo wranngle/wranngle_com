@@ -12,20 +12,13 @@ import {
  * the home page. Routes set their own `surface_context` so Sarah's
  * opening line knows which page the caller is looking at.
  *
- * Previously the widget lived inside App.tsx (the AI-voice-agents home),
- * which meant /about, /products/websites, /products/gtm-ops, /privacy,
- * /terms, /pricing, /pilot, and 404 had no widget at all.
+ * Previously the widget lived inside App.tsx, which meant /about,
+ * /privacy, /terms, and 404 had no widget at all.
  */
 const SURFACE_BY_ROUTE: Record<string, string> = {
   '/': 'wranngle-com/home',
-  '/products/ai-voice-agents': 'wranngle-com/home',
-  '/products/websites': 'wranngle-com/products/websites',
-  '/products/gtm-ops': 'wranngle-com/products/gtm-ops',
-  '/products/gtm_ops': 'wranngle-com/products/gtm-ops',
   '/about': 'wranngle-com/about',
   '/built-by': 'wranngle-com/about',
-  '/pricing': 'wranngle-com/pricing',
-  '/pilot': 'wranngle-com/pilot',
   '/privacy': 'wranngle-com/privacy',
   '/terms': 'wranngle-com/terms',
 };

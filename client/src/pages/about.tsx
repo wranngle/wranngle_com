@@ -27,7 +27,7 @@ const REPOS: RepoEntry[] = [
     fullName: 'wranngle/voice_ai_agent_evals',
     role: 'Voice evals',
     blurb:
-      'Test runner and scenario framework for ElevenLabs voice agents: deterministic synthetic transcripts, latency budgets, prompt versioning, and a scoring rubric for user-facing failures.',
+      'Test runner and scenario framework for ElevenLabs conversational agents: deterministic synthetic transcripts, latency budgets, prompt versioning, and a scoring rubric for user-facing failures.',
   },
   {
     fullName: 'wranngle/gtm_ops',
@@ -66,7 +66,7 @@ const TRUST_MARKERS = [
     value: '10+ years',
     label: 'IT operations experience',
     detail:
-      'I spent a decade running automation inside live support work rather than beside it, so every script had to keep working through the next on-call shift.',
+      'I spent a decade running automation inside live support work rather than beside it, so every script had to keep working through the next overnight shift.',
   },
   {
     value: '500+',
@@ -88,9 +88,9 @@ const TRUST_MARKERS = [
   },
   {
     value: '20+',
-    label: 'Sites covered by voice agents',
+    label: 'Sites covered by AI agents',
     detail:
-      'ElevenLabs on-call voice agents run in production across five client organizations spanning more than twenty sites. The agent does intake and triage, then hands the call to a person with the caller context intact.',
+      'ElevenLabs conversational agents run in production across five client organizations spanning more than twenty sites. The agent does intake and triage, then hands off to a person with the customer context intact.',
   },
   {
     value: '>90%',
@@ -102,9 +102,9 @@ const TRUST_MARKERS = [
 
 const WORK_SHAPES = [
   {
-    label: 'Voice AI',
-    title: 'Voice agents that cover the phones',
-    body: 'ElevenLabs agents wired to Twilio (and Telnyx and Bandwidth when telephony gets weird). Each prompt change ships with synthetic-conversation regression tests so a 2 AM call gets the same script as a 2 PM call.',
+    label: 'Front end',
+    title: 'Agents that cover every channel',
+    body: 'ElevenLabs agents wired to web chat, telephony (Twilio, Telnyx, Bandwidth), and workspace apps. Each prompt change ships with synthetic-conversation regression tests so a 2 AM conversation gets the same script as a 2 PM one.',
   },
   {
     label: 'Workflow automation',
@@ -132,7 +132,7 @@ const PRINCIPLES = [
   {
     Icon: PhoneCall,
     title: 'Fix the missed handoff',
-    body: 'For busy teams, the leak is often a missed call, an after-hours message, or the CRM note nobody wrote.',
+    body: 'For busy teams, the leak is often an unanswered conversation, a channel nobody watches, or the CRM note nobody wrote.',
   },
   {
     Icon: Gauge,
@@ -230,13 +230,13 @@ export default function About() {
 
                 <div className="mt-8 space-y-5 text-base md:text-xl leading-relaxed">
                   <p>
-                    Wranngle builds AI voice agents and workflow automation for
-                    service businesses where the phone keeps ringing while every
-                    tech is on a job: plumbing and HVAC shops, dealerships, help
-                    desks. The agent answers the call, collects what a
-                    dispatcher would ask for, and writes the job into the CRM
-                    and tools the team already checks. Afterward, every step is
-                    on record and easy to review.
+                    Wranngle builds a unified AI front end and workflow
+                    automation for teams whose customers show up faster than
+                    anyone can answer — across chat, phone, and workspace apps.
+                    The agent answers, collects what a dispatcher would ask for,
+                    and writes the request into the CRM and tools the team
+                    already checks. Afterward, every step is on record and easy
+                    to review.
                   </p>
                   <p className={mutedText}>
                     The discipline comes from 10+ years in IT operations,
@@ -287,9 +287,9 @@ export default function About() {
                       What Wranngle does
                     </p>
                     <p className="mt-1 text-sm leading-relaxed opacity-80">
-                      Production voice agents and the workflow around them, so a
-                      missed call becomes a clean follow-up instead of a
-                      voicemail your team never hears.
+                      A production AI front end and the workflow around it, so
+                      every conversation becomes a clean follow-up instead of a
+                      thread your team never sees.
                     </p>
                   </div>
                 </div>
@@ -310,9 +310,10 @@ export default function About() {
                       Work covered
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
-                      Voice AI on the inbound. Workflow plumbing in the middle.
-                      Operator-facing tooling on the outbound. The same engineer
-                      owns all three so the contract between them stays honest.
+                      Conversational AI on the inbound. Workflow automation in
+                      the middle. Operator-facing tooling on the outbound. The
+                      same engineer owns all three so the contract between them
+                      stays honest.
                     </dd>
                   </div>
                   <div className="py-4">
@@ -330,7 +331,7 @@ export default function About() {
                       Recent work
                     </dt>
                     <dd className="mt-2 text-sm leading-relaxed">
-                      ElevenLabs on-call voice agents in production across 5
+                      ElevenLabs conversational agents in production across 5
                       client organizations spanning 20+ sites. A
                       synthetic-conversation regression harness gates every
                       prompt change.
@@ -479,9 +480,9 @@ export default function About() {
                   Most AI products make a team change how they work before the
                   software pays off. Busy teams can&apos;t — customers are
                   calling and staff are switching context all day. So the target
-                  is continuity: a missed call becomes a qualified lead, the CRM
-                  gets the useful facts, the owner can pick up exactly where the
-                  agent left off.
+                  is continuity: a raw conversation becomes a qualified lead,
+                  the CRM gets the useful facts, the owner can pick up exactly
+                  where the agent left off.
                 </p>
                 <p>
                   In practice that means mapping the current process, building

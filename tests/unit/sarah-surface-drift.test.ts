@@ -51,9 +51,9 @@ describe('Sarah surface_context drift', () => {
   const surfaces = surfaceMapKeys();
 
   it('finds the real component routes (regex sanity)', () => {
-    expect(routes.length).toBeGreaterThanOrEqual(10);
+    expect(routes.length).toBeGreaterThanOrEqual(4);
     expect(routes).toContain('/');
-    expect(routes).toContain('/pilot');
+    expect(routes).toContain('/about');
   });
 
   it('maps every component-backed route to an explicit surface_context', () => {

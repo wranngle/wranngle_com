@@ -29,20 +29,18 @@ describe('buildSarahDynamicVariables', () => {
   });
 
   it('defaults surface_context when omitted', () => {
-    const parsed = JSON.parse(
-      buildSarahDynamicVariables('after-hours-demo'),
-    ) as {
+    const parsed = JSON.parse(buildSarahDynamicVariables('roleplay-demo')) as {
       mode: string;
       surface_context: string;
     };
-    expect(parsed.mode).toBe('after-hours-demo');
+    expect(parsed.mode).toBe('roleplay-demo');
     expect(parsed.surface_context).toBe('wranngle-com');
   });
 
   it('round-trips every documented agent mode (prompt-branch parity)', () => {
     // These three values are exactly what the live agent prompt branches on.
     // Adding a SarahMode without updating the prompt is the drift this guards.
-    const modes: SarahMode[] = ['lead-intake', 'after-hours-demo', 'general'];
+    const modes: SarahMode[] = ['lead-intake', 'roleplay-demo', 'general'];
     for (const mode of modes) {
       const parsed = JSON.parse(buildSarahDynamicVariables(mode)) as {
         mode: string;

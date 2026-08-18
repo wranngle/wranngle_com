@@ -3,28 +3,20 @@ export type OfferingKind = 'ai-agent' | 'website' | 'saas';
 export type PricingTier = {
   monthly: number;
   annualMonthly: number;
-  /** Per-location (AI agents) or unused (websites). */
   addon?: number;
 };
 
 export type OfferingFacts = {
-  /** Drives spec-sheet rendering: voice/SMS labels for AI agents, project/perf labels for websites, seat/proposal labels for SaaS. */
   kind: OfferingKind;
   tierName: string;
   /** 0 means "no annual commitment plan" — popout suppresses the discount UI. */
   discountPercent: number;
-  /** Headline price. For AI agents this is monthly subscription; for websites this is one-time project cost; for SaaS it is monthly SaaS price (0 for trial). */
   headlinePrice: number;
-  /** Annual-commitment monthly equivalent (AI agents + SaaS). Set equal to headlinePrice for websites or trial. */
   annualMonthly: number;
-  /** Per-location addon (AI agents), maintenance fee (websites), or seat/usage addon (SaaS). */
   addon: {price: number; label: string};
   specs: {coverage: string; ingredients: string};
-  /** Voice/SMS limits for AI agents. Empty/undefined for websites + SaaS. */
   limits?: {minutes: string; sms: string};
-  /** Website-only: project delivery facts. */
   delivery?: {timeline: string; pages: string; performance: string};
-  /** SaaS-only: subscription plan facts. proposalsCap is a string so values like 'Unlimited' or '5 / mo (trial)' render cleanly. */
   saasLimits?: {
     proposalsCap: string;
     users: string;
@@ -33,52 +25,33 @@ export type OfferingFacts = {
     auditChain: string;
   };
   features: string[];
-  /** Cross-sell hint shown on the spec sheet itself (under Marketing Ingredients). */
   crossSell?: {label: string; offeringId: string};
-
-  // Backwards-compat: keep `pricing` shape for any legacy consumers.
-  // Prefer `headlinePrice` / `annualMonthly` / `addon` going forward.
   pricing: PricingTier;
 };
 
 export type OfferingItem = {
   id: string;
   name: string;
-  /** Tile-displayed price (string for formatting like "3,500"). */
   price: string;
-  /** Whether `price` is a recurring monthly fee or a one-time project cost. */
   priceCadence: 'monthly' | 'one-time';
   description: string;
   features: string[];
   badge?: string;
   cta: string;
   monthlyAddon?: {price: string; label: string};
-  /** Name of the tier this one builds on. When set, the card renders
-   *  "Everything in <includesPrevious>, plus:" and `features` lists only the
-   *  deltas — never restating features the lower tier already covers. */
   includesPrevious?: string;
   facts?: OfferingFacts;
 };
 
-/** Uniform price-display spec derived from a tier — the single source of
- *  truth consumed by TierCard so every card on every page renders pricing
- *  identically (round-2 F006 + F011). */
 export type TierPricing = {
   isFree: boolean;
-  /** Headline price, e.g. "$250", "$900", "Free". */
   priceLabel: string;
-  /** Cadence suffix, e.g. "/mo", " one-time", "". */
   priceSuffix: string;
-  /** Pink "billed annually, save N%" line — present only when a real annual
-   *  discount exists. */
   annualLine?: string;
-  /** Secondary add-on line (per-location, maintenance), or undefined. */
   addonLine?: string;
 };
 
 function formatTierPrice(value: number): string {
-  // Currency display: whole numbers render bare ("250"), fractional values
-  // keep two decimals ("212.50", "16.67") rather than stripping zeros.
   return Number.isInteger(value)
     ? value.toLocaleString('en-US')
     : value.toFixed(2);
@@ -100,21 +73,12 @@ export function getTierPricing(item: OfferingItem): TierPricing {
       ? `or $${formatTierPrice(facts.annualMonthly)}/mo billed annually · save ${facts.discountPercent}%`
       : undefined;
 
-  // Add-on line: per-location for agents, maintenance for websites. SaaS
-  // tiers express their annual story through annualLine, so their monthly
-  // addon (the "/yr" annual plan) is intentionally omitted here.
   let addonLine: string | undefined;
   if (item.monthlyAddon && facts?.kind !== 'saas') {
     const {price, label} = item.monthlyAddon;
     addonLine = label.startsWith('/')
       ? `+ $${price}${label}`
       : `+ $${price}/mo ${label}`;
-    if (facts?.kind === 'website') {
-      // Websites get an annual maintenance option too (two months free).
-      // Match the annual-discount line's "· save N%" phrasing exactly.
-      const yearly = Number(price) * 10;
-      addonLine += ` · or $${formatTierPrice(yearly)}/yr · save 17%`;
-    }
   }
 
   return {isFree, priceLabel, priceSuffix, annualLine, addonLine};
@@ -127,370 +91,142 @@ export type OfferingCategory = {
   items: OfferingItem[];
 };
 
+/**
+ * STAGE-1 TEAROUT SKELETON (2026-08-15).
+ * One product line: a unified, external-facing AI front-end dispatch for
+ * sales and customer service across every channel a customer shows up on —
+ * web chat, voice, Slack, Teams, Discord. No channel is an add-on and no
+ * channel is a tier. The ladder is capability, not channels:
+ *
+ *   base    = Omni Intake        (all channels, capture + dispatch)
+ *   upgrade = Internal AI        (the AI layer that resolves, not just routes)
+ *   max     = gtm_ops Platform   (the full go-to-market operations console)
+ *
+ * Item ids are LOAD-BEARING for /api/checkout and /api/leads package
+ * allowlists (basic / premium / gtm-ops-pro) — do not rename ids without
+ * touching functions/api/*. Add-ons and annual-discount plumbing are
+ * intentionally removed: discountPercent 0 + no monthlyAddon means no
+ * extra pricing lines render anywhere.
+ */
 export const OFFERING_CATEGORIES: OfferingCategory[] = [
   {
-    id: 'ai-agents',
-    name: 'AI Agents',
+    id: 'unified',
+    name: 'Unified AI Front End',
     description:
-      'Voice, web chat, and SMS agents for teams that need reliable lead capture. They answer, qualify, route, and log leads without a long contract.',
+      'One front door for sales and customer service — web chat, voice, Slack, Teams, and Discord land in the same intake, the same dispatch, the same follow-up.',
     items: [
       {
         id: 'basic',
-        name: 'Core Agent',
+        name: 'Omni Intake',
         price: '250',
         priceCadence: 'monthly',
         description:
-          'Voice receptionist for overflow and after-hours calls. It captures caller details and sends the transcript to your team.',
-        cta: 'Get Core Agent',
+          'Every channel answered by one AI front end. It captures who, what, and how urgent, then dispatches to the person or system that owns the next step.',
+        cta: 'Start with Omni Intake',
         features: [
-          '24/7 voice answering on a forwarded line',
-          'Company-specific training on your services, pricing, and policies',
-          'Lead scoring + qualification',
-          'SMS notification to your phone within minutes of a call',
-          'Email lead capture with caller transcript',
+          'Web chat, voice, Slack, Teams, and Discord — one front door',
+          'Sales and support requests triaged in the same flow',
+          'Structured intake record on every conversation',
+          'Dispatch to email, CRM, or webhook with full context',
           'Standard support, business-hours response',
         ],
         facts: {
           kind: 'ai-agent',
-          tierName: 'Core',
-          discountPercent: 15,
+          tierName: 'Omni Intake',
+          discountPercent: 0,
           headlinePrice: 250,
-          annualMonthly: 212.5,
-          addon: {price: 200, label: '/mo per extra location'},
-          pricing: {monthly: 250, annualMonthly: 212.5, addon: 200},
+          annualMonthly: 250,
+          addon: {price: 0, label: 'no add-ons'},
+          pricing: {monthly: 250, annualMonthly: 250},
           specs: {
-            coverage: 'After-hours + overflow',
+            coverage: 'All channels, one intake',
             ingredients:
-              'Forwarded business line, call transcript, lead scoring, workflow-specific prompts, SMS alerts, email notifications.',
+              'Unified channel adapters (web chat, voice, Slack, Teams, Discord), structured intake schema, dispatch routing, transcript + record on every conversation.',
           },
           limits: {minutes: '1,000', sms: '500'},
           features: [
-            'Voice agent (single channel)',
-            'Customer-request detection',
-            'Lead scoring & qualification',
-            'One-way SMS notify (shared pool)',
-            'Forwarding to your mobile on hot leads',
-            'Company-specific training data',
+            'Omni-channel front end (chat, voice, Slack, Teams, Discord)',
+            'Structured intake + dispatch',
+            'Conversation records and transcripts',
             'Standard support',
           ],
           crossSell: {
             label:
-              'Pair with a landing page so form leads and phone leads land in one follow-up path',
-            offeringId: 'landing-page',
-          },
-        },
-      },
-      {
-        id: 'premium',
-        name: 'Elite Agent',
-        price: '500',
-        priceCadence: 'monthly',
-        description:
-          'Voice, web chat, and two-way SMS with booking and human handoff. Built for teams that need coverage across more than one channel.',
-        badge: 'Most Popular',
-        cta: 'Get Elite Agent',
-        includesPrevious: 'Core Agent',
-        features: [
-          'Adds web chat and two-way SMS to voice',
-          'ElevenLabs custom voice identity',
-          'Cal.com calendar booking from within the call',
-          'Direct transfer to a human if requested',
-          'Unified inbox across all channels',
-          'Priority support, 4-hour response',
-        ],
-        facts: {
-          kind: 'ai-agent',
-          tierName: 'Elite',
-          discountPercent: 20,
-          headlinePrice: 500,
-          annualMonthly: 400,
-          addon: {price: 400, label: '/mo per extra location'},
-          pricing: {monthly: 500, annualMonthly: 400, addon: 400},
-          specs: {
-            coverage: '24/7/365 priority',
-            ingredients:
-              'ElevenLabs voice, on-call routing rules, Cal.com booking, compliant two-way SMS, shared inbox, priority support.',
-          },
-          limits: {minutes: '2,500', sms: '1,500'},
-          features: [
-            'Voice + web chat + two-way SMS',
-            'Dual-agent on-call routing',
-            'Lead qualification with custom playbooks',
-            'Two-way SMS on a dedicated number',
-            'Cal.com booking integration',
-            'Unified inbox across channels',
-            'Priority support',
-          ],
-          crossSell: {
-            label:
-              'Add a business site when the agent, forms, and service pages need to work together',
-            offeringId: 'business-site',
-          },
-        },
-      },
-    ],
-  },
-  {
-    id: 'websites',
-    name: 'Websites',
-    description:
-      'Owned websites with lead forms, SEO basics, hosting, and optional maintenance. You get the source code.',
-    items: [
-      {
-        id: 'landing-page',
-        name: 'Landing Page',
-        price: '900',
-        priceCadence: 'one-time',
-        description:
-          'One focused page shipped in 7 days. Mobile-first, SEO basics, and a contact form wired to email and n8n.',
-        cta: 'Start Landing Page',
-        monthlyAddon: {price: '100', label: 'maintenance'},
-        features: [
-          'One-page custom design, delivered in 7 days',
-          'Mobile-first responsive build',
-          'SEO foundations (sitemap, OG tags, robots)',
-          'Contact form wired to email + n8n webhook',
-          'Cloudflare global CDN hosting',
-          'Source code is yours — no platform lock-in',
-          'Optional $100/mo maintenance + security updates',
-        ],
-        facts: {
-          kind: 'website',
-          tierName: 'Landing Page',
-          discountPercent: 0,
-          headlinePrice: 900,
-          annualMonthly: 900,
-          addon: {price: 100, label: '/mo maintenance (optional)'},
-          pricing: {monthly: 100, annualMonthly: 100, addon: 900},
-          specs: {
-            coverage: 'One-page lead capture site',
-            ingredients:
-              'Vite build, responsive layout, Cloudflare Pages hosting, validated contact form, n8n lead webhook, Core Web Vitals budget, Git handoff.',
-          },
-          delivery: {
-            timeline: '7 days',
-            pages: '1 page',
-            performance: 'Lighthouse 95+',
-          },
-          features: [
-            'Custom responsive design',
-            'Mobile-first build',
-            'SEO foundations (sitemap + robots + OG tags)',
-            'Contact form → n8n webhook',
-            'Cloudflare global CDN',
-            'Source code ownership (Git handoff)',
-            'Optional monthly maintenance',
-          ],
-          crossSell: {
-            label:
-              'Add web chat when visitors need answers before they fill out the form',
+              'Upgrade to Internal AI when the front end should resolve requests, not just route them',
             offeringId: 'premium',
           },
         },
       },
       {
-        id: 'business-site',
-        name: 'Business Site',
-        price: '3,500',
-        priceCadence: 'one-time',
-        description:
-          'Up to 5 pages with CMS editing, analytics, and lead routing. Shipped in 3 weeks with source code included.',
-        badge: 'Best Value',
-        cta: 'Start Business Site',
-        monthlyAddon: {price: '250', label: 'maintenance'},
-        includesPrevious: 'Landing Page',
-        features: [
-          'Up to 5 pages with custom design',
-          'Headless CMS (you edit copy without us)',
-          'Analytics dashboard',
-          'Lighthouse 90+ performance budget',
-          'First year of Cloudflare hosting included',
-          'Optional $250/mo maintenance + content support',
-        ],
-        facts: {
-          kind: 'website',
-          tierName: 'Business Site',
-          discountPercent: 0,
-          headlinePrice: 3500,
-          annualMonthly: 3500,
-          addon: {price: 250, label: '/mo maintenance + content support'},
-          pricing: {monthly: 250, annualMonthly: 250, addon: 3500},
-          specs: {
-            coverage: 'Up to 5 pages + headless CMS',
-            ingredients:
-              'React + Tailwind build, headless CMS, Cloudflare Pages hosting, analytics, n8n lead routing, performance budget, Git handoff.',
-          },
-          delivery: {
-            timeline: '3 weeks',
-            pages: 'Up to 5',
-            performance: 'Lighthouse 90+',
-          },
-          features: [
-            'Up to 5 custom-designed pages',
-            'Headless CMS integration',
-            'Analytics dashboard',
-            'Lead capture → email + webhook',
-            'Performance optimization (LH 90+)',
-            'Cloudflare hosting (first year)',
-            'Source code ownership',
-            'Monthly maintenance + content support',
-          ],
-          crossSell: {
-            label:
-              'Pair with a Core Agent when calls matter as much as form submissions',
-            offeringId: 'basic',
-          },
-        },
-      },
-    ],
-  },
-  {
-    id: 'gtm_ops',
-    name: 'gtm_ops',
-    description:
-      'A proposal console for turning lead details into branded PDFs with enrichment, templates, and a run log.',
-    items: [
-      {
-        id: 'gtm-ops-trial',
-        name: 'Trial',
-        price: '0',
+        id: 'premium',
+        name: 'Internal AI',
+        price: '500',
         priceCadence: 'monthly',
         description:
-          '14-day trial with Plus features, 5 proposal runs, demo data, and no credit card required.',
-        cta: 'Start gtm_ops Trial',
+          'The upgrade: an internal AI layer behind the front door that answers from your knowledge, takes real actions in your systems, and closes the loop itself.',
+        cta: 'Upgrade to Internal AI',
+        includesPrevious: 'Omni Intake',
         features: [
-          '14-day evaluation of Plus-tier features',
-          'Up to 5 proposals during trial',
-          'Branded PDF generation',
-          'Demo data preloaded',
-          'Gemini field extraction',
-          'No credit card required',
-          'Upgrade or cancel anytime',
+          'Trained on your company knowledge, policies, and pricing',
+          'Resolves requests end-to-end, not just intake',
+          'Acts in your systems: booking, CRM updates, order lookups',
+          'Human handoff with full context when it matters',
+          'Priority support',
         ],
         facts: {
-          kind: 'saas',
-          tierName: 'Trial',
+          kind: 'ai-agent',
+          tierName: 'Internal AI',
           discountPercent: 0,
-          headlinePrice: 0,
-          annualMonthly: 0,
-          addon: {price: 0, label: 'free for 14 days'},
-          pricing: {monthly: 0, annualMonthly: 0},
+          headlinePrice: 500,
+          annualMonthly: 500,
+          addon: {price: 0, label: 'no add-ons'},
+          pricing: {monthly: 500, annualMonthly: 500},
           specs: {
-            coverage: '14-day evaluation window',
+            coverage: 'Front end + internal resolution',
             ingredients:
-              'Gemini extraction, branded PDF renderer, demo data, run log, event replay, Cloudflare Pages delivery, no credit card.',
+              'Company knowledge base, action tools (booking, CRM, lookups), system integrations, escalation paths, evaluation harness on every prompt change.',
           },
-          saasLimits: {
-            proposalsCap: '5 over 14 days',
-            users: '1',
-            sso: false,
-            customDomain: false,
-            auditChain: 'Standard',
-          },
+          limits: {minutes: '2,500', sms: '1,500'},
           features: [
-            '14-day evaluation of Plus-tier features',
-            '5 proposals during trial',
-            'Branded PDF output',
-            'Demo data preloaded',
-            'Gemini field extraction',
-            'Audit log',
-            'No credit card required',
+            'Everything in Omni Intake',
+            'Internal knowledge + action layer',
+            'System integrations (booking, CRM, ops)',
+            'Priority support',
           ],
           crossSell: {
             label:
-              'Use Plus when you need 50 proposal runs per month and custom branding',
-            offeringId: 'gtm-ops-plus',
-          },
-        },
-      },
-      {
-        id: 'gtm-ops-plus',
-        name: 'Plus',
-        price: '20',
-        priceCadence: 'monthly',
-        description:
-          'For solo operators and small teams sending real proposals. Includes branded PDFs, workspace branding, forms, webhooks, and a full run log.',
-        badge: 'Most Popular',
-        cta: 'Start gtm_ops Plus',
-        monthlyAddon: {price: '200', label: '/yr (annual, 17% off)'},
-        features: [
-          '50 proposals per month',
-          'Branded PDFs with your logo + colors',
-          'Custom workspace branding',
-          'Lead intake forms',
-          'Full audit log',
-          'n8n webhook integration',
-          'Gemini field extraction',
-          'Email support',
-        ],
-        facts: {
-          kind: 'saas',
-          tierName: 'Plus',
-          discountPercent: 17,
-          headlinePrice: 20,
-          annualMonthly: 16.67,
-          addon: {price: 200, label: '/yr (annual, 17% off)'},
-          pricing: {monthly: 20, annualMonthly: 16.67},
-          specs: {
-            coverage: '50 proposals/mo per workspace',
-            ingredients:
-              'Gemini extraction, branded PDF renderer, custom logo and colors, lead intake forms, n8n webhooks, full run log, Cloudflare D1 storage.',
-          },
-          saasLimits: {
-            proposalsCap: '50',
-            users: '3',
-            sso: false,
-            customDomain: false,
-            auditChain: 'Full',
-          },
-          features: [
-            '50 proposals/mo',
-            'Branded PDF output (logo + colors)',
-            'Custom workspace branding',
-            'Lead intake forms',
-            'Full audit log',
-            'n8n webhook integration',
-            'Gemini field extraction',
-            'Email support',
-          ],
-          crossSell: {
-            label:
-              'Use Pro when you need SSO, team workspaces, custom domain, or unlimited proposal runs',
+              'Go to gtm_ops Platform when intake should become proposals, pipelines, and run logs',
             offeringId: 'gtm-ops-pro',
           },
         },
       },
       {
         id: 'gtm-ops-pro',
-        name: 'Pro',
-        price: '99',
+        name: 'gtm_ops Platform',
+        price: '900',
         priceCadence: 'monthly',
         description:
-          'For teams that need SSO, role-based access, a custom domain, and unlimited proposal runs.',
-        cta: 'Talk to Sales',
-        monthlyAddon: {price: '990', label: '/yr annual plan'},
-        includesPrevious: 'Plus',
+          'The max tier: the full gtm_ops platform. Every conversation the front end captures becomes enrichment, branded proposals, and a replayable run log.',
+        cta: 'Get gtm_ops Platform',
+        includesPrevious: 'Internal AI',
         features: [
-          'Unlimited proposals',
-          'SSO (Google + Azure AD)',
-          'Team workspaces with role-based access',
-          'Custom domain (proposals.yourco.com)',
-          'Exportable run log',
-          'Priority support',
+          'Lead enrichment + branded proposal generation',
+          'Replayable run log on every proposal',
+          'Team workspaces, SSO, custom domain',
           'Onboarding session included',
         ],
         facts: {
           kind: 'saas',
-          tierName: 'Pro',
-          discountPercent: 17,
-          headlinePrice: 99,
-          annualMonthly: 82.5,
-          addon: {price: 990, label: '/yr (annual, 17% off)'},
-          pricing: {monthly: 99, annualMonthly: 82.5},
+          tierName: 'gtm_ops Platform',
+          discountPercent: 0,
+          headlinePrice: 900,
+          annualMonthly: 99,
+          addon: {price: 0, label: 'no add-ons'},
+          pricing: {monthly: 900, annualMonthly: 900},
           specs: {
-            coverage: 'Unlimited proposals, multi-team',
+            coverage: 'Full platform, multi-team',
             ingredients:
-              'Google and Azure AD SSO, team workspaces, role-based access, custom domain routing, exportable logs, priority support.',
+              'Enrichment pipeline, branded PDF renderer, run log + replay, SSO, team workspaces, custom domain.',
           },
           saasLimits: {
             proposalsCap: 'Unlimited',
@@ -500,20 +236,12 @@ export const OFFERING_CATEGORIES: OfferingCategory[] = [
             auditChain: 'Exportable',
           },
           features: [
-            'Unlimited proposals',
-            'Everything in Plus',
-            'SSO (Google + Azure AD)',
-            'Team workspaces + RBAC',
-            'Custom domain',
-            'Exportable run log',
-            'Priority support',
+            'Everything in Internal AI',
+            'Enrichment + proposal generation',
+            'Run log with replay',
+            'SSO + team workspaces + custom domain',
             'Onboarding session',
           ],
-          crossSell: {
-            label:
-              'Add an Elite Agent when phone and chat leads should feed gtm_ops directly',
-            offeringId: 'premium',
-          },
         },
       },
     ],

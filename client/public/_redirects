@@ -4,3 +4,10 @@
 # the canonical content. Eliminates the byte-identical 5.5 KB duplicate on every deploy
 # and the silent drift risk if one file is updated and the other isn't.
 /profile.md /cody-arnold.md 301
+
+# Retired routes (single-product consolidation, 2026-08): the marketing site now
+# serves one product at /. Old product/pricing/pilot pages 301 to the home page.
+/pricing / 301
+/pilot / 301
+/offerings / 301
+/products/* / 301

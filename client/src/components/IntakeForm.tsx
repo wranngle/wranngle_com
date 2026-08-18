@@ -41,12 +41,10 @@ type IntakeFormData = {
   estimatedProposalsPerMonth?: string;
   notes?: string;
   agentName?: string;
-  addWebChatAgent?: boolean;
 };
 
 const isAgentPackage = (id: string) => id === 'basic' || id === 'premium';
-const isSaasPackage = (id: string) =>
-  id === 'gtm-ops-trial' || id === 'gtm-ops-plus' || id === 'gtm-ops-pro';
+const isSaasPackage = (id: string) => id === 'gtm-ops-pro';
 const noopOnSuccess = () => undefined;
 
 type IntakeFormFieldsProps = {
@@ -56,47 +54,6 @@ type IntakeFormFieldsProps = {
   onSubmit: (data: IntakeFormData) => void;
   isPending: boolean;
 };
-
-function getAddonReceipt(addon?: {price: string; label: string}) {
-  if (!addon) return undefined;
-
-  const cadenceMatch = /^(\/\w+)\s*(.*)$/.exec(addon.label);
-  return {
-    price: addon.price,
-    label: cadenceMatch ? cadenceMatch[2] : addon.label,
-    cadence: cadenceMatch ? cadenceMatch[1] : '/MO',
-  };
-}
-
-function ReceiptMonthlyAddonLine({
-  addon,
-}: {
-  addon?: {price: string; label: string};
-}) {
-  const receipt = getAddonReceipt(addon);
-  if (!receipt) return null;
-
-  return (
-    <div className="flex justify-between opacity-70">
-      <span>+ {receipt.label}</span>
-      <span>
-        ${receipt.price}
-        {receipt.cadence}
-      </span>
-    </div>
-  );
-}
-
-function ReceiptWebChatLine({enabled}: {enabled?: boolean}) {
-  if (!enabled) return null;
-
-  return (
-    <div className="flex justify-between opacity-70">
-      <span>WEB CHAT AGENT</span>
-      <span>$250/MO</span>
-    </div>
-  );
-}
 
 function ReceiptTotalLine({
   canCheckout,
@@ -237,8 +194,6 @@ function OrderReceipt({successData}: {successData: IntakeFormData}) {
             {cadenceLabel}
           </span>
         </div>
-        <ReceiptMonthlyAddonLine addon={submittedOffering?.monthlyAddon} />
-        <ReceiptWebChatLine enabled={successData.addWebChatAgent} />
         <ReceiptTotalLine
           canCheckout={Boolean(canCheckout)}
           cadence={cadence}
@@ -321,7 +276,7 @@ function AgentDemoSecondaryAction() {
 
 /**
  * Pre-modal gate shown before the typed intake form. Sarah is Wranngle's
- * own lead-intake voice agent — not just a product demo — so the gate
+ * own lead-intake agent — not just a product demo — so the gate
  * frames a live call as the open-ended way to scope the project: she asks
  * everything the form asks and more, in conversation. Two paths:
  *   1. Scope it with Sarah — opens the ElevenLabs voice widget for a live
@@ -334,11 +289,9 @@ function AgentDemoSecondaryAction() {
 function SarahPreModalGate({
   tierName,
   onContinue,
-  isTrial,
 }: {
   tierName: string;
   onContinue: () => void;
-  isTrial: boolean;
 }) {
   return (
     <div className="py-3" data-testid="sarah-pre-modal">
@@ -379,7 +332,7 @@ function SarahPreModalGate({
           onClick={onContinue}
           className="h-12 px-4 border border-current/25 font-bold uppercase text-xs rounded-md hover:border-[var(--s500)] hover:text-[var(--s500)] transition-all inline-flex items-center justify-center gap-2"
         >
-          {isTrial ? 'Continue to trial form' : 'Continue to form'}
+          Continue to form
           <ArrowRight size={14} aria-hidden />
         </button>
       </div>
@@ -399,19 +352,16 @@ function SaasIntakeForm({
   isPending,
 }: IntakeFormFieldsProps) {
   const offering = getOfferingById(currentPackage);
-  const tierName = offering?.name ?? 'gtm_ops';
-  const isTrial = currentPackage === 'gtm-ops-trial';
+  const tierName = offering?.name ?? 'gtm_ops Platform';
 
   return (
     <>
       <DialogHeader>
         <DialogTitle className="brand-font text-2xl">
-          {isTrial ? 'Start your trial' : 'Request workspace setup'}
+          Request workspace setup
         </DialogTitle>
         <DialogDescription>
-          {isTrial
-            ? 'Email + company is all we need. No card. 14 days, then upgrade or walk.'
-            : `Email + company is all we need. We handle ${tierName} workspace setup from there.`}
+          {`Email + company is all we need. We handle ${tierName} workspace setup from there.`}
         </DialogDescription>
       </DialogHeader>
 
@@ -462,11 +412,7 @@ function SaasIntakeForm({
           className="w-full bg-[var(--s500)] hover:bg-[var(--s500)]/90"
           disabled={isPending}
         >
-          {isPending
-            ? 'Submitting...'
-            : isTrial
-              ? 'Request trial access'
-              : `Request ${tierName} setup`}
+          {isPending ? 'Submitting...' : `Request ${tierName} setup`}
         </Button>
       </form>
     </>
@@ -486,11 +432,11 @@ function PackageFollowup({
         title="Optional Upgrade"
         body={
           <>
-            Voice catches the after-hours phone call. <b>Web Chat</b> catches
-            the visitor who would rather type.
+            Omni Intake answers and dispatches. <b>Internal AI</b> resolves —
+            trained on your knowledge, acting in your systems.
           </>
         }
-        buttonLabel="Upgrade to Elite Agent (+$250/mo)"
+        buttonLabel="Upgrade to Internal AI (+$250/mo)"
         onClick={() => {
           setCurrentPackage('premium');
         }}
@@ -500,31 +446,27 @@ function PackageFollowup({
 
   if (currentPackage === 'premium') {
     return (
-      <SelectedPackageCard
-        title="Elite Agent Selected"
-        body="Priority 24/7 coverage, web chat, and two-way SMS are included."
-      />
-    );
-  }
-
-  if (currentPackage === 'landing-page') {
-    return (
       <UpgradeCard
         title="Optional Upgrade"
-        body="Need more than one page? The Business Site includes CMS, analytics, and automation."
-        buttonLabel="Upgrade to Business Site"
+        body={
+          <>
+            Internal AI resolves conversations. <b>gtm_ops Platform</b> turns
+            them into pipeline: enrichment, branded proposals, and run logs.
+          </>
+        }
+        buttonLabel="Go Platform (+$400/mo)"
         onClick={() => {
-          setCurrentPackage('business-site');
+          setCurrentPackage('gtm-ops-pro');
         }}
       />
     );
   }
 
-  if (currentPackage === 'business-site') {
+  if (currentPackage === 'gtm-ops-pro') {
     return (
       <SelectedPackageCard
-        title="Business Site Selected"
-        body="Multi-page site with CMS, analytics, and lead capture automation."
+        title="gtm_ops Platform Selected"
+        body="Everything in Internal AI plus enrichment, branded proposals, run logs, SSO, and team workspaces."
       />
     );
   }
@@ -574,30 +516,6 @@ function SelectedPackageCard({title, body}: {title: string; body: string}) {
           {title}
         </div>
         <p className="text-[11px] opacity-80 leading-relaxed">{body}</p>
-      </div>
-    </div>
-  );
-}
-
-function WebChatAddOn({register}: {register: UseFormRegister<IntakeFormData>}) {
-  return (
-    <div className="p-4 border border-[var(--s500)]/30 bg-[var(--s500)]/5 rounded-lg flex gap-4 items-start">
-      <Zap className="text-[var(--s500)] shrink-0" size={20} aria-hidden />
-      <div>
-        <div className="text-xs font-bold text-[var(--s500)] uppercase tracking-wider mb-1">
-          Add-On: Web Chat Agent
-        </div>
-        <p className="text-[11px] opacity-80 leading-relaxed mb-2">
-          Capture leads 24/7 with an AI-powered web chat agent on your new site.
-        </p>
-        <label className="flex items-center gap-2 text-[11px] cursor-pointer">
-          <input
-            type="checkbox"
-            {...register('addWebChatAgent')}
-            className="accent-[var(--s500)]"
-          />
-          <span>Add Web Chat Agent (+$250/mo)</span>
-        </label>
       </div>
     </div>
   );
@@ -713,7 +631,6 @@ function StandardIntakeForm({
           currentPackage={currentPackage}
           setCurrentPackage={setCurrentPackage}
         />
-        {!isAgent && <WebChatAddOn register={register} />}
         <input type="hidden" {...register('package')} value={currentPackage} />
         <LegalNotice />
         <Button
@@ -806,7 +723,6 @@ const IntakeForm = ({
     return (
       <SarahPreModalGate
         tierName={tierName}
-        isTrial={currentPackage === 'gtm-ops-trial'}
         onContinue={() => {
           setSarahGateOpen(false);
         }}

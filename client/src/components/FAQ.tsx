@@ -13,102 +13,77 @@ const FAQ_ITEMS: FAQItem[] = [
     group: 'Getting started',
     question: 'How fast can I be live?',
     answer:
-      'Plan on 1–2 weeks from kickoff. That covers phone provisioning, training the agent on your services and pricing, and a couple rounds of test calls before we hand it the line.',
+      'Plan on 1\u20132 weeks from kickoff. That covers connecting your channels, training the front end on your services and policies, and a couple rounds of test conversations before it takes real traffic.',
   },
   {
     group: 'Getting started',
-    question: 'Do I need new phone equipment?',
+    question: 'What do I need to install?',
     answer:
-      'No. We give you a forwarding number — no hardware, no PBX changes. Forward your existing line after-hours, or replace it entirely. Setup is cloud-based; no boxes, no installer visit.',
+      'Nothing. Web chat is a script tag, voice is a forwarding number, and Slack, Teams, and Discord connect as apps to the workspaces you already run. Setup is cloud-based; no hardware, no PBX changes, no installer visit.',
   },
   {
     group: 'Getting started',
-    question: 'How does the agent learn my business?',
+    question: 'How does the front end learn my business?',
     answer:
-      'During onboarding we add your coverage rules, pricing ranges, common questions, and policies. After launch, we tune the agent from real call transcripts. Updates go through Wranngle for now — no self-serve dashboard yet.',
+      'During onboarding we add your services, pricing ranges, common questions, and policies. After launch, we tune it from real conversation transcripts. Updates go through Wranngle for now \u2014 no self-serve dashboard yet.',
   },
   // How it works
   {
     group: 'How it works',
-    question: 'What happens when a call needs a human?',
+    question: 'What counts as a channel, and what does each tier include?',
     answer:
-      'The agent hands off when a call falls outside its instructions. Elite tier hot-transfers to your mobile. Core tier captures details and texts you immediately so you can call back — transcript included.',
+      'Web chat, voice, Slack, Teams, and Discord \u2014 and every tier includes all of them. The tiers differ in what happens after the conversation is captured: Omni Intake dispatches it, Internal AI resolves it, and gtm_ops Platform turns it into pipeline.',
   },
   {
     group: 'How it works',
-    question: 'How accurate is lead qualification?',
+    question: 'What happens when a conversation needs a human?',
     answer:
-      'It depends on your call mix — a single percentage does not honestly cover every business. We test against fixtures of real customer-call transcripts (urgent requests, vendors, wrong numbers, and out-of-scope questions) and measure your actual first-month performance before tuning. The scoring rubric is open source: github.com/wranngle/voice_ai_agent_evals.',
+      'The front end hands off whenever a request falls outside its instructions \u2014 with the full transcript and structured context attached, so your team never re-asks a question the customer already answered.',
   },
   {
     group: 'How it works',
-    question: 'How does it compare to a human answering service?',
+    question: 'How accurate is triage and qualification?',
     answer:
-      'Predictable monthly cost — no per-minute meter that spikes during call surges. Deeper integrations with your CRM, calendar, and n8n flows. Onboards in days instead of weeks. And you can pick a custom voice or clone one, where most human services follow a fixed script.',
+      'It depends on your conversation mix \u2014 a single percentage does not honestly cover every business. We test against fixtures of real customer conversations (urgent requests, vendors, spam, and out-of-scope questions) and measure your actual first-month performance before tuning. The scoring rubric is open source: github.com/wranngle/voice_ai_agent_evals.',
   },
   {
     group: 'How it works',
-    question: 'Can Sarah book appointments?',
+    question: 'Can it book appointments and act in my systems?',
     answer:
-      'Yes. Elite includes Cal.com calendar booking. The agent checks availability, schedules the job, sends confirmations, and handles common reschedule requests on its own.',
+      'Internal AI and above, yes. It checks availability, books via Cal.com, updates your CRM, and runs lookups in the systems you connect \u2014 with every action logged.',
   },
   {
     group: 'How it works',
     question: 'Can I customize the voice and personality?',
     answer:
-      "Elite includes a custom ElevenLabs voice identity — choose from professional voices or clone one for an additional fee. You also control the agent's personality (warm vs formal, talkative vs efficient) so it matches your brand.",
+      'Yes. Pick a professional voice identity and set the personality (warm vs formal, talkative vs efficient) so the front end matches your brand across every channel.',
   },
   {
     group: 'How it works',
-    question: 'What languages does Sarah support?',
+    question: 'What languages are supported?',
     answer:
       'Out of the box: English, Spanish, French, Arabic, Chinese, Japanese, and Korean. Additional languages are available on request.',
   },
+  // gtm_ops Platform
   {
-    group: 'How it works',
-    question: 'What if I have multiple business locations?',
+    group: 'gtm_ops Platform',
+    question: 'What does the Platform tier add?',
     answer:
-      "Each location gets its own forwarding number, knowledge base, and routing rules — but all share one unified inbox so you don't lose visibility. Per-location add-ons are priced on each spec sheet.",
-  },
-  // Websites
-  {
-    group: 'Websites',
-    question: 'How fast does a website ship, and what do I get?',
-    answer:
-      'A Landing Page ships in about 7 days; a Business Site (up to 5 pages, CMS, analytics) in about 3 weeks. Both include a mobile-first build, SEO foundations, contact forms wired to email and a webhook, Cloudflare hosting, and the full source code — no page-builder lock-in.',
+      'Everything in Internal AI, plus go-to-market operations: lead enrichment, branded PDF proposal generation, a replayable run log on every proposal, SSO, team workspaces, and a custom domain.',
   },
   {
-    group: 'Websites',
-    question: 'Do I own the code, and can I edit content myself?',
+    group: 'gtm_ops Platform',
+    question: 'Where does proposal data come from?',
     answer:
-      'Yes. Every site is handed off via Git, so the source is yours. The Business Site adds a headless CMS so you can edit copy without us. Maintenance is optional — monthly, or annually with two months free.',
-  },
-  {
-    group: 'Websites',
-    question: 'Can a website include a chat or voice agent?',
-    answer:
-      'Yes. A site captures form leads on its own; add a web chat or voice agent when you also want to answer questions and qualify visitors after hours. The same lead then flows into one follow-up path.',
-  },
-  // gtm_ops
-  {
-    group: 'gtm_ops',
-    question: 'What is gtm_ops?',
-    answer:
-      'gtm_ops is a proposal console that turns lead details into branded PDF proposals. It accepts a form, webhook, CRM export, or voice-agent handoff, enriches the lead, fills a typed template, renders the PDF, and keeps a replayable run log. There is a live, no-signup demo on the product page.',
-  },
-  {
-    group: 'gtm_ops',
-    question: 'How is gtm_ops priced?',
-    answer:
-      'Start free for 14 days with 5 proposal runs and no card. Plus is $20/mo (or $16.67/mo billed annually) for 50 proposals, branded PDFs, intake forms, and a full audit log. Pro is $99/mo (or $82.50/mo annually) for unlimited proposals, SSO, team workspaces, and a custom domain.',
-  },
-  {
-    group: 'gtm_ops',
-    question: 'Where does the proposal data come from?',
-    answer:
-      'Any intake source: web chat, a Wranngle voice-agent call, a contact form, a CRM export, or a webhook. gtm_ops normalizes the fields, runs enrichment (Clay and Apollo), and feeds a typed template — so a proposal never starts from a blank form.',
+      'Any conversation the front end captures \u2014 chat, voice, Slack, Teams, Discord \u2014 plus forms, CRM exports, and webhooks. The platform normalizes the fields, runs enrichment, and feeds a typed template, so a proposal never starts from a blank form.',
   },
   // Pricing & plans
+  {
+    group: 'Pricing & plans',
+    question: 'How is it priced?',
+    answer:
+      'Three tiers, all monthly, all channels included: Omni Intake at $250/mo, Internal AI at $500/mo, and gtm_ops Platform at $900/mo. No add-ons, no annual lock-in, cancel anytime.',
+  },
   {
     group: 'Pricing & plans',
     question: 'What if usage exceeds my plan limits?',
@@ -117,28 +92,22 @@ const FAQ_ITEMS: FAQItem[] = [
   },
   {
     group: 'Pricing & plans',
-    question: 'Is there an annual discount?',
-    answer:
-      'Yes. Voice agents save 15–20% on annual billing, gtm_ops plans save about 17%, and website maintenance gets two months free paid annually. Every tile shows both the monthly and annual rate.',
-  },
-  {
-    group: 'Pricing & plans',
     question: 'What if I cancel?',
     answer:
-      'Monthly plans cancel anytime, end-of-period. Annual plans carry a 50% early-termination fee on remaining months. Your data stays exportable for 30 days after cancellation.',
+      'Cancel anytime, effective at the end of the current billing period. Your data stays exportable for 30 days after cancellation.',
   },
   // Trust & data
   {
     group: 'Trust & data',
-    question: 'Is caller and lead data safe?',
+    question: 'Is customer and lead data safe?',
     answer:
-      'Encrypted at rest and in transit. GDPR- and CCPA-aligned. You own the data; export or deletion requests are processed within 30 days. Recordings are retained 90 days by default — longer retention available on request.',
+      'Encrypted at rest and in transit. GDPR- and CCPA-aligned. You own the data; export or deletion requests are processed within 30 days. Conversation records are retained 90 days by default \u2014 longer retention available on request.',
   },
   {
     group: 'Trust & data',
-    question: 'Will callers know they are talking to an AI?',
+    question: 'Will customers know they are talking to an AI?',
     answer:
-      'Yes. Sarah and every deployed agent announce that they are an AI and that the call may be recorded at the start of the call, and confirm plainly if a caller asks. Agents are never configured to claim to be human.',
+      'Yes. Sarah and every deployed front end announce that they are an AI at the start of the conversation \u2014 and that calls may be recorded \u2014 and confirm plainly if asked. Agents are never configured to claim to be human.',
   },
 ];
 

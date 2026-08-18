@@ -21,45 +21,26 @@ type StripeCheckoutCreateResult = {
 const CHECKOUT_PACKAGES: Record<string, CheckoutPackage> = {
   basic: {
     id: 'basic',
-    name: 'Core Agent',
-    description: 'Always-on voice receptionist for busy teams.',
+    name: 'Omni Intake',
+    description:
+      'Unified AI front end — web chat, voice, Slack, Teams, and Discord.',
     unitAmount: 25_000,
     mode: 'subscription',
   },
   premium: {
     id: 'premium',
-    name: 'Elite Agent',
-    description: 'Voice, web chat, and two-way SMS AI agent coverage.',
-    unitAmount: 50_000,
-    mode: 'subscription',
-  },
-  'landing-page': {
-    id: 'landing-page',
-    name: 'Landing Page',
-    description: 'One custom lead-capture page.',
-    unitAmount: 90_000,
-    mode: 'payment',
-  },
-  'business-site': {
-    id: 'business-site',
-    name: 'Business Site',
-    description: 'Custom multi-page website with lead capture automation.',
-    unitAmount: 350_000,
-    mode: 'payment',
-  },
-  'gtm-ops-plus': {
-    id: 'gtm-ops-plus',
-    name: 'gtm_ops Plus',
+    name: 'Internal AI',
     description:
-      'Proposal-generation runtime for solo operators and small teams.',
-    unitAmount: 2000,
+      'Omni Intake plus an internal AI layer that resolves requests and acts in your systems.',
+    unitAmount: 50_000,
     mode: 'subscription',
   },
   'gtm-ops-pro': {
     id: 'gtm-ops-pro',
-    name: 'gtm_ops Pro',
-    description: 'Proposal-generation runtime for teams and ops orgs.',
-    unitAmount: 9900,
+    name: 'gtm_ops Platform',
+    description:
+      'Internal AI plus the full go-to-market platform: enrichment, proposals, run logs, SSO.',
+    unitAmount: 90_000,
     mode: 'subscription',
   },
 };

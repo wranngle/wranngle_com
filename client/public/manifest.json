@@ -1,7 +1,7 @@
 {
   "name": "Wranngle Systems",
   "short_name": "Wranngle",
-  "description": "AI voice agents for busy teams. 24/7 call answering, lead capture, business websites, and gtm_ops proposal generation.",
+  "description": "One AI front end for sales and customer service — web chat, voice, Slack, Teams, and Discord.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

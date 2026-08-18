@@ -5,66 +5,24 @@ import GlobalSarahWidget from './components/GlobalSarahWidget.tsx';
 import TermsOfService from './pages/terms-of-service.tsx';
 import PrivacyPolicy from './pages/privacy-policy.tsx';
 import About from './pages/about.tsx';
-import GtmOps from './pages/gtm-ops.tsx';
-import Websites from './pages/websites.tsx';
-import Pricing from './routes/pricing.tsx';
-import Pilot from './pages/pilot.tsx';
 import NotFound from './pages/not-found.tsx';
 
 const CANONICAL_ORIGIN = 'https://wranngle.com';
 
 /**
- * Featured-product config. The chosen product owns BOTH `/` and
- * `/products/<slug>` — same component, same meta, canonical URL on
- * both routes points to `/` so search engines see one page, not two.
- *
- * To swap the home page to a different product, change `HOME_PRODUCT`.
- * `RouteHeadSync` below derives `/`'s metadata from the chosen product's
- * own `/products/<slug>` entry in `ROUTE_META`, so no separate home-page
- * meta block is needed.
- */
-type ProductSlug = 'ai-voice-agents' | 'websites' | 'gtm-ops';
-const HOME_PRODUCT: ProductSlug = 'ai-voice-agents';
-const HOME_PRODUCT_PATH = `/products/${HOME_PRODUCT}`;
-const PRODUCT_COMPONENT: Record<ProductSlug, React.ComponentType> = {
-  'ai-voice-agents': App,
-  websites: Websites,
-  'gtm-ops': GtmOps,
-};
-const HomeComponent = PRODUCT_COMPONENT[HOME_PRODUCT];
-
-/**
- * Per-route SEO metadata. Each entry is what a social-card scraper or
- * search index sees when crawling that URL. Keep titles ≤60 chars and
- * descriptions 120-160 chars (Google's display range). Pages that set
- * document.title in their own useEffect (about, gtm-ops, privacy,
- * terms) take precedence — see RouteHeadSync below.
+ * The site is one landing page. All former product/pricing/pilot routes
+ * redirect home; only /about, /terms, and /privacy remain as sub-pages.
  */
 const ROUTE_META: Record<string, {title: string; description: string}> = {
   '/': {
-    title: 'Stop missing leads with AI call coverage | Wranngle',
+    title: 'One AI front end for every customer conversation | Wranngle',
     description:
-      "Stop losing leads to missed calls. Sarah's live demo shows Wranngle's AI call answering service qualifies leads, books appointments, and hands them off.",
+      "Wranngle's unified AI front end answers, qualifies, and dispatches sales and support conversations across web chat, voice, Slack, Teams, and Discord.",
   },
   '/about': {
     title: 'Cody Arnold - About Wranngle',
     description:
       'Why Wranngle exists, the operating principles behind the practice, and the public repos that show how the work actually gets done.',
-  },
-  '/products/gtm-ops': {
-    title: 'gtm_ops — Lead in, branded proposal out · Wranngle',
-    description:
-      'gtm_ops turns inbound leads into branded PDF proposals. Enrichment, run logs, live demo with synthetic data. No signup.',
-  },
-  '/products/websites': {
-    title: 'Websites that capture leads — Wranngle Systems',
-    description:
-      'Landing pages and business websites built with fast performance, lead capture, SEO foundations, and owned source code.',
-  },
-  '/products/ai-voice-agents': {
-    title: 'Stop missing leads with AI call coverage | Wranngle',
-    description:
-      "Stop losing leads to missed calls. Sarah's live demo shows Wranngle's AI call answering service qualifies leads, books appointments, and hands them off.",
   },
   '/privacy': {
     title: 'Privacy Policy — Wranngle Systems',
@@ -74,44 +32,17 @@ const ROUTE_META: Record<string, {title: string; description: string}> = {
   '/terms': {
     title: 'Terms of Service — Wranngle Systems',
     description:
-      'Terms of Service for the Wranngle Systems platform — voice agents, websites, and the gtm_ops SaaS.',
-  },
-  '/pricing': {
-    title: 'Pricing — Wranngle Systems',
-    description:
-      'Core Agent and Elite Agent pricing for AI call coverage, plus custom programs for multi-location teams.',
-  },
-  '/pilot': {
-    title: 'Pilot Agreement — Wranngle Systems',
-    description:
-      '30-day click-through pilot agreement for the Wranngle Systems voice agent + gtm_ops bundle. Flat $1,000, refund on miss.',
+      'Terms of Service for the Wranngle Systems platform — the unified AI front end and the gtm_ops SaaS.',
   },
 };
 
-/**
- * Keeps canonical, og:url, og:title, og:description, twitter:url, and
- * twitter:description in sync with the current SPA route. Without this,
- * static index.html shipped the home-page values on every URL — so
- * social cards for /about and /products/gtm-ops unfurled with the
- * home page's headline and search engines consolidated all sub-pages'
- * signals into "/".
- */
+/** Keeps canonical + og/twitter meta in sync with the current SPA route. */
 function RouteHeadSync() {
   const [location] = useLocation();
   useEffect(() => {
     const path = location || '/';
-    // Two URL classes get folded together:
-    //   - `/products/gtm_ops` is a legacy alias of `/products/gtm-ops`.
-    //   - `/products/<HOME_PRODUCT>` serves the same component as `/`,
-    //     so canonical/meta both point to `/` to dedupe SEO signals.
-    let canonicalPath = path;
-    if (path === '/products/gtm_ops') canonicalPath = '/products/gtm-ops';
-    if (path === HOME_PRODUCT_PATH) canonicalPath = '/';
-    // For `/` itself, surface the featured product's meta so the
-    // home page advertises the actual content visitors will see.
-    const metaKey = canonicalPath === '/' ? HOME_PRODUCT_PATH : canonicalPath;
-    const meta = ROUTE_META[metaKey] ?? ROUTE_META['/'];
-    const url = `${CANONICAL_ORIGIN}${canonicalPath}`;
+    const meta = ROUTE_META[path] ?? ROUTE_META['/'];
+    const url = `${CANONICAL_ORIGIN}${ROUTE_META[path] ? path : '/'}`;
 
     let canonical = document.head.querySelector<HTMLLinkElement>(
       'link[rel="canonical"]',
@@ -149,29 +80,29 @@ export default function Router() {
     <>
       <RouteHeadSync />
       <Switch>
-        {/* `/` mirrors whichever product is featured (HOME_PRODUCT). The
-            same component still serves at /products/<slug>; canonical URL
-            on both routes points to `/` so SEO signals consolidate. */}
-        <Route path="/" component={HomeComponent} />
-        {/* Backcompat: /offerings consolidated into the home page (#offerings). */}
-        <Route path="/offerings">
-          <Redirect to="/#offerings" />
-        </Route>
+        <Route path="/" component={App} />
         <Route path="/about" component={About} />
         {/* Backcompat: previous /built-by URL still resolves to the About page. */}
         <Route path="/built-by" component={About} />
-        <Route path="/products/ai-voice-agents" component={App} />
-        <Route path="/products/websites" component={Websites} />
-        <Route path="/products/gtm-ops" component={GtmOps} />
-        <Route path="/products/gtm_ops" component={GtmOps} />
         <Route path="/terms" component={TermsOfService} />
         <Route path="/privacy" component={PrivacyPolicy} />
-        <Route path="/pricing" component={Pricing} />
-        <Route path="/pilot" component={Pilot} />
+        {/* TEAROUT redirects: every retired commercial route folds into
+            the single landing page. Stage-3 mirrors these in _redirects. */}
+        <Route path="/offerings">
+          <Redirect to="/#offerings" />
+        </Route>
+        <Route path="/pricing">
+          <Redirect to="/#offerings" />
+        </Route>
+        <Route path="/pilot">
+          <Redirect to="/" />
+        </Route>
+        <Route path="/products/:rest*">
+          <Redirect to="/" />
+        </Route>
         <Route component={NotFound} />
       </Switch>
-      {/* Single mount point for the Sarah widget so every route shows
-          it. App.tsx no longer renders its own <elevenlabs-convai>. */}
+      {/* Single mount point for the Sarah widget so every route shows it. */}
       <GlobalSarahWidget />
     </>
   );

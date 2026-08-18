@@ -28,8 +28,8 @@ export default function SiteHeader({
   const [deployOpen, setDeployOpen] = useState(false);
   const deployCta =
     homeAbVariant === 'value-first'
-      ? 'Build my call flow'
-      : 'Get call coverage';
+      ? 'Build my front door'
+      : 'Get the AI front end';
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -163,31 +163,6 @@ export default function SiteHeader({
               >
                 Offerings
               </a>
-              <Link
-                href="/products/ai-voice-agents"
-                onClick={() => {
-                  setMobileOpen(false);
-                }}
-              >
-                AI Voice Agents
-              </Link>
-              <Link
-                href="/products/websites"
-                onClick={() => {
-                  setMobileOpen(false);
-                }}
-              >
-                Websites
-              </Link>
-              <Link
-                href="/products/gtm-ops"
-                onClick={() => {
-                  setMobileOpen(false);
-                }}
-                className="mono-font"
-              >
-                gtm_ops
-              </Link>
               {showMarketingActions && (
                 <button
                   type="button"

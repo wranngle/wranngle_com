@@ -18,22 +18,13 @@ type LeadInput = {
   email: string;
   package: string;
   agentName?: string;
-  addWebChatAgent?: boolean;
   status?: string;
   notes?: string;
   estimatedProposalsPerMonth?: string;
 };
 
-const SAAS_PACKAGES = new Set(['gtm-ops-trial', 'gtm-ops-plus', 'gtm-ops-pro']);
-const VALID_PACKAGES = new Set([
-  'basic',
-  'premium',
-  'landing-page',
-  'business-site',
-  'gtm-ops-trial',
-  'gtm-ops-plus',
-  'gtm-ops-pro',
-]);
+const SAAS_PACKAGES = new Set(['gtm-ops-pro']);
+const VALID_PACKAGES = new Set(['basic', 'premium', 'gtm-ops-pro']);
 const FULL_INTAKE_REQUIRED_FIELDS = [
   'businessName',
   'industry',
@@ -121,7 +112,6 @@ function sanitizeLeadInput(
     email: sanitizeString(body.email as string, 254), // RFC 5321 max email length
     package: body.package as string,
     agentName: sanitizeOptionalString(body.agentName, 50),
-    addWebChatAgent: body.addWebChatAgent === true ? true : undefined,
     status: (body.status as string) || 'pending',
     notes: sanitizeOptionalString(body.notes, 1000),
     estimatedProposalsPerMonth: sanitizeOptionalString(

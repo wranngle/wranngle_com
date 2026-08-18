@@ -3,19 +3,7 @@ import {mkdir, readFile, writeFile} from 'node:fs/promises';
 import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
 
-const spaHtmlRoutes = [
-  'about',
-  'built-by',
-  'offerings',
-  'pilot',
-  'pricing',
-  'privacy',
-  'products/ai-voice-agents',
-  'products/gtm-ops',
-  'products/gtm_ops',
-  'products/websites',
-  'terms',
-];
+const spaHtmlRoutes = ['about', 'built-by', 'privacy', 'terms'];
 
 const canonicalOrigin = 'https://wranngle.com';
 
@@ -35,59 +23,17 @@ const routeMeta: Record<
     description:
       'Why Wranngle exists, the operating principles behind the practice, and the public repos that show how the work actually gets done.',
   },
-  offerings: {
-    canonicalPath: '/',
-    title: 'AI Call Coverage for Busy Teams - Wranngle Systems',
-    description:
-      'Wranngle Systems builds AI call coverage for busy teams: call answering, qualification, scheduling, and clean handoffs.',
-  },
-  pricing: {
-    canonicalPath: '/pricing',
-    title: 'Pricing - Wranngle Systems',
-    description:
-      'Core Agent and Elite Agent pricing for AI call coverage, plus custom programs for multi-location teams.',
-  },
-  pilot: {
-    canonicalPath: '/pilot',
-    title: 'Pilot Agreement - Wranngle Systems',
-    description:
-      '30-day click-through pilot agreement for the Wranngle Systems voice agent + gtm_ops bundle. Flat $1,000, refund on miss.',
-  },
   privacy: {
     canonicalPath: '/privacy',
     title: 'Privacy Policy - Wranngle Systems',
     description:
-      'How Wranngle Systems collects, uses, and safeguards your data. GDPR- and CCPA-aligned; recordings encrypted in transit and at rest.',
-  },
-  'products/ai-voice-agents': {
-    canonicalPath: '/',
-    title: 'AI Call Coverage for Busy Teams - Wranngle Systems',
-    description:
-      'Answer, qualify, schedule, and hand off calls when your team is busy, closed, or already helping someone else.',
-  },
-  'products/gtm-ops': {
-    canonicalPath: '/products/gtm-ops',
-    title: 'gtm_ops - Lead in, branded proposal out - Wranngle',
-    description:
-      'gtm_ops turns inbound leads into branded PDF proposals. Enrichment, run logs, live demo with synthetic data. No signup.',
-  },
-  'products/gtm_ops': {
-    canonicalPath: '/products/gtm-ops',
-    title: 'gtm_ops - Lead in, branded proposal out - Wranngle',
-    description:
-      'gtm_ops turns inbound leads into branded PDF proposals. Enrichment, run logs, live demo with synthetic data. No signup.',
-  },
-  'products/websites': {
-    canonicalPath: '/products/websites',
-    title: 'Websites that capture leads - Wranngle Systems',
-    description:
-      'Landing pages and business websites built with fast performance, lead capture, SEO foundations, and owned source code.',
+      'How Wranngle Systems collects, uses, and safeguards your data. GDPR- and CCPA-aligned; conversation records encrypted in transit and at rest.',
   },
   terms: {
     canonicalPath: '/terms',
     title: 'Terms of Service - Wranngle Systems',
     description:
-      'Terms of Service for the Wranngle Systems platform - voice agents, websites, and the gtm_ops SaaS.',
+      'Terms of Service for the Wranngle Systems platform - the unified AI front end and the gtm_ops Platform tier.',
   },
 };
 
