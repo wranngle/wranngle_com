@@ -52,12 +52,7 @@ export function OfferingsMegaMenu({isDark}: OfferingsMegaMenuProps) {
         <div className="grid grid-cols-3 gap-0">
           {OFFERING_CATEGORIES.map((cat, catIndex) => {
             const isLast = catIndex === OFFERING_CATEGORIES.length - 1;
-            const headerHref =
-              cat.id === 'gtm_ops'
-                ? '/products/gtm-ops'
-                : cat.id === 'websites'
-                  ? '/products/websites'
-                  : '/products/ai-voice-agents';
+            const headerHref = '/#offerings';
 
             return (
               <div
@@ -184,24 +179,6 @@ export function AboutMegaMenu({isDark, onTalkToSarah}: AboutMegaMenuProps) {
                 className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
               >
                 About Wranngle
-              </Link>
-              <Link
-                href="/products/ai-voice-agents"
-                className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
-              >
-                AI Voice Agents
-              </Link>
-              <Link
-                href="/products/websites"
-                className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold"
-              >
-                Websites
-              </Link>
-              <Link
-                href="/products/gtm-ops"
-                className="block px-3 py-2 rounded-md border-l-2 border-transparent hover:border-[var(--s500)] hover:bg-[var(--s500)]/10 transition-colors text-sm font-semibold mono-font"
-              >
-                gtm_ops
               </Link>
               <a
                 href="/#faq"

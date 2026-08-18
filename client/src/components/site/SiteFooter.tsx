@@ -40,7 +40,7 @@ export default function SiteFooter({isDark, showCta = true}: SiteFooterProps) {
                 READY WHEN YOU ARE
               </div>
               <h2 className="brand-font text-3xl md:text-4xl font-bold leading-tight">
-                Stop letting good calls go to voicemail.
+                One front door for every customer conversation.
               </h2>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -73,15 +73,6 @@ export default function SiteFooter({isDark, showCta = true}: SiteFooterProps) {
             <a href="/#talk-to-sarah" className={linkBase}>
               Talk to Sarah
             </a>
-            <Link href="/products/ai-voice-agents" className={linkBase}>
-              AI Voice Agents
-            </Link>
-            <Link href="/products/websites" className={linkBase}>
-              Websites
-            </Link>
-            <Link href="/products/gtm-ops" className={linkBase}>
-              gtm_ops
-            </Link>
             {/* Wrap so flex doesn't stretch the bare <img>; mt-auto pushes
                 this block to the column bottom; the image keeps its natural
                 aspect ratio inside max-w-[136px]. */}
@@ -101,15 +92,9 @@ export default function SiteFooter({isDark, showCta = true}: SiteFooterProps) {
           {/* Offerings */}
           <div>
             <div className={colHeading}>Offerings</div>
-            <Link href="/products/ai-voice-agents" className={linkBase}>
-              AI Voice Agents
-            </Link>
-            <Link href="/products/websites" className={linkBase}>
-              Websites
-            </Link>
-            <Link href="/products/gtm-ops" className={`${linkBase} mono-font`}>
-              gtm_ops
-            </Link>
+            <a href="/#offerings" className={linkBase}>
+              All tiers
+            </a>
             {offeringItems.map((item) => (
               <a
                 key={item.id}
@@ -187,7 +172,7 @@ export default function SiteFooter({isDark, showCta = true}: SiteFooterProps) {
         >
           <div>© 2026 Wranngle Systems LLC</div>
           <div>
-            AI voice agents and lead automation for busy teams · Stay
+            AI front-end dispatch for sales and customer service · Stay
             Wrannglin&apos;
           </div>
         </div>

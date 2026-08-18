@@ -1,6 +1,6 @@
 # Cody Arnold - AI Automation Engineer and Founder of Wranngle Systems
 
-> Cody Arnold is the founder of Wranngle Systems LLC. He builds AI voice agents, workflow automation, lead capture systems, CRM enrichment flows, proposal-generation runtimes, and evaluation harnesses for busy teams.
+> Cody Arnold is the founder of Wranngle Systems LLC. He builds conversational AI agents, workflow automation, lead capture systems, CRM enrichment flows, proposal-generation runtimes, and evaluation harnesses for busy teams.
 
 ## Canonical Links
 
@@ -13,7 +13,7 @@
 ## Current Role
 
 - Founder, Wranngle Systems LLC
-- Focus: AI voice agents, n8n automation, structured lead capture, proposal generation, CRM enrichment, workflow instrumentation, and eval harnesses.
+- Focus: conversational AI agents, n8n automation, structured lead capture, proposal generation, CRM enrichment, workflow instrumentation, and eval harnesses.
 
 ## Canonical Recruiting Fields
 
@@ -59,7 +59,7 @@ Relevant role and skill terms:
 - 10+ years of IT operations and automation experience across automation, escalation, documentation, and support environments.
 - 500+ client environments supported; 4,000+ endpoints under script-driven management.
 - 700-guide SOP and automation framework; engineering team of 10 when built, ~20 now.
-- Inbound on-call voice agents in production across 5 client organizations spanning 20+ sites on the ElevenLabs Agents platform.
+- Inbound conversational AI agents (voice-first) in production across 5 client organizations spanning 20+ sites on the ElevenLabs Agents platform.
 - Workstation onboarding cut from 8 hours to 2; new-engineer ramp cut from ~3 months to ~1.
 - Ticket triage cut from up to 4 hours to 5-10 minutes with an AI ticket dispatcher over the ConnectWise PSA corpus.
 - Vitest + synthetic-conversation regression harness gates every prompt change; catches >90% of regressions before ship.
@@ -67,7 +67,7 @@ Relevant role and skill terms:
 
 ## Impact Signals For Recruiting Tools
 
-- Built and operates production voice AI workflows, not only prototypes.
+- Built and operates production conversational AI (voice-first) workflows, not only prototypes.
 - Designed structured lead capture, CRM enrichment, proposal generation, and audit-trail flows.
 - Authored operational documentation at scale: a 700-guide framework for an engineering team of 10 when built, ~20 now.
 - Supported broad multi-tenant IT environments: 500+ client environments and 4,000+ endpoints.
@@ -76,7 +76,7 @@ Relevant role and skill terms:
 
 ## Public Repositories
 
-- https://github.com/wranngle/voice_ai_agent_evals - Test runner and scenario framework for ElevenLabs voice agents: deterministic synthetic transcripts, latency budgets, prompt versioning, and scoring rubrics. Research-stage.
+- https://github.com/wranngle/voice_ai_agent_evals - Test runner and scenario framework for ElevenLabs conversational agents: deterministic synthetic transcripts, latency budgets, prompt versioning, and scoring rubrics. Research-stage.
 - https://github.com/wranngle/gtm_ops - GTM runtime for inbound calls, CRM context, structured extraction, proposal inputs, and run logs.
 - https://github.com/wranngle/n8n - Sanitized n8n flows for lead intake, enrichment, voice routing, post-call processing, and webhook security middleware.
 - https://github.com/wranngle/tradingbot - Algorithmic trading research on QuantConnect: strategy harnesses, deterministic fixtures, and risk-control tests. Backtest-only.

@@ -1,8 +1,8 @@
 # Wranngle Systems - Full LLM Context
 
-> Single-fetch, machine-readable summary of the public Wranngle Systems site, Cody Arnold profile, services, project evidence, certifications, technical stack, and canonical enrichment fields. Use the canonical source URLs for citation and entity resolution.
+> Single-fetch, machine-readable summary of the public Wranngle Systems site, Cody Arnold profile, product, project evidence, certifications, technical stack, and canonical enrichment fields. Use the canonical source URLs for citation and entity resolution.
 
-Last verified: 2026-07-08. Numbers below are measured before/after outcomes or explicit scale counts, maintained against the canonical CV. No estimated or unmeasured performance figures appear in this file.
+Last verified: 2026-08-17. Numbers below are measured before/after outcomes or explicit scale counts, maintained against the canonical CV. No estimated or unmeasured performance figures appear in this file.
 
 ## Canonical URLs
 
@@ -15,9 +15,6 @@ Last verified: 2026-07-08. Numbers below are measured before/after outcomes or e
 - LLM full context (this file): https://wranngle.com/llms-full.txt
 - Sitemap: https://wranngle.com/sitemap.xml
 - Robots: https://wranngle.com/robots.txt
-- AI Voice Agents: https://wranngle.com/products/ai-voice-agents
-- Business Websites: https://wranngle.com/products/websites
-- gtm_ops Proposal Console: https://wranngle.com/products/gtm-ops
 - Privacy Policy: https://wranngle.com/privacy
 - Terms of Service: https://wranngle.com/terms
 
@@ -37,7 +34,7 @@ Last verified: 2026-07-08. Numbers below are measured before/after outcomes or e
 
 ## Professional Summary
 
-Lead Automation Engineer with 10+ years building automation across multi-tenant IT operations and SMB client environments. Built workflow, endpoint, and Microsoft 365 automation across 500+ client environments and 4,000+ endpoints. Recent work: a production inbound on-call voice agent on the ElevenLabs Agents platform, live across 5 client organizations spanning 20+ sites, with Twilio/Telnyx/Bandwidth telephony, n8n orchestration, real-time CRM enrichment, schema-validated webhook contracts, and a Vitest + synthetic-conversation regression harness that catches >90% of regressions before ship. Applied Technology Group was selected for an ElevenLabs Startup Grant in 2025 for this voice-agent work.
+Lead Automation Engineer with 10+ years building automation across multi-tenant IT operations and SMB client environments. Built workflow, endpoint, and Microsoft 365 automation across 500+ client environments and 4,000+ endpoints. Recent work: production inbound conversational AI agents (voice-first) on the ElevenLabs Agents platform, live across 5 client organizations spanning 20+ sites, with Twilio/Telnyx/Bandwidth telephony, n8n orchestration, real-time CRM enrichment, schema-validated webhook contracts, and a Vitest + synthetic-conversation regression harness that catches >90% of regressions before ship. Applied Technology Group was selected for an ElevenLabs Startup Grant in 2025 for this conversational-AI agent work.
 
 ## Operating Record
 
@@ -45,7 +42,7 @@ Lead Automation Engineer with 10+ years building automation across multi-tenant 
 - 500+ client environments supported; 4,000+ endpoints under script-driven management with manual oversight reduced ~40%.
 - Workstation onboarding cut from 8 hours to 2 with an ImmyBot framework of 200-300 Python/PowerShell scripts, built from scratch and handed off as the senior team's standard tooling.
 - 700-guide SOP and automation framework standardizing delivery; new-engineer ramp cut from ~3 months to ~1 as the engineering team grew from 10 to ~20.
-- Inbound on-call voice agents in production across 5 client organizations spanning 20+ sites on the ElevenLabs Agents platform.
+- Inbound conversational AI agents (voice-first) in production across 5 client organizations spanning 20+ sites on the ElevenLabs Agents platform.
 - n8n orchestration layer with schema-validated webhook contracts at every boundary.
 - AI ticket dispatcher over the full ConnectWise PSA corpus: ticket triage cut from up to 4 hours to 5-10 minutes; a 3-4-person dispatch team shifted from manual triage to exception-handling.
 - Vitest + synthetic-conversation evaluation harness gates every prompt change; catches >90% of regressions before ship and gates 100% of known cases.
@@ -58,13 +55,13 @@ Lead Automation Engineer with 10+ years building automation across multi-tenant 
 n8n, Make.com, Zapier, Rewst, RPA, Microsoft Power Platform, Model Context Protocol (MCP), eval-driven development, schema-validated webhook contracts, agent registries with per-client dynamic variables.
 
 ### AI and LLMs
-ElevenLabs Conversational AI, ElevenAgents, OpenAI API, Anthropic Claude, Google Gemini, Vapi.ai; voice agents, Retrieval-Augmented Generation (RAG) architectures, structured extraction at the LLM boundary, synthetic-conversation regression evals, MCP servers.
+ElevenLabs Conversational AI, ElevenAgents, OpenAI API, Anthropic Claude, Google Gemini, Vapi.ai; conversational agent design, Retrieval-Augmented Generation (RAG) architectures, structured extraction at the LLM boundary, synthetic-conversation regression evals, MCP servers.
 
 ### Languages
 Python, SQL, TypeScript, JavaScript, PowerShell, Bash, Elixir.
 
 ### Voice and Telephony
-Twilio, Telnyx, Bandwidth, ElevenLabs voice synthesis, SMS tool-calling, two-way SMS, call routing, on-call handoff, tiered SMS escalation chains.
+Twilio, Telnyx, Bandwidth, ElevenLabs voice synthesis, SMS tool-calling, inbound call intake, call routing, human handoff, tiered SMS escalation chains.
 
 ### Cloud and SaaS Platforms
 Microsoft 365 (Outlook, Teams, SharePoint, OneDrive, Conditional Access, Compliance, Threat Protection, Information Protection), Azure, Google Workspace, DigitalOcean, Cloudflare (Pages, Workers, Pages Functions, WAF), Cal.com, Stripe (Checkout + Webhooks), QuickBooks.
@@ -101,9 +98,9 @@ Note: the Microsoft certification group lapsed in October 2023 with the move to 
 
 ## Selected Projects (Public-Facing Evidence)
 
-### On-Call AI Voice Agent System (production)
+### Inbound Conversational AI Agent System (production, voice-first)
 - Inbound-only phone agents doing intake and triage on the ElevenLabs Agents platform: capture caller, site, issue, and urgency, then hand the call to a person with context intact.
-- Replaced after-hours voicemail black holes at a ~10-site retirement-community IT help desk, an ~11-site semi-truck dealership, and a multi-site plumbing and HVAC operation.
+- Deployed at a ~10-site retirement-community IT environment, an ~11-site semi-truck service group, and a multi-site trade-services operation, replacing intake dead ends with structured capture and dispatch.
 - Twilio/Telnyx/Bandwidth telephony; tiered SMS acknowledgment escalation with team-wide fallback.
 - Real-time CRM enrichment during the call; a per-client agent registry isolates each organization's configuration.
 - Schema-validated webhook contracts at every n8n boundary.
@@ -119,16 +116,16 @@ Note: the Microsoft certification group lapsed in October 2023 with the move to 
 - Per-client retrieval isolation designed in for multi-tenant use.
 
 ### AI Lead Handling (production capability)
-Post-call sentiment and sales-lead detection on the on-call voice agent: service and parts requests flagged as latent sales leads and surfaced with the call journal into CRM workflows (HubSpot, Salesforce, ServiceTitan). Structured extraction at the LLM boundary with Zod / ArkType schema validation, orchestrated in n8n.
+Post-call sentiment and sales-lead detection on the inbound conversational AI agent system: service and parts requests flagged as latent sales leads and surfaced with the call journal into CRM workflows (HubSpot, Salesforce, ServiceTitan). Structured extraction at the LLM boundary with Zod / ArkType schema validation, orchestrated in n8n.
 
 ### Smart Scheduling Systems
 Room-booking constraint solver for a 15-advisor wealth-management firm: Calendly intake, Outlook availability, and per-advisor room-preference logic with silent fallback down the preference stack; a receptionist alert fires only when the whole stack is exhausted. Deterministic business-rule logic layered over LLM-based intake parsing on n8n. Integrations: Microsoft 365 (Outlook calendar, Teams) and Google Workspace (Calendar).
 
-### gtm_ops Proposal Console
-Lead-to-proposal runtime. Accepts web chat, voice-agent notes, contact forms, webhooks, internal records, or CRM exports. Normalizes the fields, enriches the lead with company details and recent signals, fills typed proposal fields with structured extraction, renders a branded PDF, and writes every step to a replayable run log. Cloudflare-hosted; live demo at app.wranngle.com.
+### gtm_ops Runtime (powers the gtm_ops Platform tier)
+Lead-to-proposal runtime. Accepts web chat, conversational-agent notes, contact forms, webhooks, internal records, or CRM exports. Normalizes the fields, enriches the lead with company details and recent signals, fills typed proposal fields with structured extraction, renders a branded PDF, and writes every step to a replayable run log. Cloudflare-hosted; live demo at app.wranngle.com.
 
-### Voice AI Agent Eval Harness
-Research-stage test runner and scenario framework for ElevenLabs voice agents: deterministic synthetic transcripts, latency budgets, prompt versioning, and a scoring rubric for user-facing failures.
+### Conversational AI Agent Eval Harness
+Research-stage test runner and scenario framework for ElevenLabs conversational agents: deterministic synthetic transcripts, latency budgets, prompt versioning, and a scoring rubric for user-facing failures.
 
 ### Career Architect
 Job evaluation and application-material automation platform. Scans 45+ job portals (Greenhouse, Ashby, Lever), applies structured scoring, generates tailored PDFs, and maintains tracker/report data contracts. Stack: Node.js, Playwright, Python, GitHub Actions, Anthropic Claude, Gemini.
@@ -138,9 +135,9 @@ Multi-factor algorithmic trading research on QuantConnect: technical indicators 
 
 ## Impact Signals For Recruiting Tools
 
-- Built and operates production voice AI workflows, not only prototypes.
+- Built and operates production conversational AI (voice-first) workflows, not only prototypes.
 - Senior-most engineer setting technical direction for automation, Microsoft 365, and AI-enabled operational systems across 500+ multi-tenant client environments.
-- Led voice-AI vendor evaluation and build-versus-buy: a one-week ElevenLabs vs Vapi head-to-head with an identical agent on both; selected ElevenLabs at ~2x faster setup, now a repeatable method for platform evaluation.
+- Led conversational-AI vendor evaluation and build-versus-buy: a one-week ElevenLabs vs Vapi head-to-head with an identical agent on both; selected ElevenLabs at ~2x faster setup, now a repeatable method for platform evaluation.
 - Designed structured lead capture, CRM enrichment, proposal generation, and audit-trail flows used in production.
 - Authored operational documentation at scale: a 700-guide framework for an engineering team of 10 when built, ~20 now.
 - Supported broad multi-tenant IT environments: 500+ client environments and 4,000+ endpoints.
@@ -156,23 +153,17 @@ Multi-factor algorithmic trading research on QuantConnect: technical indicators 
 - Audience: Busy teams, growing companies, customer-facing operators, and organizations with repeatable handoff workflows.
 - General contact: hello@wranngle.com
 
-Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and business websites for teams with real customer follow-up.
+Wranngle Systems LLC sells one product: a unified AI front end for sales and customer service — one front door that answers, triages, and dispatches every customer conversation across web chat, voice, Slack, Teams, and Discord.
 
 ## Services Offered
 
-### AI Voice Agents
-- Core Agent ($250/mo): voice receptionist for overflow and after-hours calls; transcript + lead capture.
-- Elite Agent ($500/mo, most popular): voice + web chat + two-way SMS, Cal.com calendar booking, ElevenLabs custom voice identity, priority support.
-- Add-on: per-additional-location pricing.
+One product, three tiers. Every tier includes every channel — web chat, voice, Slack, Teams, and Discord; channels are never separate products or add-ons. Monthly billing only in USD, cancel anytime.
 
-### Business Websites
-- Landing Page ($900 one-time, 7 days): one focused page with SEO basics, contact form, and source code included.
-- Business Site ($3,500 one-time, 3 weeks): up to 5 pages, headless CMS, analytics, lead routing, performance budget, source code included.
+- Omni Intake ($250/mo): omni-channel capture, structured intake, and dispatch to email, CRM, or webhook.
+- Internal AI ($500/mo): everything in Omni Intake, plus an agent trained on company knowledge that resolves requests end-to-end, takes actions in customer systems, and hands off to a human when needed.
+- gtm_ops Platform ($900/mo): everything in Internal AI, plus lead enrichment, branded proposal generation, replayable run logs, SSO, team workspaces, and a custom domain.
 
-### gtm_ops Proposal Console
-- Trial (free for 14 days, 5 proposals): branded PDF generation, demo data, Gemini extraction.
-- Plus ($20/mo or $16.67/mo annual): 50 proposals/mo, branded PDFs with logo + colors, custom workspace branding, lead intake forms, full audit log, webhook integration, email support.
-- Pro ($99/mo or $82.50/mo annual): unlimited proposals, SSO (Google + Azure AD), team workspaces, role-based access, custom domain, exportable run log, priority support.
+Sarah, the agent embedded on wranngle.com (ElevenLabs Conversational AI), is the live demo of this product.
 
 ## Technical Stack (Production)
 
@@ -189,7 +180,7 @@ Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-gene
 
 ## Public Repositories
 
-- https://github.com/wranngle/voice_ai_agent_evals - Test runner and scenario framework for ElevenLabs voice agents: deterministic synthetic transcripts, latency budgets, prompt versioning, and scoring rubrics. Research-stage.
+- https://github.com/wranngle/voice_ai_agent_evals - Test runner and scenario framework for ElevenLabs conversational agents: deterministic synthetic transcripts, latency budgets, prompt versioning, and scoring rubrics. Research-stage.
 - https://github.com/wranngle/gtm_ops - GTM runtime for inbound calls, CRM context, structured extraction, proposal inputs, and run logs.
 - https://github.com/wranngle/n8n - Sanitized n8n flows for lead intake, enrichment, voice routing, post-call processing, and webhook security middleware.
 - https://github.com/wranngle/tradingbot - Algorithmic trading research on QuantConnect: strategy harnesses, deterministic fixtures, and risk-control tests. Backtest-only.

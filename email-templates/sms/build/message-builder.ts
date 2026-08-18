@@ -8,7 +8,7 @@
  *   const builder = new MessageBuilder();
  *   const message = await builder.build('welcome', {
  *     channel: 'sms',
- *     variables: { FIRST_NAME: 'John', PACKAGE: 'Elite Agent' }
+ *     variables: { FIRST_NAME: 'John', PACKAGE: 'Internal AI' }
  *   });
  */
 
@@ -107,10 +107,10 @@ export class MessageBuilder {
         name: 'welcome',
         description: 'New customer welcome message',
         sms: {
-          body: "Hi {{FIRST_NAME}}! Your {{PACKAGE}} agent is LIVE. We'll call within 24h to configure it. Questions? support@wranngle.com",
+          body: "Hi {{FIRST_NAME}}! Your {{PACKAGE}} deployment is confirmed. We'll reach out within one business day to schedule kickoff. Questions? support@wranngle.com",
         },
         rcs: {
-          body: "Hi {{FIRST_NAME}}!\n\nYour {{PACKAGE}} AI agent is now LIVE. Our team will call within 24 hours to customize your knowledge base.",
+          body: "Hi {{FIRST_NAME}}!\n\nYour {{PACKAGE}} deployment is confirmed. We'll reach out within one business day to schedule kickoff. Most deployments are live within 1-2 weeks.",
           suggestions: [
             { type: 'url', label: 'Dashboard', value: '{{DASHBOARD_URL}}' },
             { type: 'phone', label: 'Call Support', value: '+18005551234' },
@@ -211,10 +211,10 @@ export class MessageBuilder {
         name: 'sales-cold-outreach',
         description: 'Initial prospecting message',
         sms: {
-          body: "Hi {{FIRST_NAME}}, {{COMPANY}} missing calls? Wranngle AI answers 24/7. Free demo: {{SHORT_URL}} -{{REP_NAME}}",
+          body: "Hi {{FIRST_NAME}}, leads going unanswered at {{COMPANY}}? Wranngle AI answers every chat, call and DM. Demo: {{SHORT_URL}} -{{REP_NAME}}",
         },
         rcs: {
-          body: "Hi {{FIRST_NAME}},\n\nIs {{COMPANY}} missing after-hours calls? Our AI agents answer 24/7, qualify leads, and book appointments.\n\nLet's chat about how we can help.",
+          body: "Hi {{FIRST_NAME}},\n\nIs {{COMPANY}} leaving conversations unanswered? Wranngle is one AI front end for sales and support—every conversation answered, triaged, and dispatched.\n\nLet's chat about how we can help.",
           suggestions: [
             { type: 'url', label: 'Schedule Demo', value: '{{CALENDAR_URL}}' },
             { type: 'text', label: 'Not Interested', value: 'STOP' },
@@ -298,7 +298,7 @@ export class MessageBuilder {
           body: "Hi {{FIRST_NAME}}, we've added {{NEW_FEATURE_1}} + {{NEW_FEATURE_2}} since we last talked. Reconnect? {{SHORT_URL}}",
         },
         rcs: {
-          body: "Let's Reconnect!\n\nHi {{FIRST_NAME}}, a lot has changed at Wranngle:\n\n✓ {{NEW_FEATURE_1}}\n✓ {{NEW_FEATURE_2}}\n\nSpecial offer: {{SPECIAL_OFFER}}",
+          body: "Let's Reconnect!\n\nHi {{FIRST_NAME}}, a lot has changed at Wranngle:\n\n✓ {{NEW_FEATURE_1}}\n✓ {{NEW_FEATURE_2}}\n\nSpecial offer: {{SPECIAL_OFFER}} — ends {{OFFER_EXPIRY}}",
           suggestions: [
             { type: 'url', label: 'Schedule Call', value: '{{CALENDAR_URL}}' },
             { type: 'text', label: 'Unsubscribe', value: 'STOP' },
@@ -308,7 +308,7 @@ export class MessageBuilder {
             type: 'image',
           },
         },
-        variables: ['FIRST_NAME', 'NEW_FEATURE_1', 'NEW_FEATURE_2', 'SHORT_URL', 'SPECIAL_OFFER', 'CALENDAR_URL'],
+        variables: ['FIRST_NAME', 'NEW_FEATURE_1', 'NEW_FEATURE_2', 'SHORT_URL', 'SPECIAL_OFFER', 'OFFER_EXPIRY', 'CALENDAR_URL'],
         emailSibling: 'sales-winback',
         category: 'sales',
       },
@@ -553,7 +553,7 @@ export class MessageBuilder {
     const samples: Record<string, Record<string, string>> = {
       welcome: {
         ...common,
-        PACKAGE: 'Elite Agent',
+        PACKAGE: 'Internal AI',
       },
       'invoice-receipt': {
         ...common,
@@ -577,12 +577,12 @@ export class MessageBuilder {
       },
       'lead-intake': {
         ...common,
-        BUSINESS_NAME: 'Acme Plumbing',
-        INDUSTRY: 'HVAC',
+        BUSINESS_NAME: 'Acme Services Co',
+        INDUSTRY: 'Customer Operations',
         OWNER_NAME: 'John Smith',
         PHONE: '(555) 123-4567',
         STATUS: 'PENDING',
-        PACKAGE: 'Premium',
+        PACKAGE: 'Omni Intake',
       },
       'sales-cold-outreach': {
         ...common,
@@ -598,7 +598,7 @@ export class MessageBuilder {
       },
       'sales-proposal-sent': {
         ...common,
-        PACKAGE: 'Elite Agent',
+        PACKAGE: 'Internal AI',
         PRICE: '$500',
         VALID_UNTIL: 'February 1, 2026',
         PROPOSAL_URL: 'https://wranngle.com/proposals/PROP-001',
@@ -613,9 +613,10 @@ export class MessageBuilder {
       },
       'sales-winback': {
         ...common,
-        NEW_FEATURE_1: 'SMS Agents',
-        NEW_FEATURE_2: 'CRM Integrations',
+        NEW_FEATURE_1: 'Internal AI',
+        NEW_FEATURE_2: 'gtm_ops Platform',
         SPECIAL_OFFER: '20% off first month',
+        OFFER_EXPIRY: 'September 30, 2026',
         CALENDAR_URL: 'https://cal.com/wranngle/reconnect',
       },
     };

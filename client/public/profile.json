@@ -77,7 +77,7 @@
         "Twilio",
         "Telnyx",
         "Bandwidth",
-        "Two-way SMS",
+        "Inbound call intake",
         "Call routing",
         "Latency budgets",
         "Observability dashboards",
@@ -87,7 +87,6 @@
         "SQL",
         "PowerShell",
         "Bash",
-        "Rust",
         "Elixir",
         "React",
         "Vite",
@@ -296,7 +295,7 @@
           "encodingFormat": "text/markdown"
         }
       ],
-      "description": "Cody Arnold is the founder of Wranngle Systems LLC and Lead Automation Engineer with 10+ years of experience building automation across multi-tenant IT environments. He builds AI voice agents on the ElevenLabs Agents platform, workflow automation on n8n, lead capture and CRM enrichment systems, proposal-generation runtimes, and evaluation harnesses for busy teams. Recent production work: an inbound on-call voice agent live across 5 client organizations spanning 20+ sites, with schema-validated webhook contracts and a Vitest + synthetic-conversation regression harness gating every prompt change."
+      "description": "Cody Arnold is the founder of Wranngle Systems LLC and Lead Automation Engineer with 10+ years of experience building automation across multi-tenant IT environments. He builds conversational AI agents on the ElevenLabs Agents platform, workflow automation on n8n, lead capture and CRM enrichment systems, proposal-generation runtimes, and evaluation harnesses for busy teams. Recent production work: inbound conversational AI agents (voice-first) live across 5 client organizations spanning 20+ sites, with schema-validated webhook contracts and a Vitest + synthetic-conversation regression harness gating every prompt change."
     },
     {
       "@type": "Organization",
@@ -314,7 +313,8 @@
         "https://www.linkedin.com/in/codyarnold96"
       ],
       "knowsAbout": [
-        "AI voice agents",
+        "Unified AI front ends for sales and customer service",
+        "Omni-channel intake (web chat, voice, Slack, Teams, Discord)",
         "ElevenLabs Conversational AI",
         "ElevenAgents",
         "n8n workflow automation",
@@ -323,65 +323,56 @@
         "Proposal generation",
         "Cloudflare Pages",
         "Cloudflare Workers",
-        "Business websites with lead capture",
         "Run logs and audit trails",
         "Synthetic-conversation evaluation harnesses"
       ],
       "makesOffer": [
         {
           "@type": "Offer",
-          "name": "Core Agent",
-          "category": "AI Voice Agent",
+          "name": "Omni Intake",
+          "category": "Unified AI front end for sales and customer service",
+          "description": "Base tier: omni-channel capture across web chat, voice, Slack, Teams, and Discord; structured intake; dispatch to email, CRM, or webhook. Monthly billing, cancel anytime.",
           "price": "250",
           "priceCurrency": "USD",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "250",
+            "priceCurrency": "USD",
+            "billingDuration": 1,
+            "unitText": "MONTH"
+          },
           "url": "https://wranngle.com/#offerings-basic"
         },
         {
           "@type": "Offer",
-          "name": "Elite Agent",
-          "category": "AI Voice Agent",
+          "name": "Internal AI",
+          "category": "Unified AI front end for sales and customer service",
+          "description": "Upgrade tier: everything in Omni Intake, plus an agent trained on company knowledge that resolves requests end-to-end, takes actions in customer systems, and hands off to a human when needed. Monthly billing, cancel anytime.",
           "price": "500",
           "priceCurrency": "USD",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "500",
+            "priceCurrency": "USD",
+            "billingDuration": 1,
+            "unitText": "MONTH"
+          },
           "url": "https://wranngle.com/#offerings-premium"
         },
         {
           "@type": "Offer",
-          "name": "Landing Page",
-          "category": "Business Website",
+          "name": "gtm_ops Platform",
+          "category": "Unified AI front end for sales and customer service",
+          "description": "Max tier: everything in Internal AI, plus lead enrichment, branded proposal generation, replayable run logs, SSO, team workspaces, and a custom domain. Monthly billing, cancel anytime.",
           "price": "900",
           "priceCurrency": "USD",
-          "url": "https://wranngle.com/#offerings-landing-page"
-        },
-        {
-          "@type": "Offer",
-          "name": "Business Site",
-          "category": "Business Website",
-          "price": "3500",
-          "priceCurrency": "USD",
-          "url": "https://wranngle.com/#offerings-business-site"
-        },
-        {
-          "@type": "Offer",
-          "name": "gtm_ops Trial",
-          "category": "Proposal Console SaaS",
-          "price": "0",
-          "priceCurrency": "USD",
-          "url": "https://wranngle.com/#offerings-gtm-ops-trial"
-        },
-        {
-          "@type": "Offer",
-          "name": "gtm_ops Plus",
-          "category": "Proposal Console SaaS",
-          "price": "20",
-          "priceCurrency": "USD",
-          "url": "https://wranngle.com/#offerings-gtm-ops-plus"
-        },
-        {
-          "@type": "Offer",
-          "name": "gtm_ops Pro",
-          "category": "Proposal Console SaaS",
-          "price": "99",
-          "priceCurrency": "USD",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "900",
+            "priceCurrency": "USD",
+            "billingDuration": 1,
+            "unitText": "MONTH"
+          },
           "url": "https://wranngle.com/#offerings-gtm-ops-pro"
         }
       ],
@@ -405,7 +396,7 @@
           "encodingFormat": "text/markdown"
         }
       ],
-      "description": "Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and business websites. Production stack includes ElevenLabs Conversational AI, Twilio/Telnyx/Bandwidth telephony, n8n orchestration with schema-validated webhook contracts, TypeScript + React + Vite on Cloudflare Pages, ArkType validation, and Vitest + synthetic-conversation regression harnesses."
+      "description": "Wranngle Systems LLC sells one product: a unified AI front end for sales and customer service — one front door that answers, triages, and dispatches every customer conversation across web chat, voice, Slack, Teams, and Discord. Production stack includes ElevenLabs Conversational AI, Twilio/Telnyx/Bandwidth telephony, n8n orchestration with schema-validated webhook contracts, TypeScript + React + Vite on Cloudflare Pages, ArkType validation, and Vitest + synthetic-conversation regression harnesses."
     }
   ]
 }

@@ -476,7 +476,7 @@ When converting email content to SMS:
 
 **Example:**
 ```
-Hi Jane! Your Elite Agent is LIVE. We'll call within 24h. Questions? support@wranngle.com
+Hi Jane! Your Internal AI deployment is confirmed. We'll reach out within one business day to schedule kickoff. Questions? support@wranngle.com
 ```
 
 ### RCS Rich Features
@@ -700,7 +700,7 @@ POST https://n8n.wranngle.com/webhook/universal-message-v1
   "template": "welcome",
   "variables": {
     "FIRST_NAME": "Cody",
-    "PACKAGE": "Elite Agent"
+    "PACKAGE": "Internal AI"
   }
 }
 ```

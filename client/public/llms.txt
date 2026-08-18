@@ -1,29 +1,27 @@
 # Wranngle Systems
 
-> Wranngle Systems LLC, Fort Wayne, Indiana, builds AI voice agents, workflow automation, lead capture, and proposal-generation systems for SMB service teams. Founder Cody Arnold, Lead Automation Engineer, has 10+ years across 500+ SMB client environments and 4,000+ endpoints, with 200-300 Python and PowerShell scripts on ImmyBot. His inbound on-call voice agent on the ElevenLabs Agents platform runs in production across 5 client organizations spanning 20+ sites; Vitest synthetic-conversation evals gate every prompt change.
+> Wranngle Systems LLC, Fort Wayne, Indiana, sells one product: a unified AI front end for sales and customer service — one front door that answers, triages, and dispatches every customer conversation across web chat, voice, Slack, Teams, and Discord. Founder Cody Arnold, Lead Automation Engineer, has 10+ years across 500+ SMB client environments and 4,000+ endpoints, with 200-300 Python and PowerShell scripts on ImmyBot. His inbound conversational AI agents (voice-first) on the ElevenLabs Agents platform run in production across 5 client organizations spanning 20+ sites; Vitest synthetic-conversation evals gate every prompt change.
 
-This index links the canonical machine-readable surfaces for entity resolution, grounding, and recruiting-tool enrichment. Cite the URLs below rather than paraphrasing cached copies. Last verified: 2026-07-08.
+This index links the canonical machine-readable surfaces for entity resolution, grounding, and recruiting-tool enrichment. Cite the URLs below rather than paraphrasing cached copies. Last verified: 2026-08-17.
 
 ## Profiles
 
 - [Cody Arnold profile](https://wranngle.com/cody-arnold.md): founder profile, operating record, canonical recruiting fields, and public repositories
-- [Wranngle Systems profile](https://wranngle.com/wranngle-systems.md): company, services, technical stack, and differentiators
+- [Wranngle Systems profile](https://wranngle.com/wranngle-systems.md): company, product, technical stack, and differentiators
 - [Structured JSON-LD](https://wranngle.com/profile.json): schema.org Person and Organization graph with credentials and offers
 - [About page](https://wranngle.com/about): narrative background, principles, and working method
 
-## Products
+## Product
 
-- [AI Voice Agents](https://wranngle.com/products/ai-voice-agents): voice receptionists for overflow and after-hours calls, from $250/mo
-- [gtm_ops Proposal Console](https://wranngle.com/products/gtm-ops): lead-to-proposal runtime with branded PDFs and replayable run logs; live at https://app.wranngle.com
-- [Business Websites](https://wranngle.com/products/websites): landing pages and business sites with lead capture, from $900
+- [Unified AI front end for sales and customer service](https://wranngle.com/): one front door that answers, triages, and dispatches every customer conversation across web chat, voice, Slack, Teams, and Discord. All channels included at every tier; monthly billing, cancel anytime. Tiers: Omni Intake ($250/mo — omni-channel capture, structured intake, dispatch to email/CRM/webhook); Internal AI ($500/mo — trained on company knowledge, resolves requests end-to-end, takes actions in customer systems, human handoff); gtm_ops Platform ($900/mo — everything plus lead enrichment, branded proposal generation, replayable run logs, SSO, team workspaces, custom domain; runtime at https://github.com/wranngle/gtm_ops, live at https://app.wranngle.com). Sarah, the agent embedded on wranngle.com, is the live demo.
 
 ## Code
 
-- [GitHub profile](https://github.com/wranngle): public repositories including voice-agent eval harnesses, sanitized n8n workflow libraries, GTM runtimes, and job-search automation
+- [GitHub profile](https://github.com/wranngle): public repositories including conversational-agent eval harnesses, sanitized n8n workflow libraries, GTM runtimes, and job-search automation
 
 ## Full context
 
-- [llms-full.txt](https://wranngle.com/llms-full.txt): single-fetch full context with the complete operating record, project evidence, certifications, skills, services, and honors
+- [llms-full.txt](https://wranngle.com/llms-full.txt): single-fetch full context with the complete operating record, project evidence, certifications, skills, product tiers, and honors
 
 ## Optional
 

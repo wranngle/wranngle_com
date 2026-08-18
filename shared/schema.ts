@@ -21,7 +21,6 @@ export const insertLeadSchema = type({
   'agentName?': 'string',
   'status?': 'string',
   'notes?': 'string',
-  'addWebChatAgent?': 'boolean',
   // SMS consent fields for multi-channel messaging
   'smsConsent?': 'boolean',
   'smsConsentTimestamp?': 'string',
@@ -39,7 +38,6 @@ export const leadSchema = type({
   'agentName?': 'string',
   'status?': 'string',
   'notes?': 'string',
-  'addWebChatAgent?': 'boolean',
   // SMS consent fields for multi-channel messaging
   'smsConsent?': 'boolean',
   'smsConsentTimestamp?': 'string',
@@ -49,7 +47,7 @@ export const leadSchema = type({
 export const welcomeEmailRequestSchema = type({
   email: 'string.email',
   name: 'string',
-  packageName: '"Core Agent" | "Elite Agent"',
+  packageName: '"Omni Intake" | "Internal AI" | "gtm_ops Platform"',
 });
 
 export type InsertUser = typeof insertUserSchema.infer;

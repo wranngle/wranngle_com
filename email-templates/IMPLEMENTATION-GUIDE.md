@@ -31,7 +31,7 @@ const builder = new EmailTemplateBuilder();
 // Build the email
 const html = await builder.build('welcome', {
   USER_NAME: 'Jane Doe',
-  PACKAGE_NAME: 'Elite Agent',
+  PACKAGE_NAME: 'Internal AI',
   DASHBOARD_URL: 'https://wranngle.com/dashboard',
 }, {
   inlineCSS: true,

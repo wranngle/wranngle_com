@@ -1,14 +1,11 @@
-# Wranngle Systems - AI Voice Agents and Workflow Automation
+# Wranngle Systems - Unified AI Front End for Sales and Customer Service
 
-> Wranngle Systems LLC builds AI voice agents, lead capture systems, proposal-generation workflows, and business websites.
+> Wranngle Systems LLC sells one product: a unified AI front end for sales and customer service — one front door that answers, triages, and dispatches every customer conversation across web chat, voice, Slack, Teams, and Discord.
 
 ## Canonical Links
 
 - Website: https://wranngle.com
 - About: https://wranngle.com/about
-- AI Voice Agents: https://wranngle.com/products/ai-voice-agents
-- gtm_ops: https://wranngle.com/products/gtm-ops
-- Websites: https://wranngle.com/products/websites
 - GitHub: https://github.com/wranngle
 - LinkedIn: https://www.linkedin.com/in/codyarnold96
 - General contact: hello@wranngle.com
@@ -20,17 +17,24 @@
 - Founder: Cody Arnold
 - Audience: Busy teams, growing companies, customer-facing operators, and organizations with repeatable handoff workflows.
 
-## Services
+## Product
 
-Wranngle Systems builds and operates:
+One product, three tiers. Every tier includes every channel — web chat, voice, Slack, Teams, and Discord; channels are never separate products or add-ons. Monthly billing only in USD, cancel anytime.
 
-- AI voice agents for after-hours call answering and lead qualification.
+- Omni Intake ($250/mo): omni-channel capture, structured intake, and dispatch to email, CRM, or webhook.
+- Internal AI ($500/mo): everything in Omni Intake, plus an agent trained on company knowledge that resolves requests end-to-end, takes actions in customer systems, and hands off to a human when needed.
+- gtm_ops Platform ($900/mo): everything in Internal AI, plus lead enrichment, branded proposal generation, replayable run logs, SSO, team workspaces, and a custom domain.
+
+Sarah, the agent embedded on https://wranngle.com (ElevenLabs Conversational AI), is the live demo of this product.
+
+Under the hood the product runs on:
+
+- Omni-channel conversation capture with structured intake and triage.
 - CRM enrichment and lead routing workflows.
-- Post-call processing and structured transcript extraction.
+- Post-conversation processing and structured transcript extraction.
 - Proposal-generation runtimes that turn inbound leads into branded PDFs.
 - Run logs, runbooks, fallback paths, and review screens.
-- Business websites with lead capture and SEO foundations.
-- Cloudflare-hosted APIs and serverless lead intake endpoints.
+- Cloudflare-hosted APIs and serverless intake endpoints.
 
 ## Technical Stack
 
@@ -49,11 +53,11 @@ The public Wranngle site and related projects use:
 
 ## Differentiators
 
-- Voice systems are designed and tested against latency budgets, handoff quality, transcript accuracy, and fallback behavior.
+- Agents are designed and tested against latency budgets, handoff quality, transcript accuracy, and fallback behavior — the same discipline on every channel.
 - Automation work is designed around existing operator workflows instead of forcing a business to reorganize around software.
 - Proposal and lead workflows preserve run logs so humans can inspect inputs, outputs, ownership, and failure paths.
 - The public repositories include eval harnesses, workflow infrastructure, and operational tooling rather than only marketing demos.
 
 ## Recruiting And Enrichment Keywords
 
-AI voice agents, voice AI, ElevenLabs conversational AI, ElevenAgents, AI automation, workflow automation, n8n, lead capture, CRM enrichment, lead automation, workflow software, proposal generation, GTM automation, TypeScript, React, Vite, Cloudflare Pages, serverless API, ArkType, eval harness, run log, runbook, IT operations.
+AI front end, conversational AI agents, omni-channel intake, web chat, voice AI, Slack, Microsoft Teams, Discord, ElevenLabs conversational AI, ElevenAgents, AI automation, workflow automation, n8n, lead capture, CRM enrichment, lead automation, workflow software, proposal generation, GTM automation, TypeScript, React, Vite, Cloudflare Pages, serverless API, ArkType, eval harness, run log, runbook, IT operations.

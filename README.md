@@ -1,12 +1,12 @@
-![The wranngle.com landing hero: the headline "Your phone rings. Every tech is on a job." beside the animated hex-tile grid, where three tiles (restaurant, dental, salon) are recorded ElevenLabs widget runs and the remaining tiles are static screenshot fill](docs/hero.webp)
+![The wranngle.com landing hero](docs/hero.webp)
 
 <div align="center">
 
-#### voice agent · lead capture · stripe checkout · llms.txt · 53 demo storefronts
+#### unified ai front end · lead capture · stripe checkout · llms.txt
 
 # Wranngle Systems
 
-> answer, triage, and book 24/7: an ElevenLabs voice agent named sarah picks up
+> one AI front door for sales and customer service: an ElevenLabs agent named sarah picks up
 
 ### [**wranngle.com**](https://wranngle.com)
 
@@ -16,19 +16,18 @@
 
 </div>
 
-- 📞 Sarah, a live ElevenLabs ConvAI voice agent on every route
+- 📞 Sarah, a live ElevenLabs ConvAI agent on every route
 - 📥 Lead capture, ArkType-validated and forwarded to n8n
 - 💳 Stripe Checkout Sessions with webhook fulfillment
 - 🤖 llms.txt and llms-full.txt for AI crawlers
-- 🏪 53 generated demo storefront landing pages
 
 One repo, one Cloudflare Pages deploy, the whole storefront. 120 vitest tests.
 
 ## Demo
 
 - **Live site:** [wranngle.com](https://wranngle.com)
-- **Voice agent demo:** [wranngle.com/#talk-to-sarah](https://wranngle.com/#talk-to-sarah): Sarah is a live ElevenLabs ConvAI agent embedded on the page; mic permission required, no signup.
-- **gtm_ops product page:** [wranngle.com/products/gtm-ops](https://wranngle.com/products/gtm-ops); the product page links to the gtm_ops console at [app.wranngle.com](https://app.wranngle.com).
+- **Live agent demo:** [wranngle.com/#talk-to-sarah](https://wranngle.com/#talk-to-sarah): Sarah is a live ElevenLabs ConvAI agent embedded on the page; mic permission required, no signup.
+- **gtm_ops Platform:** the max tier; the console lives at [app.wranngle.com](https://app.wranngle.com).
 
 ## Tech stack
 

@@ -76,7 +76,7 @@ const builder = new EmailTemplateBuilder();
 // Build welcome email
 const html = await builder.build('welcome', {
   USER_NAME: 'Jane Doe',
-  PACKAGE_NAME: 'Elite Agent',
+  PACKAGE_NAME: 'Internal AI',
   DASHBOARD_URL: 'https://wranngle.com/dashboard',
 });
 
@@ -95,14 +95,14 @@ await sendEmail({
 **Use Case:** Onboarding, first impressions
 **Variables:**
 - `USER_NAME` - Customer's name
-- `PACKAGE_NAME` - Subscription tier (Core Agent / Elite Agent)
+- `PACKAGE_NAME` - Subscription tier (Omni Intake / Internal AI / gtm_ops Platform)
 - `DASHBOARD_URL` - Link to customer dashboard
 
 **Sample:**
 ```typescript
 await builder.build('welcome', {
   USER_NAME: 'John Smith',
-  PACKAGE_NAME: 'Elite Agent',
+  PACKAGE_NAME: 'Omni Intake',
   DASHBOARD_URL: 'https://wranngle.com/dashboard',
 });
 ```
@@ -126,7 +126,7 @@ await builder.build('welcome', {
 await builder.build('invoice-receipt', {
   INVOICE_ID: 'INV-2026-001234',
   INVOICE_DATE: '2026-01-19',
-  ITEM_NAME: 'Elite Agent - Monthly',
+  ITEM_NAME: 'Internal AI - Monthly',
   TOTAL_AMOUNT: '542.50',
   PAYMENT_METHOD: 'Visa ending in 4242',
 });

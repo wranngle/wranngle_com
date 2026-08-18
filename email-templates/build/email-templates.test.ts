@@ -117,10 +117,10 @@ describe('Template Builder Core', () => {
     test('replaces multiple variables', async () => {
       const html = await builder.build('welcome', {
         USER_NAME: 'John',
-        PACKAGE_NAME: 'Elite',
+        PACKAGE_NAME: 'Internal AI',
       });
       expect(html).toContain('John');
-      expect(html).toContain('Elite');
+      expect(html).toContain('Internal AI');
     });
 
     test('handles special characters in variable values (XSS prevention)', async () => {
@@ -289,7 +289,7 @@ describe('Welcome Template', () => {
   });
 
   test('renders step indicators', () => {
-    expect(html).toContain('Setup Call Scheduled');
+    expect(html).toContain('Kickoff Scheduling');
     expect(html).toContain('Knowledge Base Training');
     expect(html).toContain('Go Live');
   });
@@ -331,7 +331,7 @@ describe('Invoice Receipt Template', () => {
   test('renders line items', () => {
     expect(html).toContain('ITEM');
     expect(html).toContain('AMT');
-    expect(html).toContain('Elite Agent');
+    expect(html).toContain('Internal AI - Monthly');
   });
 
   test('renders payment status with green (completed state)', () => {
@@ -488,7 +488,7 @@ describe('Lead Intake Template', () => {
 
   test('renders package selection', () => {
     expect(html).toContain('Package Selection');
-    expect(html).toContain('Premium');
+    expect(html).toContain('Omni Intake');
   });
 
   test('renders notes section with orange border (not gray)', () => {

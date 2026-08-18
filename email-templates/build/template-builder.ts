@@ -8,7 +8,7 @@
  *   const builder = new EmailTemplateBuilder();
  *   const html = await builder.build('welcome', {
  *     USER_NAME: 'John Doe',
- *     PACKAGE_NAME: 'Elite Agent'
+ *     PACKAGE_NAME: 'Internal AI'
  *   });
  */
 
@@ -244,8 +244,8 @@ export class EmailTemplateBuilder {
       welcome: {
         ...common,
         EMAIL_TITLE: 'Welcome to Wranngle',
-        PREHEADER_TEXT: 'Your AI agent is ready to deploy',
-        PACKAGE_NAME: 'Elite Agent',
+        PREHEADER_TEXT: 'Deployment confirmed — kickoff scheduling underway',
+        PACKAGE_NAME: 'Internal AI',
       },
       'invoice-receipt': {
         ...common,
@@ -253,8 +253,8 @@ export class EmailTemplateBuilder {
         PREHEADER_TEXT: 'Your payment has been received',
         INVOICE_ID: 'INV-2026-001234',
         INVOICE_DATE: '2026-01-19',
-        ITEM_NAME: 'Elite Agent - Monthly',
-        ITEM_DESCRIPTION: 'Triple-channel Voice + Web + SMS AI Agents',
+        ITEM_NAME: 'Internal AI - Monthly',
+        ITEM_DESCRIPTION: 'Unified AI front end for sales and customer service',
         ITEM_AMOUNT: '500.00',
         SUBTOTAL: '500.00',
         TAX_RATE: '8.5',
@@ -271,7 +271,7 @@ export class EmailTemplateBuilder {
         NOTIFICATION_TITLE: 'New Lead Captured',
         NOTIFICATION_TIMESTAMP: '2026-01-19 14:32 PST',
         NOTIFICATION_MESSAGE:
-          'Your AI agent successfully captured and qualified a new lead from an after-hours call.',
+          'Your AI agent successfully captured and qualified a new lead from an inbound conversation.',
         EVENT_TYPE: 'LEAD_CAPTURED',
         EVENT_DATA: 'Contact: John Smith | Phone: (555) 123-4567',
         EVENT_STATUS: 'QUALIFIED',
@@ -306,10 +306,10 @@ export class EmailTemplateBuilder {
         OWNER_NAME: 'John Smith',
         EMAIL: 'john@acmeservices.com',
         PHONE: '(555) 123-4567',
-        PACKAGE: 'Premium',
+        PACKAGE: 'Omni Intake',
         AGENT_NAME: 'Samantha',
         STATUS: 'PENDING',
-        NOTES: 'Interested in after-hours call handling. Currently using an answering service but looking to upgrade. Has a distributed team and recurring seasonal volume spikes.',
+        NOTES: 'Interested in one front door for sales and support. Currently triaging requests manually across chat, phone, and DMs. Has a distributed team and recurring seasonal volume spikes.',
         TIMESTAMP: '2026-01-19 14:32:15 PST',
         UNSUBSCRIBE_URL: '#',
         COMPANY_ADDRESS: 'Wranngle Systems LLC',
@@ -317,12 +317,12 @@ export class EmailTemplateBuilder {
       // Sales templates
       'sales-cold-outreach': {
         ...common,
-        EMAIL_TITLE: 'Never Miss Another Call',
-        PREHEADER_TEXT: 'AI voice agents that answer 24/7',
+        EMAIL_TITLE: 'Every Conversation Answered',
+        PREHEADER_TEXT: 'One AI front end for sales and support',
         RECIPIENT_NAME: 'John',
         COMPANY_NAME: 'Acme Services',
         INDUSTRY: 'Customer Operations',
-        PAIN_POINT: 'after-hours calls',
+        PAIN_POINT: 'leads going unanswered across chat, phone, and DMs',
         CALENDAR_URL: 'https://cal.com/wranngle/intro',
         REP_NAME: 'Alex',
         REP_EMAIL: 'alex@wranngle.com',
@@ -344,7 +344,7 @@ export class EmailTemplateBuilder {
         PREHEADER_TEXT: 'Custom proposal for your AI agent deployment',
         RECIPIENT_NAME: 'Mike',
         PROPOSAL_ID: 'PROP-2026-0042',
-        PACKAGE_NAME: 'Elite Agent',
+        PACKAGE_NAME: 'Internal AI',
         MONTHLY_PRICE: '$500',
         PROPOSAL_URL: 'https://wranngle.com/proposals/PROP-2026-0042',
         VALID_UNTIL: 'February 1, 2026',
@@ -371,9 +371,11 @@ export class EmailTemplateBuilder {
         PREHEADER_TEXT: 'A lot has changed at Wranngle',
         RECIPIENT_NAME: 'David',
         LAST_CONTACT_DATE: '6 months ago',
-        NEW_FEATURE_1: 'SMS Agents',
-        NEW_FEATURE_2: 'CRM Integrations',
+        NEW_FEATURE_1: 'Internal AI — resolves requests using your company knowledge',
+        NEW_FEATURE_2: 'gtm_ops Platform — lead enrichment and branded proposals',
+        NEW_FEATURE_3: 'Web chat, voice, Slack, Teams, and Discord at every tier',
         SPECIAL_OFFER: '20% off first month',
+        OFFER_EXPIRY: 'September 30, 2026',
         CALENDAR_URL: 'https://cal.com/wranngle/reconnect',
         REP_NAME: 'Alex',
         REP_EMAIL: 'alex@wranngle.com',

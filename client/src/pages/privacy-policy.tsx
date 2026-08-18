@@ -54,7 +54,7 @@ export default function PrivacyPolicy() {
                   &quot;us,&quot; or &quot;our&quot;) is committed to protecting
                   your privacy. This Privacy Policy explains how we collect,
                   use, disclose, and safeguard your information when you use our
-                  AI voice agent service (&quot;Service&quot;).
+                  unified AI front-end service (&quot;Service&quot;).
                 </p>
                 <p className="opacity-80">
                   By using the Service, you consent to the data practices
@@ -158,7 +158,7 @@ export default function PrivacyPolicy() {
                 <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
                   <li>
                     <strong>Provide the Service:</strong> Create and manage AI
-                    voice agents, process calls, send SMS messages
+                    agents, process conversations, send SMS messages
                   </li>
                   <li>
                     <strong>Billing and Payments:</strong> Process
@@ -265,8 +265,8 @@ export default function PrivacyPolicy() {
                 </h3>
                 <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
                   <li>
-                    <strong>ElevenLabs Conversational AI:</strong> Voice agent
-                    runtime and natural language understanding
+                    <strong>ElevenLabs Conversational AI:</strong> Agent runtime
+                    and natural language understanding
                   </li>
                   <li>
                     <strong>OpenAI / Anthropic / Google (Gemini):</strong>{' '}
@@ -554,7 +554,7 @@ export default function PrivacyPolicy() {
                   PinchGrab is our browser extension for annotating web page
                   elements and exporting that feedback for AI coding agents. Its
                   data practices are deliberately different from — and far
-                  narrower than — the voice agent Service described above.
+                  narrower than — the AI front-end Service described above.
                 </p>
                 <ul className="list-disc list-inside opacity-80 space-y-2 ml-4">
                   <li>
