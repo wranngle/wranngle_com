@@ -1,0 +1,426 @@
+[
+  {
+    "slug": "bakery",
+    "name": "Aviary Bakehouse",
+    "vertical": "Artisan bakery — Brooklyn, NY",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/bakery.jpg",
+    "thumb": "/assets/hero-tiles/bakery.thumb.jpg"
+  },
+  {
+    "slug": "barbershop",
+    "name": "Pinion & Crow Barber Co.",
+    "vertical": "Barbershop — Portland, OR",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/barbershop.jpg",
+    "thumb": "/assets/hero-tiles/barbershop.thumb.jpg"
+  },
+  {
+    "slug": "bbq-joint",
+    "name": "Hickory Hall",
+    "vertical": "Barbecue restaurant — Asheville, NC",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/bbq-joint.jpg",
+    "thumb": "/assets/hero-tiles/bbq-joint.thumb.jpg"
+  },
+  {
+    "slug": "climbing-gym",
+    "name": "North Face Climbing Co-op",
+    "vertical": "Climbing gym — Boulder, CO",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/climbing-gym.jpg",
+    "thumb": "/assets/hero-tiles/climbing-gym.thumb.jpg"
+  },
+  {
+    "slug": "cocktail-bar",
+    "name": "Lantern & Owl",
+    "vertical": "Cocktail bar — New Orleans, LA",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/cocktail-bar.jpg",
+    "thumb": "/assets/hero-tiles/cocktail-bar.thumb.jpg"
+  },
+  {
+    "slug": "coffee-roaster",
+    "name": "Stalk & Tin Coffee",
+    "vertical": "Specialty coffee roaster — Madison, WI",
+    "layout": "clinical",
+    "full": "/assets/hero-tiles/coffee-roaster.jpg",
+    "thumb": "/assets/hero-tiles/coffee-roaster.thumb.jpg"
+  },
+  {
+    "slug": "crossfit-gym",
+    "name": "Iron Bell Strength",
+    "vertical": "Strength + conditioning gym — Salt Lake City, UT",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/crossfit-gym.jpg",
+    "thumb": "/assets/hero-tiles/crossfit-gym.thumb.jpg"
+  },
+  {
+    "slug": "dermatology",
+    "name": "Field Avenue Skin Clinic",
+    "vertical": "Dermatology practice — Minneapolis, MN",
+    "layout": "clinical",
+    "full": "/assets/hero-tiles/dermatology.jpg",
+    "thumb": "/assets/hero-tiles/dermatology.thumb.jpg"
+  },
+  {
+    "slug": "electrician",
+    "name": "Holloway Electric",
+    "vertical": "Residential + light commercial electrician — Charleston, SC",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/electrician.jpg",
+    "thumb": "/assets/hero-tiles/electrician.thumb.jpg"
+  },
+  {
+    "slug": "family-law",
+    "name": "Wren & Hadley LLP",
+    "vertical": "Family law firm — Raleigh, NC",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/family-law.jpg",
+    "thumb": "/assets/hero-tiles/family-law.thumb.jpg"
+  },
+  {
+    "slug": "florist",
+    "name": "Bramble & Stem",
+    "vertical": "Florist + event design — Nashville, TN",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/florist.jpg",
+    "thumb": "/assets/hero-tiles/florist.thumb.jpg"
+  },
+  {
+    "slug": "hvac",
+    "name": "Northstar HVAC",
+    "vertical": "HVAC installer + service — Saint Paul, MN",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/hvac.jpg",
+    "thumb": "/assets/hero-tiles/hvac.thumb.jpg"
+  },
+  {
+    "slug": "nail-studio",
+    "name": "Cosmos Nail Studio",
+    "vertical": "Nail studio — Austin, TX",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/nail-studio.jpg",
+    "thumb": "/assets/hero-tiles/nail-studio.thumb.jpg"
+  },
+  {
+    "slug": "physical-therapy",
+    "name": "Cedar Bend PT",
+    "vertical": "Physical therapy — Bend, OR",
+    "layout": "clinical",
+    "full": "/assets/hero-tiles/physical-therapy.jpg",
+    "thumb": "/assets/hero-tiles/physical-therapy.thumb.jpg"
+  },
+  {
+    "slug": "plumber",
+    "name": "Crestline Plumbing",
+    "vertical": "Residential plumbing — Spokane, WA",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/plumber.jpg",
+    "thumb": "/assets/hero-tiles/plumber.thumb.jpg"
+  },
+  {
+    "slug": "ramen-bar",
+    "name": "Kōri Ramen",
+    "vertical": "Ramen bar — Seattle, WA",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/ramen-bar.jpg",
+    "thumb": "/assets/hero-tiles/ramen-bar.thumb.jpg"
+  },
+  {
+    "slug": "tattoo-parlor",
+    "name": "Iron Heron Tattoo",
+    "vertical": "Tattoo studio — Philadelphia, PA",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/tattoo-parlor.jpg",
+    "thumb": "/assets/hero-tiles/tattoo-parlor.thumb.jpg"
+  },
+  {
+    "slug": "vegan-cafe",
+    "name": "Greenhouse 14",
+    "vertical": "Vegan café — Burlington, VT",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/vegan-cafe.jpg",
+    "thumb": "/assets/hero-tiles/vegan-cafe.thumb.jpg"
+  },
+  {
+    "slug": "vet",
+    "name": "Northside Veterinary",
+    "vertical": "Veterinary clinic — Madison, WI",
+    "layout": "clinical",
+    "full": "/assets/hero-tiles/vet.jpg",
+    "thumb": "/assets/hero-tiles/vet.thumb.jpg"
+  },
+  {
+    "slug": "yoga-studio",
+    "name": "Sage & Cedar Yoga",
+    "vertical": "Yoga studio — Boise, ID",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/yoga-studio.jpg",
+    "thumb": "/assets/hero-tiles/yoga-studio.thumb.jpg"
+  },
+  {
+    "slug": "accounting-firm",
+    "name": "Lattimer & Holt CPA",
+    "vertical": "Accounting firm — Charlotte, NC",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/accounting-firm.jpg",
+    "thumb": "/assets/hero-tiles/accounting-firm.thumb.jpg"
+  },
+  {
+    "slug": "pet-grooming",
+    "name": "Bramble & Boop",
+    "vertical": "Dog & cat grooming — Denver, CO",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/pet-grooming.jpg",
+    "thumb": "/assets/hero-tiles/pet-grooming.thumb.jpg"
+  },
+  {
+    "slug": "music-school",
+    "name": "Stoneharbor Music Conservatory",
+    "vertical": "Music school — Pittsburgh, PA",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/music-school.jpg",
+    "thumb": "/assets/hero-tiles/music-school.thumb.jpg"
+  },
+  {
+    "slug": "car-detail",
+    "name": "Mirror Finish Auto Spa",
+    "vertical": "Auto detailing — Scottsdale, AZ",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/car-detail.jpg",
+    "thumb": "/assets/hero-tiles/car-detail.thumb.jpg"
+  },
+  {
+    "slug": "juice-bar",
+    "name": "Sun & Stone Juicery",
+    "vertical": "Juice bar — Santa Cruz, CA",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/juice-bar.jpg",
+    "thumb": "/assets/hero-tiles/juice-bar.thumb.jpg"
+  },
+  {
+    "slug": "bookbinder",
+    "name": "Argent Bookworks",
+    "vertical": "Bookbindery — Providence, RI",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/bookbinder.jpg",
+    "thumb": "/assets/hero-tiles/bookbinder.thumb.jpg"
+  },
+  {
+    "slug": "pottery-studio",
+    "name": "Riverstone Clay Co-op",
+    "vertical": "Pottery studio — Portland, ME",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/pottery-studio.jpg",
+    "thumb": "/assets/hero-tiles/pottery-studio.thumb.jpg"
+  },
+  {
+    "slug": "chiropractor",
+    "name": "Hilltown Spine + Wellness",
+    "vertical": "Chiropractic clinic — Burlington, VT",
+    "layout": "clinical",
+    "full": "/assets/hero-tiles/chiropractor.jpg",
+    "thumb": "/assets/hero-tiles/chiropractor.thumb.jpg"
+  },
+  {
+    "slug": "pilates-studio",
+    "name": "Halcyon Pilates",
+    "vertical": "Pilates studio — Cambridge, MA",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/pilates-studio.jpg",
+    "thumb": "/assets/hero-tiles/pilates-studio.thumb.jpg"
+  },
+  {
+    "slug": "sushi-bar",
+    "name": "Ohba Sushi",
+    "vertical": "Sushi bar — Chicago, IL",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/sushi-bar.jpg",
+    "thumb": "/assets/hero-tiles/sushi-bar.thumb.jpg"
+  },
+  {
+    "slug": "pizzeria",
+    "name": "Anchor & Coal Pizza",
+    "vertical": "Pizzeria — Oakland, CA",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/pizzeria.jpg",
+    "thumb": "/assets/hero-tiles/pizzeria.thumb.jpg"
+  },
+  {
+    "slug": "wine-bar",
+    "name": "Vesper & Vine",
+    "vertical": "Wine bar — Hudson, NY",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/wine-bar.jpg",
+    "thumb": "/assets/hero-tiles/wine-bar.thumb.jpg"
+  },
+  {
+    "slug": "bookstore",
+    "name": "Halcyon & Press",
+    "vertical": "Independent bookstore — Asheville, NC",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/bookstore.jpg",
+    "thumb": "/assets/hero-tiles/bookstore.thumb.jpg"
+  },
+  {
+    "slug": "gelato-shop",
+    "name": "Lago Gelato",
+    "vertical": "Gelato shop — Princeton, NJ",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/gelato-shop.jpg",
+    "thumb": "/assets/hero-tiles/gelato-shop.thumb.jpg"
+  },
+  {
+    "slug": "locksmith",
+    "name": "Cardinal Lock + Key",
+    "vertical": "Locksmith — Indianapolis, IN",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/locksmith.jpg",
+    "thumb": "/assets/hero-tiles/locksmith.thumb.jpg"
+  },
+  {
+    "slug": "roofer",
+    "name": "Foundry Roofing",
+    "vertical": "Roofing contractor — Kansas City, MO",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/roofer.jpg",
+    "thumb": "/assets/hero-tiles/roofer.thumb.jpg"
+  },
+  {
+    "slug": "landscaper",
+    "name": "Quartermile Landscape Design",
+    "vertical": "Landscape design + build — Austin, TX",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/landscaper.jpg",
+    "thumb": "/assets/hero-tiles/landscaper.thumb.jpg"
+  },
+  {
+    "slug": "bike-shop",
+    "name": "Allwheel Cycle Works",
+    "vertical": "Bike shop — Bozeman, MT",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/bike-shop.jpg",
+    "thumb": "/assets/hero-tiles/bike-shop.thumb.jpg"
+  },
+  {
+    "slug": "vinyl-shop",
+    "name": "Bandstand Records",
+    "vertical": "Record store — Detroit, MI",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/vinyl-shop.jpg",
+    "thumb": "/assets/hero-tiles/vinyl-shop.thumb.jpg"
+  },
+  {
+    "slug": "candle-maker",
+    "name": "Wax & Wick Studio",
+    "vertical": "Candle studio — Asheville, NC",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/candle-maker.jpg",
+    "thumb": "/assets/hero-tiles/candle-maker.thumb.jpg"
+  },
+  {
+    "slug": "watch-repair",
+    "name": "Trenton Watchworks",
+    "vertical": "Watch repair — Trenton, NJ",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/watch-repair.jpg",
+    "thumb": "/assets/hero-tiles/watch-repair.thumb.jpg"
+  },
+  {
+    "slug": "knife-sharpening",
+    "name": "Whetstone & Co.",
+    "vertical": "Knife sharpening — Brooklyn, NY",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/knife-sharpening.jpg",
+    "thumb": "/assets/hero-tiles/knife-sharpening.thumb.jpg"
+  },
+  {
+    "slug": "arborist",
+    "name": "Greatwood Tree Care",
+    "vertical": "Tree care — Atlanta, GA",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/arborist.jpg",
+    "thumb": "/assets/hero-tiles/arborist.thumb.jpg"
+  },
+  {
+    "slug": "garden-nursery",
+    "name": "Greenstone Nursery",
+    "vertical": "Plant nursery — Eugene, OR",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/garden-nursery.jpg",
+    "thumb": "/assets/hero-tiles/garden-nursery.thumb.jpg"
+  },
+  {
+    "slug": "frame-shop",
+    "name": "Cornerstone Custom Framing",
+    "vertical": "Picture framing — Newport, RI",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/frame-shop.jpg",
+    "thumb": "/assets/hero-tiles/frame-shop.thumb.jpg"
+  },
+  {
+    "slug": "letterpress",
+    "name": "Hollow Press Print Co.",
+    "vertical": "Letterpress studio — Richmond, VA",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/letterpress.jpg",
+    "thumb": "/assets/hero-tiles/letterpress.thumb.jpg"
+  },
+  {
+    "slug": "ice-cream-truck",
+    "name": "Big Dipper Mobile Creamery",
+    "vertical": "Ice cream truck — Atlanta, GA",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/ice-cream-truck.jpg",
+    "thumb": "/assets/hero-tiles/ice-cream-truck.thumb.jpg"
+  },
+  {
+    "slug": "arcade-bar",
+    "name": "Neon & Quarters",
+    "vertical": "Arcade bar — Brooklyn, NY",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/arcade-bar.jpg",
+    "thumb": "/assets/hero-tiles/arcade-bar.thumb.jpg"
+  },
+  {
+    "slug": "piano-tuner",
+    "name": "Sterling Piano Service",
+    "vertical": "Piano tuner + technician — Boston, MA",
+    "layout": "editorial",
+    "full": "/assets/hero-tiles/piano-tuner.jpg",
+    "thumb": "/assets/hero-tiles/piano-tuner.thumb.jpg"
+  },
+  {
+    "slug": "bike-courier",
+    "name": "Cardinal Courier Co-op",
+    "vertical": "Courier service — Chicago, IL",
+    "layout": "bold",
+    "full": "/assets/hero-tiles/bike-courier.jpg",
+    "thumb": "/assets/hero-tiles/bike-courier.thumb.jpg"
+  },
+  {
+    "slug": "leather-goods",
+    "name": "Foundling Leatherworks",
+    "vertical": "Leather goods studio — Lexington, KY",
+    "layout": "warm",
+    "full": "/assets/hero-tiles/leather-goods.jpg",
+    "thumb": "/assets/hero-tiles/leather-goods.thumb.jpg"
+  },
+  {
+    "slug": "sail-school",
+    "name": "Newport Harbor Sailing",
+    "vertical": "Sailing school — Newport, RI",
+    "layout": "clinical",
+    "full": "/assets/hero-tiles/sail-school.jpg",
+    "thumb": "/assets/hero-tiles/sail-school.thumb.jpg"
+  },
+  {
+    "slug": "film-lab",
+    "name": "Argentic Film Lab",
+    "vertical": "Film photography lab — Brooklyn, NY",
+    "layout": "architectural",
+    "full": "/assets/hero-tiles/film-lab.jpg",
+    "thumb": "/assets/hero-tiles/film-lab.thumb.jpg"
+  }
+]

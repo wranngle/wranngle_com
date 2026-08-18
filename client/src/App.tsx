@@ -1,5 +1,6 @@
 import React from 'react';
 import {OFFERING_CATEGORIES} from '@/data/offerings.ts';
+import PolygonTileHero from '@/components/PolygonTileHero.tsx';
 import TierCard from '@/components/TierCard.tsx';
 import FAQ from '@/components/FAQ.tsx';
 import SiteHeader from '@/components/site/SiteHeader.tsx';
@@ -71,6 +72,17 @@ export default function App() {
                 See tiers
               </a>
             </div>
+          </section>
+
+          {/* Animated tile field — generated sample storefronts + recorded
+              agent demos, labeled as such so the mosaic never reads as a
+              client portfolio. */}
+          <section aria-label="Illustrative demo tiles">
+            <PolygonTileHero
+              isDark={isDark}
+              caption="Illustrative demo tiles"
+              subcaption="Generated sample storefronts and recorded agent demos — not client sites."
+            />
           </section>
 
           {/* TIERS — base intake / internal AI upgrade / gtm_ops max */}
