@@ -275,6 +275,19 @@ function buildTiles(): TileGeom[] {
     });
   };
 
+  // Once the 53 unique tiles are consumed, remaining slots recycle stock
+  // thumbs (never demos — no extra video elements) so the outer lattice
+  // shows imagery instead of blank primitives. A prime stride scatters
+  // the repeats so no duplicate sits next to its twin. Recycled tiles are
+  // never featured.
+  const imagePool = STOCK_TILES.filter((t) => t.kind === 'image');
+  let recycleIndex = 7;
+  const recycle = (): TileContent => {
+    recycleIndex = (recycleIndex + 11) % imagePool.length;
+    const t = imagePool[recycleIndex];
+    return t.kind === 'image' ? {...t, featured: false} : PRIMITIVE;
+  };
+
   push(0, 0, 0, consume());
   for (let k = 1; k <= CFG.rings; k++) {
     for (let i = 0; i < n; i++) {
@@ -286,12 +299,11 @@ function buildTiles(): TileGeom[] {
       const by = Math.sin(a1) * k;
       for (let j = 0; j < k; j++) {
         const t = j / k;
-        // Rings 1-4 carry real imagery (ring 5 stays primitive as fade
-        // buffer for the radial mask). consume() returns PRIMITIVE once
-        // the populated list runs out, so the back half of ring 4 ends
-        // up primitive — fine, they dissolve in the mask's heavy-fade
-        // band before they ever read as empty.
-        const content = k <= 4 ? consume() : PRIMITIVE;
+        // Every slot carries imagery: unique tiles first (center + rings
+        // 1-4 front), then recycled thumbs fill the back of ring 4 and
+        // all of ring 5, so the vignette only has to dissolve edges —
+        // not hide empty boxes.
+        const content = popIndex < populated.length ? consume() : recycle();
         push(k, ax + (bx - ax) * t, ay + (by - ay) * t, content);
       }
     }
@@ -365,8 +377,18 @@ function drawTile(tl: TileGeom, el: HTMLDivElement, c: DrawContext) {
   if (!c.reduce) {
     dx = 12 * c.i * Math.sin(c.ft * 0.5 * tl.fj + tl.pdx);
     dy = 12 * c.i * Math.sin(c.ft * 0.47 * tl.fj + tl.pdy);
-    pulse = 1 + 0.045 * c.i * Math.sin(c.ft * 0.65 * tl.fj + tl.pp);
-    sway = 6 * c.i * Math.sin(c.ft * 0.55 * tl.fj + tl.ps);
+    // Screenshot tiles carry small text: continuous scale/rotate resamples
+    // the composited texture every frame and shimmers the glyphs. So
+    // imagery keeps full translation drift (subpixel translate is clean)
+    // but no breathing scale and only ~1/3 of the sway; the empty
+    // primitives carry the full ambient motion for the field.
+    const hasText = tl.content.kind !== 'primitive';
+    if (!hasText) {
+      pulse = 1 + 0.045 * c.i * Math.sin(c.ft * 0.65 * tl.fj + tl.pp);
+    }
+
+    const swayAmp = hasText ? 2.2 : 6;
+    sway = swayAmp * c.i * Math.sin(c.ft * 0.55 * tl.fj + tl.ps);
   }
 
   const ang = c.gAng + c.gtw * tl.ring;
@@ -612,16 +634,17 @@ export default function PolygonTileHero({isDark, caption, subcaption}: Props) {
         className="absolute inset-0"
         style={{
           // Radial dissolve — closest-side ties the gradient envelope to
-          // the field box so the fade reaches the edges. The solid core
-          // holds to ~46% so most of the field reads crisp; the falloff
-          // is late and steep instead of a long half-transparent mush
-          // (the old 24% core read as a blurry over-vignetted haze). The
-          // canvas tracer overlay is a child of this div and inherits the
-          // same mask, so embers dissolve identically.
+          // the field box so the fade reaches the edges. Every slot now
+          // carries imagery (recycled thumbs fill the outer lattice), so
+          // the mask's only job is an aesthetic edge dissolve: solid to
+          // ~38%, then a steady falloff — crisper than the original 24%
+          // haze, softer than the 46% core that exposed the rim tiles.
+          // The canvas tracer overlay is a child of this div and inherits
+          // the same mask, so embers dissolve identically.
           WebkitMaskImage:
-            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 46%, rgba(0,0,0,0.94) 62%, rgba(0,0,0,0.7) 76%, rgba(0,0,0,0.32) 90%, transparent 100%)',
+            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 38%, rgba(0,0,0,0.9) 56%, rgba(0,0,0,0.6) 72%, rgba(0,0,0,0.24) 88%, transparent 100%)',
           maskImage:
-            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 46%, rgba(0,0,0,0.94) 62%, rgba(0,0,0,0.7) 76%, rgba(0,0,0,0.32) 90%, transparent 100%)',
+            'radial-gradient(ellipse closest-side at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 38%, rgba(0,0,0,0.9) 56%, rgba(0,0,0,0.6) 72%, rgba(0,0,0,0.24) 88%, transparent 100%)',
         }}
       >
         {tilesRef.current.map((tile, idx) => (
